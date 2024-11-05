@@ -2,9 +2,9 @@
 module.exports = {
   root: true,
   extends: [
-    "@repo/eslint-config/next.js",
+    "@withbee/eslint-config/next.js",
     "plugin:storybook/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
