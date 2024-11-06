@@ -1,0 +1,38 @@
+/* page.module.css */
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f4f8;
+}
+
+.main {
+  text-align: center;
+}
+
+.button {
+  background-color: #6200ea; /* 버튼 배경색 */
+  color: #fff; /* 버튼 텍스트 색상 */
+  padding: 12px 24px; /* 패딩 */
+  font-size: 16px; /* 텍스트 크기 */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px; /* 모서리를 둥글게 */
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* 호버 효과를 위한 트랜지션 */
+}
+
+/* 버튼 호버 시 효과 */
+.button:hover {
+  transform: scale(1.05); /* 약간 확대 */
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 버튼 활성화 시 효과 */
+.button:active {
+  transform: scale(0.95); /* 살짝 축소 */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}

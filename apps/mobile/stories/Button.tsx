@@ -1,17 +1,14 @@
+"use client";
 import React from 'react';
+import { motion } from 'framer-motion';
+import styles from './button.module.css';
 
-import './button.css';
 
 export interface ButtonProps {
-  /** Is this the principal call to action on the page? */
   primary?: boolean;
-  /** What background color to use */
   backgroundColor?: string;
-  /** How large should the button be? */
   size?: 'small' | 'medium' | 'large';
-  /** Button contents */
   label: string;
-  /** Optional click handler */
   onClick?: () => void;
 }
 
@@ -24,18 +21,23 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  
   return (
-    <button
+    <motion.button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      className={['storybook-button', `storybook-button--${size}`, mode, styles.button].join(' ')}
+      style={{ backgroundColor }}
+      initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+      animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
+      transition={{
+        duration: 1,
+        ease: "easeInOut",
+        repeat: Infinity,
+        repeatType: "mirror"
+      }}
       {...props}
     >
       {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
-    </button>
+    </motion.button>
   );
 };
