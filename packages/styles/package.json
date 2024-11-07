@@ -1,0 +1,6 @@
+{
+  "name": "@withbee/styles",
+  "version": "0.0.0",
+  "main": "global.css",
+  "private": "true"
+}

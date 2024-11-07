@@ -1,0 +1,277 @@
+* {
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -o-text-size-adjust: none;
+}
+
+*:before,
+*:after {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+html,
+body {
+  height: 100%;
+  font-size-adjust: none;
+  -webkit-font-size-adjust: none;
+  -o-font-size-adjust: none;
+  -moz-font-size-adjust: none;
+}
+
+/*기본폰트 10px*/
+body,
+th,
+td,
+input,
+select,
+textarea,
+button {
+  font-family: 'Pretendard', var(--font-notosanskr) !important;
+  line-height: 1.5;
+  color: #333;
+  word-break: keep-all;
+  word-wrap: break-word;
+  letter-spacing: 0.24px;
+}
+
+caption {
+  display: none;
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+textarea,
+p,
+blockquote,
+th,
+td,
+input,
+select,
+textarea,
+button,
+header,
+nav,
+menu,
+section,
+article {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset,
+img {
+  border: 0 none;
+  max-width: 100%;
+}
+
+dl,
+ul,
+ol,
+menu,
+li {
+  list-style: none;
+  vertical-align: middle;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset; /* 크롭입력배경색제거 */
+}
+
+input,
+select,
+textarea,
+button {
+  vertical-align: middle;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='submit'],
+input[type='search'],
+input[type='number'] {
+  -webkit-appearance: none;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='tel'],
+input[type='email'],
+input[type='number'],
+input[type='url'] {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button,
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+input[type='file'] {
+  -webkit-appearance: none;
+  border-radius: 0;
+  border: none;
+}
+
+input[type='button'] {
+  -webkit-appearance: none;
+  border: 0;
+}
+
+input[type='search']:-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  border: none;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+textarea:focus {
+  outline: none;
+}
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+var,
+i {
+  font-style: normal;
+  font-weight: normal;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+img {
+  vertical-align: middle;
+}
+
+legend,
+caption {
+  display: none;
+}
+
+code {
+  border-radius: 0;
+  padding: initial;
+}
+
+label {
+  cursor: pointer;
+}
+
+/* root */
+:root {
+   /* Gray Palette */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+
+   /* Blue Palette */
+  --color-blue-1: #FCFDFF;
+  --color-blue-2: #F5F9FF;
+  --color-blue-3: #EAF3FD;
+  --color-blue-4: #DCECFF;
+  --color-blue-5: #CCE2FF;
+  --color-blue-6: #B8D5FA;
+  --color-blue-7: #9FC3F2;
+  --color-blue-8: #7BACEA;
+  --color-blue-9: #4397FD;
+  --color-blue-10: #3B8BEC;
+  --color-blue-11: #1B70CE;
+  --color-blue-12: #11335D;
+
+  /* Yellow Palette */
+  --color-yellow-1: #FFFDE2;
+  --color-yellow-2: #FFFAD5;
+  --color-yellow-3: #FFF1B8;
+  --color-yellow-4: #FFE991;
+  --color-yellow-5: #FBE17C;
+  --color-yellow-6: #FAD743;
+  --color-yellow-7: #F6CB00;
+  --color-yellow-8: #DFB800;
+  --color-yellow-9: #A98A00;
+  --color-yellow-10: #9D7F00;
+  --color-yellow-11: #786000;
+  --color-yellow-12: #2A1F00;
+}
