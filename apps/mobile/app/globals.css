@@ -1,9 +1,0 @@
-html,
-body {
-  height: 100%;
-  font-size-adjust: none;
-  -webkit-font-size-adjust: none;
-  -o-font-size-adjust: none;
-  -moz-font-size-adjust: none;
-  font-family: var(--font-pretendard), sans-serif;
-}

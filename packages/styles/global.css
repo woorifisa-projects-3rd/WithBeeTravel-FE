@@ -19,6 +19,7 @@ body {
   -webkit-font-size-adjust: none;
   -o-font-size-adjust: none;
   -moz-font-size-adjust: none;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 /*기본폰트 10px*/
@@ -29,7 +30,7 @@ input,
 select,
 textarea,
 button {
-  font-family: 'Pretendard', var(--font-notosanskr) !important;
+  font-family: 'Pretendard', var(--font-pretendard) !important;
   line-height: 1.5;
   color: #333;
   word-break: keep-all;
