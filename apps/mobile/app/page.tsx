@@ -8,6 +8,7 @@ export default function Home() {
     <div className={styles.page}>
       <h1>윗비트래블</h1>
       <div>모두들 화이팅 합시다!!</div>
+      <Button label="기모철" />
     </div>
   );
 }
