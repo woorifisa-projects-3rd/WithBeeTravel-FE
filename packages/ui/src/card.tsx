@@ -11,7 +11,13 @@ export interface CardProps {
   storeName: string;
 }
 
-const Card = ({ imageSrc, time, comment, price, storeName }: CardProps) => {
+export const Card = ({
+  imageSrc,
+  time,
+  comment,
+  price,
+  storeName,
+}: CardProps) => {
   return (
     <div className={styles.card}>
       {imageSrc && (
