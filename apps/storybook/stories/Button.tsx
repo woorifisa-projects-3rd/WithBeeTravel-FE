@@ -6,8 +6,7 @@ import styles from './button.module.css';
 
 export interface ButtonProps {
   primary?: boolean;
-  backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
   label: string;
   onClick?: () => void;
 }

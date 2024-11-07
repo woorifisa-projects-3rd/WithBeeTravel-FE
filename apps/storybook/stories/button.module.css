@@ -18,6 +18,12 @@
   font-size: 20px; /* 텍스트 크기 */
 }
 
+.xlarge {
+  width: 486px;
+  padding: 18.5px 18px; /* 패딩 */
+  font-size: 22px; /* 텍스트 크기 */
+}
+
 .medium {
   width: 325px;
   padding: 16.5px 18px; /* 패딩 */

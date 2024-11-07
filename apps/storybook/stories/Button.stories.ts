@@ -11,7 +11,6 @@ const meta: Meta<typeof Button> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    backgroundColor: { control: 'color' },
   },
   args: { onClick: action('clicked') }, // onClick 이벤트 추적을 위해 action 사용
 };
@@ -38,6 +37,14 @@ export const LargePrimary: Story = {
   args: {
     primary: true,
     size: 'large',
+    label: '그룹 선택 완료',
+  },
+};
+
+export const XLargePrimary: Story = {
+  args: {
+    primary: true,
+    size: 'xlarge',
     label: '그룹 선택 완료',
   },
 };
