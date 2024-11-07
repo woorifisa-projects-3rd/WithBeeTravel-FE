@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./tag": "./src/tag.tsx",
     "./title": "./src/title.tsx",
     "./test": "./src/test.tsx",
     "./button": "./src/button.tsx",
