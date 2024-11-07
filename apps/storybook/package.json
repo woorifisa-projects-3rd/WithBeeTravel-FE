@@ -33,6 +33,7 @@
     "@withbee/eslint-config": "workspace:*",
     "@withbee/exception": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
+    "@withbee/styles": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
     "eslint-plugin-storybook": "^0.11.0",

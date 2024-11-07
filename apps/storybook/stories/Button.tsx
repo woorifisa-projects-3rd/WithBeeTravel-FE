@@ -16,19 +16,17 @@ export interface ButtonProps {
 export const Button = ({
   primary = false,
   size = 'medium',
-  backgroundColor,
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  const mode = primary ? styles.primary : styles.secondary;
   
   return (
     <motion.button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode, styles.button].join(' ')}
-      style={{ backgroundColor }}
-      initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-      animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
+      className={[styles[size], mode, styles.button].join(' ')}
+      // initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+      // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
       transition={{
         duration: 1,
         ease: "easeInOut",

@@ -23,26 +23,43 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {
   args: {
     primary: true,
-    label: 'Button',
+    label: '선택 완료',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: 'Button',
+    primary: false,
+    label: '돌아가기',
   },
 };
 
-export const Large: Story = {
+export const LargePrimary: Story = {
+  args: {
+    primary: true,
+    size: 'large',
+    label: '그룹 선택 완료',
+  },
+};
+
+export const LargeSecondary: Story = {
   args: {
     size: 'large',
-    label: 'Button',
+    label: '돌아가기',
   },
 };
 
-export const Small: Story = {
+export const SmallPrimary: Story = {
+  args: {
+    primary: true,
+    size: 'small',
+    label: '불러오기',
+  },
+};
+
+export const SmallSecondary: Story = {
   args: {
     size: 'small',
-    label: 'Button',
+    label: '직접 추가',
   },
 };

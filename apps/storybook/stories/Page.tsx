@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Header } from './Header';
 import './page.css';
+import "@withbee/styles";
 
 type User = {
   name: string;

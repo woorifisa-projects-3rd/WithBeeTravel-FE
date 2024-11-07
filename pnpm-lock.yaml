@@ -201,6 +201,9 @@ importers:
       '@withbee/exception':
         specifier: workspace:*
         version: link:../../packages/exception
+      '@withbee/styles':
+        specifier: workspace:*
+        version: link:../../packages/styles
       '@withbee/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
