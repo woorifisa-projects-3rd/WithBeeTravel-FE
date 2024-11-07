@@ -1,11 +1,6 @@
 import Image from "next/image";
 import { Button } from "@withbee/ui/button";
-<<<<<<< HEAD
-import styles from "./page.module.css";
-import "@withbee/styles"
-=======
 // import "@withbee/styles"
->>>>>>> bb1be6b88148e2de338a052937678e454f3607a3
 
 export default function Home() {
   return (
