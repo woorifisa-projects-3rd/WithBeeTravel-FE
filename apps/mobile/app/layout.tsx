@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "../../../packages/styles/global.css";
+import "@withbee/styles";
+import "./global.css"
+
 
 const pretendard = localFont({
   src: 'fonts/PretendardVariable.ttf',
@@ -22,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={pretendard.variable} >
+    <html lang="ko" className="layout">
+      <body className={[pretendard.variable, "mobile"].join(" ")} >
         {children}
       </body>
     </html>
