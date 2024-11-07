@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Button } from "@withbee/ui/button";
-// import "@withbee/styles"
+import styles from "./page.module.css";
+import "@withbee/styles"
+
 
 export default function Home() {
   return (
