@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Modal } from './Modal';
+import { Modal } from '@withbee/ui/modal';
 import { useState } from 'react';
 
 const meta: Meta<typeof Modal> = {
