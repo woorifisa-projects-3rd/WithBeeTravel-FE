@@ -10,6 +10,7 @@ export interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
   label: string;
   onClick?: () => void;
+  className?: string;
 }
 
 /** Primary UI component for user interaction */
