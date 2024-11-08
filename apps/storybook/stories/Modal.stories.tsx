@@ -3,7 +3,7 @@ import { Modal } from '@withbee/ui/modal';
 import { useState } from 'react';
 
 const meta: Meta<typeof Modal> = {
-  title: 'Conponents/Modal',
+  title: 'Components/Modal',
   component: Modal,
   parameters: {
     layout: 'centered',

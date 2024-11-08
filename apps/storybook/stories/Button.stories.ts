@@ -4,7 +4,7 @@ import { Button } from './Button';
 
 // Meta 설정 부분
 const meta: Meta<typeof Button> = {
-  title: 'Conponents/Button',
+  title: 'Components/Button',
   component: Button,
   parameters: {
     layout: 'centered',
