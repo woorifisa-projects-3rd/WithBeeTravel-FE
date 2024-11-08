@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from './button'; 
+import { Button } from './button.js'; 
 import styles from './modal.module.css';
 
 export interface ModalProps {
