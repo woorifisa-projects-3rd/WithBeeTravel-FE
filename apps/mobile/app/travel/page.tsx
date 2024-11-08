@@ -1,102 +1,12 @@
-'use client'; // Chart.js 라이브러리를 사용하기 위해 client로 설정
-
 import { Button } from '@withbee/ui/button';
 import { Tag } from '@withbee/ui/tag';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title as ChartTitle,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { useState, useEffect } from 'react';
-
-// Register chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, ChartTitle, Tooltip, Legend);
+import BarChart from '@withbee/ui/bar-chart';
 
 export default function Page() {
-  // TODO: Chart, Friends 컴포넌트화 필요
-  // React 상태로 CSS 변수 값을 저장
-  const [blueColor3, setBlueColor3] = useState('');
-  const [blueColor9, setBlueColor9] = useState('');
-  const [grayColor900, setGrayColor900] = useState('');
-
-  useEffect(() => {
-    // CSS 변수 값 가져오기
-    const rootStyles = getComputedStyle(document.documentElement);
-    setBlueColor3(rootStyles.getPropertyValue('--color-blue-3').trim());
-    setBlueColor9(rootStyles.getPropertyValue('--color-blue-9').trim());
-    setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
-  }, []);
-
-  const options = {
-    aspectRatio: 1.5,
-    layout: {
-      padding: {
-        top: 28,
-        bottom: 30,
-      },
-    },
-    scales: {
-      x: {
-        position: 'top' as const,
-        ticks: {
-          color: grayColor900, // 가져온 CSS 변수로 설정
-        },
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          display: false,
-        },
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
-    elements: {
-      bar: {
-        borderRadius: [8, 8, 8, 8],
-      },
-    },
-  };
-
-  const data = {
-    labels: ['교통', '식비', '숙박', '항공', '기타'],
-    datasets: [
-      {
-        base: 0,
-        data: [10, 20, 6, 12, 10],
-        backgroundColor: [blueColor3, blueColor9, blueColor3, blueColor3, blueColor3],
-        hoverBackgroundColor: [blueColor3, blueColor9, blueColor3, blueColor3, blueColor3],
-        hoverBorderColor: [blueColor3, blueColor9, blueColor3, blueColor3, blueColor3],
-      },
-    ],
-  };
-
+  // TODO: Friends 컴포넌트화 필요
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
@@ -126,7 +36,7 @@ export default function Page() {
         <Button label="그룹 결제 내역" />
         <Button label="친구 초대" primary={false} />
       </div>
-      <Bar data={data} options={options} />
+      <BarChart />
     </div>
   );
 }
