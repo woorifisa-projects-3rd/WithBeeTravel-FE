@@ -2,9 +2,9 @@ import { Button } from '@withbee/ui/button';
 import { Tag } from '@withbee/ui/tag';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
-import FriendImage from '@withbee/ui/friend-image';
+import { FriendImage } from '@withbee/ui/friend-image';
 import Image from 'next/image';
-import BarChart from '@withbee/ui/bar-chart';
+import { BarChart } from '@withbee/ui/chart';
 
 export default function Page() {
   // TODO: Friends 컴포넌트화 필요
@@ -26,7 +26,9 @@ export default function Page() {
           <Tag label="스위스" />
         </div>
         <div className={styles.friendsWrapper}>
-          {[1, 2, 3, 4, 5].map((number) => <FriendImage number={number} />)}
+          {[1, 2, 3, 4, 5].map((number) => (
+            <FriendImage number={number} />
+          ))}
         </div>
       </div>
       <div className={styles.btnWrapper}>

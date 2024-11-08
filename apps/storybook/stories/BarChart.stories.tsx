@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import BarChart from '@withbee/ui/bar-chart';
+import { BarChart } from '@withbee/ui/chart';
 import React from 'react';
 
 const meta: Meta<typeof BarChart> = {
@@ -16,5 +16,5 @@ export default meta;
 type Story = StoryObj<typeof BarChart>;
 
 export const Default: Story = {
-  render: () => <BarChart />
+  render: () => <BarChart />,
 };

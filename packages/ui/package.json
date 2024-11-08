@@ -4,7 +4,7 @@
   "private": true,
   "exports": {
     "./friend-image": "./src/friend-image.tsx",
-    "./bar-chart": "./src/bar-chart.tsx",
+    "./chart": "./src/chart.tsx",
     "./tag": "./src/tag.tsx",
     "./title": "./src/title.tsx",
     "./test": "./src/test.tsx",

@@ -26,7 +26,7 @@ interface ExpenseChartProps {
   highlightIndex?: number; // 강조할 막대의 인덱스
 }
 
-const BarChart = ({ expenses, highlightIndex = 1 }: ExpenseChartProps) => {
+export const BarChart = ({ expenses, highlightIndex = 1 }: ExpenseChartProps) => {
   const [blueColor3, setBlueColor3] = useState('');
   const [blueColor9, setBlueColor9] = useState('');
   const [grayColor900, setGrayColor900] = useState('');
@@ -114,5 +114,3 @@ const BarChart = ({ expenses, highlightIndex = 1 }: ExpenseChartProps) => {
 
   return <Bar data={data} options={options} />;
 };
-
-export default BarChart;

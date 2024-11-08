@@ -6,7 +6,7 @@ interface FriendImageProps {
   size?: number;
 }
 
-const FriendImage = ({ number, size = 40}: FriendImageProps) => {
+export const FriendImage = ({ number, size = 40}: FriendImageProps) => {
   // 1-10 사이의 숫자로 제한
   const safeNumber = Math.max(1, Math.min(10, number));
 
@@ -20,5 +20,3 @@ const FriendImage = ({ number, size = 40}: FriendImageProps) => {
     />
   );
 };
-
-export default FriendImage;
