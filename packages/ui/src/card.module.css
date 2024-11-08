@@ -36,13 +36,5 @@
   display: flex;
   align-items: center;
   font-weight: bold;
-}
-
-.price,
-.storeName {
-  background-color: #f3f4f6;
-  padding: 7px 10px; /* 내부 여백 */
-  border-radius: 7px; /* 모서리 둥글게 */
-  color: #4b5563;
-  margin-right: 7px;
+  gap: 10px;
 }

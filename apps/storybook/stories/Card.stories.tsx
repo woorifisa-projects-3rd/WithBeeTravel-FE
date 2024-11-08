@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Card } from "@withbee/ui/card";
+import "@withbee/styles";
 
 const meta: Meta<typeof Card> = {
   title: "Components/Card",
