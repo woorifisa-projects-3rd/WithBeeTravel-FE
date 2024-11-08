@@ -12,6 +12,8 @@ import { useState } from "react";
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
+  const [code, setCode] = useState("");
+
   const cards = [
     {
       image: "/api/placeholder/400/200",
@@ -90,13 +92,28 @@ export default function page() {
             </div>
           </div>
         ))}
-
-        {/* 모달 */}
-        {/* Modal 컴포넌트 */}
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="모달 제목">
-          <p>여기에 모달 내용이 들어갑니다.</p>
-        </Modal>
       </div>
+
+      {/* 모달 */}
+      {/* Modal 컴포넌트 */}
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="초대코드를 입력해주세요."
+        closeLabel="입력 완료"
+      >
+        <p className={styles.subtitle}>
+          초대 코드를 입력하여 그룹에 가입하세요.
+        </p>
+        <input
+          id="inviteCode"
+          type="text"
+          className={styles.input}
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="초대코드"
+        />
+      </Modal>
     </div>
   );
 }
