@@ -2,6 +2,7 @@ import { Button } from '@withbee/ui/button';
 import { Tag } from '@withbee/ui/tag';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
+import FriendImage from '@withbee/ui/friend-image';
 import Image from 'next/image';
 import BarChart from '@withbee/ui/bar-chart';
 
@@ -25,11 +26,7 @@ export default function Page() {
           <Tag label="스위스" />
         </div>
         <div className={styles.friendsWrapper}>
-          <Image src="/friends/1.png" alt="map" width={40} height={40} className={styles.friends} />
-          <Image src="/friends/2.png" alt="map" width={40} height={40} className={styles.friends} />
-          <Image src="/friends/3.png" alt="map" width={40} height={40} className={styles.friends} />
-          <Image src="/friends/4.png" alt="map" width={40} height={40} className={styles.friends} />
-          <Image src="/friends/5.png" alt="map" width={40} height={40} className={styles.friends} />
+          {[1, 2, 3, 4, 5].map((number) => <FriendImage number={number} />)}
         </div>
       </div>
       <div className={styles.btnWrapper}>

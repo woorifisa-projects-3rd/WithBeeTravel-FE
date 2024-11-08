@@ -2,8 +2,8 @@
   "name": "@withbee/ui",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "exports": {
+    "./friend-image": "./src/friend-image.tsx",
     "./bar-chart": "./src/bar-chart.tsx",
     "./tag": "./src/tag.tsx",
     "./title": "./src/title.tsx",
