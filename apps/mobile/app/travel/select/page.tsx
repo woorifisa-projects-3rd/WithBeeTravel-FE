@@ -1,3 +1,4 @@
+"use client";
 import styles from "./page.module.css";
 import { Title } from "@withbee/ui/title";
 import Image from "next/image";
@@ -6,21 +7,24 @@ import background from "../../../public/imgs/travel/withbee_friends_background.p
 import plane from "../../../public/imgs/travel/travel_select_plane.png";
 import inviteCode from "../../../public/imgs/travel/travel_select_invitecode.png";
 import travelExam from "../../../public/imgs/travel/travel_exam.png";
+import { Modal } from "@withbee/ui/modal";
+import { useState } from "react";
 
 export default function page() {
+  const [isOpen, setIsOpen] = useState(false);
   const cards = [
     {
-      image: '/api/placeholder/400/200',
-      travelName: '팀 호주투',
-      date: '12/25/2022',
+      image: "/api/placeholder/400/200",
+      travelName: "호초룰루랄라",
+      date: "12/25/2022",
     },
     {
-      image: '/api/placeholder/400/200',
-      travelName: '팀 호주투',
-      date: '12/25/2022',
+      image: "/api/placeholder/400/200",
+      travelName: "진콩패키지",
+      date: "12/25/2022~01/04/2024",
     },
   ];
-  
+
   return (
     <div>
       <Title label="여행 선택하기" />
@@ -48,7 +52,7 @@ export default function page() {
             <Image src={plane} alt="비행기 아이콘" className={styles.icon} />
           </div>
         </button>
-        <button className={styles.button}>
+        <button className={styles.button} onClick={() => setIsOpen(true)}>
           <div className={styles.buttonTitleWrap}>
             <p className={styles.buttonTitle}>초대 코드 입력하기</p>
           </div>
@@ -64,21 +68,35 @@ export default function page() {
 
       {/* 생성한 그룹 나열하기 */}
       <div className={styles.cardWrap}>
-      {cards.map((card, index) => (
-        <div key={index} className={styles.card}>
-          <Image src={travelExam} alt={card.travelName} className={styles.cardImage} />
-          <div className={styles.cardContent}>
-            <div className={styles.cardText}>
-             <Image src={plane} alt="비행기 아이콘" className={styles.icon} />
-             <div className={styles.travelNameWrap}>
-              <span>{card.travelName}</span>
-              <span className={styles.date}>{card.date}</span>
+        {cards.map((card, index) => (
+          <div key={index} className={styles.card}>
+            <Image
+              src={travelExam}
+              alt={card.travelName}
+              className={styles.cardImage}
+            />
+            <div className={styles.cardContent}>
+              <div className={styles.cardText}>
+                <Image
+                  src={plane}
+                  alt="비행기 아이콘"
+                  className={styles.icon}
+                />
+                <div className={styles.travelNameWrap}>
+                  <span>{card.travelName}</span>
+                  <span className={styles.date}>{card.date}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+
+        {/* 모달 */}
+        {/* Modal 컴포넌트 */}
+        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="모달 제목">
+          <p>여기에 모달 내용이 들어갑니다.</p>
+        </Modal>
+      </div>
     </div>
   );
 }
