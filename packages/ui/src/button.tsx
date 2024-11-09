@@ -24,7 +24,7 @@ export const Button = ({
     <motion.button
       type="button"
       className={[styles[size], mode, styles.button].join(' ')}
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 0.98 }}
       {...props}
     >
       {label}

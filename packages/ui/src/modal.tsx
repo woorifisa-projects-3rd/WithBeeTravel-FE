@@ -1,8 +1,8 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Button } from './button'; 
-import styles from './modal.module.css';
+import React from "react";
+import { motion } from "framer-motion";
+import { Button } from "./button";
+import styles from "./modal.module.css";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -26,9 +26,7 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
         <header className={styles.header}>
           <h2>{title}</h2>
         </header>
-        <div className={styles.content}>
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
           <Button onClick={onClose} label="닫기" />
         </footer>
