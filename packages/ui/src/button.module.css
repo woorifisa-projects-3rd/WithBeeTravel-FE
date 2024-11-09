@@ -3,7 +3,7 @@
   border: none;
   border-radius: 10px; /* 모서리를 둥글게 */
   cursor: pointer;
-  transition: transform 0.2s ease /* 호버 효과를 위한 트랜지션 */
+  /* transition: transform 0.2s ease 호버 효과를 위한 트랜지션 */
 }
 
 .small {
@@ -39,10 +39,4 @@
 .secondary {
   background-color: var(--color-gray-100); /* 버튼 배경색 */
   color: var(--color-gray-600); /* 버튼 텍스트 색상 */
-}
-
-/* 버튼 활성화 시 효과 */
-.button:active {
-  transform: scale(0.98); /* 살짝 축소 */
-  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
 }

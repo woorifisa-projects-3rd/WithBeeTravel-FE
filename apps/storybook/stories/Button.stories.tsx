@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { Button } from './Button';
+import { Button } from '@withbee/ui/button';
+
+// 모바일 컨테이너 데코레이터 스타일
+const mobileContainerStyle = {
+  width: '430px',
+};
 
 // Meta 설정 부분
 const meta: Meta<typeof Button> = {
@@ -10,9 +15,15 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-  },
+  argTypes: {},
   args: { onClick: action('clicked') }, // onClick 이벤트 추적을 위해 action 사용
+  decorators: [
+    (Story) => (
+      <div style={mobileContainerStyle}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
