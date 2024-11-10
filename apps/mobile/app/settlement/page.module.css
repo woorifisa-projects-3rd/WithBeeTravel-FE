@@ -1,0 +1,184 @@
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  background-color: white;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.mainContent {
+  padding: 34px 16px;
+  font-size: 18px;
+}
+
+.mainCard {
+  border-radius: 10px;
+  padding: 25px 23px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 17px;
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.myName {
+  font-weight: bold;
+}
+
+.suffixText {
+  color: #000000;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.summaryBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.summaryInfo {
+  display: flex;
+  justify-content: space-between;
+  color: #6b7280;
+}
+
+.label {
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+.detailsButton {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.expenseList {
+  margin-top: 16px;
+}
+
+.expenseItem {
+  padding-bottom: 23px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.expenseDate {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.expensePlace {
+  font-size: 16px;
+  font-weight: medium;
+}
+
+.amountRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 14px;
+  color: #6b7280;
+  width: 100%;
+}
+
+.totalAmount {
+  color: #3b82f6;
+  margin-left: 4px;
+}
+
+.requestAmount {
+  color: #ef4444;
+  margin-left: 4px;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 25px 23px;
+}
+
+.positiveAmount {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.negativeAmount {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.suffix {
+  font-size: 14px;
+}
+
+.userCard {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.userRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* isAgreed가 true일 때 적용할 스타일 */
+.completedCard {
+  position: relative;
+  border-radius: 8px;
+  background-color: rgba(200, 200, 200, 0.7);
+}
+
+.completedCard::before {
+  content: "";
+  position: absolute;
+  top: -2px; /* 테두리가 흐릿해 보이도록 경계선 바깥으로 확장 */
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+  backdrop-filter: blur(2px); /* 배경에 블러 효과 추가 */
+  filter: blur(1px); /* 테두리도 흐릿하게 보이도록 추가 */
+  z-index: 0;
+}
+
+.completedOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: black;
+  z-index: 1; /* 텍스트가 블러 배경 위에 나타나도록 설정 */
+}
+
+.remainingUsers {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.btnWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
