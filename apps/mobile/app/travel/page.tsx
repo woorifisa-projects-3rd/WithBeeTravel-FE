@@ -9,10 +9,12 @@ import inviteCode from "../../public/imgs/travel/travel_select_invitecode.png";
 import travelExam from "../../public/imgs/travel/travel_exam.png";
 import { Modal } from "@withbee/ui/modal";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState("");
+  const router = useRouter();
 
   const cards = [
     {
@@ -46,7 +48,7 @@ export default function page() {
 
       {/* 여행생성, 초대코드 버튼 */}
       <div className={styles.buttonWrap}>
-        <button className={styles.button}>
+        <button className={styles.button} onClick={() => router.push("/travel/form?mode=create")}>
           <div className={styles.buttonTitleWrap}>
             <p className={styles.buttonTitle}>여행 생성하기</p>
           </div>
