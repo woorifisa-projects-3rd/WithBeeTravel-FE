@@ -121,6 +121,7 @@
   border-radius: 10px;
   padding: 25px 23px;
   margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
 }
 
 .positiveAmount {
@@ -137,11 +138,6 @@
   font-size: 14px;
 }
 
-.userCard {
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-}
-
 .userRow {
   display: flex;
   justify-content: space-between;
@@ -151,7 +147,6 @@
 /* isAgreed가 true일 때 적용할 스타일 */
 .completedCard {
   position: relative;
-  border-radius: 8px;
   background-color: rgba(200, 200, 200, 0.7);
 }
 
