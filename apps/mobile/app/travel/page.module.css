@@ -1,75 +1,125 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+.imageWrap {
+    position: relative;
+    left: 50%; 
+    transform: translate(-50%);
+    width: 80%;
 }
 
-.subtitleContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* flex-wrap: wrap; */
-  gap: 3px;
+.imgBackground {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.subContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 19px;
-  margin-bottom: 28px;
+.withbeeFriendsImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
-.imgWrapper {
-  width: calc(100% - 100px);
-  /* min-width: 280px; */
-  height: 207px;
-  border-radius: 20px;
-  background: var(--color-gray-100) url('/friends/wibee_gray.png') no-repeat center / 162px 156.67px;
+
+.buttonWrap {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.btnWrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* flex-wrap: wrap; */
-  gap: 8px;
+.button {
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.subtitleWrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.buttonTitleWrap{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.tagWrapper {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+.buttonTitle {
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.date {
-  font-size: 14px;
-  color: var(--color-gray-600);
+.imgWrap{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+}
+.icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
-.subtitle {
-  font-size: 20px;
-  color: var(--color-gray-800);
-  font-weight: 500;
-}
 
-.tag {
-  padding: 7px 10px;
-  background: var(--color-gray-100);
-  border-radius: 7px;
-}
+/* 카드리스트 */
+.cardWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 9rem;
+    object-fit: cover;
+  }
+  
+  .cardContent {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .cardText {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-.friendsWrapper {
-  display: flex;
-  align-items: center;
-}
+  .travelNameWrap{
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 초대 코드 모달 */
+  .subtitle {
+    font-size: 16px;
+    color: var(--color-gray-500);
+    margin: -15px 0px 5px 0px;
+    text-align: center;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 20px 0px 5px 0px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+    font-size: 18px;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #000;
+  }
