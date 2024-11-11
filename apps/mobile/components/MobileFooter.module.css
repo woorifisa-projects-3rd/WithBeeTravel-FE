@@ -12,11 +12,6 @@
     z-index: 50;
 }
 
-.nav {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
 .menuList {
     display: flex;
     justify-content: space-around;

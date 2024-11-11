@@ -28,7 +28,7 @@ export default function page() {
   ];
 
   return (
-    <div>
+    <div className={styles.travelSelectWrap}>
       <Title label="여행 선택하기" />
       {/* 위비프렌즈이미지 */}
       <div className={styles.imageWrap}>
