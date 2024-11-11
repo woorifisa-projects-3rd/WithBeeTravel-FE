@@ -6,9 +6,7 @@
     width: 100%;
     max-width: 430px;
     background: #ffffff;
-    border: 1px solid #eaeaea;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top: 1.5px solid var(--color-gray-300);
     z-index: 50;
 }
 
@@ -18,7 +16,7 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 3px;
 }
 
 
@@ -33,11 +31,7 @@
     transition: all 0.1s;
 }
 
-.menuLink.active {
-    border-top: 2px solid #35bbbb;
-}
-
-.iconWrapper {  
+.iconWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +44,7 @@
 
 .label {
     color: #6D6E6E;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.2;
     font-weight: 500;
 }
@@ -61,6 +55,5 @@
 
 .iconWrapper.active .svg path {
     fill: var(--color-blue-6);
-    stroke : var(--color-blue-9);
+    stroke: var(--color-blue-9);
 }
-
