@@ -8,11 +8,6 @@
   font-weight: 600;
 }
 
-.menu {
-  font-size: 20px;
-  color: #666;
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -26,7 +21,7 @@
 }
 
 .inputGroup label {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
 }
 
