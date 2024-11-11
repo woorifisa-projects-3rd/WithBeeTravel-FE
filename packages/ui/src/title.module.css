@@ -1,8 +1,15 @@
 .nav {
-  width: 100%;
+  box-sizing: border-box;
+  width: min(100vw, 430px);
   display: flex;
   align-items: center;
-  padding: 20px 0;
+  padding: 15px 27px;
+  border-bottom: 1px solid var(--color-gray-200);
+  font-weight: 500;
+}
+
+.back {
+  cursor: pointer;
 }
 
 .label {
