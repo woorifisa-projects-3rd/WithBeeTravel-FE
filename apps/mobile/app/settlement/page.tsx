@@ -48,7 +48,7 @@ export default function Page() {
       id: 1,
       name: "김호철",
       requestAmount: 3000,
-      isAgreed: true,
+      isAgreed: false,
     },
     {
       id: 2,
@@ -60,7 +60,7 @@ export default function Page() {
       id: 3,
       name: "유승아",
       requestAmount: -28000,
-      isAgreed: false,
+      isAgreed: true,
     },
     {
       id: 4,
@@ -151,38 +151,42 @@ export default function Page() {
 
         <div className={styles.userList}>
           <ul>
-            {others.map((user) => (
-              <li
-                key={user.id}
-                className={`${styles.card} ${
-                  user.isAgreed ? styles.completedCard : styles.userCard
-                }`}
-              >
-                <div className={styles.userRow}>
-                  <span>
-                    <span>{user.name}</span>
-                    <span className={styles.suffix}>님이</span>
-                  </span>
-                  <span>
-                    <span
-                      className={
-                        user.requestAmount >= 0
-                          ? styles.positiveAmount
-                          : styles.negativeAmount
-                      }
-                    >
-                      {user.requestAmount >= 0
-                        ? `+${user.requestAmount.toLocaleString()}원`
-                        : `${user.requestAmount.toLocaleString()}원`}
+            {others
+              .sort((a, b) => {
+                return a.isAgreed === b.isAgreed ? 0 : a.isAgreed ? 1 : -1;
+              })
+              .map((user) => (
+                <li
+                  key={user.id}
+                  className={`${styles.card} ${
+                    user.isAgreed ? styles.completedCard : styles.userCard
+                  }`}
+                >
+                  <div className={styles.userRow}>
+                    <span>
+                      <span>{user.name}</span>
+                      <span className={styles.suffix}>님이</span>
                     </span>
-                    <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "내요"}`}</span>
-                  </span>
-                </div>
-                {user.isAgreed && (
-                  <div className={styles.completedOverlay}>정산완료</div>
-                )}
-              </li>
-            ))}
+                    <span>
+                      <span
+                        className={
+                          user.requestAmount >= 0
+                            ? styles.positiveAmount
+                            : styles.negativeAmount
+                        }
+                      >
+                        {user.requestAmount >= 0
+                          ? `+${user.requestAmount.toLocaleString()}원`
+                          : `${user.requestAmount.toLocaleString()}원`}
+                      </span>
+                      <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "내요"}`}</span>
+                    </span>
+                  </div>
+                  {user.isAgreed && (
+                    <div className={styles.completedOverlay}>정산완료</div>
+                  )}
+                </li>
+              ))}
           </ul>
         </div>
         <div className={styles.remainingUsers}>
