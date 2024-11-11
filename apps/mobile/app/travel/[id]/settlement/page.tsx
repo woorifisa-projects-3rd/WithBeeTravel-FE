@@ -4,9 +4,12 @@ import { Title } from "@withbee/ui/title";
 import styles from "./page.module.css";
 import { Button } from "@withbee/ui/button";
 import { useState } from "react";
+import { Modal } from "@withbee/ui/modal";
+import "@withbee/styles";
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleDetails = () => {
     setIsOpen((prev) => !prev);
@@ -197,9 +200,25 @@ export default function Page() {
         </div>
         <div className={styles.btnWrapper}>
           <Button label="동의하기" />
-          <Button label="정산 취소하기" primary={false} />
+          <Button
+            label="정산 취소하기"
+            primary={false}
+            onClick={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="정산을 취소하시겠습니까?"
+        closeLabel="정산 취소하기"
+      >
+        <p className={styles.subtitle}>
+          정산 취소는 되돌릴 수 없으며,
+          <br />
+          모든 그룹원에게 알림이 전송됩니다.
+        </p>
+      </Modal>
     </div>
   );
 }
