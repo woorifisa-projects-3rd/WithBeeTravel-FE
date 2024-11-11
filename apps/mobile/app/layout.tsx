@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "@withbee/styles";
 import "./global.css"
+import "@withbee/styles/global.css";
 
 
 const pretendard = localFont({
