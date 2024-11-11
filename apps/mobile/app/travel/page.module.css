@@ -103,13 +103,6 @@
   }
 
   /* 초대 코드 모달 */
-  .subtitle {
-    font-size: 16px;
-    color: var(--color-gray-500);
-    margin: -15px 0px 5px 0px;
-    text-align: center;
-  }
-  
   .input {
     width: 100%;
     padding: 20px 0px 5px 0px;

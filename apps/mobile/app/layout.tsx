@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@withbee/styles";
-import "./global.css"
+import "./global.css";
 import MobileFooter from "../components/MobileFooter"
 
 

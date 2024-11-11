@@ -9,7 +9,6 @@
     border: 1px solid #eaeaea;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
     z-index: 50;
 }
 
@@ -29,21 +28,26 @@
 
 
 .menuLink {
+    border-top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* padding: 8px; */
+    padding: 10px 8px;
     color: #6D6E6E;
     text-decoration: none;
-
+    transition: all 0.1s;
 }
 
-.iconWrapper {
+.menuLink.active {
+    border-top: 2px solid #35bbbb;
+}
+
+.iconWrapper {  
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 27px;
-    height: 27px;
+    width: 24px;
+    height: 24px;
     margin-bottom: 4px;
     transition: all 0.1s;
 }
@@ -51,14 +55,9 @@
 
 .label {
     color: #6D6E6E;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
-    transition: all 0.1s;
-}
-
-.iconWrapper.active {
-    color: var(--color-blue-7);
 }
 
 .label.active {
@@ -66,5 +65,7 @@
 }
 
 .iconWrapper.active .svg path {
-    fill: var(--color-blue-9);
+    fill: var(--color-blue-6);
+    stroke : var(--color-blue-9);
 }
+
