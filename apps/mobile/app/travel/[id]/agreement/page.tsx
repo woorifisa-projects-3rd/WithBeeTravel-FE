@@ -7,6 +7,7 @@ import { Title } from "@withbee/ui/title";
 import check from "../../../../public/check.png";
 import uncheck from "../../../../public/uncheck.png";
 import agreeOpen from "../../../../public/agreeOpen.png";
+import { Button } from "@withbee/ui/button";
 
 export default function ConsentPage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
@@ -142,7 +143,7 @@ export default function ConsentPage() {
                 src={agreeOpen}
                 alt="Expand"
                 width={15}
-                height={12}
+                height={10}
                 className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ""}`}
                 onClick={() => toggleExpand(index)}
               />
@@ -168,13 +169,9 @@ export default function ConsentPage() {
           </div>
         ))}
       </div>
-
-      <button
-        className={`${styles.submitButton} ${requiredAgreed ? styles.active : ""}`}
-        disabled={!requiredAgreed}
-      >
-        동의하고 PIN 번호 입력하기
-      </button>
+      <div className={styles.btnWrapper}>
+        <Button label="동의하고 PIN 번호 입력하기" disabled={!requiredAgreed} />
+      </div>
     </div>
   );
 }

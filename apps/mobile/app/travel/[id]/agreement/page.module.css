@@ -16,10 +16,15 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  flex-grow: 1;
 }
 
 .consentItem:first-of-type {
   margin-top: 15px;
+}
+
+.consentItem:last-of-type {
+  margin-bottom: 15px;
 }
 
 .consentHeader {
@@ -48,7 +53,7 @@
   padding-top: 10px;
   font-size: 14px;
   line-height: 1.6;
-  padding-left: 30px;
+  padding-left: 35px;
 }
 
 .termSection {
@@ -68,26 +73,17 @@
   list-style-type: circle;
 }
 
-.submitButton {
+.btnWrapper {
   width: 100%;
-  padding: 16px;
-  background-color: #ffd700;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  position: sticky;
-  bottom: 16px;
-  margin: 0 auto;
-  max-width: calc(100% - 32px);
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
-.submitButton.active {
-  opacity: 1;
-}
-
-.submitButton:disabled {
+.btnWrapper button:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
   cursor: not-allowed;
 }
