@@ -1,8 +1,17 @@
+"use client";
+
 import { Title } from "@withbee/ui/title";
 import styles from "./page.module.css";
 import { Button } from "@withbee/ui/button";
+import { useState } from "react";
 
 export default function Page() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDetails = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   const myTotalPayments = {
     name: "공예진",
     totalPaymentCost: 20000,
@@ -39,7 +48,7 @@ export default function Page() {
       id: 1,
       name: "김호철",
       requestAmount: 3000,
-      isAgreed: false,
+      isAgreed: true,
     },
     {
       id: 2,
@@ -51,7 +60,7 @@ export default function Page() {
       id: 3,
       name: "유승아",
       requestAmount: -28000,
-      isAgreed: true,
+      isAgreed: false,
     },
     {
       id: 4,
@@ -96,69 +105,85 @@ export default function Page() {
                 <span>{myTotalPayments.actualBurdenCost.toLocaleString()}</span>
               </div>
             </div>
-            <details>
-              <summary className={styles.detailsButton}>상세내역 보기</summary>
+
+            {isOpen && (
               <div className={styles.expenseList}>
-                {expenses.map((expense) => (
-                  <div key={expense.id} className={styles.expenseItem}>
-                    <div>
-                      <div className={styles.expenseDate}>{expense.date}</div>
-                      <div className={styles.expensePlace}>{expense.place}</div>
-                    </div>
-                    <div>
-                      <div className={styles.amountRow}>
-                        <span>결제 금액</span>
-                        <span className={styles.totalAmount}>
-                          {expense.totalAmount.toLocaleString()}
-                        </span>
+                <ul>
+                  {expenses.map((expense) => (
+                    <li key={expense.id} className={styles.expenseItem}>
+                      <div>
+                        <div className={styles.expenseDate}>{expense.date}</div>
+                        <div className={styles.expensePlace}>
+                          {expense.place}
+                        </div>
                       </div>
-                      <div className={styles.amountRow}>
-                        <span>요청 금액</span>
-                        <span className={styles.requestAmount}>
-                          {expense.requestAmount.toLocaleString()}
-                        </span>
+                      <div>
+                        <div className={styles.amountRow}>
+                          <span>결제 금액</span>
+                          <span className={styles.totalAmount}>
+                            {expense.totalAmount.toLocaleString()}
+                          </span>
+                        </div>
+                        <div className={styles.amountRow}>
+                          <span>요청 금액</span>
+                          <span className={styles.requestAmount}>
+                            {expense.requestAmount.toLocaleString()}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </details>
+            )}
+            <button className={styles.detailsButton} onClick={toggleDetails}>
+              <span>{isOpen ? "상세내역 접기" : "상세내역 보기"}</span>
+              <span
+                className={`${styles.arrows} ${
+                  isOpen ? styles.arrowOpen : styles.arrowClosed
+                }`}
+              >
+                &gt;
+              </span>
+            </button>
           </div>
         </div>
 
         <div className={styles.userList}>
-          {others.map((user) => (
-            <div
-              key={user.id}
-              className={`${styles.card} ${
-                user.isAgreed ? styles.completedCard : styles.userCard
-              }`}
-            >
-              <div className={styles.userRow}>
-                <span>
-                  <span>{user.name}</span>
-                  <span className={styles.suffix}>님이</span>
-                </span>
-                <span>
-                  <span
-                    className={
-                      user.requestAmount >= 0
-                        ? styles.positiveAmount
-                        : styles.negativeAmount
-                    }
-                  >
-                    {user.requestAmount >= 0
-                      ? `+${user.requestAmount.toLocaleString()}원`
-                      : `${user.requestAmount.toLocaleString()}원`}
+          <ul>
+            {others.map((user) => (
+              <li
+                key={user.id}
+                className={`${styles.card} ${
+                  user.isAgreed ? styles.completedCard : styles.userCard
+                }`}
+              >
+                <div className={styles.userRow}>
+                  <span>
+                    <span>{user.name}</span>
+                    <span className={styles.suffix}>님이</span>
                   </span>
-                  <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "내요"}`}</span>
-                </span>
-              </div>
-              {user.isAgreed && (
-                <div className={styles.completedOverlay}>정산완료</div>
-              )}
-            </div>
-          ))}
+                  <span>
+                    <span
+                      className={
+                        user.requestAmount >= 0
+                          ? styles.positiveAmount
+                          : styles.negativeAmount
+                      }
+                    >
+                      {user.requestAmount >= 0
+                        ? `+${user.requestAmount.toLocaleString()}원`
+                        : `${user.requestAmount.toLocaleString()}원`}
+                    </span>
+                    <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "내요"}`}</span>
+                  </span>
+                </div>
+                {user.isAgreed && (
+                  <div className={styles.completedOverlay}>정산완료</div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
         <div className={styles.remainingUsers}>
           <span>정산 완료까지 남은 인원 : </span>
