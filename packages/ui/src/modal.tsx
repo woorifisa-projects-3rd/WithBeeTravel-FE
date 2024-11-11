@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { Button } from "./button";
-import styles from "./modal.module.css";
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Button } from './button';
+import styles from './modal.module.css';
 
 export interface ModalProps {
   isOpen: boolean;
