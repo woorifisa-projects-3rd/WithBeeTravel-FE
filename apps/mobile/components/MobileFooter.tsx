@@ -57,9 +57,9 @@ export default function MobileFooter() {
       icon: (
         <svg
           className={styles.svg}
-          width="31"
-          height="31"
-          viewBox="0 0 31 31"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -95,8 +95,8 @@ export default function MobileFooter() {
       label: "여행선택",
       icon: (
         <svg
-          width="50"
-          height="35"
+      width="55"
+  height="55"
           viewBox="0 0 100 70"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
