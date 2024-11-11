@@ -1,0 +1,93 @@
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.title {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.consentList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.consentItem:first-of-type {
+  margin-top: 15px;
+}
+
+.consentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.arrow {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.termsContent {
+  padding-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-left: 30px;
+}
+
+.termSection {
+  margin-bottom: 10px;
+}
+
+.termSection h3 {
+  font-weight: normal;
+  list-style-type: circle;
+}
+
+.termSection ul {
+  padding-left: 15px;
+}
+
+.termSection li {
+  list-style-type: circle;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 16px;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  position: sticky;
+  bottom: 16px;
+  margin: 0 auto;
+  max-width: calc(100% - 32px);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.submitButton.active {
+  opacity: 1;
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
+}
