@@ -18,7 +18,7 @@ export const Payment = () => {
 
   return (
     <article className={styles.payment}>
-      <FriendImage number={Math.round(friends.length * Math.random())} size={40} />
+      <FriendImage number={Math.round(friends.length * Math.random())} size={50} className={styles.friendImage} />
       <div className={styles.content}>
         <div className={styles.contentWrapper}>
           <div className={styles.info}>

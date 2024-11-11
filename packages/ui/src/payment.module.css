@@ -1,8 +1,12 @@
 .payment {
   width: 100%;
   display: flex;
-  gap: 18px;
+  gap: 19px;
   padding: 11px 2px;
+}
+
+.friendImage {
+  margin-top: 10px;
 }
 
 .content {
