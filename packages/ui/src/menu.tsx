@@ -6,6 +6,7 @@ import styles from './menu.module.css';
 import { Tag } from './tag';
 import { useState } from 'react';
 import { BottomModal } from './modal';
+import selectIcon from './assets/select.png';
 
 interface MenuProps {
   className?: string;
@@ -16,6 +17,11 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     period: false,
     member: false,
     sort: false,
+  });
+  const [selected, setSelected] = useState({
+    period: '전체',
+    member: '전체',
+    sort: '최신순',
   });
   const [isFilter, setIsFilter] = useState(false);
 
@@ -52,7 +58,12 @@ export const Menu = ({ className, ...props }: MenuProps) => {
               onClick={() => handleModal('member')}
             />
           </div>
-          <Tag label="최신순" size="small" type="select" />
+          <Tag
+            label="최신순"
+            size="small"
+            type="select"
+            onClick={() => handleModal('sort')}
+          />
         </div>
       ) : (
         <div className={styles.default}>
@@ -66,12 +77,65 @@ export const Menu = ({ className, ...props }: MenuProps) => {
           onClose={() => handleModal('member')}
           title="결제 멤버"
         >
-          <ul className={styles.memberList}>
-            <li>삼도삼</li>
-            <li>진콩이</li>
-            <li>호초루</li>
-            <li>연콩이</li>
-            <li>대장님</li>
+          <ul className={styles.list}>
+            {['전체', '삼도삼', '진콩이', '호초루', '연콩이', '대장님'].map(
+              (member) => (
+                <li
+                  key={member}
+                  onClick={() => setSelected({ ...selected, member })}
+                >
+                  {member}
+                  {selected.member === member && (
+                    <Image
+                      src={selectIcon}
+                      alt="select"
+                      width={25}
+                      height={25}
+                    />
+                  )}
+                </li>
+              ),
+            )}
+          </ul>
+        </BottomModal>
+      )}
+      {isOpen.period && (
+        <BottomModal
+          isOpen={isOpen.period}
+          onClose={() => handleModal('period')}
+          title="기간 설정"
+        >
+          <ul className={styles.list}>
+            <li onClick={() => setSelected({ ...selected, period: '전체' })}>
+              전체
+              {selected.period === '전체' && (
+                <Image src={selectIcon} alt="select" width={25} height={25} />
+              )}
+            </li>
+            <li>
+              시작일<span>2024.10.28</span>
+            </li>
+            <li>
+              종료일<span>2024.10.28</span>
+            </li>
+          </ul>
+        </BottomModal>
+      )}
+      {isOpen.sort && (
+        <BottomModal
+          isOpen={isOpen.sort}
+          onClose={() => handleModal('sort')}
+          title="정렬"
+        >
+          <ul className={styles.list}>
+            {['최신순', '금액순'].map((sort) => (
+              <li key={sort} onClick={() => setSelected({ ...selected, sort })}>
+                {sort}
+                {selected.sort === sort && (
+                  <Image src={selectIcon} alt="select" width={25} height={25} />
+                )}
+              </li>
+            ))}
           </ul>
         </BottomModal>
       )}

@@ -10,7 +10,7 @@ export interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-  closeLabel: string;
+  closeLabel?: string;
 }
 
 export const Modal = ({
@@ -37,7 +37,7 @@ export const Modal = ({
         </header>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
-          <Button onClick={onClose} label={closeLabel} />
+          {closeLabel && <Button onClick={onClose} label={closeLabel} />}
         </footer>
       </motion.div>
     </div>
@@ -50,7 +50,8 @@ export const BottomModal = ({
   onClose,
   title,
   children,
-}: Omit<ModalProps, 'closeLabel'>) => {
+  closeLabel,
+}: ModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -78,6 +79,9 @@ export const BottomModal = ({
           <h2 className={styles.title}>{title}</h2>
         </header>
         <div className={styles.content}>{children}</div>
+        <footer className={styles.footer}>
+          {closeLabel && <Button onClick={onClose} label={closeLabel} />}
+        </footer>
       </motion.div>
     </div>
   );
