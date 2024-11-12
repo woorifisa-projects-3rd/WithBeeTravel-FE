@@ -43,7 +43,7 @@
 
 
 .label {
-    color: #6D6E6E;
+    color: var(--color-gray-400);
     font-size: 14px;
     line-height: 1.2;
     font-weight: 500;

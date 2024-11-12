@@ -18,12 +18,12 @@ export default function page() {
     {
       image: "/api/placeholder/400/200",
       travelName: "호초룰루랄라",
-      date: "12/25/2022",
+      date: "2024/12/24",
     },
     {
       image: "/api/placeholder/400/200",
       travelName: "진콩패키지",
-      date: "12/25/2022~01/04/2024",
+      date: "2024/12/24~2025/01/05",
     },
   ];
 
@@ -32,11 +32,6 @@ export default function page() {
       <Title label="여행 선택하기" />
       {/* 위비프렌즈이미지 */}
       <div className={styles.imageWrap}>
-        <Image
-          src={background}
-          alt="이미지 백그라운드"
-          className={styles.imgBackground}
-        />
         <Image
           src={withbeeFriends}
           alt="위비프렌즈친구들"

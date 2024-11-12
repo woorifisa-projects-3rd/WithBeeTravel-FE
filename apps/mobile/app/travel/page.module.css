@@ -1,18 +1,20 @@
-.travelSelectWrap{
-  padding-bottom: 70px;
-}
-
 .imageWrap {
-    position: relative;
-    left: 50%; 
-    transform: translate(-50%);
-    width: 80%;
+  position: relative;
+  left: 50%; 
+  transform: translate(-50%);
+  width: 90%;
+  height: 250px;
 }
 
-.imgBackground {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.imageWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/imgs/travel/withbee_friends_background.png') center/contain;
+  z-index: -1; /* 다른 이미지들 위에 배경이 위치하도록 */
 }
 
 .withbeeFriendsImg {
@@ -22,6 +24,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    z-index: 1;
 }
 
 
@@ -34,11 +37,10 @@
 
 .button {
     padding: 12px 15px;
-    border: 1px solid #e5e7eb;
+    border: 1.5px solid var(--color-gray-200);
     border-radius: 0.75rem;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .buttonTitleWrap{
@@ -78,8 +80,7 @@
   .card {
     border-radius: 0.75rem;
     overflow: hidden;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-gray-200);
   }
   
   .cardImage {
@@ -104,6 +105,11 @@
   .travelNameWrap{
     display: flex;
     flex-direction: column;
+  }
+
+  .date{
+    font-size: 14px;
+    color:var( --color-gray-400)
   }
 
   /* 초대 코드 모달 */
