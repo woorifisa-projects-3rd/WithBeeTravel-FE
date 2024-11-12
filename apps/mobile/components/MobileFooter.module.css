@@ -1,0 +1,59 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    border-top: 1.5px solid var(--color-gray-300);
+    z-index: 50;
+}
+
+.menuList {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 3px;
+}
+
+
+.menuLink {
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 8px;
+    color: #6D6E6E;
+    text-decoration: none;
+    transition: all 0.1s;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    transition: all 0.1s;
+}
+
+
+.label {
+    color: var(--color-gray-400);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.label.active {
+    color: var(--color-blue-9);
+}
+
+.iconWrapper.active .svg path {
+    fill: var(--color-blue-6);
+    stroke: var(--color-blue-9);
+}

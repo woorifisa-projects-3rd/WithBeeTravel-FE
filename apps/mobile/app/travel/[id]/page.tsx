@@ -5,7 +5,6 @@ import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
 import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
-import Link from 'next/link';
 
 export default function Page() {
   // TODO: Friends 컴포넌트화 필요
@@ -33,9 +32,7 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.btnWrapper}>
-        <Link href={'/travel/1/payments'}>
-          <Button label="그룹 결제 내역" />
-        </Link>
+        <Button label="그룹 결제 내역" />
         <Button label="친구 초대" primary={false} />
       </div>
       <BarChart />
