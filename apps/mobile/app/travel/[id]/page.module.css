@@ -1,8 +1,5 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  height: 100%;
 }
 
 .subtitleContainer {
@@ -13,6 +10,7 @@
   align-items: center;
   /* flex-wrap: wrap; */
   gap: 3px;
+  padding-top: 35px;
 }
 
 .subContainer {

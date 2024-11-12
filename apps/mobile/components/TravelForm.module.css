@@ -16,7 +16,6 @@
 
 .inputGroup label {
   font-size: 18px;
-  font-weight: 500;
 }
 
 .input {
@@ -24,7 +23,7 @@
   padding: 12px;
   font-size: 16px;
   border: none;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1.5px solid var(--color-gray-300);
   outline: none;
   padding: 8px 0;
 }
@@ -45,21 +44,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-gray-200);
   border-radius: 8px;
 }
 
 .dateInput span {
-  color: #333;
+  color: var(--color-gray-600);
 }
 
 .dateInput input {
   border: none;
   font-size: 16px;
-  color: #333;
+  color: var(--color-gray-600);
 }
 
 .searchSection {
+  position: relative;
   margin-top: 16px;
 }
 
@@ -80,7 +80,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666;
+  color: var(--color-gray-500);
 }
 
 .selectedCountries {
@@ -95,7 +95,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background-color: #f5f5f5;
+  background-color: var(--color-gray-100);
   border-radius: 20px;
   font-size: 14px;
   margin-top: 15px;
@@ -104,7 +104,7 @@
 .removeTag {
   background: none;
   border: none;
-  color: #666;
+  color: var(--color-gray-600);
   cursor: pointer;
   padding: 0;
   font-size: 16px;
@@ -116,7 +116,7 @@
   width: 100%;
   max-width: 430px;
   background-color: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-gray-200);
   border-radius: 8px;
   margin-top: 4px;
   max-height: 200px;
@@ -131,5 +131,5 @@
 }
 
 .searchResultItem:hover {
-  background-color: #f5f5f5;
+  background-color: var(--color-gray-100);
 }

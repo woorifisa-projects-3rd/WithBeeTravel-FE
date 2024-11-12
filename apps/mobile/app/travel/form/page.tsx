@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TravelForm from "../../../components/TravelForm";
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
+import './page.module.css';
 
 export default function Page() {
   const [editedTravel, setEditedTravel] = useState<any | null>(null); // 편집할 여행 데이터 (기본값은 null)

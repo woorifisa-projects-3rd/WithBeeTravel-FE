@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import serach from "../public/imgs/travelform/Search.png";
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 
@@ -156,7 +158,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                   onChange={handleSearchChange}
                   className={`${styles.input} ${styles.searchInput}`}
                 />
-                <span className={styles.searchIcon}>🔍</span>
+                <span className={styles.searchIcon}><Image src={serach} alt="검색창 아이콘" className={styles.serach} width={24} height={24}/></span>
               </div>
 
               {/* 선택된 국가 태그 */}

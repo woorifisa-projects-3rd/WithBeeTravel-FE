@@ -1,24 +1,9 @@
 .container {
-  display: flex;
   width: 100%;
-  flex-direction: column;
-  align-items: center;
 }
 
-.subContainer {
-  width: 100%;
-  display: flex;
-  align-items: center;
+.menu {
   margin-top: 16px;
-  /* padding: 0 25px; */
-}
-
-.subContainer > *:first-child {
-  margin-right: auto;
-}
-
-.subContainer > *:nth-child(2) {
-  margin-right: 10px;
 }
 
 .paymentContainer {

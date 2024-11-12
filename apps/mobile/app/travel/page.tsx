@@ -3,11 +3,11 @@
 import styles from "./page.module.css";
 import { Title } from "@withbee/ui/title";
 import Image from "next/image";
-import withbeeFriends from "../../public/imgs/travel/withbee_friends.png";
-import background from "../../public/imgs/travel/withbee_friends_background.png";
-import plane from "../../public/imgs/travel/travel_select_plane.png";
-import inviteCode from "../../public/imgs/travel/travel_select_invitecode.png";
-import travelExam from "../../public/imgs/travel/travel_exam.png";
+import withbeeFriends from "../../public/imgs/travelselect/withbee_friends.png";
+import background from "../../public/imgs/travelselect/withbee_friends_background.png";
+import plane from "../../public/imgs/travelselect/travel_select_plane.png";
+import inviteCode from "../../public/imgs/travelselect/travel_select_invitecode.png";
+import travelExam from "../../public/imgs/travelselect/travel_exam.png";
 import { Modal } from "@withbee/ui/modal";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

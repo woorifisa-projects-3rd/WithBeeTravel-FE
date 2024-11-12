@@ -7,6 +7,8 @@ import { FriendImage } from '@withbee/ui/friend-image';
 import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
+
 
 export default function Page() {
   const router = useRouter();
@@ -37,7 +39,9 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.btnWrapper}>
-        <Button label="그룹 결제 내역" />
+        <Link href="/travel/1/payments">
+          <Button label="그룹 결제 내역" />
+        </Link>
         <Button label="친구 초대" primary={false} />
       </div>
       <BarChart />
