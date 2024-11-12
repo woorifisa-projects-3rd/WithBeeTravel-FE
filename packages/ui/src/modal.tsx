@@ -26,7 +26,7 @@ export const Modal = ({ isOpen, onClose, title, children,closeLabel }: ModalProp
         onClick={(e) => e.stopPropagation()}
       >
         <header className={styles.header}>
-          <h2>{title}</h2>
+          <h2 className={styles.title}>{title}</h2>
         </header>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>

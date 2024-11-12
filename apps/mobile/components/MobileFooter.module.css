@@ -6,16 +6,8 @@
     width: 100%;
     max-width: 430px;
     background: #ffffff;
-    border: 1px solid #eaeaea;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 8px 0;
+    border-top: 1.5px solid var(--color-gray-300);
     z-index: 50;
-}
-
-.nav {
-    max-width: 500px;
-    margin: 0 auto;
 }
 
 .menuList {
@@ -24,35 +16,30 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 3px;
 }
 
 
 .menuLink {
+    border-top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* padding: 8px; */
+    padding: 10px 8px;
     color: #6D6E6E;
     text-decoration: none;
-
+    transition: all 0.1s;
 }
 
 .iconWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 27px;
-    height: 27px;
+    width: 24px;
+    height: 24px;
     margin-bottom: 4px;
     transition: all 0.1s;
 }
-
-/* .iconWrapper:nth-child(3){
-    width: 35px !important;
-    height: 35px !important;
-} */
-
 
 
 .label {
@@ -60,11 +47,6 @@
     font-size: 14px;
     line-height: 1.2;
     font-weight: 500;
-    transition: all 0.1s;
-}
-
-.iconWrapper.active {
-    color: var(--color-blue-7);
 }
 
 .label.active {
@@ -72,5 +54,6 @@
 }
 
 .iconWrapper.active .svg path {
-    fill: var(--color-blue-9);
+    fill: var(--color-blue-6);
+    stroke: var(--color-blue-9);
 }
