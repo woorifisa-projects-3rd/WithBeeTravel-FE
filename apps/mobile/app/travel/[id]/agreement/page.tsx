@@ -47,7 +47,7 @@ export default function ConsentPage() {
       <div className={styles.title}>
         <Title label="약관 동의" />
       </div>
-      <div className={styles.content}>
+      <div className={`${styles.content} content full`}>
       <div className={styles.consentList}>
         <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
           <Image

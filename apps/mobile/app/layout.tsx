@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: '윗비트래블',
   description: '편리하게 여행 경비를 관리할 수 있는 서비스',
   icons: {
-    icon: '/Airplane.png',
+    icon: '/Airplane.ico',
   },
 };
 
@@ -25,9 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="layout">
-      <body className={[pretendard.variable, 'mobile'].join(' ')}>
-        {children}
-        <MobileFooter />
+      <body className={pretendard.variable}>
+        <div className="mobile">
+          {children}
+          <MobileFooter />
+        </div>
       </body>
     </html>
   );

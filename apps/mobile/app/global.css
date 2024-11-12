@@ -3,9 +3,19 @@
   height: 100%;
   margin: 0 auto;
   padding: 0 25px;
-  padding-bottom: 150px;
+  /* padding-bottom: 80px; */
 }
 
 .layout {
   width: 100%;
 }
+
+/* .content{
+  padding: 25px;
+  padding-bottom: 95px;
+  box-sizing: border-box;
+}
+
+.content.full{
+  min-height: calc(100% - 58px);
+} */
