@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { Title } from "@withbee/ui/title";
-import check from "../../../../public/check.png";
-import uncheck from "../../../../public/uncheck.png";
-import agreeOpen from "../../../../public/agreeOpen.png";
 import { Button } from "@withbee/ui/button";
 import { consentItems } from "../../../../../../packages/utils/consentItems";
 
@@ -45,7 +42,7 @@ export default function ConsentPage() {
         <Title label="약관 동의" />
         <div className={styles.checkboxContainer} onClick={toggleAllAgreements}>
           <Image
-            src={agreements.every((agreement) => agreement) ? check : uncheck}
+            src={agreements.every((agreement) => agreement) ? "/check.png" : "/uncheck.png"}
             alt={
               agreements.every((agreement) => agreement)
                 ? "Checked"
@@ -70,7 +67,7 @@ export default function ConsentPage() {
                   className={`${styles.checkboxContainer} ${agreements[index] ? styles.checked : ""}`}
                 >
                   <Image
-                    src={agreements[index] ? check : uncheck}
+                    src={agreements[index] ? "/check.png" : "/uncheck.png"}
                     width={22}
                     height={22}
                     alt={agreements[index] ? "Checked" : "Unchecked"}
@@ -79,10 +76,10 @@ export default function ConsentPage() {
                 <span>{item.title}</span>
               </div>
               <Image
-                src={agreeOpen}
+                src="/arrow.png"
                 alt="Expand"
-                width={15}
-                height={10}
+                width={10}
+                height={6}
                 className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ""}`}
                 onClick={() => toggleExpand(index)}
               />
