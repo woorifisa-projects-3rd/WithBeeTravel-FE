@@ -1,0 +1,118 @@
+/* TravelForm.module.css */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .backButton {
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .menu {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .inputGroup label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .locationButtons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .locationButton {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .locationButton.active {
+    background-color: #FFD600;
+    border-color: #FFD600;
+  }
+  
+  .dateGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .dateInput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .dateInput span {
+    color: #333;
+  }
+  
+  .dateInput input {
+    border: none;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 16px;
+    background-color: #FFD600;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 200px;
+  }
+  
+  .submitButton:hover {
+    background-color: #FFC800;
+  }
+
+  
