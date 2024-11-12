@@ -47,7 +47,10 @@ export default function ConsentPage() {
     <div className={styles.container}>
       <div className={styles.title}>
         <Title label="약관 동의" />
-        <div className={styles.checkboxContainer} onClick={toggleAllAgreements}>
+      </div>
+      <div className={styles.content}>
+      <div className={styles.consentList}>
+        <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
           <Image
             src={agreements.every((agreement) => agreement) ? "/check.png" : "/uncheck.png"}
             alt={
@@ -60,9 +63,6 @@ export default function ConsentPage() {
           />
           <span>전체 동의 체크</span>
         </div>
-      </div>
-
-      <div className={styles.consentList}>
         {consentItems.map((item, index) => (
           <div 
             key={index} 
@@ -118,6 +118,7 @@ export default function ConsentPage() {
       </div>
       <div className={styles.btnWrapper}>
         <Button label="동의하고 PIN 번호 입력하기" disabled={!requiredAgreed} />
+      </div>
       </div>
     </div>
   );
