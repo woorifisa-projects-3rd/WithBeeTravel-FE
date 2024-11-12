@@ -1,28 +1,27 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import styles from "./page.module.css";
-import Image from "next/image";
-import { Title } from "@withbee/ui/title";
-import { Button } from "@withbee/ui/button";
-import { consentItems } from "../../../../../../packages/utils/consentItems";
-
+import { useState, useRef } from 'react';
+import styles from './page.module.css';
+import Image from 'next/image';
+import { Title } from '@withbee/ui/title';
+import { Button } from '@withbee/ui/button';
+import { consentItems } from '../../../../../../packages/utils/consentItems';
 
 export default function ConsentPage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
   const [agreements, setAgreements] = useState<boolean[]>(
-    new Array(consentItems.length).fill(false)
+    new Array(consentItems.length).fill(false),
   );
 
   // 각 약관항목에 ref를 연결해 스크롤 위치를 이동
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]); 
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const toggleExpand = (index: number) => {
     // 다른 약관을 펼칠 때, 페이지 맨 위로 스크롤
     if (expandedIndex !== index) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
@@ -52,11 +51,15 @@ export default function ConsentPage() {
       <div className={styles.consentList}>
         <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
           <Image
-            src={agreements.every((agreement) => agreement) ? "/check.png" : "/uncheck.png"}
+            src={
+              agreements.every((agreement) => agreement)
+                ? '/check.png'
+                : '/uncheck.png'
+            }
             alt={
               agreements.every((agreement) => agreement)
-                ? "Checked"
-                : "Unchecked"
+                ? 'Checked'
+                : 'Unchecked'
             }
             width={22}
             height={22}
@@ -64,24 +67,24 @@ export default function ConsentPage() {
           <span>전체 동의 체크</span>
         </div>
         {consentItems.map((item, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className={styles.consentItem}
-            ref={(el) => (itemRefs.current[index] = el)} 
-            >
+            ref={(el) => (itemRefs.current[index] = el)}
+          >
             <div className={styles.consentHeader}>
               <div
                 className={styles.checkboxContainer}
                 onClick={() => toggleAgreement(index)}
               >
                 <div
-                  className={`${styles.checkboxContainer} ${agreements[index] ? styles.checked : ""}`}
+                  className={`${styles.checkboxContainer} ${agreements[index] ? styles.checked : ''}`}
                 >
                   <Image
-                    src={agreements[index] ? "/check.png" : "/uncheck.png"}
+                    src={agreements[index] ? '/check.png' : '/uncheck.png'}
                     width={22}
                     height={22}
-                    alt={agreements[index] ? "Checked" : "Unchecked"}
+                    alt={agreements[index] ? 'Checked' : 'Unchecked'}
                   />
                 </div>
                 <span>{item.title}</span>
@@ -91,7 +94,7 @@ export default function ConsentPage() {
                 alt="Expand"
                 width={10}
                 height={6}
-                className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ""}`}
+                className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ''}`}
                 onClick={() => toggleExpand(index)}
               />
             </div>

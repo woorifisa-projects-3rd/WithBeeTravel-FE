@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Button } from "@withbee/ui/button";
-import styles from "./page.module.css";
-import { Title } from "@withbee/ui/title";
-import agreeWibee from "../../../../../public/friends/agreeWibee.png";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { Button } from '@withbee/ui/button';
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
+import agreeWibee from '../../../../../public/friends/agreeWibee.png';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 export default function Page() {
   return (
@@ -15,10 +15,11 @@ export default function Page() {
         <motion.div
           animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
           transition={{
-            duration: 2, 
-            repeat: Infinity, 
-            repeatType: "reverse",
-          }}>
+            duration: 2,
+            repeat: Infinity,
+            repeatType: 'reverse',
+          }}
+        >
           <Image src={agreeWibee} alt="completed" width={208} height={222} />
         </motion.div>
         <p className={styles.title}>정산 동의 완료</p>
