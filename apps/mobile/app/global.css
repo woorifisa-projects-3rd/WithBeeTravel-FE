@@ -4,9 +4,9 @@
   /* background: var(--color-gray-200); */
   margin: 0 auto;
   padding: 0 25px;
+  padding-bottom: 150px;
 }
 
 .layout {
   width: 100%;
-  padding-bottom: 70px;
 }

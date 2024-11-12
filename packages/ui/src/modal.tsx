@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-"use client";
-=======
 'use client';
->>>>>>> 93b7af32d63bb703cc49fb9b57f414fd33d17180
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './button'; 
