@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from './button'; 
@@ -28,9 +28,7 @@ export const Modal = ({ isOpen, onClose, title, children,closeLabel }: ModalProp
         <header className={styles.header}>
           <h2>{title}</h2>
         </header>
-        <div className={styles.content}>
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
           <Button onClick={onClose} label={closeLabel} />
         </footer>

@@ -19,8 +19,7 @@ const meta: Meta<typeof Title> = {
     layout: 'centered',
   },
   tags: ['title'],
-  argTypes: {
-  },
+  argTypes: {},
   args: { onClick: action('clicked') },
   // 데코레이터 추가
   decorators: [

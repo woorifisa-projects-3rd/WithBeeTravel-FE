@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@withbee/styles";
-import "./global.css"
-
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import '@withbee/styles';
+import './global.css';
 
 const pretendard = localFont({
   src: 'fonts/PretendardVariable.ttf',
@@ -11,8 +10,8 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "윗비트래블",
-  description: "편리하게 여행 경비를 관리할 수 있는 서비스",
+  title: '윗비트래블',
+  description: '편리하게 여행 경비를 관리할 수 있는 서비스',
   icons: {
     icon: '/Airplane.png',
   },
@@ -25,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="layout">
-      <body className={[pretendard.variable, "mobile"].join(" ")} >
+      <body className={[pretendard.variable, 'mobile'].join(' ')}>
         {children}
       </body>
     </html>
