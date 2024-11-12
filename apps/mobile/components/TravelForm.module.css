@@ -1,3 +1,7 @@
+.container {
+  padding-top: 30px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -61,7 +65,7 @@
 
 .searchInputWrapper {
   position: relative;
-  margin-bottom: 12px;
+  margin: -5px 0px;
 }
 
 .searchInput {
@@ -94,6 +98,7 @@
   background-color: #f5f5f5;
   border-radius: 20px;
   font-size: 14px;
+  margin-top: 15px;
 }
 
 .removeTag {

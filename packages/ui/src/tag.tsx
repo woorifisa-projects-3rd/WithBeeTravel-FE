@@ -1,5 +1,10 @@
 import styles from './tag.module.css';
 
-export const Tag = ({ label }: { label: string }) => {
-  return <span className={styles.tag}>{label}</span>;
+interface TagProps {
+  label: string;
+  size?: 'small' | 'medium';
+}
+
+export const Tag = ({ label, size = 'medium' }: TagProps) => {
+  return <i className={[styles.tag, styles[size]].join(' ')}>{label}</i>;
 };

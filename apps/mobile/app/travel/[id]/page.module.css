@@ -29,7 +29,8 @@
   /* min-width: 280px; */
   height: 207px;
   border-radius: 20px;
-  background: var(--color-gray-100) url('/friends/wibee_gray.png') no-repeat center / 162px 156.67px;
+  background: var(--color-gray-100) url('/imgs/travel/wibee_gray.png') no-repeat
+    center / 162px 156.67px;
 }
 
 .btnWrapper {
@@ -50,6 +51,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
+  color: var(--color-gray-600);
 }
 
 .date {
