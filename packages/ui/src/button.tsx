@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import styles from "./button.module.css";
+import { motion } from 'framer-motion';
+import styles from './button.module.css';
+
 
 export interface ButtonProps {
   primary?: boolean;
@@ -28,9 +29,9 @@ export const Button = ({
       // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
       transition={{
         duration: 1,
-        ease: "easeInOut",
+        ease: 'easeInOut',
         repeat: Infinity,
-        repeatType: "mirror",
+        repeatType: "mirror"
       }}
       {...props}
     >

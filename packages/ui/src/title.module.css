@@ -9,6 +9,6 @@
   width: 100%;
   text-align: center;
   font-size: 18px;
-  colof: var(--color-gray-950);
-  font-weight: 400;
+  color: var(--color-gray-950);
+  font-weight: 500;
 }

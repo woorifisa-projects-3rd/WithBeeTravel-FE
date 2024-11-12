@@ -1,4 +1,4 @@
-import { Button } from "@withbee/ui/button";
+import { Button } from '@withbee/ui/button';
 
 export default function page() {
   return (
