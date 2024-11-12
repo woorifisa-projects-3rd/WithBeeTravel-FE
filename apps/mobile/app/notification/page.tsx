@@ -1,0 +1,88 @@
+import { Title } from '@withbee/ui/title';
+import styles from './page.module.css';
+import '@withbee/styles';
+import Image from 'next/image';
+
+export default function Page() {
+  const notifications = [
+    {
+      id: 1,
+      logTime: '2024/11/02 13:56:39',
+      logTitle: '결제 내역 정리 요청',
+      logMessage: '여행이 끝났어요! 🚗💨 함께 사용한 비용들을 정리해 볼까요? 공동 결제 내역을 확인하고 마무리해 주세요.',
+      link: '/link1'
+    },
+    {
+      id: 2,
+      logTime: '2024/11/03 18:24:59',
+      logTitle: '정산 요청',
+      logMessage: '팀 호초루에서 정산 요청을 보냈어요! 💸 함께한 비용을 확인하고, 나의 몫을 정산해 주세요.',
+      link: '/link2'
+    },
+    {
+      id: 3,
+      logTime: '2024/11/03 18:50:59',
+      logTitle: '정산 취소',
+      logMessage: '팀 호초루의 정산 요청이 취소되었습니다. 😌 ',
+      link: null
+    },
+    {
+      id: 4,
+      logTime: '2024/11/05 18:24:59',
+      logTitle: '정산 재요청',
+      logMessage: '아직 정산이 완료되지 않았어요! 😅 혹시 잊으신 건 아닌가요? 빠르게 정산을 완료해 주세요.',
+      link: '/link4'
+    },
+    {
+      id: 5,
+      logTime: '2024/11/07 18:24:59',
+      logTitle: '정산 완료',
+      logMessage: '정산이 완료되었습니다! 🎉 모두와 나눠야 할 금액이 처리되었어요. 다음 여행도 기대해요!',
+      link: '/link5'
+    }
+  ];
+
+  const sortedNotifications = notifications.sort((a, b) => b.id - a.id);
+
+  return (
+    <div className={styles.container}>
+      <header>
+        <Title label="알림함" />
+      </header>
+      <div className={styles.content}>
+        <ul>
+          {sortedNotifications.map((notification) => (
+            <li key={notification.id} className={styles.cardContainer}>
+              <div className={styles.logTime}>
+                {new Intl.DateTimeFormat('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  weekday: 'short',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false,
+                  }).format(new Date(notification.logTime)).replace('.', '년 ').replace('.', '월 ').replace('.', '일')}
+              </div>
+              <div className={styles.card}>
+                <div className={styles.cardRow}>
+                  <span className={styles.logTitle}>
+                    {notification.logTitle}
+                  </span>
+                  {notification.link && (
+                    <span className={styles.linkIcon}>
+                    <a href={notification.link} target="_blank" rel="noopener noreferrer">
+                      <Image src="/arrow.png" alt="link icon" width={12} height={6}/>
+                    </a>
+                  </span>
+                  )}
+                </div>
+                <div className={styles.logMessage}>{notification.logMessage}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
