@@ -99,29 +99,32 @@ export default function ConsentPage() {
               />
             </div>
 
-            {expandedIndex === index && (
-              <div className={styles.termsContent}>
-                {item.terms.map((term, idx) => (
-                  <div key={idx} className={styles.termSection}>
-                    <h3>{term.title}</h3>
-                    <p>{term.content}</p>
-                    {term.subItems && (
-                      <ul>
-                        {term.subItems.map((subItem, subIdx) => (
-                          <li key={subIdx}>{subItem}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className={styles.btnWrapper}>
-        <Button label="동의하고 PIN 번호 입력하기" disabled={!requiredAgreed} />
-      </div>
+              {expandedIndex === index && (
+                <div className={styles.termsContent}>
+                  {item.terms.map((term, idx) => (
+                    <div key={idx} className={styles.termSection}>
+                      <h3>{term.title}</h3>
+                      <p>{term.content}</p>
+                      {term.subItems && (
+                        <ul>
+                          {term.subItems.map((subItem, subIdx) => (
+                            <li key={subIdx}>{subItem}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className={styles.btnWrapper}>
+          <Button
+            label="동의하고 PIN 번호 입력하기"
+            disabled={!requiredAgreed}
+          />
+        </div>
       </div>
     </div>
   );
