@@ -1,6 +1,7 @@
 .nav {
   box-sizing: border-box;
-  width: min(100vw, 430px);
+  width: calc(100% + 50px);
+  margin-left: -25px;
   display: flex;
   align-items: center;
   padding: 15px 27px;
