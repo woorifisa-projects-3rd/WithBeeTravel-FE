@@ -6,6 +6,7 @@ import { Button } from "@withbee/ui/button";
 import { useState } from "react";
 import { Modal } from "@withbee/ui/modal";
 import "@withbee/styles";
+import Image from "next/image";
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,7 +83,10 @@ export default function Page() {
         <div className={styles.summary}>
           <div className={styles.mainCard}>
             <div className={styles.summaryHeader}>
-              <span className={styles.myName}>{myTotalPayments.name}</span>
+              <span>
+                <span className={styles.name}>{myTotalPayments.name}</span>
+                <span className={styles.name}>(나)</span>
+              </span>
               <span
                 className={
                   myTotalPayments.totalPaymentCost >= 0
@@ -94,7 +98,7 @@ export default function Page() {
                   ? `+${myTotalPayments.totalPaymentCost.toLocaleString()}원`
                   : `${myTotalPayments.totalPaymentCost.toLocaleString()}원`}
                 <span className={styles.suffixText}>
-                  을 {myTotalPayments.totalPaymentCost >= 0 ? "받아요" : "내요"}
+                  을 {myTotalPayments.totalPaymentCost >= 0 ? "받아요" : "보내요"}
                 </span>
               </span>
             </div>
@@ -141,14 +145,16 @@ export default function Page() {
             )}
             <button className={styles.detailsButton} onClick={toggleDetails}>
               <span>{isOpen ? "상세내역 접기" : "상세내역 보기"}</span>
-              <span
+              <Image
+                src="/arrow.png"
+                alt="arrow"
+                width={10} height={7}
                 className={`${styles.arrows} ${
                   isOpen ? styles.arrowOpen : styles.arrowClosed
                 }`}
-              >
-                &gt;
-              </span>
+              />
             </button>
+
           </div>
         </div>
 
@@ -167,7 +173,7 @@ export default function Page() {
                 >
                   <div className={styles.userRow}>
                     <span>
-                      <span>{user.name}</span>
+                      <span className={styles.name}>{user.name}</span>
                       <span className={styles.suffix}>님이</span>
                     </span>
                     <span>
@@ -182,20 +188,26 @@ export default function Page() {
                           ? `+${user.requestAmount.toLocaleString()}원`
                           : `${user.requestAmount.toLocaleString()}원`}
                       </span>
-                      <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "내요"}`}</span>
+                      <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "보내요"}`}</span>
                     </span>
                   </div>
                   {user.isAgreed && (
-                    <div className={styles.completedOverlay}>정산완료</div>
+                    <div className={styles.completedOverlay}>동의완료</div>
                   )}
                 </li>
               ))}
           </ul>
         </div>
+        <div className={styles.comment}>
+          <span>위 금액은 정산 후 개인이 최종적으로<br />송금하거나 수령할 금액입니다. </span>
+        </div>
         <div className={styles.remainingUsers}>
           <span>정산 완료까지 남은 인원 : </span>
+          <strong>
+            {others.filter((person) => !person.isAgreed).length + 1}
+          </strong>
           <span>
-            {others.filter((person) => !person.isAgreed).length + 1}명
+            명
           </span>
         </div>
         <div className={styles.btnWrapper}>
