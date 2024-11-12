@@ -3,10 +3,7 @@
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
 import { Tag } from './tag';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import plusIcon from './assets/plus.png';
-import { useState } from 'react';
 
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];
 
@@ -19,7 +16,7 @@ export const Payment = () => {
   return (
     <article className={styles.payment}>
       <FriendImage
-        number={Math.round(friends.length * Math.random())}
+        number={Math.round((friends.length - 1) * Math.random())}
         size={50}
         className={styles.friendImage}
       />

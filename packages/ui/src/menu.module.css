@@ -1,0 +1,26 @@
+.menu {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.filterContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 9px;
+}
+
+.filter {
+  display: flex;
+  gap: 7px;
+}
+
+.default {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
