@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { Title } from "@withbee/ui/title";
-import styles from "./page.module.css";
-import { Button } from "@withbee/ui/button";
-import { useState } from "react";
-import { Modal } from "@withbee/ui/modal";
-import "@withbee/styles";
-import Image from "next/image";
+import { Title } from '@withbee/ui/title';
+import styles from './page.module.css';
+import { Button } from '@withbee/ui/button';
+import { useState } from 'react';
+import { Modal } from '@withbee/ui/modal';
+import '@withbee/styles';
+import Image from 'next/image';
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Page() {
   };
 
   const myTotalPayments = {
-    name: "공예진",
+    name: '공예진',
     totalPaymentCost: 20000,
     ownPaymentCost: 150000,
     actualBurdenCost: 130000,
@@ -26,22 +26,22 @@ export default function Page() {
   const expenses = [
     {
       id: 1,
-      date: "2023/12/25 18:24:59",
-      place: "최선생마라마라",
+      date: '2023/12/25 18:24:59',
+      place: '최선생마라마라',
       totalAmount: 80000,
       requestAmount: 20000,
     },
     {
       id: 2,
-      date: "2023/12/26 18:24:59",
-      place: "모수",
+      date: '2023/12/26 18:24:59',
+      place: '모수',
       totalAmount: 360000,
       requestAmount: 90000,
     },
     {
       id: 3,
-      date: "2023/12/27 18:24:59",
-      place: "CASA DE VERDE",
+      date: '2023/12/27 18:24:59',
+      place: 'CASA DE VERDE',
       totalAmount: 80000,
       requestAmount: 20000,
     },
@@ -50,25 +50,25 @@ export default function Page() {
   const others = [
     {
       id: 1,
-      name: "김호철",
+      name: '김호철',
       requestAmount: 3000,
       isAgreed: false,
     },
     {
       id: 2,
-      name: "이도이",
+      name: '이도이',
       requestAmount: -25000,
       isAgreed: false,
     },
     {
       id: 3,
-      name: "유승아",
+      name: '유승아',
       requestAmount: -28000,
       isAgreed: true,
     },
     {
       id: 4,
-      name: "공소연",
+      name: '공소연',
       requestAmount: +25000,
       isAgreed: true,
     },
@@ -98,7 +98,8 @@ export default function Page() {
                   ? `+${myTotalPayments.totalPaymentCost.toLocaleString()}원`
                   : `${myTotalPayments.totalPaymentCost.toLocaleString()}원`}
                 <span className={styles.suffixText}>
-                  을 {myTotalPayments.totalPaymentCost >= 0 ? "받아요" : "보내요"}
+                  을{' '}
+                  {myTotalPayments.totalPaymentCost >= 0 ? '받아요' : '보내요'}
                 </span>
               </span>
             </div>
@@ -144,17 +145,17 @@ export default function Page() {
               </div>
             )}
             <button className={styles.detailsButton} onClick={toggleDetails}>
-              <span>{isOpen ? "상세내역 접기" : "상세내역 보기"}</span>
+              <span>{isOpen ? '상세내역 접기' : '상세내역 보기'}</span>
               <Image
                 src="/arrow.png"
                 alt="arrow"
-                width={10} height={7}
+                width={10}
+                height={7}
                 className={`${styles.arrows} ${
                   isOpen ? styles.arrowOpen : styles.arrowClosed
                 }`}
               />
             </button>
-
           </div>
         </div>
 
@@ -188,7 +189,7 @@ export default function Page() {
                           ? `+${user.requestAmount.toLocaleString()}원`
                           : `${user.requestAmount.toLocaleString()}원`}
                       </span>
-                      <span className="suffixText">{`을 ${user.requestAmount >= 0 ? "받아요" : "보내요"}`}</span>
+                      <span className="suffixText">{`을 ${user.requestAmount >= 0 ? '받아요' : '보내요'}`}</span>
                     </span>
                   </div>
                   {user.isAgreed && (
@@ -199,16 +200,18 @@ export default function Page() {
           </ul>
         </div>
         <div className={styles.comment}>
-          <span>위 금액은 정산 후 개인이 최종적으로<br />송금하거나 수령할 금액입니다. </span>
+          <span>
+            위 금액은 정산 후 개인이 최종적으로
+            <br />
+            송금하거나 수령할 금액입니다.{' '}
+          </span>
         </div>
         <div className={styles.remainingUsers}>
           <span>정산 완료까지 남은 인원 : </span>
           <strong>
             {others.filter((person) => !person.isAgreed).length + 1}
           </strong>
-          <span>
-            명
-          </span>
+          <span>명</span>
         </div>
         <div className={styles.btnWrapper}>
           <Button label="동의하기" />
