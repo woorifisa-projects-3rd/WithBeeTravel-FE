@@ -11,10 +11,17 @@ import {
   Legend,
 } from 'chart.js';
 import { useState, useEffect } from 'react';
-import "@withbee/styles"
+import '@withbee/styles';
 
 // Register chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface ExpenseData {
   category: string;
@@ -26,7 +33,10 @@ interface ExpenseChartProps {
   highlightIndex?: number; // 강조할 막대의 인덱스
 }
 
-export const BarChart = ({ expenses, highlightIndex = 1 }: ExpenseChartProps) => {
+export const BarChart = ({
+  expenses,
+  highlightIndex = 1,
+}: ExpenseChartProps) => {
   const [blueColor3, setBlueColor3] = useState('');
   const [blueColor9, setBlueColor9] = useState('');
   const [grayColor900, setGrayColor900] = useState('');
@@ -105,9 +115,15 @@ export const BarChart = ({ expenses, highlightIndex = 1 }: ExpenseChartProps) =>
       {
         base: 0,
         data: currentExpenses.map((expense) => expense.amount),
-        backgroundColor: currentExpenses.map((_, index) => (index === highlightIndex ? blueColor9 : blueColor3)),
-        hoverBackgroundColor: currentExpenses.map((_, index) => (index === highlightIndex ? blueColor9 : blueColor3)),
-        hoverBorderColor: currentExpenses.map((_, index) => (index === highlightIndex ? blueColor9 : blueColor3)),
+        backgroundColor: currentExpenses.map((_, index) =>
+          index === highlightIndex ? blueColor9 : blueColor3,
+        ),
+        hoverBackgroundColor: currentExpenses.map((_, index) =>
+          index === highlightIndex ? blueColor9 : blueColor3,
+        ),
+        hoverBorderColor: currentExpenses.map((_, index) =>
+          index === highlightIndex ? blueColor9 : blueColor3,
+        ),
       },
     ],
   };

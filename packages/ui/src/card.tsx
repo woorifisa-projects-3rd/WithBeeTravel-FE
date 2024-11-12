@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import styles from "./card.module.css";
-import { Tag } from "./tag";
+import Image from 'next/image';
+import styles from './card.module.css';
+import { Tag } from './tag';
 
 export interface CardProps {
   imageSrc?: string;

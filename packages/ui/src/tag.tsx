@@ -1,4 +1,4 @@
-import styles from "./tag.module.css";
+import styles from './tag.module.css';
 
 interface TagProps {
   label: string;

@@ -10,8 +10,7 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-  },
+  argTypes: {},
   args: { onClick: action('clicked') }, // onClick 이벤트 추적을 위해 action 사용
 };
 
