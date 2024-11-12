@@ -25,14 +25,14 @@ export default function Page({ params }: TravelPageProps) {
       </div>
       <TabGroup />
       <section className={styles.paymentContainer}>
-          {[5, 4, 3].map((day) => (
-            <div className={styles.paymentWrapper}>
-              <span className={styles.date}>11월 {day}일</span>
-              <Payment />
-              <Payment />
-              <Payment />
-            </div>
-          ))}
+        {[5, 4, 3].map((day) => (
+          <div className={styles.paymentWrapper}>
+            <span className={styles.date}>11월 {day}일</span>
+            <Payment />
+            <Payment />
+            <Payment />
+          </div>
+        ))}
       </section>
     </main>
   );

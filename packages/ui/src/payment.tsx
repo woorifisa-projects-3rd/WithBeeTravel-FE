@@ -11,14 +11,18 @@ import { useState } from 'react';
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];
 
 export const Payment = () => {
-  const width = (window !== undefined) ? window.innerWidth : 0;
+  const width = window !== undefined ? window.innerWidth : 0;
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
   const visibleFriendsLength = width > 390 ? 5 : 4;
 
   return (
     <article className={styles.payment}>
-      <FriendImage number={Math.round(friends.length * Math.random())} size={50} className={styles.friendImage} />
+      <FriendImage
+        number={Math.round(friends.length * Math.random())}
+        size={50}
+        className={styles.friendImage}
+      />
       <div className={styles.content}>
         <div className={styles.contentWrapper}>
           <div className={styles.info}>
@@ -32,7 +36,9 @@ export const Payment = () => {
             ))}
             {friends.length > visibleFriendsLength && (
               <motion.button className={styles.plusButton}>
-                <button className={styles.moreFriends}>+{friends.length - visibleFriendsLength}</button>
+                <button className={styles.moreFriends}>
+                  +{friends.length - visibleFriendsLength}
+                </button>
               </motion.button>
             )}
           </div>

@@ -9,7 +9,17 @@ const TabGroup = () => {
   const constraintsRef = useRef(null);
   const dragControls = useDragControls();
 
-  const tabs = ['전체', '항공', '교통', '숙박', '식비', '관광', '액티비티', '쇼핑', '기타'];
+  const tabs = [
+    '전체',
+    '항공',
+    '교통',
+    '숙박',
+    '식비',
+    '관광',
+    '액티비티',
+    '쇼핑',
+    '기타',
+  ];
 
   return (
     <div className={styles.container} ref={constraintsRef}>
@@ -26,7 +36,10 @@ const TabGroup = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={[styles.tab, activeTab === tab ? styles.activeTab : styles.inactiveTab].join(' ')}
+            className={[
+              styles.tab,
+              activeTab === tab ? styles.activeTab : styles.inactiveTab,
+            ].join(' ')}
           >
             {tab}
             {activeTab === tab && (
