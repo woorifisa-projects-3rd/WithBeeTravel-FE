@@ -1,39 +1,77 @@
 .container {
   display: flex;
-  width: 100%;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
+}
+
+.subtitleContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  gap: 3px;
 }
 
 .subContainer {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-top: 16px;
-  /* padding: 0 25px; */
+  gap: 19px;
+  margin-bottom: 28px;
+  padding-top: 35px;
 }
 
-.subContainer > *:first-child {
-  margin-right: auto;
+.imgWrapper {
+  width: calc(100% - 100px);
+  /* min-width: 280px; */
+  height: 207px;
+  border-radius: 20px;
+  background: var(--color-gray-100) url('/imgs/travel/wibee_gray.png') no-repeat
+    center / 162px 156.67px;
 }
 
-.subContainer > *:nth-child(2) {
-  margin-right: 10px;
-}
-
-.paymentContainer {
+.btnWrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  margin: 21px 0 25px 0;
+  /* flex-wrap: wrap; */
+  gap: 8px;
 }
 
-.paymentWrapper {
-  width: 100%;
+.subtitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tagWrapper {
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .date {
-  color: var(--color-gray-500);
   font-size: 14px;
+  color: var(--color-gray-600);
+}
+
+.subtitle {
+  font-size: 20px;
+  color: var(--color-gray-800);
+  font-weight: 500;
+}
+
+.tag {
+  padding: 7px 10px;
+  background: var(--color-gray-100);
+  border-radius: 7px;
+}
+
+.friendsWrapper {
+  display: flex;
+  align-items: center;
 }

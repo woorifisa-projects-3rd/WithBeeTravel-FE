@@ -1,39 +1,44 @@
-import { Title } from '@withbee/ui/title';
-import Image from 'next/image';
-import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
-import TabGroup from '@withbee/ui/tab-group';
-import { Payment } from '@withbee/ui/payment';
+import { Tag } from '@withbee/ui/tag';
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
+import { FriendImage } from '@withbee/ui/friend-image';
+import Image from 'next/image';
+import { BarChart } from '@withbee/ui/chart';
+import Link from 'next/link';
 
-interface TravelPageProps {
-  params: {
-    id: string;
-  };
-}
-export default function Page({ params }: TravelPageProps) {
-  const { id } = params;
-
-  console.log('id:', id);
-
+export default function Page() {
+  // TODO: Friends 컴포넌트화 필요
   return (
-    <main className={styles.container}>
-      <Title label="공동 결제 내역" />
+    <div className={styles.container}>
+      <Title label="여행 홈" />
       <div className={styles.subContainer}>
-        <Image src="/setting.png" alt="edit" width={28} height={28} />
-        <Button label="불러오기" size={'small'} />
-        <Button label="직접 추가" size={'small'} primary={false} />
-      </div>
-      <TabGroup />
-      <section className={styles.paymentContainer}>
-          {[5, 4, 3].map((day) => (
-            <div className={styles.paymentWrapper}>
-              <span className={styles.date}>11월 {day}일</span>
-              <Payment />
-              <Payment />
-              <Payment />
-            </div>
+        <div className={styles.subtitleContainer}>
+          <p className={styles.date}>2022/12/25 ~ 2023/01/01</p>
+          <div className={styles.subtitleWrapper}>
+            <h2 className={styles.subtitle}>팀 호초루의 여행</h2>
+            <Image src="/edit.png" alt="edit" width={19} height={17.94} />
+          </div>
+        </div>
+        <div className={styles.imgWrapper}>{/* <Image /> */}</div>
+        <div className={styles.tagWrapper}>
+          <Tag label="오스트리아" />
+          <Tag label="포르투갈" />
+          <Tag label="스위스" />
+        </div>
+        <div className={styles.friendsWrapper}>
+          {[1, 2, 3, 4, 5].map((number) => (
+            <FriendImage number={number} />
           ))}
-      </section>
-    </main>
+        </div>
+      </div>
+      <div className={styles.btnWrapper}>
+        <Link href={'/travel/1/payments'}>
+          <Button label="그룹 결제 내역" />
+        </Link>
+        <Button label="친구 초대" primary={false} />
+      </div>
+      <BarChart />
+    </div>
   );
 }
