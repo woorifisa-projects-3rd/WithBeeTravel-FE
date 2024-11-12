@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -19,7 +21,7 @@ jobs:
           node-version: '21'
 
       - name: Install pnpm
-        run: npm install -g pnpm # pnpm을 전역으로 설치
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install 
@@ -35,6 +37,9 @@ jobs:
           git commit -m "chore: apply Prettier formatting" || exit 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull latest changes
+        run: git pull --rebase origin ${{ github.head_ref }}
 
       - name: Push changes
         run: git push origin HEAD:${{ github.head_ref }}
