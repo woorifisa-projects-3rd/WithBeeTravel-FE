@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import TravelForm from "../../../components/TravelForm";
+import TravelForm from '../../../components/TravelForm';
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
 import './page.module.css';
@@ -15,8 +15,6 @@ export default function Page() {
   const handleTravelSelect = (travel: any) => {
     setEditedTravel(travel); // 여행 선택 시 데이터 세팅
   };
-
-
 
   const travelData =
     mode === 'edit'

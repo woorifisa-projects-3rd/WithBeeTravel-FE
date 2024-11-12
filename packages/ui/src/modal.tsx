@@ -37,7 +37,7 @@ export const Modal = ({
         </header>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
-          <Button onClick={onClose} label={closeLabel} size='medium'/>
+          <Button onClick={onClose} label={closeLabel} size="medium" />
         </footer>
       </motion.div>
     </div>

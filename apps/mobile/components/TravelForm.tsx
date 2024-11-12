@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
-import serach from "../public/imgs/travelform/Search.png";
+import Image from 'next/image';
+import serach from '../public/imgs/travelform/Search.png';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 
@@ -36,7 +36,14 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
   const [searchResults, setSearchResults] = useState<string[]>([]);
 
   // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
-  const countriesList = ['오스트리아', '스위스', '포르투갈', '프랑스', '이탈리아', '스페인'];
+  const countriesList = [
+    '오스트리아',
+    '스위스',
+    '포르투갈',
+    '프랑스',
+    '이탈리아',
+    '스페인',
+  ];
 
   // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
   useEffect(() => {
@@ -51,7 +58,9 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
     }
   }, [mode, travelData]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -72,10 +81,10 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-    
+
     if (query.trim()) {
-      const filtered = countriesList.filter(country =>
-        country.toLowerCase().includes(query.toLowerCase())
+      const filtered = countriesList.filter((country) =>
+        country.toLowerCase().includes(query.toLowerCase()),
       );
       setSearchResults(filtered);
     } else {
@@ -86,9 +95,9 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
   // 국가 선택 처리
   const handleCountrySelect = (country: string) => {
     if (!formData.countries.includes(country)) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        countries: [...prev.countries, country]
+        countries: [...prev.countries, country],
       }));
     }
     setSearchQuery('');
@@ -97,9 +106,11 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
 
   // 선택된 국가 제거
   const removeCountry = (countryToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      countries: prev.countries.filter(country => country !== countryToRemove)
+      countries: prev.countries.filter(
+        (country) => country !== countryToRemove,
+      ),
     }));
   };
 
@@ -132,20 +143,19 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
         <div className={styles.inputGroup}>
           <label>여행지</label>
           <div className={styles.locationButtons}>
-       
-           <Button
-  primary={formData.location === 'domestic'}  // '국내' 버튼 활성화 시 primary 스타일 적용
-  size="medium"  // 크기를 medium으로 설정
-  label="국내"
-  onClick={() => handleLocationChange('domestic')}
-/>
+            <Button
+              primary={formData.location === 'domestic'} // '국내' 버튼 활성화 시 primary 스타일 적용
+              size="medium" // 크기를 medium으로 설정
+              label="국내"
+              onClick={() => handleLocationChange('domestic')}
+            />
 
-<Button
-  primary={formData.location === 'overseas'}  // '해외' 버튼 활성화 시 primary 스타일 적용
-  size="medium"
-  label="해외"
-  onClick={() => handleLocationChange('overseas')}
-/>
+            <Button
+              primary={formData.location === 'overseas'} // '해외' 버튼 활성화 시 primary 스타일 적용
+              size="medium"
+              label="해외"
+              onClick={() => handleLocationChange('overseas')}
+            />
           </div>
 
           {formData.location === 'overseas' && (
@@ -158,7 +168,15 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                   onChange={handleSearchChange}
                   className={`${styles.input} ${styles.searchInput}`}
                 />
-                <span className={styles.searchIcon}><Image src={serach} alt="검색창 아이콘" className={styles.serach} width={24} height={24}/></span>
+                <span className={styles.searchIcon}>
+                  <Image
+                    src={serach}
+                    alt="검색창 아이콘"
+                    className={styles.serach}
+                    width={24}
+                    height={24}
+                  />
+                </span>
               </div>
 
               {/* 선택된 국가 태그 */}
@@ -220,11 +238,10 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
         </div>
 
         <Button
-  type="submit" // 제출 버튼으로 설정
-  label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
-  primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
-
-/>
+          type="submit" // 제출 버튼으로 설정
+          label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
+          primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
+        />
       </form>
     </div>
   );

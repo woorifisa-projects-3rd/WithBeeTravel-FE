@@ -1,22 +1,20 @@
-
-"use client";
-import styles from "./page.module.css";
-import { Title } from "@withbee/ui/title";
-import Image from "next/image";
-import withbeeFriends from "../../public/imgs/travelselect/withbee_friends.png";
-import background from "../../public/imgs/travelselect/withbee_friends_background.png";
-import plane from "../../public/imgs/travelselect/travel_select_plane.png";
-import inviteCode from "../../public/imgs/travelselect/travel_select_invitecode.png";
-import travelExam from "../../public/imgs/travelselect/travel_exam.png";
-import { Modal } from "@withbee/ui/modal";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
+import Image from 'next/image';
+import withbeeFriends from '../../public/imgs/travelselect/withbee_friends.png';
+import background from '../../public/imgs/travelselect/withbee_friends_background.png';
+import plane from '../../public/imgs/travelselect/travel_select_plane.png';
+import inviteCode from '../../public/imgs/travelselect/travel_select_invitecode.png';
+import travelExam from '../../public/imgs/travelselect/travel_exam.png';
+import { Modal } from '@withbee/ui/modal';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
   const router = useRouter();
-
 
   const cards = [
     {
@@ -45,7 +43,10 @@ export default function page() {
 
       {/* 여행생성, 초대코드 버튼 */}
       <div className={styles.buttonWrap}>
-        <button className={styles.button} onClick={() => router.push("/travel/form?mode=create")}>
+        <button
+          className={styles.button}
+          onClick={() => router.push('/travel/form?mode=create')}
+        >
           <div className={styles.buttonTitleWrap}>
             <p className={styles.buttonTitle}>여행 생성하기</p>
           </div>

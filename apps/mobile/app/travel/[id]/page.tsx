@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Button } from '@withbee/ui/button';
 import { Tag } from '@withbee/ui/tag';
 import styles from './page.module.css';
@@ -6,9 +6,8 @@ import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
 import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
 
 export default function Page() {
   const router = useRouter();
@@ -21,8 +20,11 @@ export default function Page() {
           <p className={styles.date}>2022/12/25 ~ 2023/01/01</p>
           <div className={styles.subtitleWrapper}>
             <h2 className={styles.subtitle}>팀 호초루의 여행</h2>
-            <button className={styles.button} onClick={() => router.push("/travel/form?mode=edit")}>
-            <Image src="/edit.png" alt="edit" width={19} height={17.94} />
+            <button
+              className={styles.button}
+              onClick={() => router.push('/travel/form?mode=edit')}
+            >
+              <Image src="/edit.png" alt="edit" width={19} height={17.94} />
             </button>
           </div>
         </div>
