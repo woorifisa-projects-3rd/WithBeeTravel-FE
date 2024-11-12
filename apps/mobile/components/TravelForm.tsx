@@ -1,7 +1,9 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Button } from '@withbee/ui/button';
 
 // 타입 정의
 interface TravelFormProps {
@@ -128,20 +130,20 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
         <div className={styles.inputGroup}>
           <label>여행지</label>
           <div className={styles.locationButtons}>
-            <button
-              type="button"
-              className={`${styles.locationButton} ${formData.location === 'domestic' ? styles.active : ''}`}
-              onClick={() => handleLocationChange('domestic')}
-            >
-              국내
-            </button>
-            <button
-              type="button"
-              className={`${styles.locationButton} ${formData.location === 'overseas' ? styles.active : ''}`}
-              onClick={() => handleLocationChange('overseas')}
-            >
-              해외
-            </button>
+       
+           <Button
+  primary={formData.location === 'domestic'}  // '국내' 버튼 활성화 시 primary 스타일 적용
+  size="medium"  // 크기를 medium으로 설정
+  label="국내"
+  onClick={() => handleLocationChange('domestic')}
+/>
+
+<Button
+  primary={formData.location === 'overseas'}  // '해외' 버튼 활성화 시 primary 스타일 적용
+  size="medium"
+  label="해외"
+  onClick={() => handleLocationChange('overseas')}
+/>
           </div>
 
           {formData.location === 'overseas' && (
@@ -215,9 +217,12 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
           </div>
         </div>
 
-        <button type="submit" className={styles.submitButton}>
-          {mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'}
-        </button>
+        <Button
+  type="submit" // 제출 버튼으로 설정
+  label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
+  primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
+
+/>
       </form>
     </div>
   );
