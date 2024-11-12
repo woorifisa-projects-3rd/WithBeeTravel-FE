@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { Title } from "@withbee/ui/title";
@@ -10,12 +10,19 @@ import { consentItems } from "../../../../../../packages/utils/consentItems";
 
 export default function ConsentPage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
-
   const [agreements, setAgreements] = useState<boolean[]>(
     new Array(consentItems.length).fill(false)
   );
 
+  // 각 약관항목에 ref를 연결해 스크롤 위치를 이동
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]); 
+
   const toggleExpand = (index: number) => {
+    // 다른 약관을 펼칠 때, 페이지 맨 위로 스크롤
+    if (expandedIndex !== index) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
@@ -57,7 +64,11 @@ export default function ConsentPage() {
 
       <div className={styles.consentList}>
         {consentItems.map((item, index) => (
-          <div key={index} className={styles.consentItem}>
+          <div 
+            key={index} 
+            className={styles.consentItem}
+            ref={(el) => (itemRefs.current[index] = el)} 
+            >
             <div className={styles.consentHeader}>
               <div
                 className={styles.checkboxContainer}
