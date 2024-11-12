@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-"use client";
-=======
 'use client';
->>>>>>> 93b7af32d63bb703cc49fb9b57f414fd33d17180
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from './button'; 
+import { Button } from './button';
 import styles from './modal.module.css';
 
 export interface ModalProps {
@@ -13,10 +10,16 @@ export interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-  closeLabel: string; 
+  closeLabel: string;
 }
 
-export const Modal = ({ isOpen, onClose, title, children,closeLabel }: ModalProps) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  closeLabel,
+}: ModalProps) => {
   if (!isOpen) return null;
 
   return (

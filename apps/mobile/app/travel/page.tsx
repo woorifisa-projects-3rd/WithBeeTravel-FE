@@ -1,29 +1,29 @@
-"use client";
-import styles from "./page.module.css";
-import { Title } from "@withbee/ui/title";
-import Image from "next/image";
-import withbeeFriends from "../../public/imgs/travel/withbee_friends.png";
-import background from "../../public/imgs/travel/withbee_friends_background.png";
-import plane from "../../public/imgs/travel/travel_select_plane.png";
-import inviteCode from "../../public/imgs/travel/travel_select_invitecode.png";
-import travelExam from "../../public/imgs/travel/travel_exam.png";
-import { Modal } from "@withbee/ui/modal";
-import { useState } from "react";
+'use client';
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
+import Image from 'next/image';
+import withbeeFriends from '../../public/imgs/travel/withbee_friends.png';
+import background from '../../public/imgs/travel/withbee_friends_background.png';
+import plane from '../../public/imgs/travel/travel_select_plane.png';
+import inviteCode from '../../public/imgs/travel/travel_select_invitecode.png';
+import travelExam from '../../public/imgs/travel/travel_exam.png';
+import { Modal } from '@withbee/ui/modal';
+import { useState } from 'react';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
 
   const cards = [
     {
-      image: "/api/placeholder/400/200",
-      travelName: "호초룰루랄라",
-      date: "2024/12/24",
+      image: '/api/placeholder/400/200',
+      travelName: '호초룰루랄라',
+      date: '2024/12/24',
     },
     {
-      image: "/api/placeholder/400/200",
-      travelName: "진콩패키지",
-      date: "2024/12/24~2025/01/05",
+      image: '/api/placeholder/400/200',
+      travelName: '진콩패키지',
+      date: '2024/12/24~2025/01/05',
     },
   ];
 

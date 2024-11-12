@@ -1,7 +1,7 @@
-"use client";
-import React, { useState, useEffect } from "react";
+'use client';
+import React, { useState, useEffect } from 'react';
 // import TravelForm from "../../../components/TravelForm";
-import { Title } from "@withbee/ui/title";
+import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
 
 export default function Page() {
@@ -14,19 +14,21 @@ export default function Page() {
   const handleTravelSelect = (travel: any) => {
     setEditedTravel(travel); // 여행 선택 시 데이터 세팅
   };
-    
-  const travelData = mode === 'edit' ? { 
-    title: '기존 여행 이름', 
-    location: 'overseas', 
-    countries: ['프랑스', '이탈리아'], 
-    startDate: '2024-10-28', 
-    endDate: '2024-11-02'
-  } : undefined;
 
+  const travelData =
+    mode === 'edit'
+      ? {
+          title: '기존 여행 이름',
+          location: 'overseas',
+          countries: ['프랑스', '이탈리아'],
+          startDate: '2024-10-28',
+          endDate: '2024-11-02',
+        }
+      : undefined;
 
   return (
     <div>
-      <Title label={ mode == "edit" ? "여행 편집하기" : "여행 생성하기"} />
+      <Title label={mode == 'edit' ? '여행 편집하기' : '여행 생성하기'} />
       {/* 여행 생성/편집 폼 렌더링 */}
       {/* <TravelForm mode={mode as 'create' | 'edit'} travelData={travelData} /> */}
     </div>

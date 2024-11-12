@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@withbee/styles/global.css";
-import "./global.css";
-import MobileFooter from "../components/MobileFooter"
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import '@withbee/styles/global.css';
+import './global.css';
+import MobileFooter from '../components/MobileFooter';
 
 const pretendard = localFont({
   src: 'fonts/PretendardVariable.ttf',

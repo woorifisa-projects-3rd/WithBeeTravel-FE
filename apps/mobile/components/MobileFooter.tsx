@@ -1,16 +1,16 @@
 // MobileFooter.jsx
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import styles from "./MobileFooter.module.css";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import styles from './MobileFooter.module.css';
 
 export default function MobileFooter() {
   const pathname = usePathname();
 
   const menuItems = [
     {
-      href: "/",
-      label: "카드혜택",
+      href: '/',
+      label: '카드혜택',
       icon: (
         <svg
           className={styles.svg}
@@ -52,8 +52,8 @@ export default function MobileFooter() {
       ),
     },
     {
-      href: "/banking",
-      label: "뱅킹서비스",
+      href: '/banking',
+      label: '뱅킹서비스',
       icon: (
         <svg
           className={styles.svg}
@@ -83,8 +83,8 @@ export default function MobileFooter() {
       ),
     },
     {
-      href: "/travel",
-      label: "여행선택",
+      href: '/travel',
+      label: '여행선택',
       icon: (
         <svg
           className={styles.svg}
@@ -105,8 +105,8 @@ export default function MobileFooter() {
       ),
     },
     {
-      href: "/mypage",
-      label: "마이페이지",
+      href: '/mypage',
+      label: '마이페이지',
       icon: (
         <svg
           width="28"
@@ -142,12 +142,12 @@ export default function MobileFooter() {
               <li key={item.href} className={styles.menuItem}>
                 <Link href={item.href} className={styles.menuLink}>
                   <span
-                    className={`${styles.iconWrapper}  ${pathname === item.href ? styles.active : ""}`}
+                    className={`${styles.iconWrapper}  ${pathname === item.href ? styles.active : ''}`}
                   >
                     {item.icon}
                   </span>
                   <span
-                    className={`${styles.label} ${pathname === item.href ? styles.active : ""}`}
+                    className={`${styles.label} ${pathname === item.href ? styles.active : ''}`}
                   >
                     {item.label}
                   </span>
