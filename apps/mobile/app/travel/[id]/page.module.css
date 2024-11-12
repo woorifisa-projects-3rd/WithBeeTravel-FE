@@ -27,8 +27,8 @@
   /* min-width: 280px; */
   height: 207px;
   border-radius: 20px;
-  background: var(--color-gray-100) url('/imgs/travel/wibee_gray.png') no-repeat
-    center / 162px 156.67px;
+  background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
+    no-repeat center / 162px 156.67px;
 }
 
 .btnWrapper {
