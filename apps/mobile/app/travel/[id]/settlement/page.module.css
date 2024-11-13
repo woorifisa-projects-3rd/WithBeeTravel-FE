@@ -5,9 +5,6 @@
 .mainContent {
   padding: 25px 0;
   font-size: 18px;
-  min-height: calc(100% - 58px);
-  padding-bottom: 95px;
-  box-sizing: border-box;
 }
 
 .mainCard {
