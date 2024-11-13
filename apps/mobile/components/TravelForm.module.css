@@ -30,8 +30,16 @@
 
 .locationButtons {
   display: flex;
-  gap: 10px;
 }
+
+.domesticBtn {
+  border-radius: 10px 0px 0px 10px !important;
+}
+
+.overseasBtn {
+  border-radius: 0px 10px 10px 0px !important;
+}
+
 
 .dateGroup {
   display: flex;
@@ -132,4 +140,13 @@
 
 .searchResultItem:hover {
   background-color: var(--color-gray-100);
+}
+
+.btnWrap {
+  width: 100%;
+  padding: 0px 20px;
+  bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
 }

@@ -148,6 +148,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               size="medium" // 크기를 medium으로 설정
               label="국내"
               onClick={() => handleLocationChange('domestic')}
+              className={styles.domesticBtn}
             />
 
             <Button
@@ -155,6 +156,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               size="medium"
               label="해외"
               onClick={() => handleLocationChange('overseas')}
+              className={styles.overseasBtn}
             />
           </div>
 
@@ -237,11 +239,13 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
           </div>
         </div>
 
-        <Button
-          type="submit" // 제출 버튼으로 설정
-          label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
-          primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
-        />
+        <div className={styles.btnWrap}>
+          <Button
+            type="submit" // 제출 버튼으로 설정
+            label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
+            primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
+          />
+        </div>
       </form>
     </div>
   );
