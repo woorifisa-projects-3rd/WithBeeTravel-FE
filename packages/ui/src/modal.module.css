@@ -36,12 +36,13 @@
 
 .bottom.modal::after {
   position: absolute;
-  top: 15px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
   content: '';
   width: 55px;
   border: 2px solid var(--color-gray-200);
+  border-radius: 50px;
 }
 
 .header {
