@@ -1,9 +1,20 @@
-import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
-import styles from './page.module.css';
+import { instance } from '@withbee/apis';
 import '@withbee/styles';
 
-export default function Home() {
+export default async function Home() {
+  const response = await instance.patch(
+    '/api/travels/1/payments/1/participants',
+    {
+      body: JSON.stringify({
+        travelMembersId: [17, 19, 22, 27],
+      }),
+      cache: 'no-store',
+    },
+  );
+
+  console.log(response);
+
   return (
     <div>
       <h1>윗비트래블</h1>
