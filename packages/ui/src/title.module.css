@@ -1,6 +1,7 @@
 .nav {
   box-sizing: border-box;
   width: calc(100% + 50px);
+  min-height: 57.67px;
   margin-left: -25px;
   display: flex;
   align-items: center;

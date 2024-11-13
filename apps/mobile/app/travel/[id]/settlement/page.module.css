@@ -1,12 +1,9 @@
 .container {
-  max-width: 768px;
-  margin: 0 auto;
-  min-height: 100vh;
-  position: relative;
+  height: 100%;
 }
 
 .mainContent {
-  padding: 20px 16px;
+  padding: 25px 0;
   font-size: 18px;
 }
 
