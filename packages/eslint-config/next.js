@@ -7,7 +7,6 @@ const project = resolve(process.cwd(), 'tsconfig.json');
 module.exports = {
   extends: [
     'eslint:recommended',
-    'prettier',
     'plugin:prettier/recommended',
     require.resolve('@vercel/style-guide/eslint/next'),
     'turbo',
@@ -21,14 +20,8 @@ module.exports = {
     node: true,
     browser: true,
   },
-  plugins: ['only-warn', 'prettier'], // Prettier 플러그인 추가
+  plugins: ['only-warn'],
   rules: {
-    'prettier/prettier': [
-      'warn',
-      {
-        ...prettierConfig,
-      },
-    ],
     'no-redeclare': 'off', // 'no-redeclare' 규칙 비활성화
   },
   settings: {
