@@ -29,6 +29,22 @@ export default function page() {
     },
   ];
 
+  // 초대코드에 맞는 그룹으로 이동하는 함수
+  const handleInviteCodeSubmit = () => {
+    // 여기서 초대 코드로 그룹을 찾는 로직을 구현합니다.
+    // 예를 들어, 입력된 초대 코드가 특정 그룹 ID와 일치한다고 가정할 수 있습니다.
+
+    // 그룹 ID가 일치하는지 확인 (실제 상황에서는 서버에서 그룹을 조회해야 할 수도 있습니다)
+    // const group = cards.find((card) => card.groupId === code);
+
+    if (true) {
+      // 그룹이 존재하면 해당 그룹의 홈으로 이동
+      router.push(`/travel/1`);
+    } else {
+      alert('잘못된 초대 코드입니다.');
+    }
+  };
+
   return (
     <div className={styles.travelSelectWrap}>
       <Title label="여행 선택하기" />
@@ -100,6 +116,7 @@ export default function page() {
         onClose={() => setIsOpen(false)}
         title="초대코드를 입력해주세요."
         closeLabel="입력 완료"
+        onClose={handleInviteCodeSubmit}
       >
         <p className={styles.subtitle}>
           초대 코드를 입력하여 그룹에 가입하세요.
