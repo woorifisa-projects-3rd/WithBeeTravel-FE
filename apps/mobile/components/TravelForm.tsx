@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import serach from '../public/imgs/travelform/Search.png';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
+import { Tag } from '@withbee/ui/tag';
 
 // 타입 정의
 interface TravelFormProps {
@@ -172,7 +172,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 />
                 <span className={styles.searchIcon}>
                   <Image
-                    src={serach}
+                    src="/imgs/travelform/Search.png"
                     alt="검색창 아이콘"
                     className={styles.serach}
                     width={24}
@@ -185,14 +185,11 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               <div className={styles.selectedCountries}>
                 {formData.countries.map((country) => (
                   <div key={country} className={styles.countryTag}>
-                    {country}
-                    <button
-                      type="button"
-                      onClick={() => removeCountry(country)}
-                      className={styles.removeTag}
-                    >
-                      ×
-                    </button>
+                    <Tag
+                      label={country}
+                      type="delete" // 'delete' 타입으로 삭제 아이콘 표시
+                      size="medium" // 원하는 사이즈로 설정
+                    />
                   </div>
                 ))}
               </div>
@@ -225,7 +222,17 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleInputChange}
+                className={styles.customDateInput}
               />
+              <span className={styles.customIcon}>
+                <Image
+                  src="/imgs/travelform/cal.png"
+                  alt="달력 아이콘"
+                  className={styles.cal}
+                  width={21}
+                  height={21}
+                />
+              </span>
             </div>
             <div className={styles.dateInput}>
               <span>종료일</span>
@@ -234,7 +241,17 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 name="endDate"
                 value={formData.endDate}
                 onChange={handleInputChange}
+                className={styles.customDateInput}
               />
+              <span className={styles.customIcon}>
+                <Image
+                  src="/imgs/travelform/cal.png"
+                  alt="달력 아이콘"
+                  className={styles.cal}
+                  width={21}
+                  height={21}
+                />
+              </span>
             </div>
           </div>
         </div>
