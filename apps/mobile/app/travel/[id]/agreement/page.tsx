@@ -48,56 +48,56 @@ export default function ConsentPage() {
         <Title label="약관 동의" />
       </div>
       <div className={`${styles.content} content full`}>
-      <div className={styles.consentList}>
-        <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
-          <Image
-            src={
-              agreements.every((agreement) => agreement)
-                ? '/check.png'
-                : '/uncheck.png'
-            }
-            alt={
-              agreements.every((agreement) => agreement)
-                ? 'Checked'
-                : 'Unchecked'
-            }
-            width={22}
-            height={22}
-          />
-          <span>전체 동의 체크</span>
-        </div>
-        {consentItems.map((item, index) => (
-          <div
-            key={index}
-            className={styles.consentItem}
-            ref={(el) => (itemRefs.current[index] = el)}
-          >
-            <div className={styles.consentHeader}>
-              <div
-                className={styles.checkboxContainer}
-                onClick={() => toggleAgreement(index)}
-              >
+        <div className={styles.consentList}>
+          <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
+            <Image
+              src={
+                agreements.every((agreement) => agreement)
+                  ? '/check.png'
+                  : '/uncheck.png'
+              }
+              alt={
+                agreements.every((agreement) => agreement)
+                  ? 'Checked'
+                  : 'Unchecked'
+              }
+              width={22}
+              height={22}
+            />
+            <span>전체 동의 체크</span>
+          </div>
+          {consentItems.map((item, index) => (
+            <div
+              key={index}
+              className={styles.consentItem}
+              ref={(el) => (itemRefs.current[index] = el)}
+            >
+              <div className={styles.consentHeader}>
                 <div
-                  className={`${styles.checkboxContainer} ${agreements[index] ? styles.checked : ''}`}
+                  className={styles.checkboxContainer}
+                  onClick={() => toggleAgreement(index)}
                 >
-                  <Image
-                    src={agreements[index] ? '/check.png' : '/uncheck.png'}
-                    width={22}
-                    height={22}
-                    alt={agreements[index] ? 'Checked' : 'Unchecked'}
-                  />
+                  <div
+                    className={`${styles.checkboxContainer} ${agreements[index] ? styles.checked : ''}`}
+                  >
+                    <Image
+                      src={agreements[index] ? '/check.png' : '/uncheck.png'}
+                      width={22}
+                      height={22}
+                      alt={agreements[index] ? 'Checked' : 'Unchecked'}
+                    />
+                  </div>
+                  <span>{item.title}</span>
                 </div>
-                <span>{item.title}</span>
+                <Image
+                  src="/arrow.png"
+                  alt="Expand"
+                  width={10}
+                  height={6}
+                  className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ''}`}
+                  onClick={() => toggleExpand(index)}
+                />
               </div>
-              <Image
-                src="/arrow.png"
-                alt="Expand"
-                width={10}
-                height={6}
-                className={`${styles.arrow} ${expandedIndex === index ? styles.expanded : ''}`}
-                onClick={() => toggleExpand(index)}
-              />
-            </div>
 
               {expandedIndex === index && (
                 <div className={styles.termsContent}>

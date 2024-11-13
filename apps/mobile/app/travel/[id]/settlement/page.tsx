@@ -217,9 +217,11 @@ export default function Page() {
           <span>명</span>
         </div>
         <div className={styles.btnWrapper}>
-          <Link href={{
-            pathname: `/travel/${params.id}/agreement`,
-          }}>
+          <Link
+            href={{
+              pathname: `/travel/${params.id}/agreement`,
+            }}
+          >
             <Button label="동의하기" />
           </Link>
           <Button
