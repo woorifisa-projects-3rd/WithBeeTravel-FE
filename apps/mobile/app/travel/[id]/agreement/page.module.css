@@ -10,7 +10,7 @@
   min-height: calc(100% - 58px);
   padding: 25px 0;
   width: 100%;
-  padding-bottom: 95px;
+  padding-bottom: 35px;
   box-sizing: border-box;
   justify-content: space-between;
 }
@@ -85,6 +85,14 @@
 
 .termSection li {
   list-style-type: circle;
+}
+
+.btnWrapper {
+  width: 80%;
+  bottom: 100px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
 }
 
 .btnWrapper button:disabled {
