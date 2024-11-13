@@ -1,0 +1,135 @@
+.container {
+  padding-top: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputGroup label {
+  font-size: 18px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1.5px solid var(--color-gray-300);
+  outline: none;
+  padding: 8px 0;
+}
+
+.locationButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dateInput {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+}
+
+.dateInput span {
+  color: var(--color-gray-600);
+}
+
+.dateInput input {
+  border: none;
+  font-size: 16px;
+  color: var(--color-gray-600);
+}
+
+.searchSection {
+  position: relative;
+  margin-top: 16px;
+}
+
+.searchInputWrapper {
+  position: relative;
+  margin: -5px 0px;
+}
+
+.searchInput {
+  padding: 12px;
+  padding-left: 40px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-500);
+}
+
+.selectedCountries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.countryTag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: var(--color-gray-100);
+  border-radius: 20px;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.removeTag {
+  background: none;
+  border: none;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.searchResults {
+  position: absolute;
+  width: 100%;
+  max-width: 430px;
+  background-color: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.searchResultItem {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: var(--color-gray-100);
+}

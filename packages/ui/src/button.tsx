@@ -7,7 +7,7 @@ export interface ButtonProps {
   primary?: boolean;
   size?: 'small' | 'medium' | 'large' | 'xlarge';
   label: string;
-  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 }
 
@@ -16,6 +16,7 @@ export const Button = ({
   primary = true,
   size = 'medium',
   label,
+  type = 'button',
   ...props
 }: ButtonProps) => {
   const mode = primary ? styles.primary : styles.secondary;
