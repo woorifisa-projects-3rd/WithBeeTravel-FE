@@ -19,7 +19,10 @@ interface RequestOptions extends RequestInit {
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
-const fetchInstance = async <T = undefined>(url: string, options: RequestOptions = {}): Promise<SuccessResponse<T> | ErrorResponse> => {
+const fetchInstance = async <T = undefined>(
+  url: string,
+  options: RequestOptions = {},
+): Promise<SuccessResponse<T> | ErrorResponse> => {
   const headers: Record<string, string> = {
     ...(options.headers as Record<string, string>),
   };
@@ -36,7 +39,9 @@ const fetchInstance = async <T = undefined>(url: string, options: RequestOptions
       headers,
     });
 
-    const result = await response.json() as SuccessResponse<T> | ErrorResponse;
+    const result = (await response.json()) as
+      | SuccessResponse<T>
+      | ErrorResponse;
 
     if (!response.ok) {
       const errorResult = result as ErrorResponse;
@@ -52,23 +57,35 @@ const fetchInstance = async <T = undefined>(url: string, options: RequestOptions
 };
 
 export const instance = {
-  get: async <T>(url: string, options: Omit<RequestOptions, 'body' | 'method'> = {}) => {
-    return fetchInstance<T>(url, { method: 'GET', ...options, });
+  get: async <T>(
+    url: string,
+    options: Omit<RequestOptions, 'body' | 'method'> = {},
+  ) => {
+    return fetchInstance<T>(url, { method: 'GET', ...options });
   },
 
-  post: async <T>(url: string, options: Omit<RequestOptions, 'method'> = {}) => {
+  post: async <T>(
+    url: string,
+    options: Omit<RequestOptions, 'method'> = {},
+  ) => {
     return fetchInstance<T>(url, { method: 'POST', ...options });
   },
 
-  patch: async <T>(url: string, options: Omit<RequestOptions, 'method'> = {}) => {
-    return fetchInstance<T>(url, { method: 'PATCH', ...options, });
+  patch: async <T>(
+    url: string,
+    options: Omit<RequestOptions, 'method'> = {},
+  ) => {
+    return fetchInstance<T>(url, { method: 'PATCH', ...options });
   },
 
   put: async <T>(url: string, options: Omit<RequestOptions, 'method'> = {}) => {
-    return fetchInstance<T>(url, { method: 'PUT', ...options, });
+    return fetchInstance<T>(url, { method: 'PUT', ...options });
   },
 
-  delete: async <T>(url: string, options: Omit<RequestOptions, 'body' | 'method'> = {}) => {
-    return fetchInstance<T>(url, { method: 'DELETE', ...options, });
+  delete: async <T>(
+    url: string,
+    options: Omit<RequestOptions, 'body' | 'method'> = {},
+  ) => {
+    return fetchInstance<T>(url, { method: 'DELETE', ...options });
   },
 };
