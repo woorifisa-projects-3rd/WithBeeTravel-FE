@@ -7,10 +7,13 @@ import { useState } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import '@withbee/styles';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const params = useParams();
 
   const toggleDetails = () => {
     setIsOpen((prev) => !prev);
@@ -214,7 +217,13 @@ export default function Page() {
           <span>명</span>
         </div>
         <div className={styles.btnWrapper}>
-          <Button label="동의하기" />
+          <Link
+            href={{
+              pathname: `/travel/${params.id}/agreement`,
+            }}
+          >
+            <Button label="동의하기" />
+          </Link>
           <Button
             label="정산 취소하기"
             primary={false}
