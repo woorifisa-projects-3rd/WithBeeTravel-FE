@@ -23,9 +23,13 @@
   padding: 12px;
   font-size: 16px;
   border: none;
-  border-bottom: 1.5px solid var(--color-gray-300);
+  border-bottom: 1.5px solid var(--color-gray-200);
   outline: none;
   padding: 8px 0;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
 }
 
 .locationButtons {
@@ -57,13 +61,13 @@
 }
 
 .dateInput span {
-  color: var(--color-gray-600);
+  color: var(--color-gray-500);
 }
 
 .dateInput input {
   border: none;
   font-size: 16px;
-  color: var(--color-gray-600);
+  color: var(--color-gray-500);
 }
 
 .searchSection {
@@ -88,7 +92,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
 }
 
 .selectedCountries {
@@ -149,4 +153,8 @@
   position: fixed;
   left: 50%;
   transform: translate(-50%);
+}
+
+.btn {
+  font-weight: 500;
 }
