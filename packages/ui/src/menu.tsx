@@ -7,6 +7,7 @@ import { Tag } from './tag';
 import { useState } from 'react';
 import { BottomModal } from './modal';
 import selectIcon from './assets/select.png';
+import DatePickerModal from './date-picker-modal';
 
 interface MenuProps {
   className?: string;
@@ -17,19 +18,32 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     period: false,
     member: false,
     sort: false,
+    start: false,
+    end: false,
   });
   const [selected, setSelected] = useState({
     period: '전체',
     member: '전체',
     sort: '최신순',
   });
+  const [startDate, setStartDate] = useState({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  });
+  const [endDate, setEndDate] = useState({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  });
+
   const [isFilter, setIsFilter] = useState(false);
 
   const handleFilter = () => {
     setIsFilter(!isFilter);
   };
 
-  const handleModal = (key: 'period' | 'member' | 'sort') => {
+  const handleModal = (key: 'period' | 'member' | 'sort' | 'start' | 'end') => {
     setIsOpen((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
@@ -71,6 +85,8 @@ export const Menu = ({ className, ...props }: MenuProps) => {
           <Button label="직접 추가" size={'small'} primary={false} />
         </div>
       )}
+
+      {/* 멤버 선택 모달 */}
       {isOpen.member && (
         <BottomModal
           isOpen={isOpen.member}
@@ -99,6 +115,8 @@ export const Menu = ({ className, ...props }: MenuProps) => {
           </ul>
         </BottomModal>
       )}
+
+      {/* 기간 선택 모달 */}
       {isOpen.period && (
         <BottomModal
           isOpen={isOpen.period}
@@ -112,15 +130,53 @@ export const Menu = ({ className, ...props }: MenuProps) => {
                 <Image src={selectIcon} alt="select" width={25} height={25} />
               )}
             </li>
-            <li>
-              시작일<span>2024.10.28</span>
+            <li
+              onClick={() => {
+                setSelected({ ...selected, period: '기간' });
+                handleModal('start');
+              }}
+            >
+              시작일
+              <span>
+                {startDate.year}.{startDate.month}.{startDate.day}
+              </span>
             </li>
-            <li>
-              종료일<span>2024.10.28</span>
+            <li
+              onClick={() => {
+                setSelected({ ...selected, period: '기간' });
+                handleModal('end');
+              }}
+            >
+              종료일
+              <span>
+                {endDate.year}.{endDate.month}.{endDate.day}
+              </span>
             </li>
           </ul>
         </BottomModal>
       )}
+
+      {/* 시작일 선택 모달 */}
+      {isOpen.start && (
+        <DatePickerModal
+          isOpen={isOpen.start}
+          onSelectDate={setStartDate}
+          onClose={() => handleModal('start')}
+          title={'시작일'}
+        />
+      )}
+
+      {/* 종료일 선택 모달 */}
+      {isOpen.end && (
+        <DatePickerModal
+          isOpen={isOpen.end}
+          onSelectDate={setEndDate}
+          onClose={() => handleModal('end')}
+          title={'종료일'}
+        />
+      )}
+
+      {/* 정렬 선택 모달 */}
       {isOpen.sort && (
         <BottomModal
           isOpen={isOpen.sort}

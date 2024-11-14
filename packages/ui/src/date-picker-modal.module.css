@@ -1,0 +1,68 @@
+.pickerContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pickerColumn {
+  flex: 1;
+  position: relative;
+}
+
+.scrollPicker {
+  height: 120px;
+  overflow-y: auto;
+  border-radius: 10px;
+  /* background: #f8f8f8; */
+  scrollbar-width: none;
+  position: relative;
+}
+
+.scrollPicker::-webkit-scrollbar {
+  display: none;
+}
+
+.pickerItems {
+  position: relative;
+}
+
+.pickerItem {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: var(--color-gray-400);
+}
+
+.pickerItem.year {
+  justify-content: flex-start;
+}
+
+.pickerItem.month {
+  justify-content: center;
+}
+
+.pickerItem.day {
+  justify-content: flex-end;
+}
+
+.pickerPadding {
+  height: 40px;
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  transform: translateY(-50%);
+  /* border-top: 1px solid #ffe978;
+  border-bottom: 1px solid #ffe978; */
+  pointer-events: none;
+}
+
+.selected {
+  color: var(--color-gray-800);
+  /* font-weight: 600; */
+}

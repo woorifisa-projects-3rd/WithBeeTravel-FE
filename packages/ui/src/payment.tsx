@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];
 
 export const Payment = () => {
-  const width = window !== undefined ? window.innerWidth : 0;
+  const width = window?.innerWidth;
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
   const visibleFriendsLength = width > 390 ? 5 : 4;
