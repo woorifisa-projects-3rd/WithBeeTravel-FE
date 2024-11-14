@@ -14,14 +14,34 @@ interface AccountHistory {
   rqspeNm: String;
 }
 
-export default function BankingPage() {
+interface AccountInfo{
+  accountNumber: String;
+  accountName: String;
+  balance: number;
+}
+
+export default function AccountPage() {
   const params = useParams();
   const id = params.id;
 
   const [histories, setHistories] = useState<AccountHistory[]>([]);
+  const [accountInfo, setAccountInfo] = useState<AccountInfo>();
 
   useEffect(() => {
     if (id) {
+      //계좌 정보 가져오기
+      fetch(`http://localhost:8080/accounts/${id}/info`)
+      .then((response) => response.json())
+      .then((data) => {
+        const formatData = {
+          accountNumber: data.accountNumber,
+          accountName: data.product,
+          balance: data.balance,
+        }
+        setAccountInfo(formatData);
+      })
+
+      // 거래 내역 가져오기
       fetch(`http://localhost:8080/accounts/${id}`) // Spring Boot 서버 주소
         .then((response) => response.json())
         .then((data) => {
@@ -45,6 +65,17 @@ export default function BankingPage() {
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
+
+      {/* 계좌 정보 표시 */}
+      {accountInfo && (
+        <div className={styles.accountDetails}>
+          <div className={styles.accountInfo}>
+            <div> {accountInfo.accountName}</div>
+            <div> {accountInfo.accountNumber}</div>
+            <div> {formatNumber(accountInfo.balance)} 원</div>
+          </div>
+        </div>
+      )}
 
       <div className={styles.transactionList}>
   {histories.map((history, index) => (
