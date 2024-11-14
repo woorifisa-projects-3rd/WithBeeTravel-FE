@@ -43,7 +43,7 @@ export default function page() {
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택하기" />
+      <Title label="여행 선택" />
       {/* 위비프렌즈이미지 */}
       <div className={styles.imageWrap}>
         <Image
