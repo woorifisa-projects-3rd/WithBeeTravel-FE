@@ -34,7 +34,10 @@ export const Modal = ({
           onClick={(e) => e.stopPropagation()}
         >
           <header className={styles.header}>
-            <h2 className={styles.title}>{title}</h2>
+            <h2
+              className={styles.title}
+              dangerouslySetInnerHTML={{ __html: title }} // HTML 태그를 안전하게 삽입
+            />
           </header>
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>
@@ -79,7 +82,10 @@ export const BottomModal = ({
           onClick={(e) => e.stopPropagation()}
         >
           <header className={styles.header}>
-            <h2 className={styles.title}>{title}</h2>
+            <h2
+              className={styles.title}
+              dangerouslySetInnerHTML={{ __html: title }} // HTML 태그를 안전하게 삽입
+            />
           </header>
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>

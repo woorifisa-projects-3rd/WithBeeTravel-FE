@@ -58,6 +58,8 @@
 .title {
   font-size: 18px;
   font-weight: 600;
+  color: var(--color-gray-700);
+  text-align: center;
 }
 
 .bottom.modal .title {
