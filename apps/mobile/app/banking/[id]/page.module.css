@@ -1,0 +1,82 @@
+/* page.module.css */
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.transactionList {
+  margin-top: 20px;
+}
+
+.transactionItem {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.transactionDate {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 10px;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.transactionDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.rcvAmount, .payAmount {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.inflowLabel {
+  color: #000000; /* 입금은 초록색 */
+}
+
+.outflowLabel {
+  color: #000000; /* 출금은 빨간색 */
+}
+
+.balance {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right; /* 오른쪽 정렬 추가 */
+}
+
+.detail {
+  padding-top: 10px;
+  font-size: 20px;
+  color: #000000;
+}
+
+.rcvAmount {
+  text-align: right;
+  color: #0044ff;
+}
+
+.payAmount {
+  text-align: right;
+  color: #dc3545;
+}
+
+.transactionItem:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.transactionItem:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
