@@ -16,7 +16,7 @@ export const Payment = () => {
   return (
     <article className={styles.payment}>
       <FriendImage
-        number={Math.round((friends.length - 1) * Math.random())}
+        number={1 + Math.round(8 * Math.random())}
         size={50}
         className={styles.friendImage}
       />
