@@ -160,6 +160,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isOpen.start && (
         <DatePickerModal
           isOpen={isOpen.start}
+          initialDate={startDate}
           onSelectDate={setStartDate}
           onClose={() => handleModal('start')}
           title={'시작일'}
@@ -170,6 +171,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isOpen.end && (
         <DatePickerModal
           isOpen={isOpen.end}
+          initialDate={endDate}
           onSelectDate={setEndDate}
           onClose={() => handleModal('end')}
           title={'종료일'}

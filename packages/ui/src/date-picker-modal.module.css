@@ -2,28 +2,22 @@
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  position: relative;
+  height: 120px;
 }
 
 .pickerColumn {
   flex: 1;
   position: relative;
+  height: 100%;
 }
 
-.scrollPicker {
-  height: 120px;
-  overflow-y: auto;
-  border-radius: 10px;
-  /* background: #f8f8f8; */
-  scrollbar-width: none;
-  position: relative;
+.columnWrapper {
+  height: 100%;
 }
 
-.scrollPicker::-webkit-scrollbar {
-  display: none;
-}
-
-.pickerItems {
-  position: relative;
+.swiper {
+  height: 100%;
 }
 
 .pickerItem {
@@ -46,23 +40,24 @@
   justify-content: flex-end;
 }
 
-.pickerPadding {
-  height: 40px;
+.selected {
+  color: var(--color-gray-600) !important;
+  font-weight: 500;
 }
 
-.selectionIndicator {
+/* .selectionIndicator {
   position: absolute;
-  top: 50%;
   left: 0;
   right: 0;
-  height: 40px;
+  top: 50%;
   transform: translateY(-50%);
-  /* border-top: 1px solid #ffe978;
-  border-bottom: 1px solid #ffe978; */
+  height: 40px;
   pointer-events: none;
-}
+  border-top: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-gray-200);
+} */
 
-.selected {
-  color: var(--color-gray-800);
-  /* font-weight: 600; */
+/* Swiper 스타일 커스터마이징 */
+:global(.swiper-slide) {
+  height: 40px !important;
 }
