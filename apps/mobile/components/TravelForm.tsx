@@ -9,6 +9,7 @@ import { Tag } from '@withbee/ui/tag';
 interface TravelFormProps {
   mode: 'create' | 'edit';
   travelData?: {
+    travelId: number;
     travelName: string;
     isDomesticTravel: boolean;
     travelCountries?: string[];
@@ -27,6 +28,7 @@ export default function TravelForm({
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
+    travelId: 12,
     travelName: '',
     isDomesticTravel: false, // true/false 값으로 설정
     travelCountries: [] as string[],
@@ -52,6 +54,7 @@ export default function TravelForm({
   useEffect(() => {
     if (mode === 'edit' && travelData) {
       setFormData({
+        travelId: travelData.travelId,
         travelName: travelData.travelName,
         isDomesticTravel: travelData.isDomesticTravel,
         travelCountries: travelData.travelCountries || [],

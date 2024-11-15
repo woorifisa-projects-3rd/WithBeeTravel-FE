@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TravelForm from '../../../components/TravelForm';
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
-import { createTravel } from '@withbee/apis';
+import { createTravel, editTravel } from '@withbee/apis';
 import './page.module.css';
 import { useRouter } from 'next/navigation';
 
@@ -14,7 +14,7 @@ export default function Page() {
   const mode = searchParams.get('mode');
   const router = useRouter();
 
-  // api연결
+  // 생성 api연결
   const handleCreateTravel = async (formData: any) => {
     const {
       travelName,
@@ -37,6 +37,31 @@ export default function Page() {
     }
   };
 
+  // 편집 api
+  const handleEditTravel = async (formData: any) => {
+    const {
+      travelId,
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    } = formData;
+
+    const response = await editTravel(
+      travelId,
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    );
+
+    if (response.status == '200') {
+      router.push(`/travel/${response.travelId}`);
+    }
+  };
+
   // 여행 선택 시 데이터 세팅
   const handleTravelSelect = (travel: any) => {
     setEditedTravel(travel); // 여행 선택 시 데이터 세팅
@@ -45,6 +70,7 @@ export default function Page() {
   const travelData =
     mode === 'edit'
       ? {
+          travelId: 12,
           travelName: '기존 여행 이름',
           isDomesticTravel: true,
           travelCountries: ['프랑스', '이탈리아'],
@@ -60,7 +86,7 @@ export default function Page() {
       <TravelForm
         mode={mode as 'create' | 'edit'}
         travelData={travelData}
-        onSubmit={handleCreateTravel}
+        onSubmit={mode === 'create' ? handleCreateTravel : handleEditTravel}
       />
     </div>
   );
