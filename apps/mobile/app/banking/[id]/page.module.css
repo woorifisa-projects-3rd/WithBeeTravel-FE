@@ -80,3 +80,12 @@
   transform: scale(0.98);
   transition: transform 0.1s;
 }
+
+.default {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
