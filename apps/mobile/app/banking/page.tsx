@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
@@ -20,11 +20,11 @@ export default function BankingPage() {
   useEffect(() => {
     // API 호출해서 데이터를 받아옴
     fetch('http://localhost:8080/accounts') // Spring Boot 서버 주소
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // 받은 데이터를 BankingAccount 배열로 변환하여 상태에 저장
         const formattedData = data.map((item: any, index: number) => ({
-          id: item.accountId, 
+          id: item.accountId,
           accountNumber: item.accountNumber,
           product: item.product,
           balance: item.balance,
@@ -34,15 +34,20 @@ export default function BankingPage() {
   }, []);
 
   // 총 잔액 계산
-  const totalBalance = accounts.reduce((total, account) => total + account.balance, 0);
+  const totalBalance = accounts.reduce(
+    (total, account) => total + account.balance,
+    0,
+  );
 
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');
   };
 
-
   // 송금 버튼 클릭 시 예외처리
-  const handleTransferClick = (event: React.MouseEvent<HTMLButtonElement>, accountId: number) => {
+  const handleTransferClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    accountId: number,
+  ) => {
     // 이벤트 버블링 방지
     event.stopPropagation();
     // 송금 페이지로 이동
@@ -67,11 +72,16 @@ export default function BankingPage() {
 
       <div className={styles.transactionList}>
         {accounts.map((transaction) => (
-          <div key={transaction.id} className={styles.transactionItem}
-          onClick={()=>router.push(`/banking/${transaction.id}`)}>
+          <div
+            key={transaction.id}
+            className={styles.transactionItem}
+            onClick={() => router.push(`/banking/${transaction.id}`)}
+          >
             <div className={styles.transactionInfo}>
               <div className={styles.accountType}>{transaction.product}</div>
-              <div className={styles.accountNumber}>{transaction.accountNumber}</div>
+              <div className={styles.accountNumber}>
+                {transaction.accountNumber}
+              </div>
             </div>
 
             {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
@@ -80,12 +90,16 @@ export default function BankingPage() {
                 <Button
                   size="xsmall"
                   label="송금"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleTransferClick(e, transaction.id)} 
-                  />
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    handleTransferClick(e, transaction.id)
+                  }
+                />
               </div>
 
               {/* 금액을 오른쪽 정렬 */}
-              <div className={styles.amount}>{formatNumber(transaction.balance)}원</div>
+              <div className={styles.amount}>
+                {formatNumber(transaction.balance)}원
+              </div>
             </div>
           </div>
         ))}

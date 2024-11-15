@@ -1,6 +1,6 @@
 'use client';
 
-import { Title } from '@withbee/ui/title'; 
+import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
@@ -86,15 +86,15 @@ export default function AccountPage() {
       )}
 
       <div className={styles.default}>
-        <Button 
-          label="송금" 
-          size={'medium'} 
-          onClick={() => router.push(`/banking/${id}/transfer`)} 
+        <Button
+          label="송금"
+          size={'medium'}
+          onClick={() => router.push(`/banking/${id}/transfer`)}
         />
-        <Button 
-          label="입금" 
-          size={'medium'} 
-          onClick={() => router.push(`/banking/${id}/deposit`)} 
+        <Button
+          label="입금"
+          size={'medium'}
+          onClick={() => router.push(`/banking/${id}/deposit`)}
         />
       </div>
 
@@ -107,9 +107,7 @@ export default function AccountPage() {
             </div>
 
             {/* 상세 내역은 날짜 바로 아래로 위치 */}
-            <div className={styles.detail}>
-              {history.rqspeNm}
-            </div>
+            <div className={styles.detail}>{history.rqspeNm}</div>
 
             {/* 거래 내역 상세 */}
             <div className={styles.transactionDetails}>

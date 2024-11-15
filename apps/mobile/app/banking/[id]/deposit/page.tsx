@@ -18,7 +18,6 @@ export default function DepositPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null); // 내 계좌 정보 상태
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
-
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
@@ -38,7 +37,6 @@ export default function DepositPage() {
     }
   }, [myAccountId]);
 
-
   // 숫자 입력 처리
   const handleNumberPress = (num: string) => {
     if (num === 'backspace') {
@@ -50,49 +48,54 @@ export default function DepositPage() {
 
   // 송금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
-    if (!amount || amount=='0') {
+    if (!amount || amount == '0') {
       alert('금액을 입력해주세요!');
       return;
     }
-    
+
     alert(`₩${amount}를 입금합니다.`);
     // 입금 로직 api
-    const DepositRequest ={
-        amount : amount,
-        rqspeNm:"입금",
-    }
-    try{
-        const response = await fetch(`http://localhost:8080/accounts/${myAccountId}/deposit`,{
-          method:'POST',
-          headers:{
-            'Content-Type':'application/json'
+    const DepositRequest = {
+      amount: amount,
+      rqspeNm: '입금',
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:8080/accounts/${myAccountId}/deposit`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(DepositRequest),
-        });
-        const result = await response.json();
-        alert("입금 완료")
-        // 송금 완료되면 페이지 이동되야됨
-        router.push((`/banking/`))
-  
-        return;
-      }catch(error){
-        console.error('오류: ',error);
-        
-        alert("입금 중 오류 발생")
-      }    
+        },
+      );
+      const result = await response.json();
+      alert('입금 완료');
+      // 송금 완료되면 페이지 이동되야됨
+      router.push(`/banking/`);
+
+      return;
+    } catch (error) {
+      console.error('오류: ', error);
+
+      alert('입금 중 오류 발생');
+    }
   };
 
   const renderKeyboard = () => (
     <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map((key) => (
-        <button
-          key={key}
-          className={styles.keyboardKey}
-          onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
-        >
-          {key}
-        </button>
-      ))}
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
+        (key) => (
+          <button
+            key={key}
+            className={styles.keyboardKey}
+            onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
+          >
+            {key}
+          </button>
+        ),
+      )}
     </div>
   );
 
@@ -102,7 +105,8 @@ export default function DepositPage() {
         <h2>입금 할 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.accountName} ({accountInfo.accountNumber}) - ₩{accountInfo.balance.toLocaleString()}
+            {accountInfo.accountName} ({accountInfo.accountNumber}) - ₩
+            {accountInfo.balance.toLocaleString()}
           </p>
         ) : (
           <p>내 계좌 정보를 불러오는 중...</p>
@@ -113,7 +117,9 @@ export default function DepositPage() {
         {amount ? (
           <>
             <span className={styles.currency}>₩</span>
-            <span className={styles.amount}>{parseInt(amount).toLocaleString()}</span>
+            <span className={styles.amount}>
+              {parseInt(amount).toLocaleString()}
+            </span>
           </>
         ) : (
           <span className={styles.placeholder}>얼마나 입금할까요?</span>
@@ -126,13 +132,9 @@ export default function DepositPage() {
     <div className={styles.container}>
       <Title label="입금하기" />
 
-      <main className={styles.main}>
-        {renderAmountInput()}
-      </main>
+      <main className={styles.main}>{renderAmountInput()}</main>
 
-      <div className={styles.actions}>
-        {renderKeyboard()}
-      </div>
+      <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
         <button className={styles.nextButton} onClick={handleSendMoney}>
