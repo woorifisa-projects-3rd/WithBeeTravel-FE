@@ -1,9 +1,3 @@
-'use client'
+'use client';
 
-
-export default function CreateAccountPage() {
-
-
-
-
-}
+export default function CreateAccountPage() {}

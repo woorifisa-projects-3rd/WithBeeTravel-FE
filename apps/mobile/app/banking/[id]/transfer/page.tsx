@@ -1,7 +1,7 @@
-'use client'
+'use client';
 import { useParams, useRouter } from 'next/navigation';
-import styles from './page.module.css'
-import { Title } from "@withbee/ui/title"
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
 import { useEffect, useState } from 'react';
 import { Button } from '@withbee/ui/button';
 
@@ -46,16 +46,15 @@ export default function TransferPage() {
       alert('계좌번호가 너무 짧아용~');
       return;
     }
-    
+
     // 계좌번호 검증 (예: 서버에 확인 요청)
     fetch(`http://localhost:8080/accounts/verify/${targetAccount}`)
       .then((response) => {
         if (response.ok) {
           setErrorMessage('');
           alert('계좌번호가 있어용~ 얼마 보낼지 알아볼까요?');
-          localStorage.setItem('targetAccountNumber',targetAccount);
-          router.push((`/banking/${accountId}/transfer/detail`))
-
+          localStorage.setItem('targetAccountNumber', targetAccount);
+          router.push(`/banking/${accountId}/transfer/detail`);
         } else {
           alert('ㅋㅋ 엥 없는 번혼데?!?^^');
         }
@@ -68,15 +67,21 @@ export default function TransferPage() {
   // 가상 키보드 생성
   const renderKeyboard = () => (
     <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map((key) => (
-        <button
-          key={key}
-          className={styles.keyboardKey}
-          onClick={() => handleNumberPress(key === '←' ? 'backspace' : key === 'X' ? 'clear' : key)}
-        >
-          {key}
-        </button>
-      ))}
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
+        (key) => (
+          <button
+            key={key}
+            className={styles.keyboardKey}
+            onClick={() =>
+              handleNumberPress(
+                key === '←' ? 'backspace' : key === 'X' ? 'clear' : key,
+              )
+            }
+          >
+            {key}
+          </button>
+        ),
+      )}
     </div>
   );
 
@@ -98,7 +103,8 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.accountName} 잔액 {formatNumber(accountInfo.balance)} 원
+            {accountInfo.accountName} 잔액 {formatNumber(accountInfo.balance)}{' '}
+            원
           </p>
         ) : (
           <p>계좌 정보를 불러오는 중입니다...</p>
@@ -116,9 +122,11 @@ export default function TransferPage() {
           onChange={handleAccountChange} // onChange 핸들러 수정
           placeholder="계좌번호 입력"
         />
-        
+
         {/* 오류 메시지 출력 */}
-        <p className={`${styles.error} ${errorMessage ? 'visible' : ''}`}>{errorMessage}</p>
+        <p className={`${styles.error} ${errorMessage ? 'visible' : ''}`}>
+          {errorMessage}
+        </p>
       </div>
     </div>
   );
