@@ -10,8 +10,6 @@
   "devDependencies": {
     "turbo": "^2.2.3",
     "typescript": "5.5.4",
-    "@withbee/eslint-config": "workspace:*",
-    "@withbee/prettier-config": "workspace:*",
     "prettier": "^3.2.5"
   },
   "packageManager": "pnpm@8.15.6",

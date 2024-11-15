@@ -8,12 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@withbee/eslint-config':
-        specifier: workspace:*
-        version: link:packages/eslint-config
-      '@withbee/prettier-config':
-        specifier: workspace:*
-        version: link:packages/prettier-config
       prettier:
         specifier: ^3.2.5
         version: 3.3.3
@@ -334,38 +328,6 @@ importers:
       typescript:
         specifier: 5.5.4
         version: 5.5.4
-
-  packages/prettier-config: {}
-
-  packages/stores:
-    devDependencies:
-      '@types/eslint':
-        specifier: ^8.56.5
-        version: 8.56.12
-      '@types/node':
-        specifier: ^20.11.24
-        version: 20.17.6
-      '@types/react':
-        specifier: ^18.2.61
-        version: 18.3.12
-      '@types/react-dom':
-        specifier: ^18.2.19
-        version: 18.3.1
-      '@withbee/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@withbee/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      typescript:
-        specifier: 5.5.4
-        version: 5.5.4
-      zustand:
-        specifier: ^5.0.1
-        version: 5.0.1(@types/react@18.3.12)(react@18.3.1)
 
   packages/styles: {}
 
