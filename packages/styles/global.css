@@ -4,6 +4,7 @@
   -webkit-text-size-adjust: none;
   -moz-text-size-adjust: none;
   -o-text-size-adjust: none;
+  box-sizing: border-box;
 }
 
 *:before,
@@ -23,7 +24,6 @@ body {
   font-family: var(--font-pretendard), sans-serif;
 }
 
-/*기본폰트 10px*/
 body,
 th,
 td,
@@ -109,7 +109,8 @@ q:after {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset; /* 크롭입력배경색제거 */
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  /* 크롭입력배경색제거 */
 }
 
 input,
@@ -189,6 +190,7 @@ textarea {
 textarea:focus {
   outline: none;
 }
+
 a,
 a:link,
 a:visited,
@@ -236,7 +238,7 @@ label {
 
 /* root */
 :root {
-   /* Gray Palette */
+  /* Gray Palette */
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -249,7 +251,7 @@ label {
   --color-gray-900: #111827;
   --color-gray-950: #030712;
 
-   /* Blue Palette */
+  /* Blue Palette */
   --color-blue-1: #FCFDFF;
   --color-blue-2: #F5F9FF;
   --color-blue-3: #EAF3FD;

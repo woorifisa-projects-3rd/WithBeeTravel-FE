@@ -1,9 +1,12 @@
-import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
-import styles from './page.module.css';
+import { chooseParticipants } from '@withbee/apis';
 import '@withbee/styles';
 
-export default function Home() {
+export default async function Home() {
+  // const response = await chooseParticipants(1, 1, [1, 2, 3]);
+
+  // console.log(response);
+
   return (
     <div>
       <h1>윗비트래블</h1>
