@@ -3,9 +3,9 @@ import { chooseParticipants } from '@withbee/apis';
 import '@withbee/styles';
 
 export default async function Home() {
-  const response = await chooseParticipants(1, 1, [1, 2, 3]);
+  // const response = await chooseParticipants(1, 1, [1, 2, 3]);
 
-  console.log(response);
+  // console.log(response);
 
   return (
     <div>
