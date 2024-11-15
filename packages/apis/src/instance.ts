@@ -1,12 +1,12 @@
 // import { auth } from '@/auth';
 
-interface SuccessResponse<T> {
+export interface SuccessResponse<T> {
   status: string;
   message: string;
   data?: T;
 }
 
-interface ErrorResponse {
+export interface ErrorResponse {
   status: string;
   name: string;
   code: string;

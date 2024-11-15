@@ -25,7 +25,7 @@ export const Button = ({
 
   return (
     <motion.button
-      type="button"
+      type={type}
       className={[styles[size], mode, styles.button, className].join(' ')}
       // initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
       // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
