@@ -15,18 +15,18 @@ export interface ButtonProps {
 export const Button = ({
   primary = true,
   size = 'medium',
-  label,
   type = 'button',
+  label,
+  onClick,
   ...props
 }: ButtonProps) => {
   const mode = primary ? styles.primary : styles.secondary;
 
   return (
     <motion.button
-      type="button"
+      type={type}
       className={[styles[size], mode, styles.button].join(' ')}
-      // initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-      // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
+      onClick={onClick}
       transition={{
         duration: 1,
         ease: 'easeInOut',

@@ -3,16 +3,21 @@ import styles from './tag.module.css';
 import deleteIcon from './assets/close.png';
 import arrowIcon from './assets/arrow_down.png';
 
-interface TagProps {
+interface TagProps extends React.HTMLAttributes<HTMLButtonElement> {
   label: string;
   size?: 'small' | 'medium';
   type?: 'default' | 'select' | 'delete';
 }
 
 // 컴포넌트 이름이 애매함
-export const Tag = ({ label, size = 'medium', type = 'default' }: TagProps) => {
+export const Tag = ({
+  label,
+  size = 'medium',
+  type = 'default',
+  ...props
+}: TagProps) => {
   return (
-    <i className={[styles.tag, styles[size]].join(' ')}>
+    <i className={[styles.tag, styles[size]].join(' ')} {...props}>
       {label}
       <button>
         {type === 'delete' && (
