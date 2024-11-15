@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
+import { instance } from '@withbee/apis';
 
 interface AccountHistory {
   date: string;
@@ -15,8 +16,9 @@ interface AccountHistory {
 }
 
 interface AccountInfo {
+  accountId: number;
   accountNumber: string;
-  accountName: string;
+  product: string;
   balance: number;
 }
 
@@ -27,50 +29,25 @@ export default function AccountPage() {
 
   const [histories, setHistories] = useState<AccountHistory[]>([]);
   const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
 
+  
   useEffect(() => {
     if (id) {
-      setLoading(true); // 로딩 시작
-
       // 계좌 정보 가져오기
-      fetch(`http://localhost:8080/accounts/${id}/info`)
-        .then((response) => response.json())
-        .then((data) => {
-          const formatData = {
-            accountNumber: data.accountNumber,
-            accountName: data.product,
-            balance: data.balance,
-          };
-          setAccountInfo(formatData);
-        })
-        .catch((error) => {
-          console.error('계좌 정보 가져오기 오류:', error);
-          setAccountInfo(null); // 계좌 정보 오류 시 null 처리
-        });
+      (async () => {
+        const response = await instance.get(`/accounts/${id}/info`);
+        console.log("호촐: ", response);
+        setAccountInfo(response); // 계좌 정보 업데이트
+      })();
 
       // 거래 내역 가져오기
-      fetch(`http://localhost:8080/accounts/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const formattedData = data.map((item: any) => ({
-            date: item.date,
-            rcvAm: item.rcvAm,
-            payAm: item.payAm,
-            balance: item.balance,
-            rqspeNm: item.rqspeNm,
-          }));
-          setHistories(formattedData);
-        })
-        .catch((error) => {
-          console.error('거래 내역 가져오기 오류:', error);
-          setHistories([]); // 거래 내역 오류 시 빈 배열 처리
-        })
-        .finally(() => {
-          setLoading(false); // 로딩 종료
-        });
+      (async () => {
+        const response = await instance.get(`/accounts/${id}`);
+        console.log("상세 내역: ", response);
+        setHistories(response); // 거래 내역 업데이트
+      })();
     }
-  }, [id]); // 의존성 배열에 id 추가
+  }, [id]);
 
   const formatNumber = (num: number | null | undefined): string => {
     if (num == null) return '0'; // null 또는 undefined 처리
@@ -91,11 +68,6 @@ export default function AccountPage() {
     }).format(new Date(date));
   };
 
-  // 로딩 중 처리
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
@@ -104,9 +76,9 @@ export default function AccountPage() {
       {accountInfo ? (
         <div className={styles.accountDetails}>
           <div className={styles.accountInfo}>
-            <div> {accountInfo.accountName}</div>
-            <div> {accountInfo.accountNumber}</div>
-            <div> {formatNumber(accountInfo.balance)} 원</div>
+            <div>{accountInfo.product}</div>
+            <div>{accountInfo.accountNumber}</div>
+            <div>{formatNumber(accountInfo.balance)} 원</div>
           </div>
         </div>
       ) : (
