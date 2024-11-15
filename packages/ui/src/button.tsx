@@ -9,6 +9,7 @@ export interface ButtonProps {
   label: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
+  className?: string;
 }
 
 /** Primary UI component for user interaction */
@@ -17,6 +18,7 @@ export const Button = ({
   size = 'medium',
   label,
   type = 'button',
+  className = '',
   ...props
 }: ButtonProps) => {
   const mode = primary ? styles.primary : styles.secondary;
@@ -24,7 +26,7 @@ export const Button = ({
   return (
     <motion.button
       type="button"
-      className={[styles[size], mode, styles.button].join(' ')}
+      className={[styles[size], mode, styles.button, className].join(' ')}
       // initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
       // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
       transition={{

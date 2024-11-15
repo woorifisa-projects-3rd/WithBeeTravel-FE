@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import serach from '../public/imgs/travelform/Search.png';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
+import { Tag } from '@withbee/ui/tag';
 
 // 타입 정의
 interface TravelFormProps {
@@ -148,6 +148,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               size="medium" // 크기를 medium으로 설정
               label="국내"
               onClick={() => handleLocationChange('domestic')}
+              className={styles.domesticBtn}
             />
 
             <Button
@@ -155,6 +156,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               size="medium"
               label="해외"
               onClick={() => handleLocationChange('overseas')}
+              className={styles.overseasBtn}
             />
           </div>
 
@@ -170,7 +172,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 />
                 <span className={styles.searchIcon}>
                   <Image
-                    src={serach}
+                    src="/imgs/travelform/Search.png"
                     alt="검색창 아이콘"
                     className={styles.serach}
                     width={24}
@@ -183,14 +185,11 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
               <div className={styles.selectedCountries}>
                 {formData.countries.map((country) => (
                   <div key={country} className={styles.countryTag}>
-                    {country}
-                    <button
-                      type="button"
-                      onClick={() => removeCountry(country)}
-                      className={styles.removeTag}
-                    >
-                      ×
-                    </button>
+                    <Tag
+                      label={country}
+                      type="delete" // 'delete' 타입으로 삭제 아이콘 표시
+                      size="medium" // 원하는 사이즈로 설정
+                    />
                   </div>
                 ))}
               </div>
@@ -223,7 +222,17 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 name="startDate"
                 value={formData.startDate}
                 onChange={handleInputChange}
+                className={styles.customDateInput}
               />
+              <span className={styles.customIcon}>
+                <Image
+                  src="/imgs/travelform/cal.png"
+                  alt="달력 아이콘"
+                  className={styles.cal}
+                  width={21}
+                  height={21}
+                />
+              </span>
             </div>
             <div className={styles.dateInput}>
               <span>종료일</span>
@@ -232,16 +241,31 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 name="endDate"
                 value={formData.endDate}
                 onChange={handleInputChange}
+                className={styles.customDateInput}
               />
+              <span className={styles.customIcon}>
+                <Image
+                  src="/imgs/travelform/cal.png"
+                  alt="달력 아이콘"
+                  className={styles.cal}
+                  width={21}
+                  height={21}
+                />
+              </span>
             </div>
           </div>
         </div>
 
-        <Button
-          type="submit" // 제출 버튼으로 설정
-          label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
-          primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
-        />
+        <div className={styles.btnWrap}>
+          <Link href="/travel/1">
+            <Button
+              type="submit" // 제출 버튼으로 설정
+              label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
+              primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
+              className={styles.btn}
+            />
+          </Link>
+        </div>
       </form>
     </div>
   );

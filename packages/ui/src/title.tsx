@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import backIcon from './assets/back.png';
+import alarm from './assets/title/bell.png';
 import styles from './title.module.css';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface TitleProps {
   label: string;
@@ -27,6 +29,15 @@ export const Title = ({ label }: TitleProps) => {
         className={styles.back}
       />
       <h1 className={styles.label}>{label}</h1>
+      <Link href="/alarm">
+        <Image
+          src={alarm}
+          alt="알림"
+          width={20}
+          height={20}
+          className={styles.alarm}
+        />
+      </Link>
     </nav>
   );
 };
