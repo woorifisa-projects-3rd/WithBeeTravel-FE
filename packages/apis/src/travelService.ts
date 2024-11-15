@@ -1,6 +1,6 @@
 import { instance } from './instance';
 
-//
+// 여행 생성
 export const createTravel = async (
   travelName: number,
   isDomesticTravel: Boolean,
@@ -19,7 +19,7 @@ export const createTravel = async (
   });
 };
 
-//
+// 여행 편집
 export const editTravel = async (
   travelId: number,
   travelName: number,
