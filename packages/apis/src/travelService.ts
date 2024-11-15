@@ -1,5 +1,4 @@
 import { instance } from './instance';
-// import { ErrorResponse } from './instance';
 
 export const createTravel = async(
     travelName: number,

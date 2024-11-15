@@ -5,12 +5,14 @@ import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
 import { createTravel } from '@withbee/apis';
 import './page.module.css';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [editedTravel, setEditedTravel] = useState<any | null>(null); // 편집할 여행 데이터 (기본값은 null)
 
   const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
   const mode = searchParams.get('mode');
+  const router = useRouter();
 
   // api연결
   const handleCreateTravel = async (formData: any) => {
@@ -29,7 +31,10 @@ export default function Page() {
       travelStartDate,
       travelEndDate,
     );
-    console.log(response);
+
+    if (response && response.travelId) {
+      router.push(`/travel/${response.travelId}`);
+    }
   };
 
   // 여행 선택 시 데이터 세팅

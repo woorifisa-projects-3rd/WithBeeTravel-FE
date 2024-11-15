@@ -4,6 +4,7 @@ export interface SuccessResponse<T> {
   status: string;
   message: string;
   data?: T;
+  travelId: string;
 }
 
 export interface ErrorResponse {
@@ -11,6 +12,7 @@ export interface ErrorResponse {
   name: string;
   code: string;
   message: string;
+  travelId: string;
 }
 
 interface RequestOptions extends RequestInit {
