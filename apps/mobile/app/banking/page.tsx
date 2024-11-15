@@ -24,7 +24,7 @@ export default function BankingPage() {
       .then(data => {
         // 받은 데이터를 BankingAccount 배열로 변환하여 상태에 저장
         const formattedData = data.map((item: any, index: number) => ({
-          id: item.accountId, // id는 임의로 생성 (만약 실제 id가 있으면 그걸 사용)
+          id: item.accountId, 
           accountNumber: item.accountNumber,
           product: item.product,
           balance: item.balance,
@@ -38,6 +38,15 @@ export default function BankingPage() {
 
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');
+  };
+
+
+  // 송금 버튼 클릭 시 예외처리
+  const handleTransferClick = (event: React.MouseEvent<HTMLButtonElement>, accountId: number) => {
+    // 이벤트 버블링 방지
+    event.stopPropagation();
+    // 송금 페이지로 이동
+    router.push(`/banking/${accountId}/transfer`);
   };
 
   return (
@@ -58,7 +67,8 @@ export default function BankingPage() {
 
       <div className={styles.transactionList}>
         {accounts.map((transaction) => (
-          <div key={transaction.id} className={styles.transactionItem}>
+          <div key={transaction.id} className={styles.transactionItem}
+          onClick={()=>router.push(`/banking/${transaction.id}`)}>
             <div className={styles.transactionInfo}>
               <div className={styles.accountType}>{transaction.product}</div>
               <div className={styles.accountNumber}>{transaction.accountNumber}</div>
@@ -70,8 +80,8 @@ export default function BankingPage() {
                 <Button
                   size="xsmall"
                   label="송금"
-                  onClick={() => router.push(`/banking/${transaction.id}/transfer`)}
-                />
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleTransferClick(e, transaction.id)} 
+                  />
               </div>
 
               {/* 금액을 오른쪽 정렬 */}
