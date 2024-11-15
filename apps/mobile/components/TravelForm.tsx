@@ -3,16 +3,14 @@ import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import { Tag } from '@withbee/ui/tag';
 
-// 타입 정의
 interface TravelFormProps {
   mode: 'create' | 'edit';
   travelData?: {
     travelName: string;
-    isDomesticTravel: boolean; // true 또는 false 값으로 변경
+    isDomesticTravel: boolean;
     travelCountries?: string[];
     travelStartDate: string;
     travelEndDate: string;
@@ -55,7 +53,7 @@ export default function TravelForm({
     if (mode === 'edit' && travelData) {
       setFormData({
         travelName: travelData.travelName,
-        isDomesticTravel: travelData.isDomesticTravel, // 'domestic' or 'overseas'에서 true/false로 설정된 값
+        isDomesticTravel: travelData.isDomesticTravel,
         travelCountries: travelData.travelCountries || [],
         travelStartDate: travelData.travelStartDate,
         travelEndDate: travelData.travelEndDate,
@@ -121,7 +119,6 @@ export default function TravelForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
     onSubmit(formData);
   };
 
@@ -144,18 +141,18 @@ export default function TravelForm({
           <label>여행지</label>
           <div className={styles.locationButtons}>
             <Button
-              primary={!formData.isDomesticTravel} // '국내' 버튼 활성화 시 primary 스타일 적용
-              size="medium" // 크기를 medium으로 설정
+              primary={!formData.isDomesticTravel}
+              size="medium"
               label="국내"
-              onClick={() => handleLocationChange(false)} // false는 '국내'를 의미
+              onClick={() => handleLocationChange(false)}
               className={styles.domesticBtn}
             />
 
             <Button
-              primary={formData.isDomesticTravel} // '해외' 버튼 활성화 시 primary 스타일 적용
+              primary={formData.isDomesticTravel}
               size="medium"
               label="해외"
-              onClick={() => handleLocationChange(true)} // true는 '해외'를 의미
+              onClick={() => handleLocationChange(true)}
               className={styles.overseasBtn}
             />
           </div>
@@ -188,7 +185,7 @@ export default function TravelForm({
                     <Tag
                       label={country}
                       type="delete" // 'delete' 타입으로 삭제 아이콘 표시
-                      size="medium" // 원하는 사이즈로 설정
+                      size="medium"
                     />
                   </div>
                 ))}
@@ -257,14 +254,12 @@ export default function TravelForm({
         </div>
 
         <div className={styles.btnWrap}>
-          {/* <Link href="/travel/1"> */}
           <Button
-            type="submit" // 제출 버튼으로 설정
-            label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
-            primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
+            type="submit"
+            label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'}
+            primary={true}
             className={styles.btn}
           />
-          {/* </Link> */}
         </div>
       </form>
     </div>

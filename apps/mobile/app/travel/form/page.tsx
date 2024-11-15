@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 export default function Page() {
   const [editedTravel, setEditedTravel] = useState<any | null>(null); // 편집할 여행 데이터 (기본값은 null)
 
-  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+  const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
 
