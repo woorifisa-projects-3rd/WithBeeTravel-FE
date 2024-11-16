@@ -8,7 +8,7 @@
     "./tab-group": "./src/tab-group.tsx",
     "./friend-image": "./src/friend-image.tsx",
     "./chart": "./src/chart.tsx",
-    "./tag": "./src/tag.tsx",
+    "./item": "./src/item.tsx",
     "./title": "./src/title.tsx",
     "./test": "./src/test.tsx",
     "./button": "./src/button.tsx",

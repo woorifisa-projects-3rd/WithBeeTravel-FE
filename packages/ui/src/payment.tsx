@@ -2,7 +2,7 @@
 
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
-import { Tag } from './tag';
+import { Tag } from './item';
 import { motion } from 'framer-motion';
 
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];

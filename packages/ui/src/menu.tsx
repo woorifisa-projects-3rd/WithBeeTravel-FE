@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Button } from './button';
 import styles from './menu.module.css';
-import { Tag } from './tag';
+import { Item } from './item';
 import { useState } from 'react';
 
 interface MenuProps {
@@ -29,10 +29,10 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isFilter ? (
         <div className={styles.filterContainer}>
           <div className={styles.filter}>
-            <Tag label="전체 기간" size="small" type="select" />
-            <Tag label="결제 멤버" size="small" type="select" />
+            <Item label="전체 기간" size="small" type="select" />
+            <Item label="결제 멤버" size="small" type="select" />
           </div>
-          <Tag label="최신순" size="small" type="select" />
+          <Item label="최신순" size="small" type="select" />
         </div>
       ) : (
         <div className={styles.default}>

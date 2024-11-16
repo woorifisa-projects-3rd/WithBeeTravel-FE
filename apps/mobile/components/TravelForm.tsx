@@ -4,7 +4,7 @@ import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
-import { Tag } from '@withbee/ui/tag';
+import { Item } from '@withbee/ui/item';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -182,9 +182,10 @@ export default function TravelForm({
               <div className={styles.selectedCountries}>
                 {formData.travelCountries.map((country) => (
                   <div key={country} className={styles.countryTag}>
-                    <Tag
+                    <Item
                       label={country}
                       type="delete" // 'delete' 타입으로 삭제 아이콘 표시
+                      onDelete={() => removeCountry(country)}
                       size="medium"
                     />
                   </div>
