@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
-import { Tag } from './tag';
+import { Tag } from './item';
 import { motion } from 'framer-motion';
 import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
