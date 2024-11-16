@@ -28,7 +28,7 @@ export default function TravelForm({
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
     travelName: '',
-    isDomesticTravel: false, // true/false 값으로 설정
+    isDomesticTravel: false,
     travelCountries: [] as string[],
     travelStartDate: '2024-10-28',
     travelEndDate: '2024-11-02',

@@ -10,7 +10,6 @@ interface ItemProps {
   onDelete?: () => void;
 }
 
-// 컴포넌트 이름이 애매함
 export const Item = ({
   label,
   size = 'medium',
