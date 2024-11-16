@@ -7,6 +7,9 @@ import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate } from '../../../packages/utils/dateUtils';
+import { CustomToastContainer } from '../components/ToastContainer';
+import { useToast } from '../hooks/useToast';
+import { validators } from '../utils/validCheck';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -144,13 +147,38 @@ export default function TravelForm({
     }));
   };
 
+  const { formValidation } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 여행명 검증
+    if (!validators.travelName(formData.travelName)) {
+      formValidation.invalidName();
+      return;
+    }
+
+    // 날짜 검증
+    const dateValidation = validators.travelDates(
+      formData.travelStartDate,
+      formData.travelEndDate,
+    );
+
+    if (!dateValidation.isValid) {
+      if (dateValidation.error === 'EXCEED_DURATION') {
+        formValidation.invalidDateDuration();
+      } else if (dateValidation.error === 'INVALID_ORDER') {
+        formValidation.invalidDateOrder();
+      }
+      return;
+    }
+
     onSubmit(formData);
   };
 
   return (
     <div className={styles.container}>
+      <CustomToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label>여행명</label>
