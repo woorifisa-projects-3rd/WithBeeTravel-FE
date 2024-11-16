@@ -6,7 +6,7 @@
     "./date-picker-modal": "./src/date-picker-modal.tsx",
     "./menu": "./src/menu.tsx",
     "./payment": "./src/payment.tsx",
-    "./tab-group": "./src/tab-group.tsx",
+    "./item-group": "./src/item-group.tsx",
     "./friend-image": "./src/friend-image.tsx",
     "./chart": "./src/chart.tsx",
     "./item": "./src/item.tsx",

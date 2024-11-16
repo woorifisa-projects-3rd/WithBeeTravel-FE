@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
-import { Tag } from './item';
+import { Item } from './item';
 import { motion } from 'framer-motion';
 import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
@@ -64,7 +64,7 @@ export const Payment = () => {
           </div>
         </div>
         <div className={styles.contentWrapper}>
-          <Tag label="1,491.33 KRW/EUR" size="small" />
+          <Item label="1,491.33 KRW/EUR" size="small" />
           <div className={styles.optionsWrapper}>
             <button className={styles.option}>기록 추가</button>
           </div>
