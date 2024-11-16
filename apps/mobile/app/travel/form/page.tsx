@@ -56,7 +56,7 @@ export default function Page() {
   return (
     <div>
       <Title label={mode == 'edit' ? '여행 편집' : '여행 생성'} />
-      {/* 여행 생성/편집 폼 렌더링 */}
+
       <TravelForm
         mode={mode as 'create' | 'edit'}
         travelData={travelData}
