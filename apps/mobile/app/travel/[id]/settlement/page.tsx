@@ -12,8 +12,8 @@ export default async function Page() {
   const params = useParams();
   const travelId = params.id;
 
-  const data = await getSettlementDetails(Number(travelId));
-  const { myTotalPayment, myDetailPayments, others } = data;
+  const response = await getSettlementDetails(Number(travelId));
+  const { myTotalPayment, myDetailPayments, others } = response.data;
 
   return (
     <div className={styles.container}>
