@@ -19,7 +19,7 @@ export const FriendImage = ({
 
   return (
     <Image
-      src={`/friends/${safeNumber}.png`}
+      src={`/imgs/friends/${safeNumber}.png`}
       alt={`Friend ${safeNumber}`}
       width={size}
       height={size}
