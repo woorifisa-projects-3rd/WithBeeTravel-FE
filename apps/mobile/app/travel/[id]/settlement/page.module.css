@@ -104,12 +104,12 @@
   width: 100%;
 }
 
-.totalAmount {
+.paymentAmout {
   color: #3b82f6;
   margin-left: 4px;
 }
 
-.requestAmount {
+.requestedAmount {
   color: #ef4444;
   margin-left: 4px;
 }
@@ -157,7 +157,7 @@
 }
 
 .completedCard::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -2px; /* 테두리가 흐릿해 보이도록 경계선 바깥으로 확장 */
   left: -2px;
