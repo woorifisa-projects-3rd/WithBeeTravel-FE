@@ -6,13 +6,11 @@ import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
-import { useParams } from 'next/navigation';
 
-export default async function Page() {
-  const params = useParams();
-  const travelId = params.id;
+export default async function Page({ params }) {
+  const travelId = Number(params.id);
 
-  const response = await getSettlementDetails(Number(travelId));
+  const response = await getSettlementDetails(travelId);
   const { myTotalPayment, myDetailPayments, others } = response.data;
 
   return (
