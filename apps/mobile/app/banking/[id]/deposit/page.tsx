@@ -4,7 +4,10 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
-import { ErrorResponse, SuccessResponse } from '../../../../../../packages/apis/src/instance';
+import {
+  ErrorResponse,
+  SuccessResponse,
+} from '../../../../../../packages/apis/src/instance';
 
 interface AccountInfo {
   accountId: number;
@@ -24,18 +27,17 @@ export default function DepositPage() {
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
-      
-      (async() =>{
-        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+      (async () => {
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${myAccountId}/info`,
+        );
         console.log(response);
 
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
-          
-          console.error(response.message)
+          console.error(response.message);
         }
-        
       })();
     }
   }, [myAccountId]);
@@ -63,12 +65,10 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await instance.post(`/accounts/${myAccountId}/deposit`,
-        {
-          body: JSON.stringify(DepositRequest),
-        },
-      );
-      console.log("호초루: ", response)
+      const response = await instance.post(`/accounts/${myAccountId}/deposit`, {
+        body: JSON.stringify(DepositRequest),
+      });
+      console.log('호초루: ', response);
       alert('입금 완료');
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);

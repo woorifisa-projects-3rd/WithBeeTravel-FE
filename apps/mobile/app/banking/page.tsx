@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
 
 interface AccountInfo {
-  accountId: number,
+  accountId: number;
   accountNumber: string;
   product: string;
   balance: number;
@@ -19,16 +19,15 @@ export default function BankingPage() {
   const [accounts, setAccounts] = useState<AccountInfo[]>([]);
 
   useEffect(() => {
-    
-    const fetchAccounts = async () =>{
-      const response = await instance.get<AccountInfo[]>(`/accounts`)
-      
-      if('data' in response){
-      setAccounts(response.data);
-      } else{
+    const fetchAccounts = async () => {
+      const response = await instance.get<AccountInfo[]>(`/accounts`);
+
+      if ('data' in response) {
+        setAccounts(response.data);
+      } else {
         console.error(response.message);
-      }   
-    }
+      }
+    };
     fetchAccounts();
   }, []);
 
