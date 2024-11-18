@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
 import { Tag } from './tag';
@@ -10,14 +10,10 @@ import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
 
-const width = window?.innerWidth;
-
-// width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
-const visibleFriendsLength = width > 390 ? 5 : 4;
-
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];
 
 export const Payment = () => {
+  const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
   const [selectedFriends, setSelectedFriends] = useState<number[]>(friends);
 
@@ -29,7 +25,21 @@ export const Payment = () => {
     }
   };
 
-  console.log('selectedFriends', selectedFriends);
+  useEffect(() => {
+    // 초기 윈도우 너비 설정
+    setWindowWidth(window.innerWidth);
+
+    // 리사이즈 이벤트 핸들러
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
+  const visibleFriendsLength = windowWidth > 390 ? 5 : 4;
 
   return (
     <article className={styles.payment}>
