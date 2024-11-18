@@ -12,6 +12,7 @@
     "@withbee/ui": "workspace:*",
     "@withbee/styles": "workspace:*",
     "@withbee/apis": "workspace:*",
+    "@withbee/utils": "workspace:*",
     "chart.js": "^4.4.6",
     "next": "14.2.6",
     "react": "18.3.1",

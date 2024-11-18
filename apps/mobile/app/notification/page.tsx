@@ -2,6 +2,7 @@ import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
 import '@withbee/styles';
 import Image from 'next/image';
+import formatDateToKorean from '@withbee/utils/dateUtils';
 
 export default function Page() {
   const notifications = [
@@ -58,19 +59,7 @@ export default function Page() {
           {sortedNotifications.map((notification) => (
             <li key={notification.id} className={styles.cardContainer}>
               <div className={styles.logTime}>
-                {new Intl.DateTimeFormat('ko-KR', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  weekday: 'short',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false,
-                })
-                  .format(new Date(notification.logTime))
-                  .replace('.', '년 ')
-                  .replace('.', '월 ')
-                  .replace('.', '일')}
+                {formatDateToKorean(new Date(notification.logTime))}
               </div>
               <div className={styles.card}>
                 <div className={styles.cardRow}>
