@@ -68,6 +68,7 @@ export default function CreateAccountPage() {
           id="product"
           value={selectedProduct}
           onChange={(e) => setSelectedProduct(e.target.value)}
+          className={styles.select}  // 여기에 className 추가
         >
           <option value="">-- 선택하세요 --</option>
           {productOptions.map((option) => (
