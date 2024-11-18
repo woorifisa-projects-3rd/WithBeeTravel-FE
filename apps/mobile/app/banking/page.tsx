@@ -57,7 +57,8 @@ export default function BankingPage() {
     <div className={styles.container}>
       <Title label="뱅킹 홈" />
       <div className={styles.space}></div>
-      <Button size="medium" label="계좌 만들러 가기" />
+      <Button size="medium" label="계좌 만들러 가기" 
+      onClick={()=>router.push(`/banking/create`)}/>
       <div className={styles.space}></div>
 
       <div className={styles.balanceSection}>
