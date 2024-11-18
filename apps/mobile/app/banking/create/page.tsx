@@ -35,12 +35,12 @@ export default function CreateAccountPage() {
     }
 
     const CreateAccount = {
-        product:selectedProduct
-    }
+      product: selectedProduct,
+    };
 
     try {
       const response = await instance.post('/accounts', {
-        body:JSON.stringify(CreateAccount)
+        body: JSON.stringify(CreateAccount),
       });
 
       if (response.status  === 201) {
@@ -65,17 +65,17 @@ export default function CreateAccountPage() {
           계좌 유형 선택
         </label>
         <select
-  id="product"
-  value={selectedProduct}
-  onChange={(e) => setSelectedProduct(e.target.value)}
->
-  <option value="">-- 선택하세요 --</option>
-  {productOptions.map((option) => (
-    <option key={option} value={option}>
-      {option}
-    </option>
-  ))}
-</select>
+          id="product"
+          value={selectedProduct}
+          onChange={(e) => setSelectedProduct(e.target.value)}
+        >
+          <option value="">-- 선택하세요 --</option>
+          {productOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* 에러 메시지 */}
@@ -83,7 +83,11 @@ export default function CreateAccountPage() {
 
       {/* 계좌 생성 버튼 */}
       <div className={styles.formSection}>
-        <Button label="계좌 생성하기" onClick={handleCreateAccount} size="medium" />
+        <Button
+          label="계좌 생성하기"
+          onClick={handleCreateAccount}
+          size="medium"
+        />
       </div>
     </div>
   );
