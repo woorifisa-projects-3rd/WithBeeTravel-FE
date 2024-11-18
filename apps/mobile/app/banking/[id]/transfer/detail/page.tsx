@@ -110,7 +110,11 @@ export default function TransferDetailPage() {
           body: JSON.stringify(TransferRequest),
         },
       );
-    
+      // if (!response.ok) {
+      //   //TODO: 에러 처리 추가 예정
+      //   alert('송금 실패');
+      // }
+      // const result = await response.json();
       alert('송금 완료');
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);
