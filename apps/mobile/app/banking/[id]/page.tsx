@@ -31,10 +31,10 @@ export default function AccountPage() {
   const [histories, setHistories] = useState<AccountHistory[]>([]);
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
 
-  
   useEffect(() => {
     if (id) {
       // 계좌 정보 가져오기
+
       (async() =>{
         const response = await instance.get<AccountInfo>(`/accounts/${id}/info`);
         console.log(response);
@@ -46,6 +46,7 @@ export default function AccountPage() {
           console.error(response.message)
         }
         
+
       })();
 
       // 거래 내역 가져오기
@@ -53,8 +54,7 @@ export default function AccountPage() {
         const response = await instance.get<AccountHistory>(`/accounts/${id}`);
         console.log("상세 내역: ", response);
         
-        setHistories(response.data); // 거래 내역 업데이트
-              
+        setHistories(response.data); // 거래 내역 업데이트            
       })();
     }
   }, [id]);
