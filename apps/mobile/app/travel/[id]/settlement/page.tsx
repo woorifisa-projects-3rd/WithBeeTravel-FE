@@ -6,6 +6,7 @@ import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
+import Image from 'next/image';
 
 export default async function Page({ params }) {
   const travelId = Number(params.id);
@@ -91,7 +92,14 @@ export default async function Page({ params }) {
                     </span>
                   </div>
                   {user.agreed && (
-                    <div className={styles.completedOverlay}>동의완료</div>
+                    <div className={styles.completedOverlay}>
+                      <Image
+                        src="/imgs/settlement/stamp.png"
+                        alt="stamp"
+                        width={50}
+                        height={50}
+                      />
+                    </div>
                   )}
                 </li>
               ))}
