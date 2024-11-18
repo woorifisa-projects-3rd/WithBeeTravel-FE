@@ -5,7 +5,6 @@ import styles from './../app/travel/[id]/settlement/page.module.css';
 import Image from 'next/image';
 
 export default function ExpenseDetails({ myDetailPayments }) {
-  console.log(myDetailPayments);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetails = () => {
@@ -21,7 +20,9 @@ export default function ExpenseDetails({ myDetailPayments }) {
               <li key={expense.id} className={styles.expenseItem}>
                 <div>
                   <div className={styles.expenseDate}>
-                    {expense.paymentDate}
+                    {expense.paymentDate.split('T')[0] +
+                      ' ' +
+                      expense.paymentDate.split('T')[1].slice(0, 8)}
                   </div>
                   <div className={styles.storeName}>{expense.storeName}</div>
                 </div>

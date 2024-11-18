@@ -105,7 +105,7 @@
 }
 
 .paymentAmout {
-  color: #3b82f6;
+  color: var(--color-blue-10);
   margin-left: 4px;
 }
 
