@@ -39,14 +39,13 @@ export default function CreateAccountPage() {
     }
 
     try {
-      // 백엔드로 계좌 생성 요청 보내기
       const response = await instance.post('/accounts', {
         body:JSON.stringify(CreateAccount)
       });
 
-      if (response.status === 201) {
-        // 계좌 생성 성공 후 홈으로 리디렉션
-        window.location.href = '/banking';
+      if (response.status  === 201) {
+        alert("계좌 생성 완료")
+        router.push('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
       }
