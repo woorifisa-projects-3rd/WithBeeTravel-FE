@@ -7,7 +7,7 @@ import { Button } from '@withbee/ui/button';
 import { instance } from '@withbee/apis';
 
 interface AccountInfo {
-  accountId: number,
+  accountId: number;
   accountNumber: string;
   product: string;
   balance: number;
@@ -25,17 +25,17 @@ export default function TransferPage() {
   // 계좌 정보 가져오기
   useEffect(() => {
     if (accountId) {
-      (async() =>{
-        const response = await instance.get<AccountInfo>(`/accounts/${accountId}/info`);
+      (async () => {
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${accountId}/info`,
+        );
         console.log(response);
 
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
-          
-          console.error(response.message)
+          console.error(response.message);
         }
-        
       })();
     }
   }, [accountId]);
@@ -51,19 +51,18 @@ export default function TransferPage() {
       return;
     }
 
- 
     const AccountNumberRequest = {
       accountNumber: targetAccount,
     };
-  
+
     // localStorage에 계좌번호 저장
     localStorage.setItem('targetAccountNumber', targetAccount);
-  
+
     try {
-      const response = await instance.post('/accounts/verify',
-        { body: JSON.stringify(AccountNumberRequest)
-         });
-  
+      const response = await instance.post('/accounts/verify', {
+        body: JSON.stringify(AccountNumberRequest),
+      });
+
       // 응답 처리
       if (response.status === 200) {
         alert('계좌번호가 확인 완!! 돈 보내러 가는 중~');
@@ -75,10 +74,7 @@ export default function TransferPage() {
       console.error('계좌번호 검증 중 오류 발생:', error);
       alert('계좌번호 검증에 실패했습니다. 다시 시도해주세요.');
     }
-  }
-    
-
-  
+  };
 
   // 가상 키보드 생성
   const renderKeyboard = () => (
@@ -119,8 +115,7 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)}{' '}
-            원
+            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)} 원
           </p>
         ) : (
           <p>계좌 정보를 불러오는 중입니다...</p>

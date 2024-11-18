@@ -20,7 +20,9 @@ export default function TransferDetailPage() {
   ); // 초기값을 null로 설정
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(undefined);
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(
+    undefined,
+  );
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<{ name: string }>({
     name: '',
@@ -50,7 +52,7 @@ export default function TransferDetailPage() {
       //   .catch((error) => {
       //     console.error('내 계좌 정보 가져오기 실패:', error);
       //   });
-      (async() =>{
+      (async () => {
         const response = await instance.get(`/accounts/${myAccountId}/info`);
         setAccountInfo(response.data);
       })();
@@ -68,7 +70,7 @@ export default function TransferDetailPage() {
           body: JSON.stringify(AccountNumberRequest),
         });
         console.log(response);
-        setTargetAccount(response.data)
+        setTargetAccount(response.data);
       })();
     }
   }, [targetAccountNumber]);
@@ -106,15 +108,11 @@ export default function TransferDetailPage() {
     try {
       const response = await instance.post(
         `/accounts/${myAccountId}/transfer`,
-        {        
+        {
           body: JSON.stringify(TransferRequest),
         },
       );
-      // if (!response.ok) {
-      //   //TODO: 에러 처리 추가 예정
-      //   alert('송금 실패');
-      // }
-      // const result = await response.json();
+
       alert('송금 완료');
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);

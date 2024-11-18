@@ -35,26 +35,25 @@ export default function AccountPage() {
     if (id) {
       // 계좌 정보 가져오기
 
-      (async() =>{
-        const response = await instance.get<AccountInfo>(`/accounts/${id}/info`);
+      (async () => {
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${id}/info`,
+        );
         console.log(response);
 
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
-          
-          console.error(response.message)
+          console.error(response.message);
         }
-        
-
       })();
 
       // 거래 내역 가져오기
       (async () => {
         const response = await instance.get<AccountHistory>(`/accounts/${id}`);
-        console.log("상세 내역: ", response);
-        
-        setHistories(response.data); // 거래 내역 업데이트            
+        console.log('상세 내역: ', response);
+
+        setHistories(response.data); // 거래 내역 업데이트
       })();
     }
   }, []);
