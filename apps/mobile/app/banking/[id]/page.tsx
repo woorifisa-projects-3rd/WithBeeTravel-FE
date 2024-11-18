@@ -57,7 +57,7 @@ export default function AccountPage() {
         setHistories(response.data); // 거래 내역 업데이트            
       })();
     }
-  }, [id]);
+  }, []);
 
   const formatNumber = (num: number | null | undefined): string => {
     if (num == null) return '0'; // null 또는 undefined 처리
