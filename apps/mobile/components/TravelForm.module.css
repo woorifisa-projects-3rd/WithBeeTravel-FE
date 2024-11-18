@@ -73,7 +73,7 @@
 
 
 .customDateInput {
-  padding-right: 15px;
+  padding-right: 25px;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -89,9 +89,12 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #ff5733;
-  /* 원하는 색상 */
   cursor: pointer;
+  padding-left: 20px;
+}
+
+.date {
+  color: var(--color-gray-500);
 }
 
 .searchSection {

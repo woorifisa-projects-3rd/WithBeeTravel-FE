@@ -30,8 +30,8 @@
 
 .bottom.modal {
   position: relative;
-  border-radius: 30px;
-  padding: 40px 25px 35px 25px;
+  border-radius: 20px;
+  padding: 40px 25px 35px;
 }
 
 .bottom.modal::after {

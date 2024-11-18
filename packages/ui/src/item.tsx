@@ -1,25 +1,32 @@
 import Image from 'next/image';
-import styles from './tag.module.css';
+import styles from './item.module.css';
 import deleteIcon from './assets/close.png';
 import arrowIcon from './assets/arrow_down.png';
 
-interface TagProps extends React.HTMLAttributes<HTMLButtonElement> {
+interface ItemProps {
   label: string;
   size?: 'small' | 'medium';
   type?: 'default' | 'select' | 'delete';
+  onDelete?: () => void;
 }
 
-// 컴포넌트 이름이 애매함
-export const Tag = ({
+export const Item = ({
   label,
   size = 'medium',
   type = 'default',
-  ...props
-}: TagProps) => {
+  onDelete,
+}: ItemProps) => {
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete();
+    }
+  };
   return (
-    <i className={[styles.tag, styles[size]].join(' ')} {...props}>
+    <i className={[styles.item, styles[size]].join(' ')}>
       {label}
-      <button>
+      <button onClick={type === 'delete' ? handleDeleteClick : undefined}>
         {type === 'delete' && (
           <Image src={deleteIcon} alt="delete" width={14} height={14} />
         )}
