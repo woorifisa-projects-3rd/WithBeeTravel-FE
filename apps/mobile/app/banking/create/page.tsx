@@ -43,8 +43,8 @@ export default function CreateAccountPage() {
         body: JSON.stringify(CreateAccount),
       });
 
-      if (response.status  === 201) {
-        alert("계좌 생성 완료")
+      if (response.status === 201) {
+        alert('계좌 생성 완료');
         router.push('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
