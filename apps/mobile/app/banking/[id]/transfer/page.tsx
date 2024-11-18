@@ -4,10 +4,12 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useEffect, useState } from 'react';
 import { Button } from '@withbee/ui/button';
+import { instance } from '@withbee/apis';
 
 interface AccountInfo {
+  accountId: number,
   accountNumber: string;
-  accountName: string;
+  product: string;
   balance: number;
 }
 
@@ -16,23 +18,25 @@ export default function TransferPage() {
   const params = useParams();
   const accountId = params.id;
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null); // 초기값을 null로 설정
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
   // 계좌 정보 가져오기
   useEffect(() => {
     if (accountId) {
-      fetch(`http://localhost:8080/accounts/${accountId}/info`)
-        .then((response) => response.json())
-        .then((data) => {
-          const formatData = {
-            accountNumber: data.accountNumber,
-            accountName: data.product,
-            balance: data.balance,
-          };
-          setAccountInfo(formatData);
-        });
+      (async() =>{
+        const response = await instance.get<AccountInfo>(`/accounts/${accountId}/info`);
+        console.log(response);
+
+        if ('data' in response) {
+          setAccountInfo(response.data);
+        } else {
+          
+          console.error(response.message)
+        }
+        
+      })();
     }
   }, [accountId]);
 
@@ -41,28 +45,40 @@ export default function TransferPage() {
   };
 
   // 계좌번호 검증 후 금액 설정 페이지로 이동
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (targetAccount.length < 10) {
       alert('계좌번호가 너무 짧아용~');
       return;
     }
 
-    // 계좌번호 검증 (예: 서버에 확인 요청)
-    fetch(`http://localhost:8080/accounts/verify/${targetAccount}`)
-      .then((response) => {
-        if (response.ok) {
-          setErrorMessage('');
-          alert('계좌번호가 있어용~ 얼마 보낼지 알아볼까요?');
-          localStorage.setItem('targetAccountNumber', targetAccount);
-          router.push(`/banking/${accountId}/transfer/detail`);
-        } else {
-          alert('ㅋㅋ 엥 없는 번혼데?!?^^');
-        }
-      })
-      .catch(() => {
-        alert('엥?? 없는 계좐뎅????');
-      });
-  };
+ 
+    const AccountNumberRequest = {
+      accountNumber: targetAccount,
+    };
+  
+    // localStorage에 계좌번호 저장
+    localStorage.setItem('targetAccountNumber', targetAccount);
+  
+    try {
+      const response = await instance.post('/accounts/verify',
+        { body: JSON.stringify(AccountNumberRequest)
+         });
+  
+      // 응답 처리
+      if (response.status === 200) {
+        alert('계좌번호가 확인 완!! 돈 보내러 가는 중~');
+        router.push(`/banking/${accountId}/transfer/detail`);
+      } else {
+        alert('없는 계좌 같은데??');
+      }
+    } catch (error) {
+      console.error('계좌번호 검증 중 오류 발생:', error);
+      alert('계좌번호 검증에 실패했습니다. 다시 시도해주세요.');
+    }
+  }
+    
+
+  
 
   // 가상 키보드 생성
   const renderKeyboard = () => (
@@ -103,7 +119,7 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.accountName} 잔액 {formatNumber(accountInfo.balance)}{' '}
+            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)}{' '}
             원
           </p>
         ) : (

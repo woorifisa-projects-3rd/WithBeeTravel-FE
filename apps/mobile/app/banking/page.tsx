@@ -4,9 +4,10 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
+import { instance } from '@withbee/apis';
 
-interface BankingAccount {
-  id: number;
+interface AccountInfo {
+  accountId: number,
   accountNumber: string;
   product: string;
   balance: number;
@@ -15,22 +16,20 @@ interface BankingAccount {
 export default function BankingPage() {
   const router = useRouter();
 
-  const [accounts, setAccounts] = useState<BankingAccount[]>([]);
+  const [accounts, setAccounts] = useState<AccountInfo[]>([]);
 
   useEffect(() => {
-    // API 호출해서 데이터를 받아옴
-    fetch('http://localhost:8080/accounts') // Spring Boot 서버 주소
-      .then((response) => response.json())
-      .then((data) => {
-        // 받은 데이터를 BankingAccount 배열로 변환하여 상태에 저장
-        const formattedData = data.map((item: any, index: number) => ({
-          id: item.accountId,
-          accountNumber: item.accountNumber,
-          product: item.product,
-          balance: item.balance,
-        }));
-        setAccounts(formattedData);
-      });
+    
+    const fetchAccounts = async () =>{
+      const response = await instance.get<AccountInfo[]>(`/accounts`)
+      
+      if('data' in response){
+      setAccounts(response.data);
+      } else{
+        console.error(response.message);
+      }   
+    }
+    fetchAccounts();
   }, []);
 
   // 총 잔액 계산
@@ -73,9 +72,9 @@ export default function BankingPage() {
       <div className={styles.transactionList}>
         {accounts.map((transaction) => (
           <div
-            key={transaction.id}
+            key={transaction.accountId}
             className={styles.transactionItem}
-            onClick={() => router.push(`/banking/${transaction.id}`)}
+            onClick={() => router.push(`/banking/${transaction.accountId}`)}
           >
             <div className={styles.transactionInfo}>
               <div className={styles.accountType}>{transaction.product}</div>
@@ -91,7 +90,7 @@ export default function BankingPage() {
                   size="xsmall"
                   label="송금"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    handleTransferClick(e, transaction.id)
+                    handleTransferClick(e, transaction.accountId)
                   }
                 />
               </div>

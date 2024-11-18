@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
+import { instance } from '@withbee/apis';
 
 interface AccountInfo {
+  accountId: number;
   accountNumber: string;
-  accountName: string;
+  product: string;
   balance: number;
 }
 
@@ -18,10 +20,10 @@ export default function TransferDetailPage() {
   ); // 초기값을 null로 설정
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null); // 내 계좌 정보 상태
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(undefined);
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
-  const [targetAccount, setTargetAccount] = useState<{ targetName: string }>({
-    targetName: '',
+  const [targetAccount, setTargetAccount] = useState<{ name: string }>({
+    name: '',
   }); // 타겟 계좌 정보
 
   // 클라이언트에서만 localStorage 접근
@@ -35,36 +37,41 @@ export default function TransferDetailPage() {
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
-      fetch(`http://localhost:8080/accounts/${myAccountId}/info`)
-        .then((response) => response.json())
-        .then((data) => {
-          const formatData: AccountInfo = {
-            accountNumber: data.accountNumber,
-            accountName: data.product, // 백엔드에서 'product'로 반환된 이름을 사용
-            balance: data.balance,
-          };
-          setAccountInfo(formatData); // 내 계좌 정보 상태 업데이트
-        })
-        .catch((error) => {
-          console.error('내 계좌 정보 가져오기 실패:', error);
-        });
+      // fetch(`http://localhost:8080/accounts/${myAccountId}/info`)
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     const formatData: AccountInfo = {
+      //       accountNumber: data.accountNumber,
+      //       accountName: data.product, // 백엔드에서 'product'로 반환된 이름을 사용
+      //       balance: data.balance,
+      //     };
+      //     setAccountInfo(formatData); // 내 계좌 정보 상태 업데이트
+      //   })
+      //   .catch((error) => {
+      //     console.error('내 계좌 정보 가져오기 실패:', error);
+      //   });
+      (async() =>{
+        const response = await instance.get(`/accounts/${myAccountId}/info`);
+        setAccountInfo(response.data);
+      })();
     }
   }, [myAccountId]);
 
   // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {
     if (targetAccountNumber) {
-      fetch(`http://localhost:8080/accounts/find-user/${targetAccountNumber}`) // URL 수정
-        .then((response) => response.json()) // 응답을 JSON 형식으로 처리
-        .then((data) => {
-          setTargetAccount({ targetName: data.name }); // 응답에서 이름을 가져와서 상태 업데이트
-          const targetName = data.name;
-        })
-        .catch((error) => {
-          console.error('계좌 이름 가져오기 실패:', error);
+      const AccountNumberRequest = {
+        accountNumber: targetAccountNumber,
+      };
+      (async () => {
+        const response = await instance.post(`/accounts/find-user`, {
+          body: JSON.stringify(AccountNumberRequest),
         });
+        console.log(response);
+        setTargetAccount(response.data)
+      })();
     }
-  }, [targetAccountNumber]); // targetAccountNumber가 변경될 때마다 호출
+  }, [targetAccountNumber]);
 
   // 숫자 입력 처리
   const handleNumberPress = (num: string) => {
@@ -87,31 +94,23 @@ export default function TransferDetailPage() {
       return;
     }
 
-    alert(`${targetAccount.targetName}님에게 ₩${amount}를 송금합니다.`);
+    alert(`${targetAccount.name}님에게 ₩${amount}를 송금합니다.`);
 
     const TransferRequest = {
       accountId: myAccountId,
       amount: amount,
       accountNumber: targetAccountNumber,
-      rqspeNm: targetAccount.targetName,
+      rqspeNm: targetAccount.name,
     };
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/accounts/${myAccountId}/transfer`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      const response = await instance.post(
+        `/accounts/${myAccountId}/transfer`,
+        {        
           body: JSON.stringify(TransferRequest),
         },
       );
-      if (!response.ok) {
-        //TODO: 에러 처리 추가 예정
-        alert('송금 실패');
-      }
-      const result = await response.json();
+    
       alert('송금 완료');
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);
@@ -146,7 +145,7 @@ export default function TransferDetailPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.accountName} ({accountInfo.accountNumber}) - ₩
+            {accountInfo.product} ({accountInfo.accountNumber}) - ₩
             {accountInfo.balance.toLocaleString()}
           </p>
         ) : (
@@ -157,7 +156,7 @@ export default function TransferDetailPage() {
       <div className={styles.targetAccount}>
         <h3>송금할 계좌</h3>
         <p className={styles.accountNumber}>
-          {targetAccount.targetName} {targetAccountNumber}
+          {targetAccount.name} {targetAccountNumber}
         </p>
       </div>
 

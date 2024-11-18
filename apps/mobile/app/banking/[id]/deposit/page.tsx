@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
+import { instance } from '@withbee/apis';
+import { ErrorResponse, SuccessResponse } from '../../../../../../packages/apis/src/instance';
 
 interface AccountInfo {
+  accountId: number;
   accountNumber: string;
-  accountName: string;
+  product: string;
   balance: number;
 }
 
@@ -15,25 +18,25 @@ export default function DepositPage() {
   const params = useParams();
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null); // 내 계좌 정보 상태
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(); // 내 계좌 정보 상태
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
-      fetch(`http://localhost:8080/accounts/${myAccountId}/info`)
-        .then((response) => response.json())
-        .then((data) => {
-          const formatData: AccountInfo = {
-            accountNumber: data.accountNumber,
-            accountName: data.product, // 백엔드에서 'product'로 반환된 이름을 사용
-            balance: data.balance,
-          };
-          setAccountInfo(formatData); // 내 계좌 정보 상태 업데이트
-        })
-        .catch((error) => {
-          console.error('내 계좌 정보 가져오기 실패:', error);
-        });
+      
+      (async() =>{
+        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+        console.log(response);
+
+        if ('data' in response) {
+          setAccountInfo(response.data);
+        } else {
+          
+          console.error(response.message)
+        }
+        
+      })();
     }
   }, [myAccountId]);
 
@@ -60,17 +63,12 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await fetch(
-        `http://localhost:8080/accounts/${myAccountId}/deposit`,
+      const response = await instance.post(`/accounts/${myAccountId}/deposit`,
         {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify(DepositRequest),
         },
       );
-      const result = await response.json();
+      console.log("호초루: ", response)
       alert('입금 완료');
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);
@@ -105,7 +103,7 @@ export default function DepositPage() {
         <h2>입금 할 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.accountName} ({accountInfo.accountNumber}) - ₩
+            {accountInfo.product} ({accountInfo.accountNumber}) - ₩
             {accountInfo.balance.toLocaleString()}
           </p>
         ) : (

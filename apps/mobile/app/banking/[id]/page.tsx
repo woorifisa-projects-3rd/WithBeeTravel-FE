@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
 import { instance } from '@withbee/apis';
+import { error } from 'console';
 
 interface AccountHistory {
   date: string;
@@ -28,23 +29,32 @@ export default function AccountPage() {
   const id = params.id;
 
   const [histories, setHistories] = useState<AccountHistory[]>([]);
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | null>(null);
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
 
   
   useEffect(() => {
     if (id) {
       // 계좌 정보 가져오기
-      (async () => {
-        const response = await instance.get(`/accounts/${id}/info`);
-        console.log("호촐: ", response);
-        setAccountInfo(response); // 계좌 정보 업데이트
+      (async() =>{
+        const response = await instance.get<AccountInfo>(`/accounts/${id}/info`);
+        console.log(response);
+
+        if ('data' in response) {
+          setAccountInfo(response.data);
+        } else {
+          
+          console.error(response.message)
+        }
+        
       })();
 
       // 거래 내역 가져오기
       (async () => {
-        const response = await instance.get(`/accounts/${id}`);
+        const response = await instance.get<AccountHistory>(`/accounts/${id}`);
         console.log("상세 내역: ", response);
-        setHistories(response); // 거래 내역 업데이트
+        
+        setHistories(response.data); // 거래 내역 업데이트
+              
       })();
     }
   }, [id]);
