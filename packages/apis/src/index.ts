@@ -1,2 +1,2 @@
 export { instance } from './instance';
-export { chooseParticipants } from './sharedPaymentsService';
+export { chooseParticipants, getSharedPayments } from './sharedPaymentsService';

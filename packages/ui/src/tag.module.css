@@ -3,6 +3,7 @@
   align-items: center;
   padding: 7px 10px;
   background: var(--color-gray-100);
+  color: var(--color-gray-600);
   border-radius: 7px;
 }
 
