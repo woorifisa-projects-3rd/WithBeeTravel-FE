@@ -1,10 +1,10 @@
 import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
 import TabGroup from '@withbee/ui/tab-group';
-import { Payment } from '@withbee/ui/payment';
 import { Menu } from '@withbee/ui/menu';
 import { getSharedPayments } from '@withbee/apis';
 import PaymentList from '@withbee/ui/payment-list';
+import { usePaymentStore } from '@withbee/stores';
 
 interface TravelPageProps {
   params: {

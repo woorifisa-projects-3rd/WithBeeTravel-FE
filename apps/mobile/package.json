@@ -29,6 +29,7 @@
     "@withbee/eslint-config": "workspace:*",
     "@withbee/types": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
+    "@withbee/stores": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
     "framer-motion": "^11.11.11",

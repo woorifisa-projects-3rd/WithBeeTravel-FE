@@ -30,6 +30,8 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 0 2px;
+  margin-bottom: 25px;
 }
 
 .list li {

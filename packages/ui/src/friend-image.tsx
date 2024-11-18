@@ -15,7 +15,7 @@ export const FriendImage = ({
   className,
 }: FriendImageProps) => {
   // 1-10 사이의 숫자로 제한
-  const safeNumber = Math.max(1, Math.min(10, Number(src))) || 1;
+  const safeNumber = Math.max(1, Math.min(10, Number(src))) || 5;
 
   return (
     <Image

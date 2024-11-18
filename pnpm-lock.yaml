@@ -109,6 +109,9 @@ importers:
       '@withbee/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@withbee/stores':
+        specifier: workspace:*
+        version: link:../../packages/stores
       '@withbee/types':
         specifier: workspace:*
         version: link:../../packages/types

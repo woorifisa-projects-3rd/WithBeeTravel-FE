@@ -5,6 +5,7 @@ import styles from './payment-list.module.css';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
+import { usePaymentStore } from '@withbee/stores';
 import useSWRInfinite from 'swr/infinite';
 import dayjs from 'dayjs';
 import { Payment } from './payment';
@@ -45,13 +46,15 @@ export default function PaymentList({
   travelId,
   initialData,
 }: PaymentListProps) {
+  const { sortBy } = usePaymentStore();
+
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
     threshold: 0.1, // 요소가 10% 보일 때 감지
   });
 
   const getKey = (pageIndex: number) => {
-    return `/api/travels/${travelId}/payments?page=${pageIndex - 1}`; // URL 형식으로 변경
+    return `/api/travels/${travelId}/payments?page=${pageIndex - 1}&sortBy=${sortBy}`;
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
@@ -62,7 +65,7 @@ export default function PaymentList({
         const response = await getSharedPayments({
           travelId,
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
-          sortBy: 'latest',
+          sortBy: sortBy,
         });
         return response.data;
       },
@@ -74,8 +77,6 @@ export default function PaymentList({
 
   // 모든 페이지의 결제내역을 하나의 배열로 합치기
   const payments = data?.flatMap((page) => page?.content ?? []) ?? [];
-  // 날짜별로 그룹화
-  const groupedPayments = groupPaymentsByDate(payments);
 
   // 다음 페이지 로드 조건 체크
   useEffect(() => {
@@ -88,16 +89,27 @@ export default function PaymentList({
     }
   }, [inView, isLoading, isValidating, data, size, setSize]);
 
+  // sortBy가 변경될 때 첫 페이지부터 다시 시작하도록 useEffect 추가
+  useEffect(() => {
+    setSize(1); // size를 1로 리셋
+  }, [sortBy, setSize]);
+
   return (
     <section className={styles.paymentContainer}>
-      {groupedPayments.map(([date, payments]) => (
-        <div className={styles.paymentWrapper} key={date}>
-          <span className={styles.date}>{date}</span>
-          {payments.map((payment) => (
+      {sortBy === 'latest'
+        ? // 최신순일 때는 날짜별 그룹화
+          groupPaymentsByDate(payments).map(([date, payments]) => (
+            <div className={styles.paymentWrapper} key={date}>
+              <span className={styles.date}>{date}</span>
+              {payments.map((payment) => (
+                <Payment key={payment.sharedPaymentId} paymentInfo={payment} />
+              ))}
+            </div>
+          ))
+        : // 금액순일 때는 그룹화 없이 바로 렌더링
+          payments.map((payment) => (
             <Payment key={payment.sharedPaymentId} paymentInfo={payment} />
           ))}
-        </div>
-      ))}
 
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref} className={styles.loadingTrigger}>

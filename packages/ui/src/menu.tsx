@@ -8,12 +8,14 @@ import { useState } from 'react';
 import { BottomModal } from './modal';
 import selectIcon from './assets/select.png';
 import DatePickerModal from './date-picker-modal';
+import { usePaymentStore } from '@withbee/stores';
 
 interface MenuProps {
   className?: string;
 }
 
 export const Menu = ({ className, ...props }: MenuProps) => {
+  const { sortBy, setSortBy } = usePaymentStore();
   const [isOpen, setIsOpen] = useState({
     period: false,
     member: false,
@@ -24,7 +26,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
   const [selected, setSelected] = useState({
     period: '전체',
     member: '전체',
-    sort: '최신순',
+    sort: sortBy === 'latest' ? '최신순' : '금액순',
   });
   const [startDate, setStartDate] = useState({
     year: new Date().getFullYear(),
@@ -45,6 +47,11 @@ export const Menu = ({ className, ...props }: MenuProps) => {
 
   const handleModal = (key: 'period' | 'member' | 'sort' | 'start' | 'end') => {
     setIsOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleSort = () => {
+    handleModal('sort');
+    setSortBy(selected.sort === '최신순' ? 'latest' : 'amount');
   };
 
   return (
@@ -73,7 +80,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
             />
           </div>
           <Tag
-            label="최신순"
+            label={selected.sort}
             size="small"
             type="select"
             onClick={() => handleModal('sort')}
@@ -153,6 +160,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
               </span>
             </li>
           </ul>
+          <Button label="선택 완료" size="large" />
         </BottomModal>
       )}
 
@@ -180,11 +188,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
 
       {/* 정렬 선택 모달 */}
       {isOpen.sort && (
-        <BottomModal
-          isOpen={isOpen.sort}
-          onClose={() => handleModal('sort')}
-          title="정렬"
-        >
+        <BottomModal isOpen={isOpen.sort} onClose={handleSort} title="정렬">
           <ul className={styles.list}>
             {['최신순', '금액순'].map((sort) => (
               <li key={sort} onClick={() => setSelected({ ...selected, sort })}>
