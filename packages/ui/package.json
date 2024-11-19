@@ -36,6 +36,7 @@
     "@withbee/types": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
     "@withbee/apis": "workspace:*",
+    "@withbee/hooks": "workspace:*",
     "@withbee/exception": "workspace:*",
     "@withbee/utils": "workspace:*",
     "eslint": "^8.57.0",

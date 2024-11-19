@@ -10,7 +10,6 @@ import {
   formatDate,
   getDateObject,
 } from '../../../packages/utils/src/dateUtils';
-import { CustomToastContainer } from '@withbee/ui/toast-container';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
 
@@ -171,7 +170,6 @@ export default function TravelForm({
 
   return (
     <div className={styles.container}>
-      <CustomToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label>여행명</label>

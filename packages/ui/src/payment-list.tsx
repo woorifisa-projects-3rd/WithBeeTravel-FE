@@ -12,6 +12,8 @@ import useSWRInfinite from 'swr/infinite';
 import dayjs from 'dayjs';
 import { Payment } from './payment';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { useToast } from '@withbee/hooks/useToast';
+import { getDateObject } from '@withbee/utils';
 
 // 날짜별로 결제 내역을 그룹화하는 함수
 const groupPaymentsByDate = (payments: SharedPayment[]) => {
@@ -49,7 +51,16 @@ export default function PaymentList({
   travelId,
   initialData,
 }: PaymentListProps) {
-  const { startDate, endDate, sortBy, isDateFiltered } = usePaymentStore();
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    sortBy,
+    isDateFiltered,
+  } = usePaymentStore();
+
+  const { showToast } = useToast();
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
@@ -85,14 +96,21 @@ export default function PaymentList({
           ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
         });
 
-        console.log('Fetched:', url, response.data);
-
         if ('code' in response) {
           // TODO: react-toastify로 에러 메시지 표시
-          console.error(
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          showToast.warning({
+            message:
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
               'Unknown Error',
-          );
+          });
+
+          if (response.code === 'VALIDATION-003') {
+            if (new Date(startDate) > new Date(endDate)) {
+              setEndDate(getDateObject(startDate));
+            } else {
+              setStartDate(getDateObject(endDate));
+            }
+          }
         }
 
         return response.data;
