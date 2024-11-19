@@ -21,6 +21,7 @@
     "@types/react-dom": "^18.2.19",
     "@withbee/eslint-config": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
+    "@withbee/utils": "workspace:*",
     "eslint": "^8.57.0",
     "typescript": "5.5.4",
     "zustand": "^5.0.1"

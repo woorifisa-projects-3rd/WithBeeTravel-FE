@@ -37,6 +37,7 @@
     "@withbee/typescript-config": "workspace:*",
     "@withbee/apis": "workspace:*",
     "@withbee/exception": "workspace:*",
+    "@withbee/utils": "workspace:*",
     "eslint": "^8.57.0",
     "framer-motion": "^11.11.11",
     "typescript": "5.5.4"

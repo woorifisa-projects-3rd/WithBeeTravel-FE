@@ -9,6 +9,7 @@ import { BottomModal } from './modal';
 import selectIcon from './assets/select.png';
 import DatePickerModal from './date-picker-modal';
 import { usePaymentStore } from '@withbee/stores';
+import { getDateObject } from '@withbee/utils';
 
 interface MenuProps {
   className?: string;
@@ -57,8 +58,18 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isFilter ? (
         <div className={styles.filterContainer}>
           <div className={styles.filter}>
-            <Item label="전체 기간" size="small" type="select" />
-            <Item label="결제 멤버" size="small" type="select" />
+            <Item
+              label="전체 기간"
+              size="small"
+              type="select"
+              onClick={() => handleModal('period')}
+            />
+            <Item
+              label="결제 멤버"
+              size="small"
+              type="select"
+              onClick={() => handleModal('member')}
+            />
           </div>
           <Item
             label={selected.sort}
@@ -144,7 +155,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isOpen.start && (
         <DatePickerModal
           isOpen={isOpen.start}
-          initialDate={startDate}
+          initialDate={getDateObject(startDate)}
           onSelectDate={setStartDate}
           onClose={() => handleModal('start')}
           title={'시작일'}
@@ -155,7 +166,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       {isOpen.end && (
         <DatePickerModal
           isOpen={isOpen.end}
-          initialDate={endDate}
+          initialDate={getDateObject(endDate)}
           onSelectDate={setEndDate}
           onClose={() => handleModal('end')}
           title={'종료일'}

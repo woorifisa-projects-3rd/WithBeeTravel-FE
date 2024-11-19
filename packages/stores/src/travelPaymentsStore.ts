@@ -1,3 +1,4 @@
+import { formatDate } from '@withbee/utils';
 import { create } from 'zustand';
 
 interface PaymentStore {
@@ -20,10 +21,10 @@ export const usePaymentStore = create<PaymentStore>((set) => ({
   endDate: today!,
   setStartDate: (date) =>
     set({
-      startDate: `${date.year}-${date.month}-${date.day}`,
+      startDate: formatDate(date),
     }),
   setEndDate: (date) =>
     set({
-      endDate: `${date.year}-${date.month}-${date.day}`,
+      endDate: formatDate(date),
     }),
 }));
