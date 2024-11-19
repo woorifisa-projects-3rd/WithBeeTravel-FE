@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import TravelForm from '../../../components/TravelForm';
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
@@ -15,14 +15,13 @@ interface FormData {
   travelEndDate: string;
 }
 
-export default function Page() {
-  const [editedTravel, setEditedTravel] = useState<FormData | null>(null); // 편집할 여행 데이터 (기본값은 null)
-
+// useSearchParams를 사용하는 컴포넌트를 분리
+function TravelFormContent() {
+  const [editedTravel, setEditedTravel] = useState<FormData | null>(null);
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
 
-  // api연결
   const handleCreateTravel = async (formData: FormData) => {
     const {
       travelName,
@@ -45,9 +44,8 @@ export default function Page() {
     }
   };
 
-  // 여행 선택 시 데이터 세팅
   const handleTravelSelect = (travel: FormData) => {
-    setEditedTravel(travel); // 여행 선택 시 데이터 세팅
+    setEditedTravel(travel);
   };
 
   const travelData =
@@ -64,12 +62,21 @@ export default function Page() {
   return (
     <div>
       <Title label={mode == 'edit' ? '여행 편집' : '여행 생성'} />
-
       <TravelForm
         mode={mode as 'create' | 'edit'}
         travelData={travelData}
         onSubmit={handleCreateTravel}
       />
     </div>
+  );
+}
+
+// 메인 컴포넌트
+export default function Page() {
+  return (
+    // 빌드 에러로 인해 수정 - useSearchParams를 사용하는 컴포넌트는 Suspense로 감싸야 함
+    <Suspense fallback={<div>Loading...</div>}>
+      <TravelFormContent />
+    </Suspense>
   );
 }
