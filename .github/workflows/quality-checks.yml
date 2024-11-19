@@ -27,11 +27,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm build --filter "./packages/ui"
+
       - name: Type check
         run: pnpm type-check
 
       - name: Lint check
         run: pnpm lint
 
-      - name: Build check
+      - name: Build all
         run: pnpm build

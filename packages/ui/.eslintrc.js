@@ -4,7 +4,6 @@ module.exports = {
   extends: ['@withbee/eslint-config/next.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.lint.json',
     tsconfigRootDir: __dirname,
   },
 };
