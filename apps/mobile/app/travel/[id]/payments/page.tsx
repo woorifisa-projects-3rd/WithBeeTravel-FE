@@ -1,10 +1,9 @@
 import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
-import TabGroup from '@withbee/ui/tab-group';
+import ItemGroup from '@withbee/ui/item-group';
 import { Menu } from '@withbee/ui/menu';
 import { getSharedPayments } from '@withbee/apis';
 import PaymentList from '@withbee/ui/payment-list';
-import { usePaymentStore } from '@withbee/stores';
 
 interface TravelPageProps {
   params: {
@@ -19,7 +18,7 @@ export default async function Page({ params }: TravelPageProps) {
     <main className={styles.container}>
       <Title label="공동 결제 내역" />
       <Menu className={styles.menu} />
-      <TabGroup />
+      <ItemGroup />
       <PaymentList travelId={Number(id)} initialData={response.data} />
     </main>
   );

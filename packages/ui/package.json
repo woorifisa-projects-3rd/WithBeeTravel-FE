@@ -7,16 +7,18 @@
     "./date-picker-modal": "./src/date-picker-modal.tsx",
     "./menu": "./src/menu.tsx",
     "./payment": "./src/payment.tsx",
-    "./tab-group": "./src/tab-group.tsx",
+    "./item-group": "./src/item-group.tsx",
     "./friend-image": "./src/friend-image.tsx",
     "./chart": "./src/chart.tsx",
-    "./tag": "./src/tag.tsx",
+    "./item": "./src/item.tsx",
     "./title": "./src/title.tsx",
     "./test": "./src/test.tsx",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
-    "./modal": "./src/modal.tsx"
+    "./modal": "./src/modal.tsx",
+    "./toast-container": "./src/toast-container.tsx",
+    "./toast-container.module.css": "./src/toast-container.module.css"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -47,6 +49,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-intersection-observer": "^9.13.1",
     "swiper": "^11.1.14",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "react-toastify": "^10.0.6"
   }
 }

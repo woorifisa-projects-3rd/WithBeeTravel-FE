@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
-import { Tag } from './tag';
+import { Item } from './item';
 import { motion } from 'framer-motion';
 import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
@@ -96,7 +96,7 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
           </div>
         </div>
         <div className={styles.contentWrapper}>
-          <Tag
+          <Item
             label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
             size="small"
           />
