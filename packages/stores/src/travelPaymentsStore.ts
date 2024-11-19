@@ -1,13 +1,14 @@
 import { formatDate } from '@withbee/utils';
+import { type DateObject } from '@withbee/types';
 import { create } from 'zustand';
 
 interface PaymentStore {
   sortBy: 'latest' | 'amount';
   setSortBy: (sort: 'latest' | 'amount') => void;
   startDate: string;
-  setStartDate: (date: { year: number; month: number; day: number }) => void;
+  setStartDate: (date: DateObject) => void;
   endDate: string;
-  setEndDate: (date: { year: number; month: number; day: number }) => void;
+  setEndDate: (date: DateObject) => void;
 }
 
 // YYYY-MM-DD 형식으로 변환

@@ -408,6 +408,9 @@ importers:
       '@withbee/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@withbee/types':
+        specifier: workspace:*
+        version: link:../types
       '@withbee/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

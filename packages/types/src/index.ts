@@ -1,7 +1,3 @@
-export type { SharedPayment } from './sharedPaymentsTypes';
-export type { DateFormat } from './dateTypes';
-export type {
-  PageResponse,
-  SuccessResponse,
-  ErrorResponse,
-} from './responseTypes';
+export type * from './sharedPaymentsType';
+export type * from './dateType';
+export type * from './responseType';
