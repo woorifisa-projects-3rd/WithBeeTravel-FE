@@ -26,9 +26,9 @@ export const Item = ({
     }
   };
   return (
-    <i className={[styles.item, styles[size]].join(' ')}>
+    <i className={[styles.item, styles[size]].join(' ')} onClick={onClick}>
       {label}
-      <button onClick={type === 'delete' ? handleDeleteClick : onClick}>
+      <button onClick={type === 'delete' ? handleDeleteClick : undefined}>
         {type === 'delete' && (
           <Image src={deleteIcon} alt="delete" width={14} height={14} />
         )}
