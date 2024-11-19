@@ -2,7 +2,9 @@
 
 import type { PageResponse, SharedPayment } from '@withbee/types';
 import styles from './payment-list.module.css';
+import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
 import { usePaymentStore } from '@withbee/stores';
@@ -125,7 +127,19 @@ export default function PaymentList({
 
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref} className={styles.loadingTrigger}>
-        {isValidating && <div className={styles.loading}>Loading...</div>}
+        {isValidating && (
+          <motion.div
+            className={styles.loadingWrapper}
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            <Image src="/loading.png" alt="loading" width={25} height={25} />
+          </motion.div>
+        )}
       </div>
 
       {data && data[data.length - 1]?.last && (

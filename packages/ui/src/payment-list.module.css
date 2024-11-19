@@ -22,3 +22,8 @@
   /* font-size: 14px; */
   margin-top: 10px;
 }
+
+.loadingWrapper {
+  width: 100%;
+  text-align: center;
+}
