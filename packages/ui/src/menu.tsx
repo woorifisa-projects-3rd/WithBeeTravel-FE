@@ -16,8 +16,15 @@ interface MenuProps {
 }
 
 export const Menu = ({ className, ...props }: MenuProps) => {
-  const { startDate, setStartDate, endDate, setEndDate, sortBy, setSortBy } =
-    usePaymentStore();
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    sortBy,
+    setSortBy,
+    setIsDateFiltered,
+  } = usePaymentStore();
   const [isOpen, setIsOpen] = useState({
     period: false,
     member: false,
@@ -31,19 +38,30 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     sort: sortBy === 'latest' ? '최신순' : '금액순',
   });
 
-  const [isFilter, setIsFilter] = useState(false);
+  const [isFilter, setIsFilter] = useState(false); // 필터 메뉴인지 여부
 
-  const handleFilter = () => {
-    setIsFilter(!isFilter);
-  };
-
+  // 모달 열기/닫기 핸들러
   const handleModal = (key: 'period' | 'member' | 'sort' | 'start' | 'end') => {
     setIsOpen((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // 정렬 변경 핸들러
   const handleSort = () => {
     handleModal('sort');
     setSortBy(selected.sort === '최신순' ? 'latest' : 'amount');
+  };
+
+  // 전체 기간 선택 핸들러
+  const handleSelectAllDate = () => {
+    setIsDateFiltered(false);
+    setSelected({ ...selected, period: '전체' });
+  };
+
+  // 시작일/종료일 선택 핸들러
+  const handleDateSelect = (type: 'start' | 'end') => {
+    setIsDateFiltered(true);
+    handleModal(type);
+    setSelected({ ...selected, period: '기간' });
   };
 
   return (
@@ -53,7 +71,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
         alt="edit"
         width={28}
         height={28}
-        onClick={handleFilter}
+        onClick={() => setIsFilter((prev) => !prev)}
       />
       {isFilter ? (
         <div className={styles.filterContainer}>
@@ -123,27 +141,17 @@ export const Menu = ({ className, ...props }: MenuProps) => {
           title="기간 설정"
         >
           <ul className={styles.list}>
-            <li onClick={() => setSelected({ ...selected, period: '전체' })}>
+            <li onClick={handleSelectAllDate}>
               전체
               {selected.period === '전체' && (
                 <Image src={selectIcon} alt="select" width={25} height={25} />
               )}
             </li>
-            <li
-              onClick={() => {
-                setSelected({ ...selected, period: '기간' });
-                handleModal('start');
-              }}
-            >
+            <li onClick={() => handleDateSelect('start')}>
               시작일
               <span>{startDate.replace(/-/g, '.')}</span>
             </li>
-            <li
-              onClick={() => {
-                setSelected({ ...selected, period: '기간' });
-                handleModal('end');
-              }}
-            >
+            <li onClick={() => handleDateSelect('end')}>
               종료일
               <span>{endDate.replace(/-/g, '.')}</span>
             </li>

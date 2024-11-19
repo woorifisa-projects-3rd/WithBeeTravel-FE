@@ -49,7 +49,7 @@ export default function PaymentList({
   travelId,
   initialData,
 }: PaymentListProps) {
-  const { startDate, endDate, sortBy } = usePaymentStore();
+  const { startDate, endDate, sortBy, isDateFiltered } = usePaymentStore();
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
@@ -57,7 +57,20 @@ export default function PaymentList({
   });
 
   const getKey = (pageIndex: number) => {
-    return `/api/travels/${travelId}/payments?page=${pageIndex}&sortBy=${sortBy}&startDate=${startDate}&endDate=${endDate}`;
+    const params = new URLSearchParams({
+      page: pageIndex.toString(),
+      sortBy,
+    });
+
+    // 날짜 필터가 적용된 경우에만 날짜 파라미터 추가
+    if (isDateFiltered) {
+      params.append('startDate', startDate);
+      params.append('endDate', endDate);
+    }
+
+    console.log(isDateFiltered, startDate, endDate, params.toString());
+
+    return `/api/travels/${travelId}/payments?${params.toString()}`;
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
@@ -69,9 +82,10 @@ export default function PaymentList({
           travelId,
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
           sortBy,
-          startDate,
-          endDate,
+          ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
         });
+
+        console.log('Fetched:', url, response.data);
 
         if ('code' in response) {
           // TODO: react-toastify로 에러 메시지 표시
@@ -85,7 +99,6 @@ export default function PaymentList({
       },
       {
         fallbackData: initialData ? [initialData] : undefined,
-        persistSize: true, // size 상태 유지
       },
     );
 
