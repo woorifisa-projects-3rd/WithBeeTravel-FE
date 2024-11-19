@@ -105,6 +105,14 @@ export default function AccountPage() {
           size={'medium'}
           onClick={() => router.push(`/banking/${id}/deposit`)}
         />
+        
+      </div>
+      <div>
+      <Button
+          label="거래 내역 추가"
+          size={'medium'}
+          onClick={() => router.push(`/banking/${id}/payment`)}
+        />
       </div>
 
       {/* 거래 내역 표시 */}
