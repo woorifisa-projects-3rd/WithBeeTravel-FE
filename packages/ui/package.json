@@ -20,6 +20,7 @@
     "./toast-container.module.css": "./src/toast-container.module.css"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "generate:component": "turbo gen react-component"
   },
