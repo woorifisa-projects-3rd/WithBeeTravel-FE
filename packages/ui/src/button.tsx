@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import styles from './button.module.css';
+
 export interface ButtonProps {
   primary?: boolean;
   size?: 'small' | 'medium' | 'large' | 'xlarge';
@@ -8,6 +9,7 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 /** Primary UI component for user interaction */
