@@ -1,6 +1,6 @@
 import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
-import TabGroup from '@withbee/ui/tab-group';
+import ItemGroup from '@withbee/ui/item-group';
 import { Payment } from '@withbee/ui/payment';
 import { Menu } from '@withbee/ui/menu';
 
@@ -18,7 +18,7 @@ export default function Page({ params }: TravelPageProps) {
     <main className={styles.container}>
       <Title label="공동 결제 내역" />
       <Menu className={styles.menu} />
-      <TabGroup />
+      <ItemGroup />
       <section className={styles.paymentContainer}>
         {[5, 4, 3].map((day) => (
           <div className={styles.paymentWrapper}>

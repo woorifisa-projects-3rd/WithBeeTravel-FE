@@ -23,15 +23,27 @@
   padding: 12px;
   font-size: 16px;
   border: none;
-  border-bottom: 1.5px solid var(--color-gray-300);
+  border-bottom: 1.5px solid var(--color-gray-200);
   outline: none;
   padding: 8px 0;
 }
 
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
 .locationButtons {
   display: flex;
-  gap: 10px;
 }
+
+.domesticBtn {
+  border-radius: 10px 0px 0px 10px !important;
+}
+
+.overseasBtn {
+  border-radius: 0px 10px 10px 0px !important;
+}
+
 
 .dateGroup {
   display: flex;
@@ -46,16 +58,43 @@
   padding: 12px;
   border: 1px solid var(--color-gray-200);
   border-radius: 8px;
+  position: relative;
 }
 
 .dateInput span {
-  color: var(--color-gray-600);
+  color: var(--color-gray-500);
 }
 
 .dateInput input {
   border: none;
   font-size: 16px;
-  color: var(--color-gray-600);
+  color: var(--color-gray-500);
+}
+
+
+.customDateInput {
+  padding-right: 25px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+}
+
+.customDateInput::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.customIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.date {
+  color: var(--color-gray-500);
 }
 
 .searchSection {
@@ -80,7 +119,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
 }
 
 .selectedCountries {
@@ -91,24 +130,7 @@
 }
 
 .countryTag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background-color: var(--color-gray-100);
-  border-radius: 20px;
-  font-size: 14px;
   margin-top: 15px;
-}
-
-.removeTag {
-  background: none;
-  border: none;
-  color: var(--color-gray-600);
-  cursor: pointer;
-  padding: 0;
-  font-size: 16px;
-  line-height: 1;
 }
 
 .searchResults {
@@ -132,4 +154,18 @@
 
 .searchResultItem:hover {
   background-color: var(--color-gray-100);
+}
+
+.btnWrap {
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.btn {
+  font-weight: 500;
 }
