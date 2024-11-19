@@ -6,10 +6,13 @@ import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
-import { formatDate } from '../../../packages/utils/dateUtils';
+import {
+  formatDate,
+  getDateObject,
+} from '../../../packages/utils/src/dateUtils';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
 import { useToast } from '@withbee/hooks/useToast';
-import { validators } from '../../../packages/utils/validCheck';
+import { validators } from '@withbee/utils';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -57,16 +60,6 @@ export default function TravelForm({
         [type === 'start' ? 'travelStartDate' : 'travelEndDate']: formattedDate,
       }));
     };
-
-  // 현재 선택된 날짜를 DatePickerModal의 initialDate 형식으로 변환하는 함수
-  const getDateObject = (dateString: string) => {
-    const date = new Date(dateString);
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate(),
-    };
-  };
 
   // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
   const countriesList = [

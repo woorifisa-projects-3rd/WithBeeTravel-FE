@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
-import { consentItems } from '../../../../../../packages/utils/consentItems';
+import { consentItems } from '../../../../../../packages/utils/src/consentItems';
 
 export default function ConsentPage() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
