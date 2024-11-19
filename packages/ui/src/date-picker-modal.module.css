@@ -56,8 +56,3 @@
   border-top: 1px solid var(--color-gray-200);
   border-bottom: 1px solid var(--color-gray-200);
 } */
-
-/* Swiper 스타일 커스터마이징 */
-:global(.swiper-slide) {
-  height: 40px !important;
-}

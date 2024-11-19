@@ -4,6 +4,7 @@
   transform: translate(-50%);
   width: 90%;
   height: 25vh;
+  margin-top: 10px;
 }
 
 .imageWrap::before {
