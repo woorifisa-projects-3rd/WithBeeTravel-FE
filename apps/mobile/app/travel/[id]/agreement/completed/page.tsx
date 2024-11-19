@@ -3,7 +3,6 @@
 import { Button } from '@withbee/ui/button';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
-import agreeWibee from '../../../../../public/friends/agreeWibee.png';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -20,7 +19,12 @@ export default function Page() {
             repeatType: 'reverse',
           }}
         >
-          <Image src={agreeWibee} alt="completed" width={208} height={222} />
+          <Image
+            src={'/friends/agreeWibee.png'}
+            alt="completed"
+            width={208}
+            height={222}
+          />
         </motion.div>
         <p className={styles.title}>정산 동의 완료</p>
         <p className={styles.content}>
