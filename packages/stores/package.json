@@ -15,14 +15,17 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@withbee/eslint-config": "workspace:*",
-    "@withbee/typescript-config": "workspace:*",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@withbee/eslint-config": "workspace:*",
+    "@withbee/typescript-config": "workspace:*",
     "eslint": "^8.57.0",
     "typescript": "5.5.4",
     "zustand": "^5.0.1"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13"
   }
 }

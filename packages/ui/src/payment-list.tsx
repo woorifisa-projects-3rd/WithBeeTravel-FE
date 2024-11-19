@@ -9,6 +9,7 @@ import { usePaymentStore } from '@withbee/stores';
 import useSWRInfinite from 'swr/infinite';
 import dayjs from 'dayjs';
 import { Payment } from './payment';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 // 날짜별로 결제 내역을 그룹화하는 함수
 const groupPaymentsByDate = (payments: SharedPayment[]) => {
@@ -46,7 +47,7 @@ export default function PaymentList({
   travelId,
   initialData,
 }: PaymentListProps) {
-  const { sortBy } = usePaymentStore();
+  const { startDate, endDate, sortBy } = usePaymentStore();
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
@@ -54,7 +55,7 @@ export default function PaymentList({
   });
 
   const getKey = (pageIndex: number) => {
-    return `/api/travels/${travelId}/payments?page=${pageIndex - 1}&sortBy=${sortBy}`;
+    return `/api/travels/${travelId}/payments?page=${pageIndex}&sortBy=${sortBy}&startDate=${startDate}&endDate=${endDate}`;
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
@@ -65,8 +66,19 @@ export default function PaymentList({
         const response = await getSharedPayments({
           travelId,
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
-          sortBy: sortBy,
+          sortBy,
+          startDate,
+          endDate,
         });
+
+        if ('code' in response) {
+          // TODO: react-toastify로 에러 메시지 표시
+          console.error(
+            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+              'Unknown Error',
+          );
+        }
+
         return response.data;
       },
       {
@@ -89,10 +101,10 @@ export default function PaymentList({
     }
   }, [inView, isLoading, isValidating, data, size, setSize]);
 
-  // sortBy가 변경될 때 첫 페이지부터 다시 시작하도록 useEffect 추가
+  // 정렬이나 날짜 필터가 변경될 때 리셋
   useEffect(() => {
-    setSize(1); // size를 1로 리셋
-  }, [sortBy, setSize]);
+    setSize(1);
+  }, [sortBy, startDate, endDate, setSize]);
 
   return (
     <section className={styles.paymentContainer}>
@@ -117,7 +129,7 @@ export default function PaymentList({
       </div>
 
       {data && data[data.length - 1]?.last && (
-        <div className={styles.noMore}>더 이상 결제 내역이 없습니다</div>
+        <div className={styles.noMore}></div>
       )}
     </section>
   );

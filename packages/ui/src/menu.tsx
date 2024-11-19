@@ -15,7 +15,8 @@ interface MenuProps {
 }
 
 export const Menu = ({ className, ...props }: MenuProps) => {
-  const { sortBy, setSortBy } = usePaymentStore();
+  const { startDate, setStartDate, endDate, setEndDate, sortBy, setSortBy } =
+    usePaymentStore();
   const [isOpen, setIsOpen] = useState({
     period: false,
     member: false,
@@ -27,16 +28,6 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     period: '전체',
     member: '전체',
     sort: sortBy === 'latest' ? '최신순' : '금액순',
-  });
-  const [startDate, setStartDate] = useState({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    day: new Date().getDate(),
-  });
-  const [endDate, setEndDate] = useState({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    day: new Date().getDate(),
   });
 
   const [isFilter, setIsFilter] = useState(false);
@@ -144,9 +135,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
               }}
             >
               시작일
-              <span>
-                {startDate.year}.{startDate.month}.{startDate.day}
-              </span>
+              <span>{startDate.replace(/-/g, '.')}</span>
             </li>
             <li
               onClick={() => {
@@ -155,12 +144,9 @@ export const Menu = ({ className, ...props }: MenuProps) => {
               }}
             >
               종료일
-              <span>
-                {endDate.year}.{endDate.month}.{endDate.day}
-              </span>
+              <span>{endDate.replace(/-/g, '.')}</span>
             </li>
           </ul>
-          <Button label="선택 완료" size="large" />
         </BottomModal>
       )}
 

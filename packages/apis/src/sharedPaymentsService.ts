@@ -12,8 +12,8 @@ interface Params {
   page?: number;
   sortBy?: 'latest' | 'amount';
   userId?: number;
-  startDate?: DateFormat;
-  endDate?: DateFormat;
+  startDate?: string;
+  endDate?: string;
 }
 
 // 공유 결제 내역 가져오기
@@ -38,13 +38,6 @@ export const getSharedPayments = async ({
   const response = await instance.get<PageResponse<SharedPayment>>(
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,
   );
-
-  if ('code' in response) {
-    throw new Error(
-      ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-        'Unknown Error',
-    );
-  }
 
   return response as SuccessResponse<PageResponse<SharedPayment>>;
 };
