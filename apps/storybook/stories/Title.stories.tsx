@@ -20,7 +20,7 @@ const meta: Meta<typeof Title> = {
   },
   tags: ['title'],
   argTypes: {},
-  args: { onClick: action('clicked') },
+  args: {},
   // 데코레이터 추가
   decorators: [
     (Story) => (

@@ -1,0 +1,40 @@
+name: 'Quality Checks'
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore:
+      - '.github/**'
+      - 'pnpm-lock.yaml'
+      - 'package.json'
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '21'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm build --filter "./packages/ui"
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Lint check
+        run: pnpm lint
+
+      - name: Build all
+        run: pnpm build
