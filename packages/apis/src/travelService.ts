@@ -1,7 +1,7 @@
 import { instance } from './instance';
 
 export const createTravel = async (
-  travelName: number,
+  travelName: string,
   isDomesticTravel: Boolean,
   travelCountries: string[],
   travelStartDate: string,

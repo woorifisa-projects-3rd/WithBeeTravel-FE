@@ -1,6 +1,6 @@
 //토스트 메시지 표시 로직만
 import { toast, ToastOptions } from 'react-toastify';
-import styles from './ToastContainer.module.css';
+// import styles from '../../ui/src/toast-container.module.css';
 
 interface ToastProps {
   message: string;
@@ -15,9 +15,9 @@ export const useToast = () => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    className: styles.customToast,
-    bodyClassName: styles.toastBody,
-    progressClassName: styles.toastProgress,
+    // className: styles.customToast,
+    // bodyClassName: styles.toastBody,
+    // progressClassName: styles.toastProgress,
   };
 
   const showToast = {

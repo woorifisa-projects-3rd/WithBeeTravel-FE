@@ -7,15 +7,23 @@ import { createTravel } from '@withbee/apis';
 import './page.module.css';
 import { useRouter } from 'next/navigation';
 
+interface FormData {
+  travelName: string;
+  isDomesticTravel: boolean;
+  travelCountries: string[];
+  travelStartDate: string;
+  travelEndDate: string;
+}
+
 export default function Page() {
-  const [editedTravel, setEditedTravel] = useState<any | null>(null); // 편집할 여행 데이터 (기본값은 null)
+  const [editedTravel, setEditedTravel] = useState<FormData | null>(null); // 편집할 여행 데이터 (기본값은 null)
 
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
 
   // api연결
-  const handleCreateTravel = async (formData: any) => {
+  const handleCreateTravel = async (formData: FormData) => {
     const {
       travelName,
       isDomesticTravel,
@@ -38,7 +46,7 @@ export default function Page() {
   };
 
   // 여행 선택 시 데이터 세팅
-  const handleTravelSelect = (travel: any) => {
+  const handleTravelSelect = (travel: FormData) => {
     setEditedTravel(travel); // 여행 선택 시 데이터 세팅
   };
 
