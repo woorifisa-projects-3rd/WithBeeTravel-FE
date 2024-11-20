@@ -1,19 +1,6 @@
 // import { auth } from '@/auth';
 
-export interface SuccessResponse<T> {
-  status: string;
-  message: string;
-  data?: T;
-  travelId: string;
-}
-
-export interface ErrorResponse {
-  status: string;
-  name: string;
-  code: string;
-  message: string;
-  travelId: string;
-}
+import { ErrorResponse, SuccessResponse } from '@withbee/types';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;

@@ -1,4 +1,5 @@
-import { ErrorResponse, SuccessResponse, instance } from './instance';
+import { instance } from './instance';
+import { ErrorResponse, SuccessResponse } from '@withbee/types';
 
 interface MyTotalPayment {
   name: string;

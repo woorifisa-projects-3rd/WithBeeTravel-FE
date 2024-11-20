@@ -1,14 +1,15 @@
 .container {
   width: 100%;
   max-width: 1000px;
-  margin: 16px 0 0 0;
+  margin: 14px 0 0 0;
   overflow: hidden; /* 중요: motion.div가 넘치지 않도록 */
 }
 
 .tabList {
   position: relative;
   display: flex;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-gray-950) 32%, transparent);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-gray-950) 32%, transparent);
   min-width: min-content; /* 내용물 크기만큼 확장 */
   touch-action: pan-x; /* 모바일에서 수평 스크롤만 허용 */
 }
