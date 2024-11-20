@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@withbee/apis": "workspace:*",
+    "@withbee/hooks": "workspace:*",
     "@withbee/styles": "workspace:*",
     "@withbee/ui": "workspace:*",
-    "@withbee/hooks": "workspace:*",
     "chart.js": "^4.4.6",
     "next": "14.2.6",
     "react": "18.3.1",
@@ -30,7 +30,7 @@
     "@withbee/typescript-config": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
-    "framer-motion": "^11.11.11",
+    "framer-motion": "^11.11.17",
     "typescript": "5.5.4"
   }
 }
