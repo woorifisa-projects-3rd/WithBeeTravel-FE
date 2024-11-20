@@ -1,7 +1,8 @@
 name: 'Quality Checks'
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches:
+      - dev
     paths-ignore:
       - '.github/**'
       - 'pnpm-lock.yaml'
