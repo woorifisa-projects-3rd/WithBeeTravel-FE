@@ -6,10 +6,7 @@ import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
-import {
-  formatDate,
-  getDateObject,
-} from '../../../packages/utils/src/dateUtils';
+import { formatDate, getDateObject } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
 
@@ -71,6 +68,7 @@ export default function TravelForm({
   ];
 
   // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
+  // 나중에 get해올때 useSWR로 변경하기
   useEffect(() => {
     if (mode === 'edit' && travelData) {
       setFormData({
