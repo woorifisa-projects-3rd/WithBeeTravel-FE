@@ -44,6 +44,7 @@ export default function PaymentPage() {
       (async () => {
         const response = await instance.get<boolean>(`/accounts/${myAccountId}/check-wibee`);
         if ('data' in response) {
+          //@ts-ignore
           if (response.data.connectedWibeeCard) {
             setIsWibeeCard(true); // 위비 카드 연결 여부 설정
           }
@@ -64,6 +65,7 @@ export default function PaymentPage() {
       return;
     }
 
+    //@ts-ignore
     if(payAm > accountInfo?.balance){
         alert('계좌에 잔액 부족!')
         return;

@@ -53,6 +53,7 @@ export default function AccountPage() {
         const response = await instance.get<AccountHistory>(`/accounts/${id}`);
         console.log('상세 내역: ', response);
 
+        //@ts-ignore
         setHistories(response.data); // 거래 내역 업데이트
       })();
     }

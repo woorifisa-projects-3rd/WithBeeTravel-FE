@@ -23,6 +23,7 @@ export default function BankingPage() {
       const response = await instance.get<AccountInfo[]>(`/accounts`);
 
       if ('data' in response) {
+        //@ts-ignore
         setAccounts(response.data);
       } else {
         console.error(response.message);

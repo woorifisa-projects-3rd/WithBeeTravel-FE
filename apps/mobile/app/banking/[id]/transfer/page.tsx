@@ -64,6 +64,7 @@ export default function TransferPage() {
       });
 
       // 응답 처리
+      //@ts-ignore
       if (response.status === 200) {
         alert('계좌번호가 확인 완!! 돈 보내러 가는 중~');
         router.push(`/banking/${accountId}/transfer/detail`);

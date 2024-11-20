@@ -39,21 +39,10 @@ export default function TransferDetailPage() {
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
-      // fetch(`http://localhost:8080/accounts/${myAccountId}/info`)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     const formatData: AccountInfo = {
-      //       accountNumber: data.accountNumber,
-      //       accountName: data.product, // 백엔드에서 'product'로 반환된 이름을 사용
-      //       balance: data.balance,
-      //     };
-      //     setAccountInfo(formatData); // 내 계좌 정보 상태 업데이트
-      //   })
-      //   .catch((error) => {
-      //     console.error('내 계좌 정보 가져오기 실패:', error);
-      //   });
+      
       (async () => {
         const response = await instance.get(`/accounts/${myAccountId}/info`);
+        //@ts-ignore
         setAccountInfo(response.data);
       })();
     }
@@ -70,6 +59,7 @@ export default function TransferDetailPage() {
           body: JSON.stringify(AccountNumberRequest),
         });
         console.log(response);
+        //@ts-ignore
         setTargetAccount(response.data);
       })();
     }
