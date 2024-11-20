@@ -74,7 +74,7 @@ export default function Page() {
                         rel="noopener noreferrer"
                       >
                         <Image
-                          src="/arrow.png"
+                          src="/notifications/arrow.png"
                           alt="link icon"
                           width={12}
                           height={6}
