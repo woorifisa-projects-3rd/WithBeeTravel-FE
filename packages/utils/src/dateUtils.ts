@@ -1,4 +1,4 @@
-// Date를 year-month-day 형식으로 변환
+// utils/date.ts
 export const formatDate = (date: {
   year: number;
   month: number;
@@ -7,8 +7,8 @@ export const formatDate = (date: {
   return `${date.year}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
 };
 
-// Date 객체를 { year, month, day } 형식으로 변환
-export const dateObject = (dateString: string) => {
+// 현재 선택된 날짜를 DatePickerModal의 initialDate 형식으로 변환하는 함수
+export const getDateObject = (dateString: string) => {
   const date = new Date(dateString);
   return {
     year: date.getFullYear(),

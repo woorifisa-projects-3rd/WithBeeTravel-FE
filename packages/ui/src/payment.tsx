@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FriendImage } from './friend-image';
 import styles from './payment.module.css';
 import { Item } from './item';
@@ -9,15 +9,21 @@ import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
+import { SharedPayment } from '@withbee/types';
+import dayjs from 'dayjs';
 
-const width = window?.innerWidth;
+import 'dayjs/locale/ko'; // 한글 로케일 import
 
-// width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
-const visibleFriendsLength = width > 390 ? 5 : 4;
+dayjs.locale('ko'); // 한글 로케일 설정
 
 const friends = [1, 2, 3, 4, 5, 7, 9, 6];
 
-export const Payment = () => {
+interface PaymentProps {
+  paymentInfo: SharedPayment;
+}
+
+export const Payment = ({ paymentInfo }: PaymentProps) => {
+  const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
   const [selectedFriends, setSelectedFriends] = useState<number[]>(friends);
 
@@ -29,21 +35,37 @@ export const Payment = () => {
     }
   };
 
-  console.log('selectedFriends', selectedFriends);
+  // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
+  const visibleFriendsLength =
+    paymentInfo.participatingMembers.length > 4
+      ? windowWidth > 390
+        ? 5
+        : 4
+      : paymentInfo.participatingMembers.length;
+
+  useEffect(() => {
+    // 초기 윈도우 너비 설정
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   return (
     <article className={styles.payment}>
       <FriendImage
-        number={1 + Math.round(8 * Math.random())}
+        src={paymentInfo.adderProfileIcon}
         size={50}
         className={styles.friendImage}
       />
       <div className={styles.content}>
         <div className={styles.contentWrapper}>
           <div className={styles.info}>
-            <span className={styles.time}>10:48</span>
-            <b className={styles.price}>21,948원 (6 EUR)</b>
-            <span className={styles.location}>최가네 김밥</span>
+            <span className={styles.time}>
+              {dayjs(paymentInfo.paymentDate).format('HH:mm')}
+            </span>
+            <b className={styles.price}>
+              {paymentInfo.paymentAmount}원 ({paymentInfo.foreignPaymentAmount}
+              {paymentInfo.unit})
+            </b>
+            <span className={styles.location}>{paymentInfo.storeName}</span>
           </div>
           <div
             className={styles.friends}
@@ -52,19 +74,22 @@ export const Payment = () => {
             }}
           >
             {selectedFriends.slice(0, visibleFriendsLength).map((friend) => (
-              <FriendImage key={friend} number={friend} size={35} />
+              <FriendImage key={friend} src={''} size={35} />
             ))}
             <motion.button className={styles.plusButton}>
               <button className={styles.moreFriends}>
                 {/* {selectedFriends.length > visibleFriendsLength &&
                   selectedFriends.length - visibleFriendsLength} */}
-                {selectedFriends.length}명
+                {paymentInfo.participatingMembers.length}명
               </button>
             </motion.button>
           </div>
         </div>
         <div className={styles.contentWrapper}>
-          <Item label="1,491.33 KRW/EUR" size="small" />
+          <Item
+            label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
+            size="small"
+          />
           <div className={styles.optionsWrapper}>
             <button className={styles.option}>기록 추가</button>
           </div>
@@ -87,7 +112,7 @@ export const Payment = () => {
                 onClick={() => handleSelectFriend(friend)}
               >
                 <div className={styles.friendInfo}>
-                  <FriendImage key={friend} number={friend} size={35} />
+                  <FriendImage key={friend} src={''} size={35} />
                   <span>콩이</span>
                 </div>
                 {selectedFriends.includes(friend) ? (

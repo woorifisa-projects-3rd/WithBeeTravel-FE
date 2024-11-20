@@ -20,6 +20,7 @@
     "@withbee/eslint-config": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
     "@withbee/exception": "workspace:*",
+    "@withbee/types": "workspace:*",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
     "@types/react": "^18.2.61",

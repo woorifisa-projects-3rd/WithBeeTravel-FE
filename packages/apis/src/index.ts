@@ -1,4 +1,3 @@
 export * from './instance';
-export { chooseParticipants } from './sharedPaymentsService';
-export { createTravel } from './travelService';
-export * from './settlementService';
+export * from './sharedPaymentsService';
+export * from './travelService';
