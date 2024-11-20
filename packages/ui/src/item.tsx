@@ -8,6 +8,7 @@ interface ItemProps {
   size?: 'small' | 'medium';
   type?: 'default' | 'select' | 'delete';
   onDelete?: () => void;
+  onClick?: () => void;
 }
 
 export const Item = ({
@@ -15,6 +16,7 @@ export const Item = ({
   size = 'medium',
   type = 'default',
   onDelete,
+  onClick,
 }: ItemProps) => {
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ export const Item = ({
     }
   };
   return (
-    <i className={[styles.item, styles[size]].join(' ')}>
+    <i className={[styles.item, styles[size]].join(' ')} onClick={onClick}>
       {label}
       <button onClick={type === 'delete' ? handleDeleteClick : undefined}>
         {type === 'delete' && (
