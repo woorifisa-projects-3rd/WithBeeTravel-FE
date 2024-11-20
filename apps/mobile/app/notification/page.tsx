@@ -2,7 +2,7 @@ import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
 import '@withbee/styles';
 import Image from 'next/image';
-import formatDateToKorean from '@withbee/utils/dateUtils';
+import { formatDateToKorean } from '@withbee/utils';
 
 export default function Page() {
   const notifications = [
