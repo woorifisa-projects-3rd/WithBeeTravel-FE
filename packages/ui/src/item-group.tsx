@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, useDragControls } from 'framer-motion';
-import styles from './tab-group.module.css';
+import styles from './item-group.module.css';
 
 const TabGroup = () => {
   const [activeTab, setActiveTab] = useState('전체');

@@ -1,11 +1,9 @@
 {
-  "name": "@withbee/apis",
+  "name": "@withbee/hooks",
   "version": "0.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.d.ts",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    "./useToast": "./src/useToast.ts"
   },
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -17,18 +15,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@withbee/eslint-config": "workspace:*",
-    "@withbee/typescript-config": "workspace:*",
-    "@withbee/exception": "workspace:*",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@withbee/eslint-config": "workspace:*",
+    "@withbee/typescript-config": "workspace:*",
     "eslint": "^8.57.0",
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "next": "14.2.6",
-    "react": "^18.2.0"
+    "react-toastify": "^10.0.6"
   }
 }

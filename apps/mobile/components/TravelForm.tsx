@@ -3,37 +3,65 @@ import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import serach from '../public/imgs/travelform/Search.png';
-import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
+import { Item } from '@withbee/ui/item';
+import DatePickerModal from '@withbee/ui/date-picker-modal';
+import { formatDate, dateObject } from '../../../packages/utils/dateUtils';
+import { CustomToastContainer } from '@withbee/ui/toast-container';
+import { useToast } from '@withbee/hooks/useToast';
+import { validators } from '../../../packages/utils/validCheck';
 
-// 타입 정의
 interface TravelFormProps {
   mode: 'create' | 'edit';
   travelData?: {
-    title: string;
-    location: string;
-    countries?: string[];
-    startDate: string;
-    endDate: string;
+    travelName: string;
+    isDomesticTravel: boolean;
+    travelCountries?: string[];
+    travelStartDate: string;
+    travelEndDate: string;
   };
+  onSubmit: (formData: any) => void;
 }
 
-export default function TravelForm({ mode, travelData }: TravelFormProps) {
+export default function TravelForm({
+  mode,
+  travelData,
+  onSubmit,
+}: TravelFormProps) {
   const router = useRouter();
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
-    title: '',
-    location: 'domestic',
-    countries: [] as string[],
-    startDate: '2024-10-28',
-    endDate: '2024-11-02',
+    travelName: '',
+    isDomesticTravel: false,
+    travelCountries: [] as string[],
+    travelStartDate: '2024-10-28',
+    travelEndDate: '2024-11-02',
   });
 
   // 검색 관련 상태
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<string[]>([]);
+
+  //DatePickerModal 관련 상태
+  const [isStartDateModalOpen, setIsStartDateModalOpen] = useState(false);
+  const [isEndDateModalOpen, setIsEndDateModalOpen] = useState(false);
+
+  // 날짜 선택 핸들러
+  const handleDateSelect =
+    (type: 'start' | 'end') =>
+    (date: { year: number; month: number; day: number }) => {
+      const formattedDate = formatDate(date);
+      setFormData((prev) => ({
+        ...prev,
+        [type === 'start' ? 'travelStartDate' : 'travelEndDate']: formattedDate,
+      }));
+    };
+
+  // 현재 선택된 날짜를 DatePickerModal의 initialDate 형식으로 변환하는 함수
+  const getDateObject = (dateString: string) => {
+    return dateObject(dateString);
+  };
 
   // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
   const countriesList = [
@@ -46,14 +74,15 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
   ];
 
   // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
+  // 나중에 get해올때 useSWR로 변경하기
   useEffect(() => {
     if (mode === 'edit' && travelData) {
       setFormData({
-        title: travelData.title,
-        location: travelData.location === 'domestic' ? 'domestic' : 'overseas',
-        countries: travelData.countries || [],
-        startDate: travelData.startDate,
-        endDate: travelData.endDate,
+        travelName: travelData.travelName,
+        isDomesticTravel: travelData.isDomesticTravel,
+        travelCountries: travelData.travelCountries || [],
+        travelStartDate: travelData.travelStartDate,
+        travelEndDate: travelData.travelEndDate,
       });
     }
   }, [mode, travelData]);
@@ -68,11 +97,11 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
     }));
   };
 
-  const handleLocationChange = (location: 'domestic' | 'overseas') => {
+  const handleLocationChange = (isDomesticTravel: boolean) => {
     setFormData((prev) => ({
       ...prev,
-      location,
-      countries: [], // 위치 변경 시 선택된 국가 초기화
+      isDomesticTravel,
+      travelCountries: [], // 위치 변경 시 선택된 국가 초기화
     }));
     setSearchQuery(''); // 검색어 초기화
   };
@@ -94,46 +123,65 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
 
   // 국가 선택 처리
   const handleCountrySelect = (country: string) => {
-    if (!formData.countries.includes(country)) {
+    if (!formData.travelCountries.includes(country)) {
       setFormData((prev) => ({
         ...prev,
-        countries: [...prev.countries, country],
+        travelCountries: [...prev.travelCountries, country],
       }));
     }
     setSearchQuery('');
     setSearchResults([]);
   };
 
-  // 선택된 국가 제거
+  // 국가 삭제 하기
   const removeCountry = (countryToRemove: string) => {
     setFormData((prev) => ({
       ...prev,
-      countries: prev.countries.filter(
+      travelCountries: prev.travelCountries.filter(
         (country) => country !== countryToRemove,
       ),
     }));
   };
 
+  const { formValidation } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (mode === 'create') {
-      // 여행 생성 로직
-      console.log('여행 생성:', formData);
-    } else {
-      // 여행 편집 로직
-      console.log('여행 편집:', formData);
+
+    // 여행명 검증
+    if (!validators.travelName(formData.travelName)) {
+      formValidation.invalidName();
+      return;
     }
+
+    // 날짜 검증
+    const dateValidation = validators.travelDates(
+      formData.travelStartDate,
+      formData.travelEndDate,
+    );
+
+    if (!dateValidation.isValid) {
+      if (dateValidation.error === 'EXCEED_DURATION') {
+        formValidation.invalidDateDuration();
+      } else if (dateValidation.error === 'INVALID_ORDER') {
+        formValidation.invalidDateOrder();
+      }
+      return;
+    }
+
+    onSubmit(formData);
   };
 
   return (
     <div className={styles.container}>
+      <CustomToastContainer />
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label>여행명</label>
           <input
             type="text"
-            name="title"
-            value={formData.title}
+            name="travelName"
+            value={formData.travelName}
             onChange={handleInputChange}
             placeholder="여행명"
             className={styles.input}
@@ -144,21 +192,23 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
           <label>여행지</label>
           <div className={styles.locationButtons}>
             <Button
-              primary={formData.location === 'domestic'} // '국내' 버튼 활성화 시 primary 스타일 적용
-              size="medium" // 크기를 medium으로 설정
+              primary={!formData.isDomesticTravel}
+              size="medium"
               label="국내"
-              onClick={() => handleLocationChange('domestic')}
+              onClick={() => handleLocationChange(false)}
+              className={styles.domesticBtn}
             />
 
             <Button
-              primary={formData.location === 'overseas'} // '해외' 버튼 활성화 시 primary 스타일 적용
+              primary={formData.isDomesticTravel}
               size="medium"
               label="해외"
-              onClick={() => handleLocationChange('overseas')}
+              onClick={() => handleLocationChange(true)}
+              className={styles.overseasBtn}
             />
           </div>
 
-          {formData.location === 'overseas' && (
+          {formData.isDomesticTravel && (
             <div className={styles.searchSection}>
               <div className={styles.searchInputWrapper}>
                 <input
@@ -170,7 +220,7 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
                 />
                 <span className={styles.searchIcon}>
                   <Image
-                    src={serach}
+                    src="/imgs/travelform/Search.png"
                     alt="검색창 아이콘"
                     className={styles.serach}
                     width={24}
@@ -181,16 +231,14 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
 
               {/* 선택된 국가 태그 */}
               <div className={styles.selectedCountries}>
-                {formData.countries.map((country) => (
+                {formData.travelCountries.map((country) => (
                   <div key={country} className={styles.countryTag}>
-                    {country}
-                    <button
-                      type="button"
-                      onClick={() => removeCountry(country)}
-                      className={styles.removeTag}
-                    >
-                      ×
-                    </button>
+                    <Item
+                      label={country}
+                      type="delete"
+                      onDelete={() => removeCountry(country)}
+                      size="medium"
+                    />
                   </div>
                 ))}
               </div>
@@ -218,30 +266,65 @@ export default function TravelForm({ mode, travelData }: TravelFormProps) {
           <div className={styles.dateGroup}>
             <div className={styles.dateInput}>
               <span>시작일</span>
-              <input
-                type="date"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleInputChange}
-              />
+              <div
+                className={styles.customDateInput}
+                onClick={() => setIsStartDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelStartDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+                <DatePickerModal
+                  title="시작일"
+                  isOpen={isStartDateModalOpen}
+                  initialDate={getDateObject(formData.travelStartDate)}
+                  onSelectDate={handleDateSelect('start')}
+                  onClose={() => setIsStartDateModalOpen(false)}
+                />
+              </div>
             </div>
             <div className={styles.dateInput}>
               <span>종료일</span>
-              <input
-                type="date"
-                name="endDate"
-                value={formData.endDate}
-                onChange={handleInputChange}
+              <div
+                className={styles.customDateInput}
+                onClick={() => setIsEndDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelEndDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+              </div>
+              <DatePickerModal
+                title="종료일"
+                isOpen={isEndDateModalOpen}
+                initialDate={getDateObject(formData.travelEndDate)}
+                onSelectDate={handleDateSelect('end')}
+                onClose={() => setIsEndDateModalOpen(false)}
               />
             </div>
           </div>
         </div>
 
-        <Button
-          type="submit" // 제출 버튼으로 설정
-          label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'} // mode에 따른 버튼 텍스트
-          primary={true} // primary 스타일 사용 (필요에 따라 false로 설정 가능)
-        />
+        <div className={styles.btnWrap}>
+          <Button
+            type="submit"
+            label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'}
+            primary={true}
+            className={styles.btn}
+          />
+        </div>
       </form>
     </div>
   );
