@@ -13,7 +13,6 @@ export const CustomToastContainer = () => {
       draggable
       className={styles.customToast}
       bodyClassName={styles.toastBody}
-      progressClassName={styles.toastProgress}
     />
   );
 };
