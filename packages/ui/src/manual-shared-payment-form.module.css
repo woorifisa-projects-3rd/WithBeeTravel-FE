@@ -1,0 +1,24 @@
+.manualPayment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 12px;
+}
+
+.formWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.formTitle {
+  font-size: 14px;
+}
+
+.paymentImage {
+  display: none;
+}
+
+.paymentImageBox {
+}
