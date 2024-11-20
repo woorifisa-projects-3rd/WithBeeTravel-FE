@@ -9,6 +9,7 @@ import { formatDate } from '../../../packages/utils/dateUtils';
 import { formatTime } from '../../../packages/utils/timeUtils';
 import { TimePickerModal } from './time-picker-modal';
 import { CurrencyUnitPickerModal } from './currency-unit-picker-modal';
+import { Button } from './button';
 
 export interface ManualPaymentFormData {
   date: string;
@@ -17,9 +18,9 @@ export interface ManualPaymentFormData {
   paymentAmount: number;
   foreignPaymentAmount: number;
   currencyUnit: string | 'KRW';
-  exchangeRate: number | null;
-  paymentImage: File | null;
-  paymentComment: string | null;
+  exchangeRate: number | undefined;
+  paymentImage: File | undefined;
+  paymentComment: string | undefined;
   isMainImage: boolean | false;
 }
 
@@ -90,6 +91,8 @@ export const ManualSharedPaymentForm = ({
       minute,
     };
   };
+
+  const handleSubmitForm = () => {};
 
   return (
     <div className={styles.manualPayment}>
@@ -244,7 +247,20 @@ export const ManualSharedPaymentForm = ({
       </div>
       <div className={styles.formWrapper}>
         <span className={styles.formTitle}>문구</span>
+        <textarea
+          value={formData.paymentComment}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              paymentComment: e.target.value,
+            })
+          }
+          placeholder="문구를 작성해주세요."
+          className={styles.recordComment}
+          maxLength={100}
+        />
       </div>
+      <Button onClick={handleSubmitForm} label="결제 내역 추가" />
     </div>
   );
 };
