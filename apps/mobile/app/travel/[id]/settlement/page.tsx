@@ -1,18 +1,28 @@
 import styles from './page.module.css';
 import '@withbee/styles';
-import { getSettlementDetails } from '@withbee/apis';
 import { Title } from '@withbee/ui/title';
 import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
 import Image from 'next/image';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+import { Key } from 'react';
+import {
+  SettlementDetails,
+  SuccessResponse,
+  getSettlementDetails,
+} from '@withbee/apis';
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: Params }) {
   const travelId = Number(params.id);
 
-  const response = await getSettlementDetails(travelId);
-  const { myTotalPayment, myDetailPayments, others } = response.data;
+  const response = (await getSettlementDetails(
+    travelId,
+  )) as SuccessResponse<SettlementDetails>;
+
+  const { myTotalPayment, myDetailPayments, others } =
+    response.data as SettlementDetails;
 
   return (
     <div className={styles.container}>
@@ -61,48 +71,55 @@ export default async function Page({ params }) {
         <div className={styles.userList}>
           <ul>
             {others
-              .sort((a, b) => {
+              .sort((a: { agreed: any }, b: { agreed: any }) => {
                 return a.agreed === b.agreed ? 0 : a.agreed ? 1 : -1;
               })
-              .map((user) => (
-                <li
-                  key={user.id}
-                  className={`${styles.card} ${
-                    user.agreed ? styles.completedCard : styles.userCard
-                  }`}
-                >
-                  <div className={styles.userRow}>
-                    <span>
-                      <span className={styles.name}>{user.name}</span>
-                      <span className={styles.suffix}>님이</span>
-                    </span>
-                    <span>
-                      <span
-                        className={
-                          user.totalPaymentCost >= 0
-                            ? styles.positiveAmount
-                            : styles.negativeAmount
-                        }
-                      >
-                        {user.totalPaymentCost >= 0
-                          ? `+${user.totalPaymentCost.toLocaleString()}원`
-                          : `${user.totalPaymentCost.toLocaleString()}원`}
+              .map(
+                (user: {
+                  id: Key | null | undefined;
+                  agreed: any;
+                  name: string;
+                  totalPaymentCost: number;
+                }) => (
+                  <li
+                    key={user.id}
+                    className={`${styles.card} ${
+                      user.agreed ? styles.completedCard : styles.userCard
+                    }`}
+                  >
+                    <div className={styles.userRow}>
+                      <span>
+                        <span className={styles.name}>{user.name}</span>
+                        <span className={styles.suffix}>님이</span>
                       </span>
-                      <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
-                    </span>
-                  </div>
-                  {user.agreed && (
-                    <div className={styles.completedOverlay}>
-                      <Image
-                        src="/imgs/settlement/stamp.png"
-                        alt="stamp"
-                        width={50}
-                        height={50}
-                      />
+                      <span>
+                        <span
+                          className={
+                            user.totalPaymentCost >= 0
+                              ? styles.positiveAmount
+                              : styles.negativeAmount
+                          }
+                        >
+                          {user.totalPaymentCost >= 0
+                            ? `+${user.totalPaymentCost.toLocaleString()}원`
+                            : `${user.totalPaymentCost.toLocaleString()}원`}
+                        </span>
+                        <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
+                      </span>
                     </div>
-                  )}
-                </li>
-              ))}
+                    {user.agreed && (
+                      <div className={styles.completedOverlay}>
+                        <Image
+                          src="/imgs/settlement/stamp.png"
+                          alt="stamp"
+                          width={50}
+                          height={50}
+                        />
+                      </div>
+                    )}
+                  </li>
+                ),
+              )}
           </ul>
         </div>
         <div className={styles.comment}>

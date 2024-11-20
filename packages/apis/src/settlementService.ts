@@ -18,11 +18,11 @@ interface MyDetailPayment {
 interface Other {
   id: number;
   name: string;
-  totalPayemntCost: number;
+  totalPaymentCost: number;
   agreed: boolean;
 }
 
-interface SettlementDetails {
+export interface SettlementDetails {
   myTotalPayment: MyTotalPayment;
   myDetailPayments: MyDetailPayment[];
   others: Other[];
@@ -32,7 +32,11 @@ interface SettlementDetails {
 export const getSettlementDetails = async (
   travelId: number,
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
-  return instance.get(`/api/travels/${travelId}/settlements`, {
-    cache: 'no-store',
-  });
+  const response = instance.get<SettlementDetails>(
+    `/api/travels/${travelId}/settlements`,
+    {
+      cache: 'no-store',
+    },
+  );
+  return response;
 };
