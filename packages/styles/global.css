@@ -281,7 +281,8 @@ label {
   --color-yellow-12: #2a1f00;
 }
 
-/* Swiper 스타일 커스터마이징 */
-:global(.swiper-slide) {
+
+.swiper-slide {
   height: 40px !important;
 }
+
