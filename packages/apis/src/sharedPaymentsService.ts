@@ -37,7 +37,7 @@ export const getSharedPayments = async ({
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,
   );
 
-  return response as SuccessResponse<PageResponse<SharedPayment>>;
+  return response;
 };
 
 // 정산 인원 선택하기

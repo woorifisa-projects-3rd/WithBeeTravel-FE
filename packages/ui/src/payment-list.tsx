@@ -97,11 +97,8 @@ export default function PaymentList({
         });
 
         if ('code' in response) {
-          // TODO: react-toastify로 에러 메시지 표시
           showToast.warning({
-            message:
-              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-              'Unknown Error',
+            message: ERROR_MESSAGES[response.code] || 'Unknown Error',
           });
 
           if (response.code === 'VALIDATION-003') {
@@ -111,9 +108,11 @@ export default function PaymentList({
               setStartDate(getDateObject(endDate));
             }
           }
+
+          throw new Error(response.code);
         }
 
-        return response.data;
+        return response.data as PageResponse<SharedPayment>;
       },
       {
         fallbackData: initialData ? [initialData] : undefined,
