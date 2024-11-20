@@ -148,7 +148,7 @@ export default function PaymentPage() {
         {renderAmountInput()}
 
         {/* 위비 카드 결제 체크박스 (위비 카드 연결되어 있을 때만 보임) */}
-        {isWibeeCard && (
+        {isWibeeCard?.connectedWibeeCard && (
           <div className={styles.inputGroup}>
             <label>
               <input
