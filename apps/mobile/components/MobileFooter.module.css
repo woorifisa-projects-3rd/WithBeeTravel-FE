@@ -54,6 +54,6 @@
 }
 
 .iconWrapper.active .svg path {
-    fill: var(--color-blue-6);
+    fill: #ADE2FF;
     stroke: var(--color-blue-9);
 }

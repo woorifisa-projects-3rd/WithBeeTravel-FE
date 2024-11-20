@@ -1,37 +1,82 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import TravelForm from '../../../components/TravelForm';
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
+import { createTravel } from '@withbee/apis';
 import './page.module.css';
+import { useRouter } from 'next/navigation';
 
-export default function Page() {
-  const [editedTravel, setEditedTravel] = useState<any | null>(null); // 편집할 여행 데이터 (기본값은 null)
+interface FormData {
+  travelName: string;
+  isDomesticTravel: boolean;
+  travelCountries: string[];
+  travelStartDate: string;
+  travelEndDate: string;
+}
 
-  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+// useSearchParams를 사용하는 컴포넌트를 분리
+function TravelFormContent() {
+  const [editedTravel, setEditedTravel] = useState<FormData | null>(null);
+  const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
+  const router = useRouter();
 
-  // 여행 선택 시 데이터 세팅
-  const handleTravelSelect = (travel: any) => {
-    setEditedTravel(travel); // 여행 선택 시 데이터 세팅
+  const handleCreateTravel = async (formData: FormData) => {
+    const {
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    } = formData;
+
+    const response = await createTravel(
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    );
+
+    if (response && response.travelId) {
+      router.push(`/travel/${response.travelId}`);
+    }
+  };
+
+  const handleTravelSelect = (travel: FormData) => {
+    setEditedTravel(travel);
   };
 
   const travelData =
     mode === 'edit'
       ? {
-          title: '기존 여행 이름',
-          location: 'overseas',
-          countries: ['프랑스', '이탈리아'],
-          startDate: '2024-10-28',
-          endDate: '2024-11-02',
+          travelName: '기존 여행 이름',
+          isDomesticTravel: true,
+          travelCountries: ['프랑스', '이탈리아'],
+          travelStartDate: '2024-10-28',
+          travelEndDate: '2024-11-02',
         }
       : undefined;
 
   return (
     <div>
-      <Title label={mode == 'edit' ? '여행 편집하기' : '여행 생성하기'} />
-      {/* 여행 생성/편집 폼 렌더링 */}
-      <TravelForm mode={mode as 'create' | 'edit'} travelData={travelData} />
+      <Title label={mode == 'edit' ? '여행 편집' : '여행 생성'} />
+      <TravelForm
+        mode={mode as 'create' | 'edit'}
+        travelData={travelData}
+        onSubmit={handleCreateTravel}
+      />
     </div>
+  );
+}
+
+// 메인 컴포넌트
+export default function Page() {
+  return (
+    // 빌드 에러로 인해 수정 - useSearchParams를 사용하는 컴포넌트는 Suspense로 감싸야 함
+    <Suspense fallback={<div>Loading...</div>}>
+      <TravelFormContent />
+    </Suspense>
   );
 }

@@ -4,6 +4,7 @@
   transform: translate(-50%);
   width: 90%;
   height: 25vh;
+  margin-top: 10px;
 }
 
 .imageWrap::before {
@@ -61,7 +62,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 5px;
+  padding-top: 5px;
 }
 
 .icon {

@@ -2,10 +2,6 @@
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
-import withbeeFriends from '../../public/imgs/travelselect/withbee_friends.png';
-import background from '../../public/imgs/travelselect/withbee_friends_background.png';
-import plane from '../../public/imgs/travelselect/travel_select_plane.png';
-import inviteCode from '../../public/imgs/travelselect/travel_select_invitecode.png';
 import travelExam from '../../public/imgs/travelselect/travel_exam.png';
 import { Modal } from '@withbee/ui/modal';
 import { useState } from 'react';
@@ -29,15 +25,33 @@ export default function page() {
     },
   ];
 
+  // 초대코드에 맞는 그룹으로 이동하는 함수
+  const handleInviteCodeSubmit = () => {
+    // 여기서 초대 코드로 그룹을 찾는 로직을 구현
+    // 예를 들어, 입력된 초대 코드가 특정 그룹 ID와 일치한다고 가정할 수 있습니다.
+
+    // 그룹 ID가 일치하는지 확인 (실제 상황에서는 서버에서 그룹을 조회해야 할 수도 있습니다)
+    // const group = cards.find((card) => card.groupId === code);
+
+    if (true) {
+      // 그룹이 존재하면 해당 그룹의 홈으로 이동
+      router.push(`/travel/1`);
+    } else {
+      alert('잘못된 초대 코드입니다.');
+    }
+  };
+
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택하기" />
+      <Title label="여행 선택" />
       {/* 위비프렌즈이미지 */}
       <div className={styles.imageWrap}>
         <Image
-          src={withbeeFriends}
+          src="/imgs/travelselect/withbee_friends.png"
           alt="위비프렌즈친구들"
           className={styles.withbeeFriendsImg}
+          width={500}
+          height={500}
         />
       </div>
 
@@ -51,7 +65,13 @@ export default function page() {
             <p className={styles.buttonTitle}>여행 생성하기</p>
           </div>
           <div className={styles.imgWrap}>
-            <Image src={plane} alt="비행기 아이콘" className={styles.icon} />
+            <Image
+              src="/imgs/travelselect/travel_select_plane.png"
+              alt="비행기 아이콘"
+              className={styles.icon}
+              width={50}
+              height={50}
+            />
           </div>
         </button>
         <button className={styles.button} onClick={() => setIsOpen(true)}>
@@ -60,9 +80,11 @@ export default function page() {
           </div>
           <div className={styles.imgWrap}>
             <Image
-              src={inviteCode}
+              src="/imgs/travelselect/travel_select_invitecode.png"
               alt="초대코드 아이콘"
               className={styles.icon}
+              width={50}
+              height={50}
             />
           </div>
         </button>
@@ -80,9 +102,11 @@ export default function page() {
             <div className={styles.cardContent}>
               <div className={styles.cardText}>
                 <Image
-                  src={plane}
+                  src="/imgs/travelselect/travel_select_plane.png"
                   alt="비행기 아이콘"
                   className={styles.icon}
+                  width={50}
+                  height={50}
                 />
                 <div className={styles.travelNameWrap}>
                   <span>{card.travelName}</span>
@@ -97,7 +121,7 @@ export default function page() {
       {/* 모달 */}
       <Modal
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={handleInviteCodeSubmit}
         title="초대코드를 입력해주세요."
         closeLabel="입력 완료"
       >
