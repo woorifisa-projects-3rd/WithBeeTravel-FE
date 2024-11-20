@@ -12,6 +12,10 @@ interface AccountInfo {
   balance: number;
 }
 
+interface TargetName {
+  name : string
+}
+
 export default function TransferDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -24,9 +28,7 @@ export default function TransferDetailPage() {
     undefined,
   );
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
-  const [targetAccount, setTargetAccount] = useState<{ name: string }>({
-    name: '',
-  }); // 타겟 계좌 정보
+  const [targetAccount, setTargetAccount] = useState<TargetName| undefined>(); // 타겟 계좌 정보
 
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
@@ -41,9 +43,12 @@ export default function TransferDetailPage() {
     if (myAccountId) {
       
       (async () => {
-        const response = await instance.get(`/accounts/${myAccountId}/info`);
-        //@ts-ignore
-        setAccountInfo(response.data);
+        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+        if ('data' in response){
+          setAccountInfo(response.data);
+        } else{
+          console.error(response.message);
+        }
       })();
     }
   }, [myAccountId]);
@@ -55,12 +60,17 @@ export default function TransferDetailPage() {
         accountNumber: targetAccountNumber,
       };
       (async () => {
-        const response = await instance.post(`/accounts/find-user`, {
+        const response = await instance.post<TargetName>(`/accounts/find-user`, {
           body: JSON.stringify(AccountNumberRequest),
         });
         console.log(response);
-        //@ts-ignore
-        setTargetAccount(response.data);
+        if('data' in response){
+          setTargetAccount(response.data);
+        }
+        else{
+          console.error(response.message);
+          
+        }
       })();
     }
   }, [targetAccountNumber]);
@@ -83,6 +93,10 @@ export default function TransferDetailPage() {
     if (accountInfo !== null && parseInt(amount) >= accountInfo!.balance) {
       // accountInfo가 null일 수도 있어서
       alert('아니 돈도 없으면서 송금을 하시겠다??');
+      return;
+    }
+    if(targetAccount == undefined){
+      console.error("계좌번호 오류");
       return;
     }
 
@@ -148,7 +162,7 @@ export default function TransferDetailPage() {
       <div className={styles.targetAccount}>
         <h3>송금할 계좌</h3>
         <p className={styles.accountNumber}>
-          {targetAccount.name} {targetAccountNumber}
+          {targetAccount?.name} {targetAccountNumber}
         </p>
       </div>
 

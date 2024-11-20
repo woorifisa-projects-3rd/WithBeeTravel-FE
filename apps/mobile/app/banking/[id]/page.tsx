@@ -28,7 +28,7 @@ export default function AccountPage() {
   const params = useParams();
   const id = params.id;
 
-  const [histories, setHistories] = useState<AccountHistory[]>([]);
+  const [histories, setHistories] = useState<AccountHistory[] | undefined>([]);
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
 
   useEffect(() => {
@@ -50,11 +50,16 @@ export default function AccountPage() {
 
       // 거래 내역 가져오기
       (async () => {
-        const response = await instance.get<AccountHistory>(`/accounts/${id}`);
+        const response = await instance.get<AccountHistory[]>(`/accounts/${id}`);
         console.log('상세 내역: ', response);
 
-        //@ts-ignore
-        setHistories(response.data); // 거래 내역 업데이트
+        if ('data' in response) {
+          setHistories(response.data);
+        } // 거래 내역 업데이트
+        else{
+          console.error(response.message);
+          
+        }
       })();
     }
   }, []);
@@ -81,7 +86,7 @@ export default function AccountPage() {
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
-
+  
       {/* 계좌 정보 표시 */}
       {accountInfo ? (
         <div className={styles.accountDetails}>
@@ -94,7 +99,7 @@ export default function AccountPage() {
       ) : (
         <div>계좌 정보가 없습니다.</div> // `accountInfo`가 없을 경우 처리
       )}
-
+  
       <div className={styles.default}>
         <Button
           label="송금"
@@ -106,49 +111,55 @@ export default function AccountPage() {
           size={'medium'}
           onClick={() => router.push(`/banking/${id}/deposit`)}
         />
-        
       </div>
+  
       <div>
-      <Button
+        <Button
           label="거래 내역 추가"
           size={'medium'}
           onClick={() => router.push(`/banking/${id}/payment`)}
         />
       </div>
-
+  
       {/* 거래 내역 표시 */}
       <div className={styles.transactionList}>
-        {histories.map((history, index) => (
-          <div key={index} className={styles.transactionItem}>
-            <div className={styles.transactionDate}>
-              {formatDate(history.date)}
-            </div>
-
-            {/* 상세 내역은 날짜 바로 아래로 위치 */}
-            <div className={styles.detail}>{history.rqspeNm}</div>
-
-            {/* 거래 내역 상세 */}
-            <div className={styles.transactionDetails}>
-              {/* 입금 / 출금 금액 */}
-              {history.rcvAm === 0 || history.rcvAm == null ? (
-                <div className={styles.payAmount}>
-                  <span className={styles.outflowLabel}>출금 : </span>
-                  {formatNumber(history.payAm)}원
+        {histories && histories.length > 0 ? (
+          histories.map((history, index) => (
+            <div key={index} className={styles.transactionItem}>
+              <div className={styles.transactionDate}>
+                {formatDate(history.date)}
+              </div>
+  
+              {/* 상세 내역은 날짜 바로 아래로 위치 */}
+              <div className={styles.detail}>{history.rqspeNm}</div>
+  
+              {/* 거래 내역 상세 */}
+              <div className={styles.transactionDetails}>
+                {/* 입금 / 출금 금액 */}
+                {history.rcvAm === 0 || history.rcvAm == null ? (
+                  <div className={styles.payAmount}>
+                    <span className={styles.outflowLabel}>출금 : </span>
+                    {formatNumber(history.payAm)}원
+                  </div>
+                ) : (
+                  <div className={styles.rcvAmount}>
+                    <span className={styles.inflowLabel}>입금 : </span>
+                    {formatNumber(history.rcvAm)}원
+                  </div>
+                )}
+  
+                <div className={styles.balance}>
+                  잔액: {formatNumber(history.balance)}원
                 </div>
-              ) : (
-                <div className={styles.rcvAmount}>
-                  <span className={styles.inflowLabel}>입금 : </span>
-                  {formatNumber(history.rcvAm)}원
-                </div>
-              )}
-
-              <div className={styles.balance}>
-                잔액: {formatNumber(history.balance)}원
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          //여기에 윗비 캐릭터 이미지 떠도 좋을듯(거래내역이 없어요~)
+          <div>텅.</div> // `histories`가 없거나 비었을 경우 처리
+        )}
       </div>
     </div>
   );
+  
 }

@@ -43,8 +43,8 @@ export default function CreateAccountPage() {
         body: JSON.stringify(CreateAccount),
       });
 
-      //@ts-ignore
-      if (response.status === 201) {
+      
+      if (Number(response.status) === 201) {
         alert('계좌 생성 완료');
         router.push('/banking');
       } else {

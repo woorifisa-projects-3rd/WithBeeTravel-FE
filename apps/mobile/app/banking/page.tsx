@@ -16,14 +16,14 @@ interface AccountInfo {
 export default function BankingPage() {
   const router = useRouter();
 
-  const [accounts, setAccounts] = useState<AccountInfo[]>([]);
+  const [accounts, setAccounts] = useState<AccountInfo[]|undefined>([]);
 
   useEffect(() => {
     const fetchAccounts = async () => {
       const response = await instance.get<AccountInfo[]>(`/accounts`);
 
       if ('data' in response) {
-        //@ts-ignore
+        
         setAccounts(response.data);
       } else {
         console.error(response.message);
@@ -33,7 +33,7 @@ export default function BankingPage() {
   }, []);
 
   // 총 잔액 계산
-  const totalBalance = accounts.reduce(
+  const totalBalance = (accounts ?? []).reduce(
     (total, account) => total + account.balance,
     0,
   );
@@ -74,7 +74,7 @@ export default function BankingPage() {
       </div>
 
       <div className={styles.transactionList}>
-        {accounts.map((transaction) => (
+        {(accounts ?? []).map((transaction) => (
           <div
             key={transaction.accountId}
             className={styles.transactionItem}
