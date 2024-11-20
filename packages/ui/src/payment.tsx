@@ -35,19 +35,6 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
     }
   };
 
-  useEffect(() => {
-    // 초기 윈도우 너비 설정
-    setWindowWidth(window.innerWidth);
-
-    // 리사이즈 이벤트 핸들러
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
   const visibleFriendsLength =
     paymentInfo.participatingMembers.length > 4
@@ -56,7 +43,10 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
         : 4
       : paymentInfo.participatingMembers.length;
 
-  if (!paymentInfo) return null;
+  useEffect(() => {
+    // 초기 윈도우 너비 설정
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   return (
     <article className={styles.payment}>

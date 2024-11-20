@@ -98,7 +98,9 @@ export default function PaymentList({
 
         if ('code' in response) {
           showToast.warning({
-            message: ERROR_MESSAGES[response.code] || 'Unknown Error',
+            message:
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+              'Unknown Error',
           });
 
           if (response.code === 'VALIDATION-003') {
@@ -112,7 +114,7 @@ export default function PaymentList({
           throw new Error(response.code);
         }
 
-        return response.data as PageResponse<SharedPayment>;
+        return response.data;
       },
       {
         fallbackData: initialData ? [initialData] : undefined,
