@@ -20,7 +20,7 @@ export default function Page() {
           }}
         >
           <Image
-            src={'/friends/agreeWibee.png'}
+            src={'/imgs/friends/agreeWibee.png'}
             alt="completed"
             width={208}
             height={222}
