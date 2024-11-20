@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./currency-unit-picker-modal": "./src/currency-unit-picker-modal.tsx",
+    "./time-picker-modal": "./src/time-picker-modal.tsx",
+    "./record-image": "./src/record-image.tsx",
     "./manual-shared-payment-form": "./src/manual-shared-payment-form.tsx",
     "./date-picker-modal": "./src/date-picker-modal.tsx",
     "./menu": "./src/menu.tsx",

@@ -17,7 +17,7 @@ interface ManualRegisterSharedPaymentProps {
 export default function Page({ params }: ManualRegisterSharedPaymentProps) {
   const { id } = params;
   const [formData, setFormData] = useState<ManualPaymentFormData>({
-    data: '',
+    date: '',
     time: '',
     paymentAmount: 0,
     foreignPaymentAmount: null,
