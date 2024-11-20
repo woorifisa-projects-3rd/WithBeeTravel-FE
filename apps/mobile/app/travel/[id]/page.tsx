@@ -36,7 +36,7 @@ export default function Page() {
         </div>
         <div className={styles.friendsWrapper}>
           {[1, 2, 3, 4, 5].map((number) => (
-            <FriendImage number={number} />
+            <FriendImage src={''} />
           ))}
         </div>
       </div>
