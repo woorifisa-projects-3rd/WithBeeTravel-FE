@@ -7,10 +7,12 @@
 
 .filterContainer {
   width: 100%;
+  min-height: 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 9px;
+  margin-left: 10px;
+  padding-top: 2px;
 }
 
 .filter {
@@ -30,6 +32,8 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 0 2px;
+  margin-bottom: 20px;
 }
 
 .list li {

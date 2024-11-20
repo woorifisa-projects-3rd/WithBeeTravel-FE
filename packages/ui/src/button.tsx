@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import styles from './button.module.css';
+
 export interface ButtonProps {
   primary?: boolean;
   size?: 'small' | 'medium' | 'large' | 'xlarge';
