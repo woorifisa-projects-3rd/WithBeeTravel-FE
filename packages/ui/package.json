@@ -3,21 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./date-picker-modal": "./src/date-picker-modal.tsx",
     "./menu": "./src/menu.tsx",
     "./payment": "./src/payment.tsx",
-    "./tab-group": "./src/tab-group.tsx",
+    "./item-group": "./src/item-group.tsx",
     "./friend-image": "./src/friend-image.tsx",
     "./chart": "./src/chart.tsx",
-    "./tag": "./src/tag.tsx",
+    "./item": "./src/item.tsx",
     "./title": "./src/title.tsx",
     "./test": "./src/test.tsx",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
-    "./modal": "./src/modal.tsx"
+    "./modal": "./src/modal.tsx",
+    "./toast-container": "./src/toast-container.tsx",
+    "./toast-container.module.css": "./src/toast-container.module.css"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
@@ -27,9 +31,9 @@
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@withbee/eslint-config": "workspace:*",
-    "@withbee/typescript-config": "workspace:*",
-    "@withbee/styles": "workspace:*",
     "@withbee/stores": "workspace:*",
+    "@withbee/styles": "workspace:*",
+    "@withbee/typescript-config": "workspace:*",
     "eslint": "^8.57.0",
     "framer-motion": "^11.11.11",
     "typescript": "5.5.4"
@@ -38,6 +42,8 @@
     "chart.js": "^4.4.6",
     "next": "14.2.6",
     "react": "^18.2.0",
-    "react-chartjs-2": "^5.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-toastify": "^10.0.6",
+    "swiper": "^11.1.14"
   }
 }

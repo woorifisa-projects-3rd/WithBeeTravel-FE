@@ -70,7 +70,9 @@ export default function ConsentPage() {
             <div
               key={index}
               className={styles.consentItem}
-              ref={(el) => (itemRefs.current[index] = el)}
+              ref={(el) => {
+                itemRefs.current[index] = el;
+              }}
             >
               <div className={styles.consentHeader}>
                 <div
