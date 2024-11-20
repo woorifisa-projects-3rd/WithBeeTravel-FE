@@ -50,15 +50,16 @@ export default function AccountPage() {
 
       // 거래 내역 가져오기
       (async () => {
-        const response = await instance.get<AccountHistory[]>(`/accounts/${id}`);
+        const response = await instance.get<AccountHistory[]>(
+          `/accounts/${id}`,
+        );
         console.log('상세 내역: ', response);
 
         if ('data' in response) {
           setHistories(response.data);
         } // 거래 내역 업데이트
-        else{
+        else {
           console.error(response.message);
-          
         }
       })();
     }
@@ -86,7 +87,7 @@ export default function AccountPage() {
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
-  
+
       {/* 계좌 정보 표시 */}
       {accountInfo ? (
         <div className={styles.accountDetails}>
@@ -99,7 +100,7 @@ export default function AccountPage() {
       ) : (
         <div>계좌 정보가 없습니다.</div> // `accountInfo`가 없을 경우 처리
       )}
-  
+
       <div className={styles.default}>
         <Button
           label="송금"
@@ -112,7 +113,7 @@ export default function AccountPage() {
           onClick={() => router.push(`/banking/${id}/deposit`)}
         />
       </div>
-  
+
       <div>
         <Button
           label="거래 내역 추가"
@@ -120,7 +121,7 @@ export default function AccountPage() {
           onClick={() => router.push(`/banking/${id}/payment`)}
         />
       </div>
-  
+
       {/* 거래 내역 표시 */}
       <div className={styles.transactionList}>
         {histories && histories.length > 0 ? (
@@ -129,10 +130,10 @@ export default function AccountPage() {
               <div className={styles.transactionDate}>
                 {formatDate(history.date)}
               </div>
-  
+
               {/* 상세 내역은 날짜 바로 아래로 위치 */}
               <div className={styles.detail}>{history.rqspeNm}</div>
-  
+
               {/* 거래 내역 상세 */}
               <div className={styles.transactionDetails}>
                 {/* 입금 / 출금 금액 */}
@@ -147,7 +148,7 @@ export default function AccountPage() {
                     {formatNumber(history.rcvAm)}원
                   </div>
                 )}
-  
+
                 <div className={styles.balance}>
                   잔액: {formatNumber(history.balance)}원
                 </div>
@@ -161,5 +162,4 @@ export default function AccountPage() {
       </div>
     </div>
   );
-  
 }

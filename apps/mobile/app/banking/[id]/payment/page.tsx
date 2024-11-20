@@ -30,14 +30,19 @@ export default function PaymentPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
   const [rqspeNm, setRqspeNm] = useState<string>(''); // 거래 내역(상호명) 상태
-  const [isWibeeCard, setIsWibeeCard] = useState<WibeeCardResponse|undefined>(); // 위비 카드 연결 여부 (계좌 정보에서 확인)
-  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] = useState<boolean>(false); // 체크박스 상태 (결제 내역에서 사용)
+  const [isWibeeCard, setIsWibeeCard] = useState<
+    WibeeCardResponse | undefined
+  >(); // 위비 카드 연결 여부 (계좌 정보에서 확인)
+  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
+    useState<boolean>(false); // 체크박스 상태 (결제 내역에서 사용)
 
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${myAccountId}/info`,
+        );
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -46,12 +51,13 @@ export default function PaymentPage() {
       })();
 
       (async () => {
-        const response = await instance.get<WibeeCardResponse>(`/accounts/${myAccountId}/check-wibee`);
-        if ('data' in response) {          
-            setIsWibeeCard(response.data);
-        }
-        else{
-          console.error(response.message);          
+        const response = await instance.get<WibeeCardResponse>(
+          `/accounts/${myAccountId}/check-wibee`,
+        );
+        if ('data' in response) {
+          setIsWibeeCard(response.data);
+        } else {
+          console.error(response.message);
         }
       })();
     }
@@ -73,7 +79,7 @@ export default function PaymentPage() {
       alert('계좌 정보가 없습니다!');
       return;
     }
-    
+
     if (Number(payAm) > accountInfo.balance) {
       alert('계좌에 잔액 부족!');
       return;
@@ -82,7 +88,7 @@ export default function PaymentPage() {
     const historyRequest: HistoryRequest = {
       payAm: parseInt(payAm),
       rqspeNm,
-      isWibeeCard: isWibeeCardCheckbox, 
+      isWibeeCard: isWibeeCardCheckbox,
     };
 
     try {
@@ -90,7 +96,7 @@ export default function PaymentPage() {
         body: JSON.stringify(historyRequest),
       });
       alert('결제 내역이 등록되었습니다.');
-      router.push(`/banking/`); 
+      router.push(`/banking/`);
       return;
     } catch (error) {
       console.error('결제 내역 추가 중 오류 발생:', error);
@@ -99,7 +105,6 @@ export default function PaymentPage() {
   };
 
   const renderAmountInput = () => (
-    
     <div className={styles.inputGroup}>
       <label>거래 금액</label>
       <input

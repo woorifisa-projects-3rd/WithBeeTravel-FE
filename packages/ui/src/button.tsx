@@ -4,8 +4,6 @@ import styles from './button.module.css';
 
 import { MouseEventHandler } from 'react';
 
-
-
 export interface ButtonProps {
   primary?: boolean;
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
@@ -16,7 +14,6 @@ export interface ButtonProps {
 
   className?: string;
   disabled?: boolean;
-
 }
 /** Primary UI component for user interaction */
 export const Button = ({

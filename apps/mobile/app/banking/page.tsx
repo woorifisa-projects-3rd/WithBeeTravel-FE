@@ -16,14 +16,13 @@ interface AccountInfo {
 export default function BankingPage() {
   const router = useRouter();
 
-  const [accounts, setAccounts] = useState<AccountInfo[]|undefined>([]);
+  const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
 
   useEffect(() => {
     const fetchAccounts = async () => {
       const response = await instance.get<AccountInfo[]>(`/accounts`);
 
       if ('data' in response) {
-        
         setAccounts(response.data);
       } else {
         console.error(response.message);

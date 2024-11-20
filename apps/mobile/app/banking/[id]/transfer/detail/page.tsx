@@ -13,7 +13,7 @@ interface AccountInfo {
 }
 
 interface TargetName {
-  name : string
+  name: string;
 }
 
 export default function TransferDetailPage() {
@@ -28,7 +28,7 @@ export default function TransferDetailPage() {
     undefined,
   );
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
-  const [targetAccount, setTargetAccount] = useState<TargetName| undefined>(); // 타겟 계좌 정보
+  const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
 
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
@@ -41,12 +41,13 @@ export default function TransferDetailPage() {
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
-      
       (async () => {
-        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
-        if ('data' in response){
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${myAccountId}/info`,
+        );
+        if ('data' in response) {
           setAccountInfo(response.data);
-        } else{
+        } else {
           console.error(response.message);
         }
       })();
@@ -60,16 +61,17 @@ export default function TransferDetailPage() {
         accountNumber: targetAccountNumber,
       };
       (async () => {
-        const response = await instance.post<TargetName>(`/accounts/find-user`, {
-          body: JSON.stringify(AccountNumberRequest),
-        });
+        const response = await instance.post<TargetName>(
+          `/accounts/find-user`,
+          {
+            body: JSON.stringify(AccountNumberRequest),
+          },
+        );
         console.log(response);
-        if('data' in response){
+        if ('data' in response) {
           setTargetAccount(response.data);
-        }
-        else{
+        } else {
           console.error(response.message);
-          
         }
       })();
     }
@@ -95,8 +97,8 @@ export default function TransferDetailPage() {
       alert('아니 돈도 없으면서 송금을 하시겠다??');
       return;
     }
-    if(targetAccount == undefined){
-      console.error("계좌번호 오류");
+    if (targetAccount == undefined) {
+      console.error('계좌번호 오류');
       return;
     }
 
