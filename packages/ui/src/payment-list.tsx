@@ -81,11 +81,11 @@ export default function PaymentList({
             } else {
               setStartDate(getDateObject(endDate));
             }
+          } else {
+            showToast.error({
+              message: ERROR_MESSAGES['COMMON'],
+            });
           }
-
-          showToast.error({
-            message: ERROR_MESSAGES['COMMON'],
-          });
           throw error; // 에러 바운더리로 전파
         }
         return response.data;
@@ -152,7 +152,7 @@ export default function PaymentList({
   }, [sortBy, startDate, endDate, setSize]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       <section className={styles.paymentContainer}>
         <motion.div
           key="content"
@@ -162,12 +162,15 @@ export default function PaymentList({
         >
           {sortBy === 'latest'
             ? // 최신순일 때는 날짜별 그룹화
-              groupPaymentsByDate(payments).map(([date, payments]) => (
-                <div className={styles.paymentWrapper} key={date}>
+              groupPaymentsByDate(payments).map(([date, payments], index) => (
+                <div
+                  className={styles.paymentWrapper}
+                  key={`payments-${index}`}
+                >
                   <span className={styles.date}>{date}</span>
-                  {payments.map((payment) => (
+                  {payments.map((payment, idx) => (
                     <Payment
-                      key={payment.id}
+                      key={`payment-${payment.id}-${idx}`}
                       travelId={travelId}
                       paymentInfo={payment}
                       travelMembers={initialData?.travelMembers!}
@@ -185,12 +188,12 @@ export default function PaymentList({
                 />
               ))}
         </motion.div>
-
-        {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
-        <div ref={ref} className={styles.loadingTrigger}>
-          {isValidating && !error && size > 1 && <PaymentSkeleton />}
-        </div>
       </section>
+
+      {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
+      <div ref={ref}>
+        {isValidating && !error && size > 1 && <PaymentSkeleton />}
+      </div>
     </AnimatePresence>
   );
 }
