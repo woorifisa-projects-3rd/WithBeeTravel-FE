@@ -120,10 +120,6 @@
     margin-top: 16px; /* 버튼과 키보드 사이의 공간을 추가 */
   }
   
-  .nextButton:hover {
-    background-color: #4caf50;
-  }
-  
   .nextButton:disabled {
     background-color: #ddd;
     cursor: not-allowed;
