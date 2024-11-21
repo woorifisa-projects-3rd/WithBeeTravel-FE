@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import styles from './card.module.css';
-import { Tag } from './tag';
+import { Item } from './item';
 
 export interface CardProps {
   imageSrc?: string;
@@ -34,8 +34,8 @@ export const Card = ({
         <p className={styles.time}>{time}</p>
         <p className={styles.comment}>{comment}</p>
         <div className={styles.details}>
-          <Tag label={price} />
-          <Tag label={storeName} />
+          <Item label={price} />
+          <Item label={storeName} />
         </div>
       </div>
     </div>

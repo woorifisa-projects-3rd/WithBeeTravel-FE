@@ -4,7 +4,11 @@ import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
-import { Tag } from '@withbee/ui/tag';
+import { Item } from '@withbee/ui/item';
+import DatePickerModal from '@withbee/ui/date-picker-modal';
+import { formatDate, getDateObject } from '@withbee/utils';
+import { useToast } from '@withbee/hooks/useToast';
+import { validators } from '@withbee/utils';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -30,7 +34,7 @@ export default function TravelForm({
   const [formData, setFormData] = useState({
     travelId: 12,
     travelName: '',
-    isDomesticTravel: false, // true/false 값으로 설정
+    isDomesticTravel: false,
     travelCountries: [] as string[],
     travelStartDate: '2024-10-28',
     travelEndDate: '2024-11-02',
@@ -39,6 +43,21 @@ export default function TravelForm({
   // 검색 관련 상태
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<string[]>([]);
+
+  //DatePickerModal 관련 상태
+  const [isStartDateModalOpen, setIsStartDateModalOpen] = useState(false);
+  const [isEndDateModalOpen, setIsEndDateModalOpen] = useState(false);
+
+  // 날짜 선택 핸들러
+  const handleDateSelect =
+    (type: 'start' | 'end') =>
+    (date: { year: number; month: number; day: number }) => {
+      const formattedDate = formatDate(date);
+      setFormData((prev) => ({
+        ...prev,
+        [type === 'start' ? 'travelStartDate' : 'travelEndDate']: formattedDate,
+      }));
+    };
 
   // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
   const countriesList = [
@@ -51,6 +70,7 @@ export default function TravelForm({
   ];
 
   // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
+  // 나중에 get해올때 useSWR로 변경하기
   useEffect(() => {
     if (mode === 'edit' && travelData) {
       setFormData({
@@ -110,7 +130,7 @@ export default function TravelForm({
     setSearchResults([]);
   };
 
-  // 선택된 국가 제거
+  // 국가 삭제 하기
   const removeCountry = (countryToRemove: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -120,8 +140,32 @@ export default function TravelForm({
     }));
   };
 
+  const { formValidation } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 여행명 검증
+    if (!validators.travelName(formData.travelName)) {
+      formValidation.invalidName();
+      return;
+    }
+
+    // 날짜 검증
+    const dateValidation = validators.travelDates(
+      formData.travelStartDate,
+      formData.travelEndDate,
+    );
+
+    if (!dateValidation.isValid) {
+      if (dateValidation.error === 'EXCEED_DURATION') {
+        formValidation.invalidDateDuration();
+      } else if (dateValidation.error === 'INVALID_ORDER') {
+        formValidation.invalidDateOrder();
+      }
+      return;
+    }
+
     onSubmit(formData);
   };
 
@@ -185,9 +229,10 @@ export default function TravelForm({
               <div className={styles.selectedCountries}>
                 {formData.travelCountries.map((country) => (
                   <div key={country} className={styles.countryTag}>
-                    <Tag
+                    <Item
                       label={country}
-                      type="delete" // 'delete' 타입으로 삭제 아이콘 표시
+                      type="delete"
+                      onDelete={() => removeCountry(country)}
                       size="medium"
                     />
                   </div>
@@ -217,41 +262,53 @@ export default function TravelForm({
           <div className={styles.dateGroup}>
             <div className={styles.dateInput}>
               <span>시작일</span>
-              <input
-                type="date"
-                name="travelStartDate"
-                value={formData.travelStartDate}
-                onChange={handleInputChange}
+              <div
                 className={styles.customDateInput}
-              />
-              <span className={styles.customIcon}>
-                <Image
-                  src="/imgs/travelform/cal.png"
-                  alt="달력 아이콘"
-                  className={styles.cal}
-                  width={21}
-                  height={21}
+                onClick={() => setIsStartDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelStartDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+                <DatePickerModal
+                  title="시작일"
+                  isOpen={isStartDateModalOpen}
+                  initialDate={getDateObject(formData.travelStartDate)}
+                  onSelectDate={handleDateSelect('start')}
+                  onClose={() => setIsStartDateModalOpen(false)}
                 />
-              </span>
+              </div>
             </div>
             <div className={styles.dateInput}>
               <span>종료일</span>
-              <input
-                type="date"
-                name="travelEndDate"
-                value={formData.travelEndDate}
-                onChange={handleInputChange}
+              <div
                 className={styles.customDateInput}
+                onClick={() => setIsEndDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelEndDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+              </div>
+              <DatePickerModal
+                title="종료일"
+                isOpen={isEndDateModalOpen}
+                initialDate={getDateObject(formData.travelEndDate)}
+                onSelectDate={handleDateSelect('end')}
+                onClose={() => setIsEndDateModalOpen(false)}
               />
-              <span className={styles.customIcon}>
-                <Image
-                  src="/imgs/travelform/cal.png"
-                  alt="달력 아이콘"
-                  className={styles.cal}
-                  width={21}
-                  height={21}
-                />
-              </span>
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 {
-  "extends": "@withbee/typescript-config/react-library.json",
+  "extends": "@withbee/typescript-config/nextjs.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "ESNext",
-    "outDir": "dist"
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

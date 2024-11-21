@@ -7,6 +7,15 @@
     /* 호버 효과를 위한 트랜지션 */
 }
 
+.xsmall {
+  border-radius: 8px;
+  /* 모서리를 둥글게 */
+  padding: 6px 9px;
+  /* 패딩 */
+  font-size: 16px;
+  /* 텍스트 크기 */
+}
+
 .small {
   border-radius: 8px;
   /* 모서리를 둥글게 */

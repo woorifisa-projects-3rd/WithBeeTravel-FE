@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@withbee/ui/button';
-import { Tag } from '@withbee/ui/tag';
+import { Item } from '@withbee/ui/item';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 export default function Page() {
   const router = useRouter();
-  // TODO: Friends 컴포넌트화 필요
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
@@ -30,13 +29,13 @@ export default function Page() {
         </div>
         <div className={styles.imgWrapper}>{/* <Image /> */}</div>
         <div className={styles.tagWrapper}>
-          <Tag label="오스트리아" />
-          <Tag label="포르투갈" />
-          <Tag label="스위스" />
+          <Item label="오스트리아" />
+          <Item label="포르투갈" />
+          <Item label="스위스" />
         </div>
         <div className={styles.friendsWrapper}>
           {[1, 2, 3, 4, 5].map((number) => (
-            <FriendImage number={number} />
+            <FriendImage src={''} />
           ))}
         </div>
       </div>

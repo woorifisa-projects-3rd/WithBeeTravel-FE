@@ -4,22 +4,22 @@ import styles from './friend-image.module.css';
 import { HTMLAttributes } from 'react';
 
 interface FriendImageProps extends HTMLAttributes<HTMLImageElement> {
-  number: number;
+  src: string;
   size?: number;
   className?: string;
 }
 
 export const FriendImage = ({
-  number,
+  src,
   size = 40,
   className,
 }: FriendImageProps) => {
   // 1-10 사이의 숫자로 제한
-  const safeNumber = Math.max(1, Math.min(10, number));
+  const safeNumber = Math.max(1, Math.min(10, Number(src))) || 5;
 
   return (
     <Image
-      src={`/friends/${safeNumber}.png`}
+      src={`/imgs/friends/${safeNumber}.png`}
       alt={`Friend ${safeNumber}`}
       width={size}
       height={size}

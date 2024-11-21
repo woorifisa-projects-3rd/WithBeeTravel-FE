@@ -4,6 +4,7 @@
   transform: translate(-50%);
   width: 90%;
   height: 25vh;
+  margin-top: 10px;
 }
 
 .imageWrap::before {
@@ -37,11 +38,12 @@
 }
 
 .button {
-  padding: 12px 15px;
+  padding: 10px 12px;
   border: 1.5px solid var(--color-gray-200);
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .buttonTitleWrap {
