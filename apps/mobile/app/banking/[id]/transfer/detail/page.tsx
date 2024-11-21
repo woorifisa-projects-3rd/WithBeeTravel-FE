@@ -4,6 +4,7 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import PinNumberModal from '../../../../../components/PinNumberModal';
 
 interface AccountInfo {
   accountId: number;
@@ -19,16 +20,13 @@ interface TargetName {
 export default function TransferDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
-    null,
-  ); // 초기값을 null로 설정
+  const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(null); // 초기값을 null로 설정
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(
-    undefined,
-  );
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(undefined);
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
@@ -42,9 +40,7 @@ export default function TransferDetailPage() {
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/accounts/${myAccountId}/info`,
-        );
+        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -57,17 +53,11 @@ export default function TransferDetailPage() {
   // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {
     if (targetAccountNumber) {
-      const AccountNumberRequest = {
-        accountNumber: targetAccountNumber,
-      };
+      const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
-        const response = await instance.post<TargetName>(
-          `/accounts/find-user`,
-          {
-            body: JSON.stringify(AccountNumberRequest),
-          },
-        );
-        console.log(response);
+        const response = await instance.post<TargetName>('/accounts/find-user', {
+          body: JSON.stringify(AccountNumberRequest),
+        });
         if ('data' in response) {
           setTargetAccount(response.data);
         } else {
@@ -88,62 +78,64 @@ export default function TransferDetailPage() {
 
   // 송금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
-    if (!amount || amount == '0') {
+    // 금액 유효성 검사
+    if (!amount || amount === '0') {
       alert('금액을 입력해주세요!');
       return;
     }
-    if (accountInfo !== null && parseInt(amount) >= accountInfo!.balance) {
-      // accountInfo가 null일 수도 있어서
-      alert('아니 돈도 없으면서 송금을 하시겠다??');
-      return;
-    }
-    if (targetAccount == undefined) {
-      console.error('계좌번호 오류');
+
+    // 잔액 검증
+    if (accountInfo && parseInt(amount) > accountInfo.balance) {
+      alert('잔액이 부족합니다!');
       return;
     }
 
-    alert(`${targetAccount.name}님에게 ₩${amount}를 송금합니다.`);
+    // 타겟 계좌 정보가 없을 때
+    if (!targetAccount) {
+      alert('타겟 계좌 정보가 잘못되었습니다.');
+      return;
+    }
 
-    const TransferRequest = {
+    // 모달 열기
+    setIsModalOpen(true);
+  };
+
+  // PIN 번호 제출 처리
+  const handlePinSubmit = async (pin: string) => {
+    const transferRequest = {
       accountId: myAccountId,
       amount: amount,
       accountNumber: targetAccountNumber,
-      rqspeNm: targetAccount.name,
+      rqspeNm: targetAccount?.name,
     };
 
     try {
       const response = await instance.post(
         `/accounts/${myAccountId}/transfer`,
-        {
-          body: JSON.stringify(TransferRequest),
-        },
+        { body: JSON.stringify(transferRequest) }
       );
-
-      alert('송금 완료');
-      // 송금 완료되면 페이지 이동되야됨
-      router.push(`/banking/`);
-
-      return;
+      
+      alert('송금이 완료되었습니다!');
+      router.push('/banking/');
     } catch (error) {
-      console.error('오류: ', error);
-
-      alert('송금 중 오류 발생');
+      console.error('송금 오류:', error);
+      alert('송금 중 오류가 발생했습니다.');
+    } finally {
+      setIsModalOpen(false); // 송금 후 모달 닫기
     }
   };
 
   const renderKeyboard = () => (
     <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
-        (key) => (
-          <button
-            key={key}
-            className={styles.keyboardKey}
-            onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
-          >
-            {key}
-          </button>
-        ),
-      )}
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map((key) => (
+        <button
+          key={key}
+          className={styles.keyboardKey}
+          onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
+        >
+          {key}
+        </button>
+      ))}
     </div>
   );
 
@@ -186,9 +178,7 @@ export default function TransferDetailPage() {
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
-
       <main className={styles.main}>{renderAmountInput()}</main>
-
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
@@ -196,6 +186,13 @@ export default function TransferDetailPage() {
           송금하기
         </button>
       )}
+
+      {/* PinNumberModal 컴포넌트 호출 */}
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // 모달 닫기
+        onSubmit={handlePinSubmit} // PIN 입력 후 제출 처리
+      />
     </div>
   );
 }
