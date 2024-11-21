@@ -21,6 +21,8 @@ export default async function Page({ params }: { params: Params }) {
   const { myTotalPayment, myDetailPayments, others } =
     response.data as SettlementDetails;
 
+  console.log(response);
+
   return (
     <div className={styles.container}>
       <header>
@@ -141,7 +143,7 @@ export default async function Page({ params }: { params: Params }) {
           >
             <Button label="동의하기" />
           </Link>
-          <ModalWrapper />
+          <ModalWrapper travelId={params.id} />
         </div>
       </div>
     </div>

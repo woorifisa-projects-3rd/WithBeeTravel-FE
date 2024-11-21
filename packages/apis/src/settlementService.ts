@@ -41,3 +41,8 @@ export const getSettlementDetails = async (
   );
   return response;
 };
+
+// 정산 취소
+export const cancelSettlement = async (travelId: number) => {
+  return instance.delete(`/api/travels/${travelId}/settlements`);
+};
