@@ -68,13 +68,13 @@ export default async function Page({ params }: { params: Params }) {
         <div className={styles.userList}>
           <ul>
             {others
-              .sort((a: { agreed: any }, b: { agreed: any }) => {
+              .sort((a: { agreed: boolean }, b: { agreed: boolean }) => {
                 return a.agreed === b.agreed ? 0 : a.agreed ? 1 : -1;
               })
               .map(
                 (user: {
-                  id: Key | null | undefined;
-                  agreed: any;
+                  id: Key;
+                  agreed: boolean;
                   name: string;
                   totalPaymentCost: number;
                 }) => (
