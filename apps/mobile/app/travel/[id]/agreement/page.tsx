@@ -33,8 +33,13 @@ export default function ConsentPage({ params }: { params: Params }) {
           message: `오류 발생: ${response.code}`,
         });
 
-        if (response.code === 'SETTLEMENT-010') {
-          router.push(`/travel/${travelId}/agreement/pending`);
+        if (
+          response.code === 'SETTLEMENT-010' ||
+          response.code === 'BANKING-001'
+        ) {
+          router.push(
+            `/travel/${travelId}/agreement/pending?error=${response.code}`,
+          );
         }
         return;
       }
