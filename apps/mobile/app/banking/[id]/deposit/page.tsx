@@ -4,10 +4,6 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
-import {
-  ErrorResponse,
-  SuccessResponse,
-} from '../../../../../../packages/apis/src/instance';
 
 interface AccountInfo {
   accountId: number;

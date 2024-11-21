@@ -39,7 +39,7 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if (response && response.travelId) {
+    if (response && 'travelId' in response) {
       router.push(`/travel/${response.travelId}`);
     }
   };
