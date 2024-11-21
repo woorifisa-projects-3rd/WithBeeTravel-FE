@@ -3,13 +3,13 @@ import plusIcon from './assets/plus.png';
 import arrowDownIcon from './assets/arrow_down.png';
 import clockIcon from './assets/clock.png';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DatePickerModal from './date-picker-modal';
-import { formatDate } from '../../../packages/utils/dateUtils';
-import { formatTime } from '../../../packages/utils/timeUtils';
+import { formatDate, formatTime } from '@withbee/utils';
 import { TimePickerModal } from './time-picker-modal';
 import { CurrencyUnitPickerModal } from './currency-unit-picker-modal';
 import { Button } from './button';
+import { getCurrencyData } from '@withbee/apis';
 
 export interface ManualPaymentFormData {
   date: string;
@@ -17,21 +17,23 @@ export interface ManualPaymentFormData {
   storeName: string;
   paymentAmount: number;
   foreignPaymentAmount: number;
-  currencyUnit: string | 'KRW';
-  exchangeRate: number | undefined;
-  paymentImage: File | undefined;
-  paymentComment: string | undefined;
-  isMainImage: boolean | false;
+  currencyUnit: string;
+  exchangeRate: number;
+  paymentImage: File | null;
+  paymentComment: string;
+  isMainImage: boolean;
 }
 
 interface ManualSharedPaymentFormProps {
   formData: ManualPaymentFormData;
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
+  currencyUnitOptions: string[];
 }
 
 export const ManualSharedPaymentForm = ({
   formData,
   setFormData,
+  currencyUnitOptions,
 }: ManualSharedPaymentFormProps) => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isTimeModalOpen, setIsTimeModalOpen] = useState(false);
@@ -72,6 +74,34 @@ export const ManualSharedPaymentForm = ({
     }
   };
 
+  const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const paymentAmount =
+      e.target.value === ''
+        ? 0
+        : parseInt(e.target.value) < 0
+          ? 0
+          : parseInt(e.target.value);
+    setFormData({
+      ...formData,
+      paymentAmount: paymentAmount,
+    });
+  };
+
+  const handleForeignPaymentChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const foreignPaymentAmount =
+      e.target.value === ''
+        ? 0
+        : parseFloat(e.target.value) < 0
+          ? 0
+          : parseFloat(e.target.value);
+    setFormData({
+      ...formData,
+      foreignPaymentAmount,
+    });
+  };
+
   const getDateObject = (dateString: string) => {
     const date = new Date(dateString);
 
@@ -91,6 +121,37 @@ export const ManualSharedPaymentForm = ({
       minute,
     };
   };
+
+  // currencyUnit이 변경될 때마다 getCurrencyData를 호출하여 환율 데이터 가져오기
+  useEffect(() => {
+    const fetchCurrencyData = async () => {
+      if (formData.currencyUnit !== 'KRW') {
+        // 'KRW'일 경우 요청하지 않음
+        const exchangeRate = await getCurrencyData(
+          formData.date === '' ? 'latest' : formData.date,
+          'v1',
+          formData.currencyUnit,
+        );
+        if (exchangeRate !== null) {
+          setFormData((prev) => ({
+            ...prev,
+            exchangeRate,
+          }));
+        }
+      }
+    };
+    fetchCurrencyData();
+  }, [formData.currencyUnit, formData.date]);
+
+  useEffect(() => {
+    const calculatedPaymentAmount = Math.floor(
+      formData.foreignPaymentAmount * formData.exchangeRate,
+    );
+    setFormData((prev) => ({
+      ...prev,
+      paymentAmount: calculatedPaymentAmount,
+    }));
+  }, [formData.exchangeRate, formData.foreignPaymentAmount]);
 
   const handleSubmitForm = () => {};
 
@@ -128,7 +189,7 @@ export const ManualSharedPaymentForm = ({
           className={`${styles.input} ${styles.rowInput}`}
           onClick={() => setIsTimeModalOpen(true)}
         >
-          <p className={formData.date === '' ? styles.emptyInput : ''}>
+          <p className={formData.time === '' ? styles.emptyInput : ''}>
             {formData.time === '' ? 'HH:MM' : formData.time}
           </p>
           <span className={styles.customIcon}>
@@ -155,7 +216,7 @@ export const ManualSharedPaymentForm = ({
         <input
           type="text"
           placeholder="상호명을 입력해주세요."
-          value={formData.storeName}
+          value={formData.storeName ?? ''}
           onChange={(e) =>
             setFormData({ ...formData, storeName: e.target.value })
           }
@@ -169,27 +230,21 @@ export const ManualSharedPaymentForm = ({
             <input
               type="number"
               placeholder="화폐 단위를 설정해주세요."
-              value={formData.paymentAmount}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  paymentAmount: parseInt(e.target.value),
-                })
-              }
-              className={styles.input}
+              value={formData.paymentAmount === 0 ? '' : formData.paymentAmount}
+              onChange={handlePaymentChange}
+              className={styles.paymentInput}
             />
           ) : (
             <input
               type="number"
               placeholder="화폐 단위를 설정해주세요."
-              value={formData.foreignPaymentAmount}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  foreignPaymentAmount: parseFloat(e.target.value),
-                })
+              value={
+                formData.foreignPaymentAmount === 0
+                  ? ''
+                  : formData.foreignPaymentAmount
               }
-              className={styles.input}
+              onChange={handleForeignPaymentChange}
+              className={styles.paymentInput}
             />
           )}
           <div
@@ -205,11 +260,19 @@ export const ManualSharedPaymentForm = ({
             />
           </div>
         </div>
+        <div className={styles.exchangeRate}>
+          {formData.foreignPaymentAmount !== 0 && (
+            <div>
+              <span>₩ </span>
+              <span>{formData.paymentAmount?.toLocaleString()}</span>
+            </div>
+          )}
+        </div>
         {isUnitModalOpen && (
           <CurrencyUnitPickerModal
             title="화폐 단위 선택"
             isOpen={isUnitModalOpen}
-            currencyUnits={['KRW', 'USD', 'KRW', 'kRW']}
+            currencyUnits={currencyUnitOptions}
             onSelectCurrency={handleCurrencyUnitSelect}
             onClose={() => setIsUnitModalOpen(false)}
           />
