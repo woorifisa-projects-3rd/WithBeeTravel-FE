@@ -39,8 +39,11 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if (response && 'travelId' in response) {
-      router.push(`/travel/${response.travelId}`);
+    if ('data' in response && response.data?.travelId) {
+      router.push(`/travel/${response.data.travelId}`);
+    } else {
+      // 에러 처리 로직
+      console.error('Travel creation failed');
     }
   };
 

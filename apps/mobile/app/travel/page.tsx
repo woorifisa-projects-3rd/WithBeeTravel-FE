@@ -121,9 +121,10 @@ export default function page() {
       {/* 모달 */}
       <Modal
         isOpen={isOpen}
-        onClose={handleInviteCodeSubmit}
+        onClose={() => setIsOpen(false)}
         title="초대코드를 입력해주세요."
         closeLabel="입력 완료"
+        onSubmit={handleInviteCodeSubmit}
       >
         <p className={styles.subtitle}>
           초대 코드를 입력하여 그룹에 가입하세요.
