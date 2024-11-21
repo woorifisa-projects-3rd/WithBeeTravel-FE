@@ -31,7 +31,7 @@ export default function ModalWrapper({ travelId }: { travelId: number }) {
       });
       console.log(response);
       setIsModalOpen(false);
-      router.push(`/travel/${travelId}/agreement/canceled`);
+      router.push(`/travel/${travelId}/settlement/canceled`);
     } catch (error) {
       showToast.error({
         // message: ERROR_MESSAGES['COMMON'],
