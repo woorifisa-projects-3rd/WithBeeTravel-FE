@@ -38,11 +38,12 @@
 }
 
 .button {
-  padding: 12px 15px;
+  padding: 10px 12px;
   border: 1.5px solid var(--color-gray-200);
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .buttonTitleWrap {
