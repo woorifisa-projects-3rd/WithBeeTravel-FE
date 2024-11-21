@@ -41,3 +41,16 @@ export const getSettlementDetails = async (
   );
   return response;
 };
+
+// 정산 동의하기
+export const agreeSettlement = async (
+  travelId: number,
+): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
+  const response = instance.post<SettlementDetails>(
+    `/api/travels/${travelId}/settlements/agreement`,
+    {
+      cache: 'no-store',
+    },
+  );
+  return response;
+};

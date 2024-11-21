@@ -6,12 +6,49 @@ import Image from 'next/image';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { consentItems } from '@withbee/utils';
+import { useToast } from '@withbee/hooks/useToast';
+import { useRouter } from 'next/navigation';
+import { agreeSettlement } from '@withbee/apis';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+// import { ERROR_MESSAGES } from '@withbee/exception';
 
-export default function ConsentPage() {
+export default function ConsentPage({ params }: { params: Params }) {
+  const travelId = Number(params.id);
+
+  const { showToast } = useToast();
+  const router = useRouter();
+
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
   const [agreements, setAgreements] = useState<boolean[]>(
     new Array(consentItems.length).fill(false),
   );
+
+  const handelAgreeSettlement = async () => {
+    try {
+      const response = await agreeSettlement(travelId);
+
+      if ('code' in response) {
+        showToast.warning({
+          // message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+          message: `오류 발생: ${response.code}`,
+        });
+
+        if (response.code === 'SETTLEMENT-010') {
+          router.push(`/travel/${travelId}/agreement/pending`);
+        }
+        return;
+      }
+
+      console.log(response);
+      router.push(`/travel/${travelId}/agreement/completed`);
+    } catch (error) {
+      showToast.error({
+        // message: ERROR_MESSAGES['COMMON'],
+        message: '정산 동의 중 오류 발생',
+      });
+      throw error;
+    }
+  };
 
   // 각 약관항목에 ref를 연결해 스크롤 위치를 이동
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -125,6 +162,7 @@ export default function ConsentPage() {
           <Button
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
+            onClick={handelAgreeSettlement}
           />
         </div>
       </div>
