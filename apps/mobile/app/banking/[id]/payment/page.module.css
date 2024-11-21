@@ -1,0 +1,62 @@
+/* 전체 컨테이너 */
+.container {
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px;
+  }
+  
+  /* 헤더 */
+  .header {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  
+  .header h1 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  /* 폼 */
+  .form {
+    flex: 1;
+    padding: 24px 16px;
+  }
+  
+  /* 입력 그룹 */
+  .inputGroup {
+    margin-bottom: 16px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+  }
+  
+  .submitButton {
+    padding: 16px;
+    background-color: var(--color-yellow-6);
+    color: var(--color-yellow-12);
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 16px;
+  }
+  
+  .submitButton:hover {
+    background-color: #4caf50;
+  }
+  
+  .submitButton:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
