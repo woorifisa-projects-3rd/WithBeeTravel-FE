@@ -71,6 +71,7 @@ export default function page() {
               className={styles.icon}
               width={50}
               height={50}
+              layout="intrinsic"
             />
           </div>
         </button>
@@ -85,6 +86,7 @@ export default function page() {
               className={styles.icon}
               width={50}
               height={50}
+              layout="intrinsic"
             />
           </div>
         </button>
