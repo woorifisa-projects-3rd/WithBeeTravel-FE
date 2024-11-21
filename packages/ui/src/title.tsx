@@ -29,7 +29,7 @@ export const Title = ({ label }: TitleProps) => {
         className={styles.back}
       />
       <h1 className={styles.label}>{label}</h1>
-      <Link href="/alarm">
+      <Link href="/notification">
         <Image
           src={alarm}
           alt="알림"
