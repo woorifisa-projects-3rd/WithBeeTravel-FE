@@ -4,6 +4,8 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import PinNumberModal from '../../../../components/PinNumberModal';
+
 
 interface HistoryRequest {
   payAm: number;
@@ -18,6 +20,11 @@ interface AccountInfo {
   balance: number;
 }
 
+interface PinNumberResponse{
+  failedPinCount:number;
+  pinLocked:boolean;
+}
+
 interface WibeeCardResponse {
   connectedWibeeCard: boolean;
 }
@@ -30,19 +37,15 @@ export default function PaymentPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
   const [rqspeNm, setRqspeNm] = useState<string>(''); // 거래 내역(상호명) 상태
-  const [isWibeeCard, setIsWibeeCard] = useState<
-    WibeeCardResponse | undefined
-  >(); // 위비 카드 연결 여부 (계좌 정보에서 확인)
-  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
-    useState<boolean>(false); // 체크박스 상태 (결제 내역에서 사용)
+  const [isWibeeCard, setIsWibeeCard] = useState<WibeeCardResponse | undefined>(); // 위비 카드 연결 여부
+  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] = useState<boolean>(false); // 체크박스 상태
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // PinNumberModal 열기/닫기 상태
 
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/accounts/${myAccountId}/info`,
-        );
+        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -51,11 +54,11 @@ export default function PaymentPage() {
       })();
 
       (async () => {
-        const response = await instance.get<WibeeCardResponse>(
-          `/accounts/${myAccountId}/check-wibee`,
-        );
+        const response = await instance.get<WibeeCardResponse>(`/accounts/${myAccountId}/check-wibee`);
         if ('data' in response) {
           setIsWibeeCard(response.data);
+          console.log(response);
+          
         } else {
           console.error(response.message);
         }
@@ -85,22 +88,36 @@ export default function PaymentPage() {
       return;
     }
 
-    const historyRequest: HistoryRequest = {
-      payAm: parseInt(payAm),
-      rqspeNm,
-      isWibeeCard: isWibeeCardCheckbox,
-    };
+    const response = await instance.get<PinNumberResponse>('/verify/user-state');
+    if(Number(response.status) != 200){
+        alert("핀번호 재 설정 후 이용 가능")
+        return;  
+    }
+    // 모달을 열어 PIN 번호 입력 받기
+    setIsModalOpen(true);
+  };
 
+  // PIN 번호 입력 완료 후 처리
+  const handlePinSubmit = async (pin: string) => {
+    // PIN 번호 확인 후 결제 요청
     try {
+      const historyRequest: HistoryRequest = {
+        payAm: parseInt(payAm),
+        rqspeNm,
+        isWibeeCard: isWibeeCardCheckbox,
+      };
+
       await instance.post(`/accounts/${myAccountId}/payment`, {
         body: JSON.stringify(historyRequest),
       });
       alert('결제 내역이 등록되었습니다.');
       router.push(`/banking/`);
-      return;
     } catch (error) {
       console.error('결제 내역 추가 중 오류 발생:', error);
       alert('오류가 발생했습니다.');
+    } finally {
+      // 모달을 닫음
+      setIsModalOpen(false);
     }
   };
 
@@ -171,6 +188,13 @@ export default function PaymentPage() {
           등록하기
         </button>
       </div>
+
+      {/* PinNumberModal 컴포넌트 호출 */}
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // 모달 닫기
+        onSubmit={handlePinSubmit} // PIN 입력 후 제출 처리
+      />
     </div>
   );
 }
