@@ -7,7 +7,12 @@ export interface SharedPayment {
   unit: string;
   storeName: string;
   isAllMemberParticipated: boolean;
-  participatingMembers: number[];
+  participatingMembers: ParticipatingMember[];
   isManuallyAdded: boolean;
   paymentDate: string;
+}
+
+export interface ParticipatingMember {
+  id: number;
+  profileImage: number;
 }

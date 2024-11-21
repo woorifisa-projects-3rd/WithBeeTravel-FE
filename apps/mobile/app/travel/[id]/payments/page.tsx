@@ -6,7 +6,7 @@ import { PaymentErrorBoundary } from '@withbee/ui/payment-error-boundary';
 import PaymentList from '@withbee/ui/payment-list';
 import { Suspense } from 'react';
 import { PaymentSkeleton } from '@withbee/ui/payment-skeleton';
-import { getSharedPayments } from '@withbee/apis';
+import { getSharedPayments, getTravelMembers } from '@withbee/apis';
 
 interface TravelPageProps {
   params: {
@@ -15,9 +15,16 @@ interface TravelPageProps {
 }
 export default async function Page({ params }: TravelPageProps) {
   const { id } = params;
-  const response = await getSharedPayments({ travelId: Number(id) });
+  const travelMembers = await getTravelMembers(Number(id));
+  const sharedPayments = await getSharedPayments({ travelId: Number(id) });
+  let initialData = null;
 
-  const initialData = 'data' in response ? response.data : null;
+  if ('data' in sharedPayments && 'data' in travelMembers) {
+    initialData = {
+      travelMembers: travelMembers.data,
+      payments: sharedPayments.data!,
+    };
+  }
 
   return (
     <main className={styles.container}>

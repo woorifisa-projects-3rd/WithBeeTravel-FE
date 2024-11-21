@@ -9,34 +9,54 @@ import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
-import { SharedPayment } from '@withbee/types';
+import {
+  ParticipatingMember,
+  SharedPayment,
+  TravelMember,
+} from '@withbee/types';
+import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
-const friends = [1, 2, 3, 4, 5, 7, 9, 6];
-
 interface PaymentProps {
+  travelMembers: TravelMember[];
   paymentInfo: SharedPayment;
 }
 
-export const Payment = ({ paymentInfo }: PaymentProps) => {
+export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
+  const { showToast } = useToast();
   const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
-  const [selectedFriends, setSelectedFriends] = useState<number[]>(friends);
+  const [selectedMembers, setSelectedMembers] = useState<ParticipatingMember[]>(
+    paymentInfo.participatingMembers,
+  );
 
-  const handleSelectFriend = (friend: number) => {
-    if (selectedFriends.includes(friend)) {
-      setSelectedFriends((prev) => prev.filter((f) => f !== friend));
+  const handleSelectFriend = (member: ParticipatingMember) => {
+    // 선택된 멤버가 이미 선택된 경우 제거
+    if (
+      selectedMembers.some((selectedMember) => selectedMember.id === member.id)
+    ) {
+      if (selectedMembers.length === 1) {
+        showToast.info({
+          message: '최소 1명은 선택되어야 합니다.',
+        });
+        return;
+      }
+
+      setSelectedMembers((prev) =>
+        prev.filter((selectedMember) => selectedMember.id !== member.id),
+      );
     } else {
-      setSelectedFriends((prev) => [...prev, friend]);
+      // 선택된 멤버가 아닌 경우 추가
+      setSelectedMembers((prev) => [...prev, member]);
     }
   };
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
-  const visibleFriendsLength =
+  const visibleMembersLength =
     paymentInfo.participatingMembers.length > 4
       ? windowWidth > 390
         ? 5
@@ -73,14 +93,16 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
               setIsOpen((prev) => !prev);
             }}
           >
-            {selectedFriends.slice(0, visibleFriendsLength).map((friend) => (
-              <FriendImage key={friend} src={friend} size={35} />
+            {selectedMembers.slice(0, visibleMembersLength).map((member) => (
+              <FriendImage
+                key={member.id}
+                src={member.profileImage}
+                size={35}
+              />
             ))}
             <motion.button className={styles.plusButton}>
               <button className={styles.moreFriends}>
-                {/* {selectedFriends.length > visibleFriendsLength &&
-                  selectedFriends.length - visibleFriendsLength} */}
-                {paymentInfo.participatingMembers.length}명
+                {selectedMembers.length}명
               </button>
             </motion.button>
           </div>
@@ -96,6 +118,7 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
         </div>
       </div>
 
+      {/* 정산인원선택 모달 */}
       {isOpen && (
         <Modal
           isOpen={isOpen}
@@ -105,17 +128,19 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
           closeLabel="확인"
         >
           <div className={styles.friendsModal}>
-            {friends.map((friend) => (
+            {travelMembers.map((member) => (
               <div
                 className={styles.friendRow}
-                key={friend}
-                onClick={() => handleSelectFriend(friend)}
+                key={member.id}
+                onClick={() => handleSelectFriend(member)}
               >
                 <div className={styles.friendInfo}>
-                  <FriendImage key={friend} src={friend} size={35} />
-                  <span>콩이</span>
+                  <FriendImage src={member.profileImage} size={35} />
+                  <span>{member.name}</span>
                 </div>
-                {selectedFriends.includes(friend) ? (
+                {selectedMembers.some(
+                  (selectedMember) => selectedMember.id === member.id,
+                ) ? (
                   <Image
                     src={selectIcon}
                     alt="select"
