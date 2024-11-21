@@ -5,8 +5,12 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+import { useRouter } from 'next/navigation';
 
-export default function Page() {
+export default function Page({ params }: { params: Params }) {
+  const router = useRouter();
+
   return (
     <div className={styles.container}>
       <Title label="" />
@@ -34,7 +38,10 @@ export default function Page() {
         </p>
       </div>
       <div className={styles.btnWrapper}>
-        <Button label="돌아가기" />
+        <Button
+          label="돌아가기"
+          onClick={() => router.push(`/travel/${params.id}`)}
+        />
       </div>
     </div>
   );
