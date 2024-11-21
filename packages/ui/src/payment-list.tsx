@@ -34,6 +34,7 @@ export default function PaymentList({
     setEndDate,
     sortBy,
     isDateFiltered,
+    memberId,
   } = usePaymentStore();
   const { showToast } = useToast();
 
@@ -46,6 +47,7 @@ export default function PaymentList({
     const params = new URLSearchParams({
       page: pageIndex.toString(),
       sortBy,
+      memberId: memberId.toString(),
     });
 
     // 날짜 필터가 적용된 경우에만 날짜 파라미터 추가
@@ -67,6 +69,7 @@ export default function PaymentList({
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
           sortBy,
           ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
+          ...(memberId !== 0 && { memberId }), // 조건부로 멤버 추가
         });
 
         if ('code' in response) {

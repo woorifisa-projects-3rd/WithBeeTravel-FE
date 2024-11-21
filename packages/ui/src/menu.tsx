@@ -10,12 +10,20 @@ import selectIcon from './assets/select.png';
 import DatePickerModal from './date-picker-modal';
 import { usePaymentStore } from '@withbee/stores';
 import { getDateObject } from '@withbee/utils';
+import { TravelMember } from '@withbee/types';
 
 interface MenuProps {
+  travelMembers: TravelMember[];
   className?: string;
 }
 
-export const Menu = ({ className, ...props }: MenuProps) => {
+const AllMembers: TravelMember = {
+  id: 0,
+  name: '전체',
+  profileImage: 0,
+};
+
+export const Menu = ({ travelMembers, className, ...props }: MenuProps) => {
   const {
     startDate,
     setStartDate,
@@ -24,6 +32,8 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     sortBy,
     setSortBy,
     setIsDateFiltered,
+    memberId,
+    setMemberId,
   } = usePaymentStore();
   const [isOpen, setIsOpen] = useState({
     period: false,
@@ -64,6 +74,13 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     setSelected({ ...selected, period: '기간' });
   };
 
+  // 멤버 선택 핸들러
+  const handleMemberSelect = (member: TravelMember) => {
+    setSelected({ ...selected, member: member.id.toString() });
+    setMemberId(member.id);
+    // handleModal('member');
+  };
+
   return (
     <section className={[styles.menu, className].join(' ')} {...props}>
       <Image
@@ -77,7 +94,7 @@ export const Menu = ({ className, ...props }: MenuProps) => {
         <div className={styles.filterContainer}>
           <div className={styles.filter}>
             <Item
-              label="전체 기간"
+              label="기간 설정"
               size="small"
               type="select"
               onClick={() => handleModal('period')}
@@ -111,24 +128,14 @@ export const Menu = ({ className, ...props }: MenuProps) => {
           title="결제 멤버"
         >
           <ul className={styles.list}>
-            {['전체', '삼도삼', '진콩이', '호초루', '연콩이', '대장님'].map(
-              (member) => (
-                <li
-                  key={member}
-                  onClick={() => setSelected({ ...selected, member })}
-                >
-                  {member}
-                  {selected.member === member && (
-                    <Image
-                      src={selectIcon}
-                      alt="select"
-                      width={25}
-                      height={25}
-                    />
-                  )}
-                </li>
-              ),
-            )}
+            {[AllMembers, ...travelMembers].map((member) => (
+              <li key={member.id} onClick={() => handleMemberSelect(member)}>
+                {member.name}
+                {memberId === member.id && (
+                  <Image src={selectIcon} alt="select" width={25} height={25} />
+                )}
+              </li>
+            ))}
           </ul>
         </BottomModal>
       )}

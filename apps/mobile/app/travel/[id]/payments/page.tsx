@@ -29,7 +29,10 @@ export default async function Page({ params }: TravelPageProps) {
   return (
     <main className={styles.container}>
       <Title label="공동 결제 내역" />
-      <Menu className={styles.menu} />
+      <Menu
+        className={styles.menu}
+        travelMembers={initialData!.travelMembers!}
+      />
       <ItemGroup />
       <PaymentErrorBoundary>
         <Suspense
