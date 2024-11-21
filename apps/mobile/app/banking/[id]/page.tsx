@@ -23,6 +23,12 @@ interface AccountInfo {
   balance: number;
 }
 
+interface PinNumberResponse{
+  failedPinCount:number;
+  pinLocked:boolean;
+}
+
+
 export default function AccountPage() {
   const router = useRouter();
   const params = useParams();
@@ -84,6 +90,16 @@ export default function AccountPage() {
     }).format(new Date(date));
   };
 
+  const handleTransferClick = async() => {
+
+    const response = await instance.get<PinNumberResponse>('/verify/user-state');
+    if(Number(response.status) != 200){
+        alert("핀번호 재 설정 후 이용 가능")
+        return;  
+    }
+    router.push(`/banking/${id}/transfer`);
+  }
+
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
@@ -105,7 +121,7 @@ export default function AccountPage() {
         <Button
           label="송금"
           size={'medium'}
-          onClick={() => router.push(`/banking/${id}/transfer`)}
+          onClick={()=>handleTransferClick()}
         />
         <Button
           label="입금"
