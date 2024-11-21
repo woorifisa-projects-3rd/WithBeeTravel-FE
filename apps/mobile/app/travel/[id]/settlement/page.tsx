@@ -8,7 +8,7 @@ import ExpenseDetails from '../../../../components/ExpenseDetails';
 import Image from 'next/image';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { Key } from 'react';
-import { getSettlementDetails, SettlementDetails } from '@withbee/apis';
+import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
 import { SuccessResponse } from '@withbee/types';
 
 export default async function Page({ params }: { params: Params }) {
