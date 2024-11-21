@@ -1,0 +1,19 @@
+/* 초대 코드 모달 */
+.input {
+    width: 100%;
+    padding: 20px 0px 5px 0px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+    font-size: 18px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #000;
+}
+
+.friendsWrapper {
+    display: flex;
+    align-items: center;
+}

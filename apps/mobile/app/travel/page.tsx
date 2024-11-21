@@ -3,14 +3,16 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import travelExam from '../../public/imgs/travelselect/travel_exam.png';
-import { Modal } from '@withbee/ui/modal';
+import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { postInviteCode } from '@withbee/apis';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
-export default function page() {
+export default function page({ params }: { params: Params }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [code, setCode] = useState('');
   const router = useRouter();
+  const travelId = Number(params.id);
 
   const cards = [
     {
@@ -25,17 +27,16 @@ export default function page() {
     },
   ];
 
-  // 초대코드에 맞는 그룹으로 이동하는 함수
-  const handleInviteCodeSubmit = () => {
-    // 여기서 초대 코드로 그룹을 찾는 로직을 구현
-    // 예를 들어, 입력된 초대 코드가 특정 그룹 ID와 일치한다고 가정할 수 있습니다.
+  // 초대코드에 맞는 여행 홈으로 이동
+  const handleInviteCodeSubmit = async (
+    inviteCode: string,
+    travelId: number,
+  ) => {
+    const response = await postInviteCode(inviteCode, travelId);
 
-    // 그룹 ID가 일치하는지 확인 (실제 상황에서는 서버에서 그룹을 조회해야 할 수도 있습니다)
-    // const group = cards.find((card) => card.groupId === code);
-
-    if (true) {
-      // 그룹이 존재하면 해당 그룹의 홈으로 이동
-      router.push(`/travel/1`);
+    // 여행 존재하면 해당 여행 홈으로 이동
+    if ('travelId' in response && response.travelId) {
+      router.push(`/travel/${response.travelId}`);
     } else {
       alert('잘못된 초대 코드입니다.');
     }
@@ -120,26 +121,13 @@ export default function page() {
         ))}
       </div>
 
-      {/* 모달 */}
-      <Modal
+      {/* 초대 코드 모달 */}
+      <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="초대코드를 입력해주세요."
-        closeLabel="입력 완료"
         onSubmit={handleInviteCodeSubmit}
-      >
-        <p className={styles.subtitle}>
-          초대 코드를 입력하여 그룹에 가입하세요.
-        </p>
-        <input
-          id="inviteCode"
-          type="text"
-          className={styles.input}
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="초대코드"
-        />
-      </Modal>
+        travelId={travelId}
+      />
     </div>
   );
 }

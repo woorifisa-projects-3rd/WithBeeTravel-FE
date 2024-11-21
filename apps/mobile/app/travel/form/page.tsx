@@ -67,8 +67,8 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if ('data' in response && response.data?.travelId) {
-      router.push(`/travel/${response.data.travelId}`);
+    if (response && 'travelId' in response) {
+      router.push(`/travel/${response.travelId}`);
     } else {
       // 에러 처리 로직
       console.error('Travel edit failed');
