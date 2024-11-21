@@ -3,7 +3,7 @@ import React, { Suspense, useState } from 'react';
 import TravelForm from '../../../components/TravelForm';
 import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
-import { createTravel } from '@withbee/apis';
+import { createTravel, editTravel } from '@withbee/apis';
 import './page.module.css';
 import { useRouter } from 'next/navigation';
 
@@ -21,6 +21,7 @@ function TravelFormContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
+
 
   const handleCreateTravel = async (formData: FormData) => {
     const {
@@ -47,13 +48,41 @@ function TravelFormContent() {
     }
   };
 
+
+  // 편집 api
+  const handleEditTravel = async (formData: any) => {
+    const {
+      travelId,
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    } = formData;
+
+    const response = await editTravel(
+      travelId,
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    );
+
+    if (response.status == '200') {
+      router.push(`/travel/${response.travelId}`);
+    }
+  };
+
   const handleTravelSelect = (travel: FormData) => {
     setEditedTravel(travel);
+
   };
 
   const travelData =
     mode === 'edit'
       ? {
+          travelId: 12,
           travelName: '기존 여행 이름',
           isDomesticTravel: true,
           travelCountries: ['프랑스', '이탈리아'],
@@ -68,7 +97,7 @@ function TravelFormContent() {
       <TravelForm
         mode={mode as 'create' | 'edit'}
         travelData={travelData}
-        onSubmit={handleCreateTravel}
+        onSubmit={mode === 'create' ? handleCreateTravel : handleEditTravel}
       />
     </div>
   );
