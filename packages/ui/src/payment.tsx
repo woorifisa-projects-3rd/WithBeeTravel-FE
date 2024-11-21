@@ -137,10 +137,14 @@ export const Payment = ({
           </div>
         </div>
         <div className={styles.contentWrapper}>
-          <Item
-            label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
-            size="small"
-          />
+          {paymentInfo.unit !== 'KRW' ? (
+            <Item
+              label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
+              size="small"
+            />
+          ) : (
+            <Item label="국내 여행" size="small" />
+          )}
           <div className={styles.optionsWrapper}>
             <button className={styles.option}>기록 추가</button>
           </div>
