@@ -168,6 +168,7 @@ export default function PaymentList({
                   {payments.map((payment) => (
                     <Payment
                       key={payment.id}
+                      travelId={travelId}
                       paymentInfo={payment}
                       travelMembers={initialData?.travelMembers!}
                     />
@@ -178,6 +179,7 @@ export default function PaymentList({
               payments.map((payment) => (
                 <Payment
                   key={payment.id}
+                  travelId={travelId}
                   paymentInfo={payment}
                   travelMembers={initialData?.travelMembers!}
                 />

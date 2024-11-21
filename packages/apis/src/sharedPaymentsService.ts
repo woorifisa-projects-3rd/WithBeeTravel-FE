@@ -1,7 +1,7 @@
 import { instance } from './instance';
 import type { PageResponse, SharedPayment } from '@withbee/types';
 
-interface Params {
+interface GetSharedPaymentsParams {
   travelId: number;
   page?: number;
   sortBy?: 'latest' | 'amount';
@@ -18,7 +18,7 @@ export const getSharedPayments = async ({
   memberId,
   startDate,
   endDate,
-}: Params) => {
+}: GetSharedPaymentsParams) => {
   const searchParams = new URLSearchParams({
     page: page.toString(),
     sortBy,
@@ -39,19 +39,24 @@ export const getSharedPayments = async ({
   return response;
 };
 
+interface chooseParticipantsParams {
+  travelId: number;
+  paymentId: number;
+  travelMembersId: number[];
+}
+
 // 정산 인원 선택하기
-export const chooseParticipants = async (
-  travelId: number,
-  paymentId: number,
-  travelMembersId: number[],
-) => {
+export const chooseParticipants = async ({
+  travelId,
+  paymentId,
+  travelMembersId,
+}: chooseParticipantsParams) => {
   return instance.patch(
     `/api/travels/${travelId}/payments/${paymentId}/participants`,
     {
       body: JSON.stringify({
         travelMembersId,
       }),
-      // cache: 'no-store',
     },
   );
 };

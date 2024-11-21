@@ -18,41 +18,63 @@ import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
+import { chooseParticipants } from '@withbee/apis';
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
 interface PaymentProps {
+  travelId: number;
   travelMembers: TravelMember[];
   paymentInfo: SharedPayment;
 }
 
-export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
+export const Payment = ({
+  travelId,
+  travelMembers,
+  paymentInfo,
+}: PaymentProps) => {
   const { showToast } = useToast();
   const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
   const [selectedMembers, setSelectedMembers] = useState<ParticipatingMember[]>(
     paymentInfo.participatingMembers,
   );
+  const [tempSelectedMembers, setTempSelectedMembers] =
+    useState<ParticipatingMember[]>(selectedMembers);
 
-  const handleSelectFriend = (member: ParticipatingMember) => {
+  const handleSelectMember = (member: ParticipatingMember) => {
     // 선택된 멤버가 이미 선택된 경우 제거
     if (
-      selectedMembers.some((selectedMember) => selectedMember.id === member.id)
+      tempSelectedMembers.some(
+        (selectedMember) => selectedMember.id === member.id,
+      )
     ) {
-      if (selectedMembers.length === 1) {
-        showToast.info({
+      if (tempSelectedMembers.length === 1) {
+        showToast.warning({
           message: '최소 1명은 선택되어야 합니다.',
         });
         return;
       }
 
-      setSelectedMembers((prev) =>
+      setTempSelectedMembers((prev) =>
         prev.filter((selectedMember) => selectedMember.id !== member.id),
       );
     } else {
-      // 선택된 멤버가 아닌 경우 추가
-      setSelectedMembers((prev) => [...prev, member]);
+      setTempSelectedMembers((prev) => [...prev, member]);
     }
+  };
+
+  const handleSubmit = async () => {
+    // 정산 인원 선택 API 호출
+    await chooseParticipants({
+      travelId: travelId,
+      paymentId: paymentInfo.id,
+      travelMembersId: selectedMembers.map((member) => member.id),
+    });
+    setSelectedMembers(tempSelectedMembers);
+    showToast.success({
+      message: '정산 인원이 변경되었습니다.',
+    });
   };
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
@@ -61,12 +83,18 @@ export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
       ? windowWidth > 390
         ? 5
         : 4
-      : paymentInfo.participatingMembers.length;
+      : selectedMembers.length;
 
   useEffect(() => {
     // 초기 윈도우 너비 설정
     setWindowWidth(window.innerWidth);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTempSelectedMembers([...selectedMembers]);
+    }
+  }, [isOpen]);
 
   return (
     <article className={styles.payment}>
@@ -93,6 +121,7 @@ export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
               setIsOpen((prev) => !prev);
             }}
           >
+            {/* 정산 참여 멤버들을 보여주는 부분 */}
             {selectedMembers.slice(0, visibleMembersLength).map((member) => (
               <FriendImage
                 key={member.id}
@@ -122,6 +151,7 @@ export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
       {isOpen && (
         <Modal
           isOpen={isOpen}
+          onSubmit={handleSubmit}
           onClose={() => setIsOpen(false)}
           title={`정산을 함께 할 <br />
             그룹원을 선택해주세요!`}
@@ -132,13 +162,13 @@ export const Payment = ({ travelMembers, paymentInfo }: PaymentProps) => {
               <div
                 className={styles.friendRow}
                 key={member.id}
-                onClick={() => handleSelectFriend(member)}
+                onClick={() => handleSelectMember(member)}
               >
                 <div className={styles.friendInfo}>
                   <FriendImage src={member.profileImage} size={35} />
                   <span>{member.name}</span>
                 </div>
-                {selectedMembers.some(
+                {tempSelectedMembers.some(
                   (selectedMember) => selectedMember.id === member.id,
                 ) ? (
                   <Image
