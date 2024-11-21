@@ -1,6 +1,6 @@
 export interface SharedPayment {
-  sharedPaymentId: number;
-  adderProfileIcon: string;
+  id: number;
+  adderProfileIcon: number;
   paymentAmount: number;
   foreignPaymentAmount: number;
   exchangeRate: number;

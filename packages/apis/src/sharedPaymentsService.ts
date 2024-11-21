@@ -1,15 +1,11 @@
 import { instance } from './instance';
-import type {
-  PageResponse,
-  SharedPayment,
-  SuccessResponse,
-} from '@withbee/types';
+import type { PageResponse, SharedPayment } from '@withbee/types';
 
 interface Params {
   travelId: number;
   page?: number;
   sortBy?: 'latest' | 'amount';
-  userId?: number;
+  memberId?: number;
   startDate?: string;
   endDate?: string;
 }
@@ -19,7 +15,7 @@ export const getSharedPayments = async ({
   travelId,
   page = 0,
   sortBy = 'latest',
-  userId,
+  memberId,
   startDate,
   endDate,
 }: Params) => {
@@ -29,12 +25,15 @@ export const getSharedPayments = async ({
   });
 
   // 선택적 파라미터는 값이 있을 때만 추가
-  if (userId) searchParams.append('userId', userId.toString());
+  if (memberId) searchParams.append('memberId', memberId.toString());
   if (startDate) searchParams.append('startDate', startDate);
   if (endDate) searchParams.append('endDate', endDate);
 
   const response = await instance.get<PageResponse<SharedPayment>>(
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,
+    {
+      cache: 'no-store',
+    },
   );
 
   return response;

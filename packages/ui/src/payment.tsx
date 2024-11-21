@@ -74,7 +74,7 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
             }}
           >
             {selectedFriends.slice(0, visibleFriendsLength).map((friend) => (
-              <FriendImage key={friend} src={''} size={35} />
+              <FriendImage key={friend} src={friend} size={35} />
             ))}
             <motion.button className={styles.plusButton}>
               <button className={styles.moreFriends}>
@@ -112,7 +112,7 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
                 onClick={() => handleSelectFriend(friend)}
               >
                 <div className={styles.friendInfo}>
-                  <FriendImage key={friend} src={''} size={35} />
+                  <FriendImage key={friend} src={friend} size={35} />
                   <span>콩이</span>
                 </div>
                 {selectedFriends.includes(friend) ? (

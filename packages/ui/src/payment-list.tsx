@@ -4,7 +4,6 @@ import type { PageResponse, SharedPayment } from '@withbee/types';
 import styles from './payment-list.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
-import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
 import { usePaymentStore } from '@withbee/stores';
@@ -14,6 +13,7 @@ import { Payment } from './payment';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useToast } from '@withbee/hooks/useToast';
 import { getDateObject } from '@withbee/utils';
+import { PaymentSkeleton } from './payment-skeleton';
 
 // 날짜별로 결제 내역을 그룹화하는 함수
 const groupPaymentsByDate = (payments: SharedPayment[]) => {
@@ -163,40 +163,21 @@ export default function PaymentList({
                 <div className={styles.paymentWrapper} key={date}>
                   <span className={styles.date}>{date}</span>
                   {payments.map((payment) => (
-                    <Payment
-                      key={payment.sharedPaymentId}
-                      paymentInfo={payment}
-                    />
+                    <Payment key={payment.id} paymentInfo={payment} />
                   ))}
                 </div>
               ))
             : // 금액순일 때는 그룹화 없이 바로 렌더링
               payments.map((payment) => (
-                <Payment key={payment.sharedPaymentId} paymentInfo={payment} />
+                <Payment key={payment.id} paymentInfo={payment} />
               ))}
         </motion.div>
 
         {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
         <div ref={ref} className={styles.loadingTrigger}>
-          {isValidating && !error && size > 1 && <LoadingSpinner />}
+          {isValidating && !error && size > 1 && <PaymentSkeleton />}
         </div>
       </section>
     </AnimatePresence>
-  );
-}
-
-function LoadingSpinner() {
-  return (
-    <motion.div
-      className={styles.loadingWrapper}
-      animate={{ rotate: 360 }}
-      transition={{
-        duration: 1,
-        repeat: Infinity,
-        ease: 'linear',
-      }}
-    >
-      <Image src="/loading.png" alt="loading" width={25} height={25} />
-    </motion.div>
   );
 }
