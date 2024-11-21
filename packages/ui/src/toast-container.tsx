@@ -14,6 +14,7 @@ export const CustomToastContainer = () => {
       className={styles.customToast}
       bodyClassName={styles.toastBody}
       progressClassName={styles.toastProgress}
+      limit={1} // 최대 1개만 표시
     />
   );
 };

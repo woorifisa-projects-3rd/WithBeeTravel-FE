@@ -1,16 +1,20 @@
 'use client';
 import { motion } from 'framer-motion';
 import styles from './button.module.css';
+
+import { MouseEventHandler } from 'react';
+
 export interface ButtonProps {
   primary?: boolean;
-  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
   label: string;
   type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
+
+  onClick?: (() => void) | ((e: React.MouseEvent<HTMLButtonElement>) => void);
+
   className?: string;
   disabled?: boolean;
 }
-
 /** Primary UI component for user interaction */
 export const Button = ({
   primary = true,
