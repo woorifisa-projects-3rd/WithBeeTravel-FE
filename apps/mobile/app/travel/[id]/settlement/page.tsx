@@ -8,11 +8,8 @@ import ExpenseDetails from '../../../../components/ExpenseDetails';
 import Image from 'next/image';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { Key } from 'react';
-import {
-  SettlementDetails,
-  SuccessResponse,
-  getSettlementDetails,
-} from '@withbee/apis';
+import { getSettlementDetails, SettlementDetails } from '@withbee/apis';
+import { SuccessResponse } from '@withbee/types';
 
 export default async function Page({ params }: { params: Params }) {
   const travelId = Number(params.id);
