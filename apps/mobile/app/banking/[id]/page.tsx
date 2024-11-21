@@ -104,18 +104,7 @@ export default function AccountPage() {
     <div className={styles.container}>
       <Title label="거래내역 조회" />
 
-      {/* 계좌 정보 표시 */}
-      {accountInfo ? (
-        <div className={styles.accountDetails}>
-          <div className={styles.accountInfo}>
-            <div>{accountInfo.product}</div>
-            <div>{accountInfo.accountNumber}</div>
-            <div>{formatNumber(accountInfo.balance)} 원</div>
-          </div>
-        </div>
-      ) : (
-        <div>계좌 정보가 없습니다.</div> // `accountInfo`가 없을 경우 처리
-      )}
+
 
       <div className={styles.default}>
         <Button
@@ -137,6 +126,21 @@ export default function AccountPage() {
           onClick={() => router.push(`/banking/${id}/payment`)}
         />
       </div>
+      {/* 계좌 정보 표시 */}
+{accountInfo ? (
+  <div className={styles.accountDetails}>
+    <div className={styles.accountInfo}>
+      <div className={styles.productName}>{accountInfo.product}</div>
+      <div className={styles.accountNumber}>{accountInfo.accountNumber}</div>
+      <div className={styles.accountBalance}>
+        <span className={styles.balanceLabel}>잔액</span>
+        {formatNumber(accountInfo.balance)} 원
+      </div>
+    </div>
+  </div>
+) : (
+  <div>계좌 정보가 없습니다.</div>
+)}
 
       {/* 거래 내역 표시 */}
       <div className={styles.transactionList}>

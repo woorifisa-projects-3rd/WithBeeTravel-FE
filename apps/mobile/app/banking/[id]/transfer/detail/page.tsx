@@ -145,8 +145,8 @@ export default function TransferDetailPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} ({accountInfo.accountNumber}) - ₩
-            {accountInfo.balance.toLocaleString()}
+            {accountInfo.product} - ₩
+            {accountInfo.balance.toLocaleString()}원
           </p>
         ) : (
           <p>내 계좌 정보를 불러오는 중...</p>
@@ -156,7 +156,7 @@ export default function TransferDetailPage() {
       <div className={styles.targetAccount}>
         <h3>송금할 계좌</h3>
         <p className={styles.accountNumber}>
-          {targetAccount?.name} {targetAccountNumber}
+          {targetAccountNumber} - {targetAccount?.name} 
         </p>
       </div>
 

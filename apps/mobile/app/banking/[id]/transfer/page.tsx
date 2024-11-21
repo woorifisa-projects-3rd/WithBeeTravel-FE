@@ -116,7 +116,7 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)} 원
+            잔액 {formatNumber(accountInfo.balance)} 원
           </p>
         ) : (
           <p>계좌 정보를 불러오는 중입니다...</p>

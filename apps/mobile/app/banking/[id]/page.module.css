@@ -1,5 +1,45 @@
-/* page.module.css */
+/* 계좌 정보 */
+.accountDetails {
+  background: #f8f8f8;
+  border-radius: 16px;
+  padding: 20px;
+  color: rgb(0, 0, 0);
+  margin-top: 20px;
+  transition: transform 0.3s ease;
+}
 
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.productName {
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
+.accountNumber {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.accountBalance {
+  font-size: 24px;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.balanceLabel {
+  font-size: 24px;
+  opacity: 0.9;
+}
+
+/* 페이지 전체 스타일 */
 .container {
   max-width: 480px;
   margin: 0 auto;
@@ -12,13 +52,13 @@
   margin-top: 20px;
 }
 
+/* 거래 내역 카드 */
 .transactionItem {
-  background-color: #f9f9f9;
+  background-color: #f9f9f900;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
   border: 1px solid #e0e0e0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -38,20 +78,18 @@
 
 .rcvAmount, .payAmount {
   font-size: 16px;
-  font-weight: 500;
 }
 
 .inflowLabel {
-  color: #000000; /* 입금은 초록색 */
+  color: #000000; 
 }
 
 .outflowLabel {
-  color: #000000; /* 출금은 빨간색 */
+  color: #000000; 
 }
 
 .balance {
   font-size: 14px;
-  font-weight: 500;
   text-align: right; /* 오른쪽 정렬 추가 */
 }
 

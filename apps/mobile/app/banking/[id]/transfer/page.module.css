@@ -1,4 +1,6 @@
 /* 전체 컨테이너 */
+
+
 .container {
     min-height: 100vh;
     background-color: white;
@@ -9,8 +11,8 @@
   
   /* 내 계좌 정보 */
   .accountInfo h2 {
+    margin-top: 10px;
     font-size: 20px;
-    margin-bottom: 8px;
   }
   
   .balance {
@@ -21,12 +23,10 @@
   /* 송금할 계좌 입력 폼 */
   .targetAccount h3 {
     font-size: 20px;
-    margin-bottom: 8px;
   }
   
   .input {
     width: 100%;
-    padding: 12px;
     border: 1px solid #e8e8e8;
     border-radius: 8px;
     font-size: 16px;
@@ -37,8 +37,6 @@
   .keyboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background-color: #f2f2f2;
     padding: 1px;
   }
   
