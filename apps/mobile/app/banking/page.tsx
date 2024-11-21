@@ -13,6 +13,13 @@ interface AccountInfo {
   balance: number;
 }
 
+interface PinNumberResponse{
+  failedPinCount:number;
+  pinLocked:boolean;
+}
+
+
+
 export default function BankingPage() {
   const router = useRouter();
 
@@ -42,12 +49,18 @@ export default function BankingPage() {
   };
 
   // 송금 버튼 클릭 시 예외처리
-  const handleTransferClick = (
+  const handleTransferClick = async (
     event: React.MouseEvent<HTMLButtonElement>,
     accountId: number,
   ) => {
     // 이벤트 버블링 방지
     event.stopPropagation();
+
+    const response = await instance.get<PinNumberResponse>('/verify/user-state');
+    if(Number(response.status) != 200){
+        alert("핀번호 재 설정 후 이용 가능")
+        return;  
+    }
     // 송금 페이지로 이동
     router.push(`/banking/${accountId}/transfer`);
   };
