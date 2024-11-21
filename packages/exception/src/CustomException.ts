@@ -10,6 +10,7 @@ type ValidationErrorCodes =
   `VALIDATION-${'001' | '002' | '003' | '004' | '005'}`;
 
 type CustomErrorCode =
+  | 'COMMON'
   | AuthErrorCodes
   | PaymentErrorCodes
   | BankingErrorCodes
@@ -18,6 +19,7 @@ type CustomErrorCode =
   | ValidationErrorCodes;
 
 export const ERROR_MESSAGES: Record<CustomErrorCode, string> = {
+  COMMON: '알 수 없는 오류가 발생했습니다.',
   'AUTH-001': '사용자 인증에 실패하였습니다.',
   'AUTH-002': '관리자 권한이 필요합니다.',
   'AUTH-003': '잘못된 이메일 또는 비밀번호입니다.',
