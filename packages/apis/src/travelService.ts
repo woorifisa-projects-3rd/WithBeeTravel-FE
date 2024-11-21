@@ -1,14 +1,9 @@
 import { instance } from './instance';
-import { ErrorResponse, SuccessResponse } from '@withbee/types';
-
-interface TravelCreateResponse {
-  travelId: number;
-  travelName: string;
-  isDomesticTravel: boolean;
-  travelCountries: string[];
-  travelStartDate: string;
-  travelEndDate: string;
-}
+import {
+  ErrorResponse,
+  SuccessResponse,
+  TravelCreateResponse,
+} from '@withbee/types';
 
 export const createTravel = async (
   travelName: string,
