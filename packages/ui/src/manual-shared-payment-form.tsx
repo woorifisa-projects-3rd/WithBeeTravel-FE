@@ -28,12 +28,14 @@ interface ManualSharedPaymentFormProps {
   formData: ManualPaymentFormData;
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
   currencyUnitOptions: string[];
+  handleSubmitForm: () => Promise<void>;
 }
 
 export const ManualSharedPaymentForm = ({
   formData,
   setFormData,
   currencyUnitOptions,
+  handleSubmitForm,
 }: ManualSharedPaymentFormProps) => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isTimeModalOpen, setIsTimeModalOpen] = useState(false);
@@ -152,8 +154,6 @@ export const ManualSharedPaymentForm = ({
       paymentAmount: calculatedPaymentAmount,
     }));
   }, [formData.exchangeRate, formData.foreignPaymentAmount]);
-
-  const handleSubmitForm = () => {};
 
   return (
     <div className={styles.manualPayment}>
