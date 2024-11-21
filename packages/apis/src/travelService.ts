@@ -1,4 +1,14 @@
 import { instance } from './instance';
+import { ErrorResponse, SuccessResponse } from '@withbee/types';
+
+interface TravelCreateResponse {
+  travelId: number;
+  travelName: string;
+  isDomesticTravel: boolean;
+  travelCountries: string[];
+  travelStartDate: string;
+  travelEndDate: string;
+}
 
 export const createTravel = async (
   travelName: string,
@@ -6,8 +16,8 @@ export const createTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-) => {
-  return instance.post(`/api/travels`, {
+): Promise<SuccessResponse<TravelCreateResponse> | ErrorResponse> => {
+  const response = instance.post<TravelCreateResponse>('/api/travels', {
     body: JSON.stringify({
       travelName,
       isDomesticTravel,
@@ -16,4 +26,6 @@ export const createTravel = async (
       travelEndDate,
     }),
   });
+
+  return response;
 };
