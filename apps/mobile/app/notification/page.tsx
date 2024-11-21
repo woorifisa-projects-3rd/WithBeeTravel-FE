@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import '@withbee/styles';
 import Image from 'next/image';
 import { formatDateToKorean } from '@withbee/utils';
+import Link from 'next/link';
 
 export default function Page() {
   const notifications = [
@@ -68,7 +69,7 @@ export default function Page() {
                   </span>
                   {notification.link && (
                     <span className={styles.linkIcon}>
-                      <a
+                      <Link
                         href={notification.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -79,7 +80,7 @@ export default function Page() {
                           width={12}
                           height={6}
                         />
-                      </a>
+                      </Link>
                     </span>
                   )}
                 </div>
