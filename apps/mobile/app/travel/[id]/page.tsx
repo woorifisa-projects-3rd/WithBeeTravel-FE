@@ -11,7 +11,6 @@ import Link from 'next/link';
 
 export default function Page() {
   const router = useRouter();
-  // TODO: Friends 컴포넌트화 필요
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
