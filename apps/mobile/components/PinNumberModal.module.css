@@ -1,0 +1,126 @@
+/* 기본 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.9); /* 배경을 밝은 색으로 변경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.modalContent {
+  background-color: #FFFFFF; /* 밝은 배경색 */
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+/* 제목과 설명 텍스트 */
+.text {
+  color: #000000; /* 텍스트 색상 흰색에서 검정색으로 변경 */
+  text-align: center;
+  margin: 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #000000; /* 제목 색상 검정 */
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 32px;
+  color: #333333; /* 부제목 색상 회색 */
+}
+
+.pinInputContainer {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.pinInput {
+  display: flex; 
+  justify-content: center; 
+  gap: 30px; 
+}
+
+.pinCircle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #D3D3D3; /* 기본 색상 */
+  transition: background-color 0.2s ease;
+}
+.filled {
+  background-color: var(--color-yellow-6); 
+}
+
+/* 키패드 */
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 20px;
+}
+
+.keyboardKey {
+  background: none;
+  border: none;
+  color: #000000; /* 키 텍스트 색상 검정으로 변경 */
+  font-size: 28px;
+  font-weight: 500;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin: 0 auto;
+}
+
+/* 에러 메시지 */
+.error {
+  color: #D32F2F; /* 에러 메시지 색상 */
+  font-size: 14px;
+  text-align: center;
+  min-height: 20px; /* 최소 높이 지정하여 에러가 없을 때 자리를 차지하도록 함 */
+  display: block; /* 항상 공간을 유지하게 설정 */
+}
+
+.hidden {
+  visibility: hidden; /* 에러 메시지가 없을 때는 숨기기 */
+}
+.inputPinNumberText{
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.closeButton {
+  position: absolute; /* 절대 위치 지정 */
+  top: 20px; 
+  right: 20px; 
+  font-size: 20px; 
+  color: #333; 
+  cursor: pointer; 
+  font-weight: bold; 
+}
