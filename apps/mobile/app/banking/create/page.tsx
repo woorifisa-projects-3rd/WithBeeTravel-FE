@@ -62,8 +62,11 @@ export default function CreateAccountPage() {
       {/* 계좌 유형 선택 */}
       <div className={styles.formSection}>
         <label htmlFor="product" className={styles.label}>
-          계좌 유형 선택
+          어떤 계좌를 만들까요?
         </label>
+        <img src="/imgs/friends/agreeWibee.png" alt="계좌 유형 이미지"
+          className={styles.image} />
+        
         <select
           id="product"
           value={selectedProduct}
@@ -82,14 +85,16 @@ export default function CreateAccountPage() {
       {/* 에러 메시지 */}
       {errorMessage && <div className={styles.error}>{errorMessage}</div>}
 
-      {/* 계좌 생성 버튼 */}
-      <div className={styles.formSection}>
-        <Button
-          label="계좌 생성하기"
-          onClick={handleCreateAccount}
-          size="medium"
-        />
-      </div>
+      {/* 계좌 생성 버튼 (선택된 계좌가 있을 때만 버튼 표시) */}
+      {selectedProduct && (
+        <div className={styles.formSection}>
+          <Button
+            label="계좌 생성하기"
+            onClick={handleCreateAccount}
+            size="medium"
+          />
+        </div>
+      )}
     </div>
   );
 }
