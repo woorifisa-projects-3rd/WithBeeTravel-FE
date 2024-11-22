@@ -2,11 +2,9 @@
 
 
 .container {
-    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px; /* 버튼과 키보드 간 간격 */
   }
   
   /* 내 계좌 정보 */

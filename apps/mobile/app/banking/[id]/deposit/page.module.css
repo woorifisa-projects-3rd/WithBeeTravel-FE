@@ -1,10 +1,8 @@
 /* 전체 컨테이너 */
 .container {
-    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px; /* 송금하기 버튼이 키보드 바로 밑에 오게끔 공간을 남겨둡니다 */
   }
   
   /* 헤더 */
@@ -65,7 +63,6 @@
     font-size: 32px;
     font-weight: 600;
     text-align: center;
-    padding: 24px 0;
   }
   
   .currency {
@@ -83,7 +80,6 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    background-color: #f2f2f2;
     padding: 1px;
   }
   
@@ -119,12 +115,10 @@
     margin-top: 16px; /* 버튼과 키보드 사이의 공간을 추가 */
   }
   
-  .nextButton:hover {
-    background-color: #4caf50;
-  }
+
   
   .nextButton:disabled {
-    background-color: #ddd;
+    background-color: #af8484;
     cursor: not-allowed;
   }
   
