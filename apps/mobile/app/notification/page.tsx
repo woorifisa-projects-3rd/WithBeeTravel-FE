@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { formatDateToKorean } from '@withbee/utils';
 import Link from 'next/link';
 import { SuccessResponse } from '@withbee/types';
-import { Notification, Notifications, getNotifications } from '@withbee/apis';
+import { Notification, getNotifications } from '@withbee/apis';
 
 export default async function Page() {
   const response = (await getNotifications()) as SuccessResponse<
