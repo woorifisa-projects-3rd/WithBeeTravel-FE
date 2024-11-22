@@ -2,7 +2,7 @@
 
 import type { PageResponse, SharedPayment } from '@withbee/types';
 import styles from './payment-list.module.css';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
@@ -44,7 +44,7 @@ const groupPaymentsByDate = (payments: SharedPayment[]) => {
 
 interface PaymentListProps {
   travelId: number;
-  initialData: PageResponse<SharedPayment> | null | undefined;
+  initialData?: PageResponse<SharedPayment> | null | undefined;
 }
 
 export default function PaymentList({
@@ -59,7 +59,6 @@ export default function PaymentList({
     sortBy,
     isDateFiltered,
   } = usePaymentStore();
-
   const { showToast } = useToast();
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
@@ -79,8 +78,6 @@ export default function PaymentList({
       params.append('endDate', endDate);
     }
 
-    console.log(isDateFiltered, startDate, endDate, params.toString());
-
     return `/api/travels/${travelId}/payments?${params.toString()}`;
   };
 
@@ -99,8 +96,7 @@ export default function PaymentList({
         if ('code' in response) {
           showToast.warning({
             message:
-              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-              'Unknown Error',
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
           });
 
           if (response.code === 'VALIDATION-003') {
@@ -111,15 +107,26 @@ export default function PaymentList({
             }
           }
 
-          throw new Error(response.code);
+          showToast.error({
+            message: ERROR_MESSAGES['COMMON'],
+          });
+          throw error; // 에러 바운더리로 전파
         }
-
         return response.data;
       },
       {
         fallbackData: initialData ? [initialData] : undefined,
+        suspense: true,
+        revalidateOnFocus: false, // 불필요한 리밸리데이션 방지
       },
     );
+
+  if (error) {
+    showToast.error({
+      message: ERROR_MESSAGES['COMMON'],
+    });
+    throw error;
+  }
 
   // 모든 페이지의 결제내역을 하나의 배열로 합치기
   const payments = data?.flatMap((page) => page?.content ?? []) ?? [];
@@ -127,13 +134,14 @@ export default function PaymentList({
   // 다음 페이지 로드 조건 체크
   useEffect(() => {
     const isLastPage = data && data[data.length - 1]?.last;
-    const shouldLoadMore = inView && !isLoading && !isValidating && !isLastPage;
+    const hasError = error || data?.some((page) => page === null);
+    const shouldLoadMore =
+      inView && !isLoading && !isValidating && !isLastPage && !hasError;
 
     if (shouldLoadMore) {
-      console.log('Loading next page:', size + 1);
       setSize(size + 1);
     }
-  }, [inView, isLoading, isValidating, data, size, setSize]);
+  }, [inView, isLoading, isValidating, data, error, size, setSize]);
 
   // 정렬이나 날짜 필터가 변경될 때 리셋
   useEffect(() => {
@@ -141,42 +149,54 @@ export default function PaymentList({
   }, [sortBy, startDate, endDate, setSize]);
 
   return (
-    <section className={styles.paymentContainer}>
-      {sortBy === 'latest'
-        ? // 최신순일 때는 날짜별 그룹화
-          groupPaymentsByDate(payments).map(([date, payments]) => (
-            <div className={styles.paymentWrapper} key={date}>
-              <span className={styles.date}>{date}</span>
-              {payments.map((payment) => (
+    <AnimatePresence mode="wait">
+      <section className={styles.paymentContainer}>
+        <motion.div
+          key="content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {sortBy === 'latest'
+            ? // 최신순일 때는 날짜별 그룹화
+              groupPaymentsByDate(payments).map(([date, payments]) => (
+                <div className={styles.paymentWrapper} key={date}>
+                  <span className={styles.date}>{date}</span>
+                  {payments.map((payment) => (
+                    <Payment
+                      key={payment.sharedPaymentId}
+                      paymentInfo={payment}
+                    />
+                  ))}
+                </div>
+              ))
+            : // 금액순일 때는 그룹화 없이 바로 렌더링
+              payments.map((payment) => (
                 <Payment key={payment.sharedPaymentId} paymentInfo={payment} />
               ))}
-            </div>
-          ))
-        : // 금액순일 때는 그룹화 없이 바로 렌더링
-          payments.map((payment) => (
-            <Payment key={payment.sharedPaymentId} paymentInfo={payment} />
-          ))}
+        </motion.div>
 
-      {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
-      <div ref={ref} className={styles.loadingTrigger}>
-        {isValidating && (
-          <motion.div
-            className={styles.loadingWrapper}
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          >
-            <Image src="/loading.png" alt="loading" width={25} height={25} />
-          </motion.div>
-        )}
-      </div>
+        {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
+        <div ref={ref} className={styles.loadingTrigger}>
+          {isValidating && !error && size > 1 && <LoadingSpinner />}
+        </div>
+      </section>
+    </AnimatePresence>
+  );
+}
 
-      {data && data[data.length - 1]?.last && (
-        <div className={styles.noMore}></div>
-      )}
-    </section>
+function LoadingSpinner() {
+  return (
+    <motion.div
+      className={styles.loadingWrapper}
+      animate={{ rotate: 360 }}
+      transition={{
+        duration: 1,
+        repeat: Infinity,
+        ease: 'linear',
+      }}
+    >
+      <Image src="/loading.png" alt="loading" width={25} height={25} />
+    </motion.div>
   );
 }
