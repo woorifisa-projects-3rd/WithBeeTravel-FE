@@ -63,6 +63,9 @@ importers:
       '@withbee/apis':
         specifier: workspace:*
         version: link:../../packages/apis
+      '@withbee/exception':
+        specifier: workspace:*
+        version: link:../../packages/exception
       '@withbee/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks

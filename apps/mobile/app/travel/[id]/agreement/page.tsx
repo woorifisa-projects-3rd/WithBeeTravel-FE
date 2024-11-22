@@ -10,7 +10,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { useRouter } from 'next/navigation';
 import { agreeSettlement } from '@withbee/apis';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-// import { ERROR_MESSAGES } from '@withbee/exception';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 export default function ConsentPage({ params }: { params: Params }) {
   const travelId = Number(params.id);
@@ -29,8 +29,7 @@ export default function ConsentPage({ params }: { params: Params }) {
 
       if ('code' in response) {
         showToast.warning({
-          // message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-          message: `오류 발생: ${response.code}`,
+          message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         });
 
         if (
@@ -48,8 +47,7 @@ export default function ConsentPage({ params }: { params: Params }) {
       router.push(`/travel/${travelId}/agreement/completed`);
     } catch (error) {
       showToast.error({
-        // message: ERROR_MESSAGES['COMMON'],
-        message: '정산 동의 중 오류 발생',
+        message: ERROR_MESSAGES['COMMON'],
       });
       throw error;
     }
