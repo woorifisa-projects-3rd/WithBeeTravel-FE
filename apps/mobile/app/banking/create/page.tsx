@@ -21,7 +21,7 @@ export default function CreateAccountPage() {
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   // Product 목록
   const productOptions = [
     'WON통장',
@@ -49,7 +49,7 @@ export default function CreateAccountPage() {
       });
 
       if (Number(response.status) === 201) {
-        showToast.success({message:'계좌 생성 완료!'});
+        showToast.success({ message: '계좌 생성 완료!' });
         router.push('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
@@ -69,9 +69,12 @@ export default function CreateAccountPage() {
         <label htmlFor="product" className={styles.label}>
           어떤 계좌를 만들까요?
         </label>
-        <img src="/imgs/friends/agreeWibee.png" alt="계좌 유형 이미지"
-          className={styles.image} />
-        
+        <img
+          src="/imgs/friends/agreeWibee.png"
+          alt="계좌 유형 이미지"
+          className={styles.image}
+        />
+
         <select
           id="product"
           value={selectedProduct}
@@ -95,7 +98,7 @@ export default function CreateAccountPage() {
         <div className={styles.formSection}>
           <Button
             label="계좌 생성하기"
-            onClick={()=>setIsModalOpen(true)}
+            onClick={() => setIsModalOpen(true)}
             size="medium"
           />
         </div>

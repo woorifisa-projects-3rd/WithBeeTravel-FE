@@ -23,7 +23,7 @@ export default function TransferPage() {
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   // 계좌 정보 가져오기
   useEffect(() => {
     if (accountId) {
@@ -49,12 +49,12 @@ export default function TransferPage() {
   // 계좌번호 검증 후 금액 설정 페이지로 이동
   const handleNextClick = async () => {
     if (targetAccount.length < 10) {
-      showToast.error({message:'계좌번호는 10자리 이상이에요!'});
+      showToast.error({ message: '계좌번호는 10자리 이상이에요!' });
       return;
     }
 
-    if(targetAccount===accountInfo?.accountNumber){
-      showToast.error({message:'동일 계좌로는 송금 할 수 없어요'})
+    if (targetAccount === accountInfo?.accountNumber) {
+      showToast.error({ message: '동일 계좌로는 송금 할 수 없어요' });
       return;
     }
 
@@ -75,7 +75,7 @@ export default function TransferPage() {
       if (Number(response.status) === 200) {
         router.push(`/banking/${accountId}/transfer/detail`);
       } else {
-        showToast.error({message:'존재 하지 않는 계좌번호에요!'});
+        showToast.error({ message: '존재 하지 않는 계좌번호에요!' });
       }
     } catch (error) {
       console.error('계좌번호 검증 중 오류 발생:', error);
@@ -169,7 +169,7 @@ export default function TransferPage() {
       <div>
         <Button
           label="다음"
-          size ='medium'
+          size="medium"
           onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
         />
       </div>

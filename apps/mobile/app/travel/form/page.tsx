@@ -22,7 +22,6 @@ function TravelFormContent() {
   const mode = searchParams.get('mode');
   const router = useRouter();
 
-
   const handleCreateTravel = async (formData: FormData) => {
     const {
       travelName,
@@ -47,7 +46,6 @@ function TravelFormContent() {
       console.error('Travel creation failed');
     }
   };
-
 
   // 편집 api
   const handleEditTravel = async (formData: any) => {
@@ -76,7 +74,6 @@ function TravelFormContent() {
 
   const handleTravelSelect = (travel: FormData) => {
     setEditedTravel(travel);
-
   };
 
   const travelData =

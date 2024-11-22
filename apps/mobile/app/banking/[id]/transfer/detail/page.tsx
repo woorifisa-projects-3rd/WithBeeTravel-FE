@@ -21,15 +21,19 @@ interface TargetName {
 export default function TransferDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(null); // 초기값을 null로 설정
+  const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
+    null,
+  ); // 초기값을 null로 설정
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(undefined);
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(
+    undefined,
+  );
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -42,7 +46,9 @@ export default function TransferDetailPage() {
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${myAccountId}/info`,
+        );
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -57,9 +63,12 @@ export default function TransferDetailPage() {
     if (targetAccountNumber) {
       const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
-        const response = await instance.post<TargetName>('/accounts/find-user', {
-          body: JSON.stringify(AccountNumberRequest),
-        });
+        const response = await instance.post<TargetName>(
+          '/accounts/find-user',
+          {
+            body: JSON.stringify(AccountNumberRequest),
+          },
+        );
         if ('data' in response) {
           setTargetAccount(response.data);
         } else {
@@ -82,13 +91,13 @@ export default function TransferDetailPage() {
   const handleSendMoney = async () => {
     // 금액 유효성 검사
     if (!amount || amount === '0') {
-      showToast.error({message:'0원은 송금할 수 없어요!'})
+      showToast.error({ message: '0원은 송금할 수 없어요!' });
       return;
     }
 
     // 잔액 검증
     if (accountInfo && parseInt(amount) > accountInfo.balance) {
-      showToast.error({message:'잔액이 부족해요!'})
+      showToast.error({ message: '잔액이 부족해요!' });
       return;
     }
 
@@ -114,11 +123,13 @@ export default function TransferDetailPage() {
     try {
       const response = await instance.post(
         `/accounts/${myAccountId}/transfer`,
-        { body: JSON.stringify(transferRequest) }
+        { body: JSON.stringify(transferRequest) },
       );
-      
-      showToast.success({message:`${targetAccount?.name}님이게
-        \n${transferRequest.amount}원 송금 완료`})
+
+      showToast.success({
+        message: `${targetAccount?.name}님이게
+        \n${transferRequest.amount}원 송금 완료`,
+      });
 
       router.push('/banking/');
     } catch (error) {
@@ -131,15 +142,17 @@ export default function TransferDetailPage() {
 
   const renderKeyboard = () => (
     <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map((key) => (
-        <button
-          key={key}
-          className={styles.keyboardKey}
-          onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
-        >
-          {key}
-        </button>
-      ))}
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
+        (key) => (
+          <button
+            key={key}
+            className={styles.keyboardKey}
+            onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
+          >
+            {key}
+          </button>
+        ),
+      )}
     </div>
   );
 
@@ -149,8 +162,7 @@ export default function TransferDetailPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            ₩ 
-            {accountInfo.balance.toLocaleString()}원
+            ₩{accountInfo.balance.toLocaleString()}원
           </p>
         ) : (
           <p>내 계좌 정보를 불러오는 중...</p>
@@ -160,7 +172,7 @@ export default function TransferDetailPage() {
       <div className={styles.targetAccount}>
         <h3>송금할 계좌</h3>
         <p className={styles.accountNumber}>
-          {targetAccountNumber} - {targetAccount?.name} 
+          {targetAccountNumber} - {targetAccount?.name}
         </p>
       </div>
 

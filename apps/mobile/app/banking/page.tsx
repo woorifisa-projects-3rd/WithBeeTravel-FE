@@ -14,19 +14,17 @@ interface AccountInfo {
   balance: number;
 }
 
-interface PinNumberResponse{
-  failedPinCount:number;
-  pinLocked:boolean;
+interface PinNumberResponse {
+  failedPinCount: number;
+  pinLocked: boolean;
 }
-
-
 
 export default function BankingPage() {
   const router = useRouter();
 
   const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -59,24 +57,25 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response = await instance.get<PinNumberResponse>('/verify/user-state');
-    if(Number(response.status) != 200){
-      showToast.error({message:"핀번호 재설정 후 송금 가능"})
-      return;  
+    const response =
+      await instance.get<PinNumberResponse>('/verify/user-state');
+    if (Number(response.status) != 200) {
+      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
+      return;
     }
     // 송금 페이지로 이동
     router.push(`/banking/${accountId}/transfer`);
   };
 
-  const createAccountHandle = async ()=> {
-
-    const response = await instance.get<PinNumberResponse>('/verify/user-state');
-    if(Number(response.status) != 200){
-      showToast.error({message:"핀번호 재설정 후 송금 가능"})
-      return;  
-    } 
-     router.push(`/banking/create`)
-  }
+  const createAccountHandle = async () => {
+    const response =
+      await instance.get<PinNumberResponse>('/verify/user-state');
+    if (Number(response.status) != 200) {
+      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
+      return;
+    }
+    router.push(`/banking/create`);
+  };
 
   return (
     <div className={styles.container}>
