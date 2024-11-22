@@ -4,6 +4,7 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import { Button } from '@withbee/ui/button';
 
 
 interface AccountInfo {
@@ -132,9 +133,10 @@ export default function DepositPage() {
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
-        <button className={styles.nextButton} onClick={handleSendMoney}>
-          입금하기
-        </button>
+        // <button className={styles.nextButton} onClick={handleSendMoney}>
+        //   입금하기
+        // </button>
+        <Button label='입금하기' onClick={handleSendMoney}/>
       )}
     </div>
   );

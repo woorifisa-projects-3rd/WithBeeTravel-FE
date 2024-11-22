@@ -1,8 +1,6 @@
 /* page.module.css */
 
 .container {
-    padding: 20px;
-    max-width: 600px;
     margin: 0 auto;
   }
   
@@ -28,12 +26,7 @@
     margin-bottom: 20px;
   }
   
-  .selectedProduct {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #2e8b57; /* 예시로 녹색 텍스트 */
-  }
+
   
   .error {
     color: red;

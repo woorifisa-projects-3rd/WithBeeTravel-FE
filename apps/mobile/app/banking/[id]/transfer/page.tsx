@@ -156,21 +156,14 @@ export default function TransferPage() {
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
-      {/* {accountInfo && (
-        <div className={styles.accountDetails}>
-          <div>{accountInfo.accountName}</div>
-          <div>{accountInfo.accountNumber}</div>
-          <div>{formatNumber(accountInfo.balance)} 원</div>
-        </div>
-      )} */}
 
       {renderAccountInput()}
       {renderKeyboard()}
 
-      <div className={styles.submitContainer}>
+      <div>
         <Button
           label="다음"
-          size="large"
+          size ='medium'
           onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
         />
       </div>

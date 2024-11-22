@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
 import PinNumberModal from '../../../../components/PinNumberModal';
+import { Button } from '@withbee/ui/button';
 
 
 interface HistoryRequest {
@@ -184,9 +185,10 @@ export default function PaymentPage() {
         )}
 
         {/* 등록하기 버튼 */}
-        <button className={styles.submitButton} onClick={handleSubmit}>
+        {/* <button className={styles.submitButton} onClick={handleSubmit}>
           등록하기
-        </button>
+        </button> */}
+        <Button label='등록하기' onClick={handleSubmit} size='large' />
       </div>
 
       {/* PinNumberModal 컴포넌트 호출 */}

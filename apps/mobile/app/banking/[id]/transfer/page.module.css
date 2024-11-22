@@ -3,8 +3,7 @@
 
 .container {
     background-color: white;
-    display: flex;
-    flex-direction: column;
+    flex-direction: coumn;
   }
   
   /* 내 계좌 정보 */
@@ -51,15 +50,8 @@
     background-color: #f8f8f8;
   }
   
-  /* 송금하기 버튼 */
-  .submitContainer {
-    padding-top: 16px;
-    text-align: center;
-  }
-  
-  .submitContainer button {
-    margin-top: 16px;
-  }
+
+
 
   .text{
     padding-bottom: 15px;

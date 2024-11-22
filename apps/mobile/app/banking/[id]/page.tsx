@@ -170,7 +170,7 @@ export default function AccountPage() {
                 )}
 
                 <div className={styles.balance}>
-                  잔액: {formatNumber(history.balance)}원
+                  잔액 : {formatNumber(history.balance)}원
                 </div>
               </div>
             </div>

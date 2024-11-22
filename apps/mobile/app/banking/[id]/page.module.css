@@ -41,11 +41,7 @@
 
 /* 페이지 전체 스타일 */
 .container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
   background-color: #ffffff;
-  min-height: 100vh;
 }
 
 .transactionList {

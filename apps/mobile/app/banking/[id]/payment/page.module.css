@@ -1,10 +1,8 @@
 /* 전체 컨테이너 */
 .container {
-    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px;
   }
   
   /* 헤더 */
@@ -38,25 +36,5 @@
     border: 1px solid #e8e8e8;
     border-radius: 8px;
   }
-  
-  .submitButton {
-    padding: 16px;
-    background-color: var(--color-yellow-6);
-    color: var(--color-yellow-12);
-    border: none;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 10px;
-    margin-top: 16px;
-  }
-  
-  .submitButton:hover {
-    background-color: #9d8b01;
-  }
-  
-  .submitButton:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
+
   
