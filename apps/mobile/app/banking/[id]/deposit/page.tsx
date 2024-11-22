@@ -136,7 +136,7 @@ export default function DepositPage() {
         // <button className={styles.nextButton} onClick={handleSendMoney}>
         //   입금하기
         // </button>
-        <Button label='입금하기' onClick={handleSendMoney}/>
+        <Button label='입금하기' onClick={handleSendMoney} className='handleSendMoney'/>
       )}
     </div>
   );
