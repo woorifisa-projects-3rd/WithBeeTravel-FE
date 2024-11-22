@@ -85,9 +85,9 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
       // 백스페이스 버튼만 활성화
       const element = document.getElementById('←');
       if (element) {
-        element.classList.add(styles.customActive);
+        element.classList.add(styles.customActive ?? '');
         setTimeout(() => {
-          element.classList.remove(styles.customActive);
+          element.classList.remove(styles.customActive ?? '');
         }, 100);
       }
       return;
@@ -98,9 +98,9 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
       // X 버튼만 활성화
       const element = document.getElementById('X');
       if (element) {
-        element.classList.add(styles.customActive);
+        element.classList.add(styles.customActive ?? '');
         setTimeout(() => {
-          element.classList.remove(styles.customActive);
+          element.classList.remove(styles.customActive?? '');
         }, 100);
       }
       return;
@@ -120,25 +120,25 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
         }
       }
   
-      const activeKeys = [key, randomKeys[randomIndices[0]], randomKeys[randomIndices[1]]];
+      const activeKeys = [key, randomKeys[Number(randomIndices[0])], randomKeys[Number(randomIndices[1])]];
   
       // active 상태 처리
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].forEach((k) => {
         const element = document.getElementById(k);
         if (element) {
           if (activeKeys.includes(k)) {
-            element.classList.add(styles.customActive);
+            element.classList.add(styles.customActive??'');
           } else {
-            element.classList.remove(styles.customActive);
+            element.classList.remove(styles.customActive??'');
           }
         }
       });
   
       setTimeout(() => {
         activeKeys.forEach((k) => {
-          const element = document.getElementById(k);
+          const element = document.getElementById(k??'');
           if (element) {
-            element.classList.remove(styles.customActive);
+            element.classList.remove(styles.customActive??'');
           }
         });
       }, 100);
