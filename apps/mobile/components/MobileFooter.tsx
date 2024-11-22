@@ -138,22 +138,29 @@ export default function MobileFooter() {
       <footer className={styles.footer}>
         <nav className={styles.nav}>
           <ul className={styles.menuList}>
-            {menuItems.map((item) => (
-              <li key={item.href} className={styles.menuItem}>
-                <Link href={item.href} className={styles.menuLink}>
-                  <span
-                    className={`${styles.iconWrapper}  ${pathname === item.href ? styles.active : ''}`}
-                  >
-                    {item.icon}
-                  </span>
-                  <span
-                    className={`${styles.label} ${pathname === item.href ? styles.active : ''}`}
-                  >
-                    {item.label}
-                  </span>
-                </Link>
-              </li>
-            ))}
+            {menuItems.map((item) => {
+              const isActive =
+                item.href === '/'
+                  ? pathname === item.href
+                  : pathname.includes(item.href!);
+
+              return (
+                <li key={item.href} className={styles.menuItem}>
+                  <Link href={item.href || '/'} className={styles.menuLink}>
+                    <span
+                      className={`${styles.iconWrapper}  ${isActive ? styles.active : ''}`}
+                    >
+                      {item.icon}
+                    </span>
+                    <span
+                      className={`${styles.label} ${isActive ? styles.active : ''}`}
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </footer>
