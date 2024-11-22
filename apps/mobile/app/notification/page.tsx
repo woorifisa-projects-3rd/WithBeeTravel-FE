@@ -45,7 +45,6 @@ export default async function Page() {
                       <span className={styles.linkIcon}>
                         <Link
                           href={notification.link}
-                          target="_blank"
                           rel="noopener noreferrer"
                         >
                           <Image
