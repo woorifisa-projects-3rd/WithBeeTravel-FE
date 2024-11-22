@@ -9,13 +9,13 @@ interface PinNumberModalProps {
   onSubmit: (pin: string) => void;
 }
 
-interface PinNumberRequest{
-  pinNumber:string;
+interface PinNumberRequest {
+  pinNumber: string;
 }
 
-interface PinNumberResponse{
-  failedPinCount:number;
-  pinLocked:boolean;
+interface PinNumberResponse {
+  failedPinCount: number;
+  pinLocked: boolean;
 }
 
 const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubmit }) => {
@@ -23,7 +23,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
   const [error, setError] = useState<string | null>(''); // error 초기값을 빈 문자열로 설정
   const [failCnt, setFailCnt] = useState<number>();
 
-  const {showToast} = useToast();
+  const { showToast } = useToast();
+
   // 모달이 닫힐 때 PIN 초기화
   useEffect(() => {
     if (!isOpen) {
@@ -31,72 +32,97 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
       setError(''); // 에러도 초기화
     }
 
-    if(isOpen){
-      const fetchUserState = async () =>{
+    if (isOpen) {
+      const fetchUserState = async () => {
         const response = await instance.get<PinNumberResponse>('/verify/user-state');
-        if('data' in response){
-          if(response.data?.failedPinCount!=0){
-            setError(`5회 틀릴 시 Pin번호 재설정 필요. ${response.data?.failedPinCount}/5`)
+        if ('data' in response) {
+          if (response.data?.failedPinCount !== 0) {
+            setError(`5회 틀릴 시 Pin번호 재설정 필요. ${response.data?.failedPinCount}/5`);
           }
           setFailCnt(response.data?.failedPinCount);
-        } else{
-          showToast.error({message:`핀번호 5회이상 틀렸습니다.\n
-            핀번호 재 설정 후 이용가능!`})
-            // TODO : 마이페이지로 리다이렉트? 할지 고민
-            onClose();
+        } else {
+          showToast.error({ message: '핀번호 5회 이상 틀렸습니다.\n핀번호 재설정 후 이용 가능!' });
+          onClose();
         }
-                
-      }
+      };
       fetchUserState();
-
     }
-
-    if(failCnt!=0){
-    }
-
-  
-  }, [isOpen]); // isOpen이 변경될 때마다 초기화
+  }, [isOpen]);
 
   // 비밀번호 입력 처리
-  const handleSubmit = async() => {
-    const pinNumberRequest:PinNumberRequest = {
+  const handleSubmit = async () => {
+    const pinNumberRequest: PinNumberRequest = {
       pinNumber: pin,
     };
 
-      const response = await instance.post(`/verify/pin-number`,{
-        body: JSON.stringify(pinNumberRequest),
-      }) 
+    const response = await instance.post(`/verify/pin-number`, {
+      body: JSON.stringify(pinNumberRequest),
+    });
 
-      if(Number(response.status)===200){
-        onSubmit(pin);  // 올바른 PIN이면 제출
-        onClose();       // 모달 닫기
-      } else{
-        setFailCnt(Number(failCnt)+1);
-        setError(`5회 틀릴 시 Pin번호 재설정 필요. ${Number(failCnt)+1}/5`);
-        setTimeout(() => {
-          setPin(''); // PIN을 초기화
-        }, 500); // 500ms 후에 PIN과 에러 메시지 초기화
-        if(Number(failCnt)>=4){
-          alert("송금 할 수 없습니다. \nPin번호 재설정 필요");
-          onClose();
-        }
+    if (Number(response.status) === 200) {
+      onSubmit(pin); // 올바른 PIN이면 제출
+      onClose(); // 모달 닫기
+    } else {
+      setFailCnt(Number(failCnt) + 1);
+      setError(`5회 틀릴 시 Pin번호 재설정 필요. ${Number(failCnt) + 1}/5`);
+      setTimeout(() => {
+        setPin(''); // PIN을 초기화
+      }, 500); // 500ms 후에 PIN과 에러 메시지 초기화
+      if (Number(failCnt) >= 4) {
+        showToast.error({ message: '핀번호 재설정 필요' });
+        onClose();
       }
-
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPin(e.target.value);
   };
-
-  // 숫자 버튼 클릭 처리
   const handleNumberPress = (key: string) => {
     if (key === 'backspace') {
-      setPin(pin.slice(0, -1)); // 백스페이스 처리
+      setPin(pin.slice(0, -1));
     } else if (key === 'clear') {
-      setPin(''); // 비밀번호 초기화
+      setPin('');
     } else if (pin.length < 6) {
-      setPin(pin + key); // 숫자 추가
+      setPin(pin + key);
     }
+
+    // 랜덤한 두 개의 숫자도 active 상태로 활성화하기
+    const randomKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const randomIndices: (string | number)[] = [];
+
+    while (randomIndices.length < 2) {
+      const randIndex = Math.floor(Math.random() * randomKeys.length);
+      if (!randomIndices.includes(randIndex) && randomKeys[randIndex] !== key) {
+        randomIndices.push(randIndex);
+      }
+    }
+
+    const activeKeys = [key, randomKeys[randomIndices[0]], randomKeys[randomIndices[1]]];
+
+    // active 상태 처리
+    const allKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'];
+
+    // 커스텀 active 클래스 적용
+    allKeys.forEach((k) => {
+      const element = document.getElementById(k);
+      if (element) {
+        if (activeKeys.includes(k)) {
+          element.classList.add(styles.customActive);
+        } else {
+          element.classList.remove(styles.customActive);
+        }
+      }
+    });
+
+    setTimeout(() => {
+      allKeys.forEach((k) => {
+        const element = document.getElementById(k);
+        if (element) {
+          element.classList.remove(styles.customActive);
+        }
+      });
+    }, 100);
   };
 
   // 가상 키보드 렌더링
@@ -105,10 +131,12 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
       {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map((key) => (
         <button
           key={key}
+          id={key}
           className={styles.keyboardKey}
           onClick={() =>
             handleNumberPress(key === '←' ? 'backspace' : key === 'X' ? 'clear' : key)
           }
+          onTouchStart={(e) => e.preventDefault()} // 터치 시작 시 기본 동작 방지
         >
           {key}
         </button>
@@ -132,7 +160,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
     );
   };
 
-  // 자동 검증 처리: 4자리 PIN 입력 시 자동으로 검증
+  // 자동 검증 처리: 6자리 PIN 입력 시 자동으로 검증
   useEffect(() => {
     if (pin.length === 6) {
       handleSubmit();
@@ -143,7 +171,9 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
     isOpen && (
       <div className={styles.modal}>
         <div className={styles.modalContent}>
-          <div className={styles.closeButton} onClick={onClose}>←</div>
+          <div className={styles.closeButton} onClick={onClose}>
+            ←
+          </div>
           <h2 className={styles.inputPinNumberText}>핀번호 입력</h2>
           {renderPinInput()}
 

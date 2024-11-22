@@ -77,9 +77,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
+  touch-action: manipulation; /* 터치 시 클릭 모션 비활성화 */
 }
 
 .keyboardKey {
+  -webkit-tap-highlight-color: transparent; /* iOS에서 터치 하이라이트 제거 */
+  user-select: none; /* 텍스트 선택 방지 */
   background: white;
   border: none;
   font-size: 28px;
@@ -96,6 +99,17 @@
   transition: color 0.2s ease;
   margin: 0 auto;
   box-sizing: border-box; /* 패딩 포함해서 크기 계산 */
+  touch-action: manipulation; /* 터치 시 클릭 모션 비활성화 */
+  outline: none; /* 포커스 아웃라인 제거 */
+}
+
+
+.keyboardKey.active {
+  background-color: transparent; /* 기본 active 상태 스타일 제거 */
+
+}
+.keyboardKey.customActive {
+  background-color: #e0e0e0; /* 회색 색상 */
 }
 
 /* 에러 메시지 */
