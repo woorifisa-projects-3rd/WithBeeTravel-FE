@@ -53,6 +53,11 @@ export default function TransferPage() {
       return;
     }
 
+    if(targetAccount===accountInfo?.accountNumber){
+      showToast.error({message:'동일 계좌로는 송금 할 수 없어요'})
+      return;
+    }
+
     const AccountNumberRequest = {
       accountNumber: targetAccount,
     };
