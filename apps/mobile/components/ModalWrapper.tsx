@@ -16,27 +16,19 @@ export default function ModalWrapper({ travelId }: { travelId: number }) {
   const router = useRouter();
 
   const handelCancelSettlement = async () => {
-    try {
-      const response = await cancelSettlement(travelId);
-      if ('code' in response) {
-        showToast.warning({
-          message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-        });
-        return;
-      }
+    const response = await cancelSettlement(travelId);
 
-      showToast.success({
-        message: '정산이 취소되었습니다.',
+    if ('code' in response) {
+      showToast.warning({
+        message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
       });
-      console.log(response);
-      setIsModalOpen(false);
-      router.push(`/travel/${travelId}/settlement/canceled`);
-    } catch (error) {
+
       showToast.error({
         message: ERROR_MESSAGES['COMMON'],
       });
-      throw error;
     }
+    setIsModalOpen(false);
+    router.push(`/travel/${travelId}/settlement/canceled`);
   };
 
   return (

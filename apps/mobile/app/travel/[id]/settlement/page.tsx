@@ -21,8 +21,6 @@ export default async function Page({ params }: { params: Params }) {
   const { myTotalPayment, myDetailPayments, others } =
     response.data as SettlementDetails;
 
-  console.log(response);
-
   return (
     <div className={styles.container}>
       <header>
