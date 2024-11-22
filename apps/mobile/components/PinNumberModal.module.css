@@ -76,26 +76,26 @@
 .keyboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
   width: 100%;
-  max-width: 320px;
-  margin-top: 20px;
 }
 
 .keyboardKey {
-  background: none;
+  background: white;
   border: none;
-  color: #000000; /* 키 텍스트 색상 검정으로 변경 */
   font-size: 28px;
   font-weight: 500;
-  height: 48px;
-  width: 48px;
+  width: 100%;  /* 가로 꽉 차게 */
+  padding-top: 20%;  /* 세로 비율로 패딩 설정 */
+  padding-bottom: 20%;  /* 세로 비율로 패딩 설정 */
+  padding-right: 0;  /* 불필요한 오른쪽 패딩 제거 */
+  padding-left: 0;  /* 불필요한 왼쪽 패딩 제거 */
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   transition: color 0.2s ease;
   margin: 0 auto;
+  box-sizing: border-box; /* 패딩 포함해서 크기 계산 */
 }
 
 /* 에러 메시지 */
