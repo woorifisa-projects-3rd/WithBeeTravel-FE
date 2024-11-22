@@ -17,3 +17,11 @@
     display: flex;
     align-items: center;
 }
+
+/* 초대코드 복사 스타일 */
+.inputCopy {
+    background-color: #c70000;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}

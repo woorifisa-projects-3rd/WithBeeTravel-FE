@@ -5,7 +5,7 @@ export const getInviteCode = async (
   travelId: number,
 ): Promise<SuccessResponse<InviteCode> | ErrorResponse> => {
   const response = instance.get<InviteCode>(
-    `api/travels/${travelId}/invite-code`,
+    `/api/travels/${travelId}/invite-code`,
   );
   return response;
 };

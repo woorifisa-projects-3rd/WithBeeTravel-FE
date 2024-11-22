@@ -6,27 +6,30 @@ import styles from './InviteCodeModal.module.css';
 interface InviteCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (inviteCode: string) => void;
+  onSubmit?: (inviteCode: string) => void;
   modalState: {
     title: string;
     closeLabel?: string;
     placeholder?: string;
     subtitle?: string;
+    isCopyMode?: boolean;
+    inviteCode?: string;
   };
 }
 
 export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
   modalState,
 }) => {
-  const [inviteCode, setInviteCode] = useState('');
+  const { isCopyMode, inviteCode = '' } = modalState;
+  const [inputValue, setInputValue] = useState(inviteCode);
 
-  const handleSubmit = () => {
-    onSubmit(inviteCode);
-    setInviteCode(''); // 입력 값 초기화
-  };
+  React.useEffect(() => {
+    if (isOpen && isCopyMode) {
+      setInputValue(inviteCode);
+    }
+  }, [isOpen, isCopyMode, inviteCode]);
 
   return (
     <Modal
@@ -34,18 +37,16 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
       onClose={onClose}
       title={modalState.title}
       closeLabel={modalState.closeLabel}
-      onSubmit={handleSubmit}
     >
-      {modalState.subtitle && (
-        <p className={styles.subtitle}>{modalState.subtitle}</p>
-      )}
+      <p className={styles.subtitle}>{modalState.subtitle}</p>
       <input
         id="inviteCode"
         type="text"
         className={styles.input}
         value={inviteCode}
-        onChange={(e) => setInviteCode(e.target.value)}
+        onChange={(e) => setInputValue(e.target.value)}
         placeholder={modalState.placeholder || '초대코드'}
+        readOnly={isCopyMode}
       />
     </Modal>
   );
