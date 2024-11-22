@@ -8,12 +8,12 @@ import { useState } from 'react';
 import { BottomModal } from './modal';
 import selectIcon from './assets/select.png';
 import DatePickerModal from './date-picker-modal';
-import { usePaymentStore } from '@withbee/stores';
+import { usePaymentStore, useTravelStore } from '@withbee/stores';
 import { getDateObject } from '@withbee/utils';
 import { TravelMember } from '@withbee/types';
 
 interface MenuProps {
-  travelMembers: TravelMember[];
+  // travelMembers: TravelMember[];
   className?: string;
 }
 
@@ -23,7 +23,7 @@ const AllMembers: TravelMember = {
   profileImage: 0,
 };
 
-export const Menu = ({ travelMembers, className, ...props }: MenuProps) => {
+export const Menu = ({ className, ...props }: MenuProps) => {
   const {
     startDate,
     setStartDate,
@@ -49,6 +49,8 @@ export const Menu = ({ travelMembers, className, ...props }: MenuProps) => {
   });
 
   const [isFilter, setIsFilter] = useState(false); // 필터 메뉴인지 여부
+
+  const { travelMembers } = useTravelStore();
 
   // 모달 열기/닫기 핸들러
   const handleModal = (key: 'period' | 'member' | 'sort' | 'start' | 'end') => {
@@ -128,7 +130,7 @@ export const Menu = ({ travelMembers, className, ...props }: MenuProps) => {
           title="결제 멤버"
         >
           <ul className={styles.list}>
-            {[AllMembers, ...travelMembers].map((member) => (
+            {[AllMembers, ...travelMembers!].map((member) => (
               <li key={member.id} onClick={() => handleMemberSelect(member)}>
                 {member.name}
                 {memberId === member.id && (

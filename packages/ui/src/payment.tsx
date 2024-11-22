@@ -9,30 +9,22 @@ import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
-import {
-  ParticipatingMember,
-  SharedPayment,
-  TravelMember,
-} from '@withbee/types';
+import { ParticipatingMember, SharedPayment } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 import { chooseParticipants } from '@withbee/apis';
+import { useTravelStore } from '@withbee/stores';
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
 interface PaymentProps {
   travelId: number;
-  travelMembers: TravelMember[];
   paymentInfo: SharedPayment;
 }
 
-export const Payment = ({
-  travelId,
-  travelMembers,
-  paymentInfo,
-}: PaymentProps) => {
+export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
   const { showToast } = useToast();
   const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
@@ -41,6 +33,8 @@ export const Payment = ({
   );
   const [tempSelectedMembers, setTempSelectedMembers] =
     useState<ParticipatingMember[]>(selectedMembers);
+
+  const { travelMembers } = useTravelStore();
 
   const handleSelectMember = (member: ParticipatingMember) => {
     // 선택된 멤버가 이미 선택된 경우 제거
@@ -162,7 +156,7 @@ export const Payment = ({
           closeLabel="확인"
         >
           <div className={styles.friendsModal}>
-            {travelMembers.map((member) => (
+            {travelMembers!.map((member) => (
               <div
                 className={styles.friendRow}
                 key={member.id}

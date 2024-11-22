@@ -17,15 +17,12 @@ import { PaymentSkeleton } from './payment-skeleton';
 
 interface PaymentListProps {
   travelId: number;
-  initialData?: {
-    travelMembers: TravelMember[] | undefined;
-    payments: PageResponse<SharedPayment>;
-  } | null;
+  initialPayments?: PageResponse<SharedPayment> | undefined;
 }
 
 export default function PaymentList({
   travelId,
-  initialData,
+  initialPayments,
 }: PaymentListProps) {
   const {
     startDate,
@@ -73,39 +70,34 @@ export default function PaymentList({
         });
 
         if ('code' in response) {
-          showToast.warning({
-            message:
-              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-          });
-
-          if (response.code === 'VALIDATION-003') {
-            if (new Date(startDate) > new Date(endDate)) {
-              setEndDate(getDateObject(startDate));
-            } else {
-              setStartDate(getDateObject(endDate));
-            }
-          } else {
-            showToast.error({
-              message: ERROR_MESSAGES['COMMON'],
-            });
-          }
-          throw error; // 에러 바운더리로 전파
+          throw response; // 에러 코드가 있는 응답은 그대로 throw
         }
+
         return response.data;
       },
       {
-        fallbackData: initialData ? [initialData.payments] : undefined,
+        fallbackData: initialPayments ? [initialPayments] : undefined,
         suspense: true,
-        revalidateOnFocus: false, // 불필요한 리밸리데이션 방지
+        onError: (err) => {
+          if ('code' in err) {
+            if (err.code === 'VALIDATION-003') {
+              if (new Date(startDate) > new Date(endDate)) {
+                setEndDate(getDateObject(startDate));
+              } else {
+                setStartDate(getDateObject(endDate));
+              }
+            }
+            showToast.warning({
+              message: ERROR_MESSAGES[err.code as keyof typeof ERROR_MESSAGES],
+            });
+          } else {
+            showToast.error({
+              message: ERROR_MESSAGES['FETCH-FAILED'],
+            });
+          }
+        },
       },
     );
-
-  if (error) {
-    showToast.error({
-      message: ERROR_MESSAGES['COMMON'],
-    });
-    throw error;
-  }
 
   // 모든 페이지의 결제내역을 하나의 배열로 합치기
   const payments = data?.flatMap((page) => page?.content ?? []) ?? [];
@@ -176,7 +168,6 @@ export default function PaymentList({
                       key={`payment-${payment.id}-${idx}`}
                       travelId={travelId}
                       paymentInfo={payment}
-                      travelMembers={initialData?.travelMembers!}
                     />
                   ))}
                 </div>
@@ -187,7 +178,6 @@ export default function PaymentList({
                   key={payment.id}
                   travelId={travelId}
                   paymentInfo={payment}
-                  travelMembers={initialData?.travelMembers!}
                 />
               ))}
         </motion.div>
@@ -195,7 +185,7 @@ export default function PaymentList({
 
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref}>
-        {isValidating && !error && size > 1 && <PaymentSkeleton />}
+        {isValidating && !error && size > 1 && <PaymentSkeleton count={1} />}
       </div>
     </AnimatePresence>
   );
