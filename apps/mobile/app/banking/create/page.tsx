@@ -6,6 +6,7 @@ import styles from './page.module.css'; // CSS 모듈
 import { instance } from '@withbee/apis'; // API 요청을 위한 instance
 import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
+import PinNumberModal from '../../../components/PinNumberModal';
 
 interface ProductOption {
   label: string;
@@ -17,6 +18,8 @@ export default function CreateAccountPage() {
 
   const [selectedProduct, setSelectedProduct] = useState<string>(''); // 선택된 계좌 유형
   const [errorMessage, setErrorMessage] = useState<string>(''); // 에러 메시지 상태
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
   const {showToast} = useToast();
   // Product 목록
@@ -92,11 +95,16 @@ export default function CreateAccountPage() {
         <div className={styles.formSection}>
           <Button
             label="계좌 생성하기"
-            onClick={handleCreateAccount}
+            onClick={()=>setIsModalOpen(true)}
             size="medium"
           />
         </div>
       )}
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // 모달 닫기
+        onSubmit={handleCreateAccount} // PIN 입력 후 제출 처리
+      />
     </div>
   );
 }
