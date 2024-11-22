@@ -78,51 +78,71 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPin(e.target.value);
   };
+  
   const handleNumberPress = (key: string) => {
     if (key === 'backspace') {
       setPin(pin.slice(0, -1));
-    } else if (key === 'clear') {
-      setPin('');
-    } else if (pin.length < 6) {
-      setPin(pin + key);
-    }
-
-    // 랜덤한 두 개의 숫자도 active 상태로 활성화하기
-    const randomKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const randomIndices: (string | number)[] = [];
-
-    while (randomIndices.length < 2) {
-      const randIndex = Math.floor(Math.random() * randomKeys.length);
-      if (!randomIndices.includes(randIndex) && randomKeys[randIndex] !== key) {
-        randomIndices.push(randIndex);
-      }
-    }
-
-    const activeKeys = [key, randomKeys[randomIndices[0]], randomKeys[randomIndices[1]]];
-
-    // active 상태 처리
-    const allKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'];
-
-    // 커스텀 active 클래스 적용
-    allKeys.forEach((k) => {
-      const element = document.getElementById(k);
+      // 백스페이스 버튼만 활성화
+      const element = document.getElementById('←');
       if (element) {
-        if (activeKeys.includes(k)) {
-          element.classList.add(styles.customActive);
-        } else {
+        element.classList.add(styles.customActive);
+        setTimeout(() => {
           element.classList.remove(styles.customActive);
+        }, 100);
+      }
+      return;
+    } 
+    
+    if (key === 'clear') {
+      setPin('');
+      // X 버튼만 활성화
+      const element = document.getElementById('X');
+      if (element) {
+        element.classList.add(styles.customActive);
+        setTimeout(() => {
+          element.classList.remove(styles.customActive);
+        }, 100);
+      }
+      return;
+    }
+    
+    if (pin.length < 6) {
+      setPin(pin + key);
+      
+      // 숫자 버튼일 경우에만 랜덤한 두 개의 추가 버튼 활성화
+      const randomKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      const randomIndices: (string | number)[] = [];
+  
+      while (randomIndices.length < 2) {
+        const randIndex = Math.floor(Math.random() * randomKeys.length);
+        if (!randomIndices.includes(randIndex) && randomKeys[randIndex] !== key) {
+          randomIndices.push(randIndex);
         }
       }
-    });
-
-    setTimeout(() => {
-      allKeys.forEach((k) => {
+  
+      const activeKeys = [key, randomKeys[randomIndices[0]], randomKeys[randomIndices[1]]];
+  
+      // active 상태 처리
+      ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].forEach((k) => {
         const element = document.getElementById(k);
         if (element) {
-          element.classList.remove(styles.customActive);
+          if (activeKeys.includes(k)) {
+            element.classList.add(styles.customActive);
+          } else {
+            element.classList.remove(styles.customActive);
+          }
         }
       });
-    }, 100);
+  
+      setTimeout(() => {
+        activeKeys.forEach((k) => {
+          const element = document.getElementById(k);
+          if (element) {
+            element.classList.remove(styles.customActive);
+          }
+        });
+      }, 100);
+    }
   };
 
   // 가상 키보드 렌더링
