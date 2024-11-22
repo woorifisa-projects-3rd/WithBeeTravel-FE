@@ -7,12 +7,10 @@ import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode } from '@withbee/apis';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
-export default function page({ params }: { params: Params }) {
+export default function page() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const travelId = Number(params.id);
 
   const cards = [
     {
@@ -28,15 +26,12 @@ export default function page({ params }: { params: Params }) {
   ];
 
   // 초대코드에 맞는 여행 홈으로 이동
-  const handleInviteCodeSubmit = async (
-    inviteCode: string,
-    travelId: number,
-  ) => {
-    const response = await postInviteCode(inviteCode, travelId);
+  const handleInviteCodeSubmit = async (inviteCode: string) => {
+    const response = await postInviteCode(inviteCode);
 
     // 여행 존재하면 해당 여행 홈으로 이동
-    if ('travelId' in response && response.travelId) {
-      router.push(`/travel/${response.travelId}`);
+    if ('data' in response && response.data) {
+      router.push(`/travel/${response.data.travelId}`);
     } else {
       alert('잘못된 초대 코드입니다.');
     }
@@ -126,7 +121,6 @@ export default function page({ params }: { params: Params }) {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleInviteCodeSubmit}
-        travelId={travelId}
       />
     </div>
   );

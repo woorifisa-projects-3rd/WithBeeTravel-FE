@@ -2,7 +2,7 @@ import { instance } from './instance';
 import {
   ErrorResponse,
   SuccessResponse,
-  TravelCreateResponse,
+  TravelFormResponse,
 } from '@withbee/types';
 
 // 여행 생성
@@ -12,8 +12,8 @@ export const createTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-): Promise<SuccessResponse<TravelCreateResponse> | ErrorResponse> => {
-  const response = instance.post<TravelCreateResponse>('/api/travels', {
+): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
+  const response = instance.post<TravelFormResponse>('/api/travels', {
     body: JSON.stringify({
       travelName,
       isDomesticTravel,
@@ -34,15 +34,23 @@ export const editTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-) => {
-  return instance.patch(`/api/travels/${travelId}`, {
-    body: JSON.stringify({
-      travelId,
-      travelName,
-      isDomesticTravel,
-      travelCountries,
-      travelStartDate,
-      travelEndDate,
-    }),
-  });
+): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
+  const response = instance.patch<TravelFormResponse>(
+    `/api/travels/${travelId}`,
+    {
+      body: JSON.stringify({
+        travelId,
+        travelName,
+        isDomesticTravel,
+        travelCountries,
+        travelStartDate,
+        travelEndDate,
+      }),
+    },
+  );
+
+  return response;
 };
+
+// //여행 목록
+// export const getTravelList = async

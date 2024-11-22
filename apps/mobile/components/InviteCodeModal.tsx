@@ -6,20 +6,18 @@ import styles from './InviteCodeModal.module.css';
 interface InviteCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (inviteCode: string, travelId: number) => void;
-  travelId: number;
+  onSubmit: (inviteCode: string) => void;
 }
 
 export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
-  travelId,
 }) => {
   const [inviteCode, setInviteCode] = useState('');
 
   const handleSubmit = () => {
-    onSubmit(inviteCode, travelId);
+    onSubmit(inviteCode);
     setInviteCode(''); // 입력 값 초기화
   };
 
