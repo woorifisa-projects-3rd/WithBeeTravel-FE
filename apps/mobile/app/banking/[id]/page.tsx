@@ -103,38 +103,42 @@ export default function AccountPage() {
   return (
     <div className={styles.container}>
       <Title label="거래내역 조회" />
-
-
-
-      <div className={styles.default}>
-        <Button
-          label="송금"
-          size={'medium'}
-          onClick={()=>handleTransferClick()}
-        />
-        <Button
-          label="입금"
-          size={'medium'}
-          onClick={() => router.push(`/banking/${id}/deposit`)}
-        />
-      </div>
-
-      <div>
-        <Button
-          label="거래 내역 추가"
-          size={'medium'}
-          onClick={() => router.push(`/banking/${id}/payment`)}
-        />
-      </div>
+      
       {/* 계좌 정보 표시 */}
 {accountInfo ? (
   <div className={styles.accountDetails}>
     <div className={styles.accountInfo}>
-      <div className={styles.productName}>{accountInfo.product}</div>
-      <div className={styles.accountNumber}>{accountInfo.accountNumber}</div>
-      <div className={styles.accountBalance}>
-        <span className={styles.balanceLabel}>잔액</span>
+    <div className={styles.productAndButton}>
+  <div className={styles.productName}>{accountInfo.product}</div>
+  <div className={styles.addHistory}>
+    <Button
+      className={styles.greyButton}
+      label="+ 내역"
+      size="xsmall"
+      onClick={() => router.push(`/banking/${id}/payment`)}
+    />
+  </div>
+</div>
+      <div className={styles.accountNumber}>{accountInfo.accountNumber}</div> 
+            
+      <div className={styles.accountBalance}>    
+        <span className={styles.balanceLabel}></span>
         {formatNumber(accountInfo.balance)} 원
+      </div>
+      <div className={styles.default}>
+      <Button 
+          className={styles.greyButton}
+          label="입금"
+          size={'medium'}
+          onClick={() => router.push(`/banking/${id}/deposit`)
+        }
+        />
+        <Button
+          label="송금"
+          size={'medium'}
+          onClick={()=>handleTransferClick()
+          }
+        />
       </div>
     </div>
   </div>
