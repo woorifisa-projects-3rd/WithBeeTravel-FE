@@ -7,7 +7,7 @@ import styles from './../app/travel/[id]/settlement/page.module.css';
 import { cancelSettlement } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { useRouter } from 'next/navigation';
-// import { ERROR_MESSAGES } from '@withbee/exception';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 export default function ModalWrapper({ travelId }: { travelId: number }) {
   console.log(travelId);
@@ -20,8 +20,7 @@ export default function ModalWrapper({ travelId }: { travelId: number }) {
       const response = await cancelSettlement(travelId);
       if ('code' in response) {
         showToast.warning({
-          // message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-          message: `오류 발생: ${response.code}`,
+          message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         });
         return;
       }
@@ -34,8 +33,7 @@ export default function ModalWrapper({ travelId }: { travelId: number }) {
       router.push(`/travel/${travelId}/settlement/canceled`);
     } catch (error) {
       showToast.error({
-        // message: ERROR_MESSAGES['COMMON'],
-        message: '정산 취소 중 오류 발생',
+        message: ERROR_MESSAGES['COMMON'],
       });
       throw error;
     }
