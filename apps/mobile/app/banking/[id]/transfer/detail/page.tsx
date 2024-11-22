@@ -145,7 +145,7 @@ export default function TransferDetailPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} - ₩
+            ₩ 
             {accountInfo.balance.toLocaleString()}원
           </p>
         ) : (

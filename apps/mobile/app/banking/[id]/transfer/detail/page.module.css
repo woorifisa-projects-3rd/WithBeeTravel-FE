@@ -1,19 +1,11 @@
 /* 전체 컨테이너 */
 .container {
-    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding-bottom: 80px; /* 송금하기 버튼이 키보드 바로 밑에 오게끔 공간을 남겨둡니다 */
   }
   
-  /* 헤더 */
-  .header {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #f2f2f2;
-  }
+
   
   .backButton {
     background: none;
@@ -32,19 +24,19 @@
   /* 메인 콘텐츠 */
   .main {
     flex: 1;
-    padding: 24px 16px;
+    padding: 6px 4px;
   }
   
   /* 금액 입력 영역 */
   .amountContainer {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 6px;
   }
   
   .accountInfo h2 {
     font-size: 20px;
-    margin-bottom: 8px;
+    
   }
   
   .balance {
@@ -66,7 +58,7 @@
     font-size: 32px;
     font-weight: 600;
     text-align: center;
-    padding: 24px 0;
+    padding: 12px 0;
   }
   
   .currency {
