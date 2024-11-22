@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -24,6 +25,8 @@ export default function BankingPage() {
   const router = useRouter();
 
   const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
+
+  const {showToast} = useToast();
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -58,12 +61,22 @@ export default function BankingPage() {
 
     const response = await instance.get<PinNumberResponse>('/verify/user-state');
     if(Number(response.status) != 200){
-        alert("핀번호 재 설정 후 이용 가능")
-        return;  
+      showToast.error({message:"핀번호 재설정 후 송금 가능"})
+      return;  
     }
     // 송금 페이지로 이동
     router.push(`/banking/${accountId}/transfer`);
   };
+
+  const createAccountHandle = async ()=> {
+
+    const response = await instance.get<PinNumberResponse>('/verify/user-state');
+    if(Number(response.status) != 200){
+      showToast.error({message:"핀번호 재설정 후 송금 가능"})
+      return;  
+    } 
+     router.push(`/banking/create`)
+  }
 
   return (
     <div className={styles.container}>
@@ -72,7 +85,7 @@ export default function BankingPage() {
       <Button
         size="medium"
         label="계좌 만들러 가기"
-        onClick={() => router.push(`/banking/create`)}
+        onClick={() => createAccountHandle()}
       />
       <div className={styles.space}></div>
 
