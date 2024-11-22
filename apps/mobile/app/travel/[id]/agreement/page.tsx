@@ -125,6 +125,7 @@ export default function ConsentPage() {
           <Button
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
+            shadow={true}
           />
         </div>
       </div>
