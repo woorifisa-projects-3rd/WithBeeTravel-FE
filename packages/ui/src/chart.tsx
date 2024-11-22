@@ -30,24 +30,18 @@ interface ExpenseData {
 
 interface ExpenseChartProps {
   expenses?: ExpenseData[];
-  highlightIndex?: number; // 강조할 막대의 인덱스
 }
 
-export const BarChart = ({
-  expenses,
-  highlightIndex = 1,
-}: ExpenseChartProps) => {
+export const BarChart = ({ expenses }: ExpenseChartProps) => {
   const [blueColor3, setBlueColor3] = useState('');
   const [blueColor9, setBlueColor9] = useState('');
   const [grayColor900, setGrayColor900] = useState('');
 
-  // CSS 변수 값 가져오기
-  useEffect(() => {
-    const rootStyles = getComputedStyle(document.documentElement);
-    setBlueColor3(rootStyles.getPropertyValue('--color-blue-3').trim());
-    setBlueColor9(rootStyles.getPropertyValue('--color-blue-9').trim());
-    setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
-  }, []);
+  // 가장 amount가 큰 카테고리의 인덱스
+  const highlightIndex = expenses?.reduce(
+    (acc, cur, index) => (cur.amount > expenses[acc]!.amount ? index : acc),
+    0,
+  );
 
   const options = {
     aspectRatio: 1.5,
@@ -127,6 +121,14 @@ export const BarChart = ({
       },
     ],
   };
+
+  // CSS 변수 값 가져오기
+  useEffect(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    setBlueColor3(rootStyles.getPropertyValue('--color-blue-3').trim());
+    setBlueColor9(rootStyles.getPropertyValue('--color-blue-9').trim());
+    setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
+  }, []);
 
   return <Bar data={data} options={options} />;
 };

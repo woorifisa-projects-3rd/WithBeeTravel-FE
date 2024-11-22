@@ -4,6 +4,7 @@ import {
   ErrorResponse,
   SuccessResponse,
   TravelCreateResponse,
+  TravelHome,
 } from '@withbee/types';
 
 // 여행 생성
@@ -50,5 +51,17 @@ export const editTravel = async (
 
 // 여행 멤버 불러오기
 export const getTravelMembers = async (travelId: number) => {
-  return await instance.get<TravelMember[]>(`/api/travels/${travelId}/members`);
+  return await instance.get<TravelMember[]>(
+    `/api/travels/${travelId}/members`,
+    {
+      cache: 'no-cache',
+    },
+  );
+};
+
+// 여행 홈 불러오기
+export const getTravelHome = async (travelId: number) => {
+  return await instance.get<TravelHome>(`/api/travels/${travelId}`, {
+    cache: 'no-cache',
+  });
 };

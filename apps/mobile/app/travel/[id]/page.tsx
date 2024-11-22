@@ -1,4 +1,3 @@
-'use client';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import styles from './page.module.css';
@@ -6,46 +5,66 @@ import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
 import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getTravelHome } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
+import { formatDateWithSlash } from '@withbee/utils';
 
-export default function Page() {
-  const router = useRouter();
+interface TravelHomeProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function Page({ params }: TravelHomeProps) {
+  const { id } = params;
+  const response = await getTravelHome(Number(id));
+
+  if (!('data' in response)) {
+    throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
+  }
+
+  const { data } = response;
+
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
       <div className={styles.subContainer}>
         <div className={styles.subtitleContainer}>
-          <p className={styles.date}>2022/12/25 ~ 2023/01/01</p>
+          <p className={styles.date}>
+            {formatDateWithSlash(data!.travelStartDate)} ~{' '}
+            {formatDateWithSlash(data!.travelEndDate)}
+          </p>
           <div className={styles.subtitleWrapper}>
-            <h2 className={styles.subtitle}>팀 호초루의 여행</h2>
-            <button
-              className={styles.button}
-              onClick={() => router.push('/travel/form?mode=edit')}
-            >
+            <h2 className={styles.subtitle}>{data!.travelName}</h2>
+            <Link href="/travel/form?mode=edit" className={styles.button}>
               <Image src="/edit.png" alt="edit" width={19} height={17.94} />
-            </button>
+            </Link>
           </div>
         </div>
         <div className={styles.imgWrapper}>{/* <Image /> */}</div>
         <div className={styles.tagWrapper}>
-          <Item label="오스트리아" />
-          <Item label="포르투갈" />
-          <Item label="스위스" />
+          {!data!.isDomesticTravel &&
+            data!.countries.map((country) => <Item label={country} />)}
         </div>
         <div className={styles.friendsWrapper}>
-          {[1, 2, 3, 4, 5].map((number) => (
-            <FriendImage src={number} />
+          {data!.travelMembers!.map((member) => (
+            <FriendImage key={member} src={member} />
           ))}
         </div>
       </div>
       <div className={styles.btnWrapper}>
-        <Link href="/travel/1/payments">
+        <Link href={`/travel/${id}/payments`}>
           <Button label="그룹 결제 내역" />
         </Link>
         <Button label="친구 초대" primary={false} />
       </div>
-      <BarChart />
+      <BarChart
+        expenses={Object.entries(data!.statistics).map(([key, value]) => ({
+          category: key,
+          amount: value,
+        }))}
+      />
     </div>
   );
 }

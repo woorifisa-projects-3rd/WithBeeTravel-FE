@@ -32,7 +32,7 @@ export const getSharedPayments = async ({
   const response = await instance.get<PageResponse<SharedPayment>>(
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,
     {
-      cache: 'no-store',
+      cache: 'no-cache',
     },
   );
 
