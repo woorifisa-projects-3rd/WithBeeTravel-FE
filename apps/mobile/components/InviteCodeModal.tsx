@@ -7,12 +7,19 @@ interface InviteCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (inviteCode: string) => void;
+  modalState: {
+    title: string;
+    closeLabel?: string;
+    placeholder?: string;
+    subtitle?: string;
+  };
 }
 
 export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
+  modalState,
 }) => {
   const [inviteCode, setInviteCode] = useState('');
 
@@ -25,18 +32,20 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="초대코드를 입력해주세요."
-      closeLabel="입력 완료"
+      title={modalState.title}
+      closeLabel={modalState.closeLabel}
       onSubmit={handleSubmit}
     >
-      <p className={styles.subtitle}>초대 코드를 입력하여 그룹에 가입하세요.</p>
+      {modalState.subtitle && (
+        <p className={styles.subtitle}>{modalState.subtitle}</p>
+      )}
       <input
         id="inviteCode"
         type="text"
         className={styles.input}
         value={inviteCode}
         onChange={(e) => setInviteCode(e.target.value)}
-        placeholder="초대코드"
+        placeholder={modalState.placeholder || '초대코드'}
       />
     </Modal>
   );

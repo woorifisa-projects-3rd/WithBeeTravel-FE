@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import styles from './page.module.css';
@@ -8,9 +9,22 @@ import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { InviteCodeModal } from '../../../components/InviteCodeModal';
 
 export default function Page() {
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    title: '초대 코드를 공유하세요.',
+    closeLabel: '닫기',
+    subtitle: '초대 코드를 복사하여 친구를 초대하세요.',
+  });
   const router = useRouter();
+
+  const handleGetInviteCode = async (inviteCode: string) => {
+    // 초대 코드 처리 로직
+    setModalState((prevState) => ({ ...prevState, isOpen: false })); // 모달 닫기
+  };
+
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
@@ -43,8 +57,21 @@ export default function Page() {
         <Link href="/travel/1/payments">
           <Button label="그룹 결제 내역" />
         </Link>
-        <Button label="친구 초대" primary={false} />
+        <Button
+          label="친구 초대"
+          primary={false}
+          onClick={() =>
+            setModalState((prevState) => ({ ...prevState, isOpen: true }))
+          }
+        />
       </div>
+
+      <InviteCodeModal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ ...modalState, isOpen: false })}
+        onSubmit={handleGetInviteCode}
+        modalState={modalState}
+      />
       <BarChart />
     </div>
   );

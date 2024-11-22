@@ -10,6 +10,12 @@ import { postInviteCode } from '@withbee/apis';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    title: '초대 코드를 입력하세요.',
+    closeLabel: '입력 완료',
+    subtitle: '초대 코드를 입력하여 그룹에 가입하세요.',
+  });
   const router = useRouter();
 
   const cards = [
@@ -29,11 +35,14 @@ export default function page() {
   const handleInviteCodeSubmit = async (inviteCode: string) => {
     const response = await postInviteCode(inviteCode);
 
+    if ('code' in response) {
+      alert(response.message);
+      throw response; // 에러 코드가 있는 응답은 그대로 throw
+    }
+
     // 여행 존재하면 해당 여행 홈으로 이동
     if ('data' in response && response.data) {
       router.push(`/travel/${response.data.travelId}`);
-    } else {
-      alert('잘못된 초대 코드입니다.');
     }
   };
 
@@ -121,6 +130,7 @@ export default function page() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleInviteCodeSubmit}
+        modalState={modalState}
       />
     </div>
   );
