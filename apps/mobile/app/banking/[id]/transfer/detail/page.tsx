@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
 import PinNumberModal from '../../../../../components/PinNumberModal';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -28,6 +29,7 @@ export default function TransferDetailPage() {
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
+  const {showToast} = useToast();
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -80,13 +82,13 @@ export default function TransferDetailPage() {
   const handleSendMoney = async () => {
     // 금액 유효성 검사
     if (!amount || amount === '0') {
-      alert('금액을 입력해주세요!');
+      showToast.error({message:'0원은 송금할 수 없어요!'})
       return;
     }
 
     // 잔액 검증
     if (accountInfo && parseInt(amount) > accountInfo.balance) {
-      alert('잔액이 부족합니다!');
+      showToast.error({message:'잔액이 부족해요!'})
       return;
     }
 
@@ -115,7 +117,9 @@ export default function TransferDetailPage() {
         { body: JSON.stringify(transferRequest) }
       );
       
-      alert('송금이 완료되었습니다!');
+      showToast.success({message:`${targetAccount?.name}님이게
+        \n${transferRequest.amount}원 송금 완료`})
+
       router.push('/banking/');
     } catch (error) {
       console.error('송금 오류:', error);

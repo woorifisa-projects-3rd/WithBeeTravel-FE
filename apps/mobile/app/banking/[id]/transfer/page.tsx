@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { useEffect, useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { instance } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -22,6 +23,7 @@ export default function TransferPage() {
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
+  const {showToast} = useToast();
   // 계좌 정보 가져오기
   useEffect(() => {
     if (accountId) {
@@ -47,7 +49,7 @@ export default function TransferPage() {
   // 계좌번호 검증 후 금액 설정 페이지로 이동
   const handleNextClick = async () => {
     if (targetAccount.length < 10) {
-      alert('계좌번호가 너무 짧아용~');
+      showToast.error({message:'계좌번호는 10자리 이상이에요!'});
       return;
     }
 
@@ -66,10 +68,9 @@ export default function TransferPage() {
       // 응답 처리
 
       if (Number(response.status) === 200) {
-        alert('계좌번호가 확인 완!! 돈 보내러 가는 중~');
         router.push(`/banking/${accountId}/transfer/detail`);
       } else {
-        alert('없는 계좌 같은데??');
+        showToast.error({message:'존재 하지 않는 계좌번호에요!'});
       }
     } catch (error) {
       console.error('계좌번호 검증 중 오류 발생:', error);

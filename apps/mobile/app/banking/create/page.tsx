@@ -5,6 +5,7 @@ import { Button } from '@withbee/ui/button'; // 버튼 UI
 import styles from './page.module.css'; // CSS 모듈
 import { instance } from '@withbee/apis'; // API 요청을 위한 instance
 import { useRouter } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface ProductOption {
   label: string;
@@ -17,6 +18,7 @@ export default function CreateAccountPage() {
   const [selectedProduct, setSelectedProduct] = useState<string>(''); // 선택된 계좌 유형
   const [errorMessage, setErrorMessage] = useState<string>(''); // 에러 메시지 상태
 
+  const {showToast} = useToast();
   // Product 목록
   const productOptions = [
     'WON통장',
@@ -44,7 +46,7 @@ export default function CreateAccountPage() {
       });
 
       if (Number(response.status) === 201) {
-        alert('계좌 생성 완료');
+        showToast.success({message:'계좌 생성 완료!'});
         router.push('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');

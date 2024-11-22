@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PinNumberModal.module.css';
 import { instance } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface PinNumberModalProps {
   isOpen: boolean;
@@ -21,6 +22,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
   const [pin, setPin] = useState<string>(''); // 비밀번호 저장 상태
   const [error, setError] = useState<string | null>(''); // error 초기값을 빈 문자열로 설정
   const [failCnt, setFailCnt] = useState<number>();
+
+  const {showToast} = useToast();
   // 모달이 닫힐 때 PIN 초기화
   useEffect(() => {
     if (!isOpen) {
@@ -37,7 +40,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
           }
           setFailCnt(response.data?.failedPinCount);
         } else{
-          alert("핀번호 재설정 후 이용 가능합니다.");
+          showToast.error({message:`핀번호 5회이상 틀렸습니다.\n
+            핀번호 재 설정 후 이용가능!`})
             // TODO : 마이페이지로 리다이렉트? 할지 고민
             onClose();
         }

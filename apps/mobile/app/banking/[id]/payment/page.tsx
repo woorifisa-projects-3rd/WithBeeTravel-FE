@@ -112,6 +112,7 @@ export default function PaymentPage() {
       await instance.post(`/accounts/${myAccountId}/payment`, {
         body: JSON.stringify(historyRequest),
       });
+      showToast.success({message:'거래내역 등록 완료!'})
 
       router.push(`/banking/`);
     } catch (error) {
