@@ -26,6 +26,7 @@ export const useToast = () => {
 
     error: ({ message, options }: ToastProps) => {
       toast.dismiss();
+      toast.clearWaitingQueue();
       toast.error(message, { ...defaultOptions, ...options });
     },
 
