@@ -76,8 +76,34 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     'ARS',
   ]);
 
-  const { showToast } = useToast();
+  const { showToast, formValidation } = useToast();
   const handleSubmit = async () => {
+    // 결제일자 입력 검증
+    if (!validateInputForm('date')) {
+      formValidation.invalidPaymentDate();
+      return;
+    }
+    // 결제 시간 입력 검증
+    if (!validateInputForm('time')) {
+      formValidation.invalidPaymentTime();
+      return;
+    }
+    // 상호명 입력 검증
+    if (!validateInputForm('storeName')) {
+      formValidation.invalidPaymentStoreName();
+      return;
+    }
+    // 결제 금액 입력 검증
+    if (
+      (formData.currencyUnit !== 'KRW' &&
+        !validateInputForm('foreignPaymentAmount')) ||
+      !validateInputForm('paymentAmount')
+    ) {
+      formValidation.invalidPaymentAmount();
+      return;
+    }
+
+    // 결제 내역 저장 요청
     const response = await createManualSharedPayment(id, formData);
 
     if ('code' in response) {
@@ -91,6 +117,21 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     }
 
     router.push(`/travel/${id}/payments`);
+  };
+
+  const validateInputForm = (type: string): boolean => {
+    if (type === 'date' && formData.date === '') return false;
+    else if (type === 'time' && formData.time === '') return false;
+    else if (type === 'storeName' && formData.storeName === '') return false;
+    else if (type === 'paymentAmount' && formData.paymentAmount === 0)
+      return false;
+    else if (
+      type === 'foreignPaymentAmount' &&
+      formData.foreignPaymentAmount === 0
+    )
+      return false;
+
+    return true;
   };
 
   return (
