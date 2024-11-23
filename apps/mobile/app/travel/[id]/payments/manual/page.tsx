@@ -33,6 +33,48 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     paymentComment: '',
     isMainImage: false,
   });
+  const [currencyUnitOptions, setCurrencyUnitOptions] = useState([
+    'USD',
+    'EUR',
+    'JPY',
+    'CNY',
+    'KRW',
+    'GBP',
+    'AUD',
+    'CAD',
+    'NZD',
+    'MXN',
+    'INR',
+    'BRL',
+    'ZAR',
+    'SEK',
+    'NOK',
+    'DKK',
+    'CHF',
+    'HKD',
+    'SGD',
+    'THB',
+    'TRY',
+    'MYR',
+    'PHP',
+    'AED',
+    'SAR',
+    'KWD',
+    'BHD',
+    'QAR',
+    'OMR',
+    'JOD',
+    'LBP',
+    'EGP',
+    'IDR',
+    'PKR',
+    'TWD',
+    'VND',
+    'COP',
+    'PEN',
+    'CLP',
+    'ARS',
+  ]);
 
   const { showToast } = useToast();
   const handleSubmit = async () => {
@@ -57,7 +99,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
       <ManualSharedPaymentForm
         formData={formData}
         setFormData={setFormData}
-        currencyUnitOptions={['KRW', 'USD', 'EUR', 'JPY', 'CNY', 'GBP']}
+        currencyUnitOptions={currencyUnitOptions}
         handleSubmitForm={handleSubmit}
       />
     </div>
