@@ -134,13 +134,7 @@ export default function DepositPage() {
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       <div className={styles.handleSendMoney}>
-      {amount && (
-        <Button
-          label="입금하기"
-          onClick={handleSendMoney}
-
-        />
-      )}
+        {amount && <Button label="입금하기" onClick={handleSendMoney} />}
       </div>
     </div>
   );
