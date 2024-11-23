@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
 export default function Page({ params }: { params: Params }) {
-  const travelId = Number(params.id);
   const router = useRouter();
 
   return (
@@ -42,7 +41,7 @@ export default function Page({ params }: { params: Params }) {
         <Button
           label="돌아가기"
           onClick={() => router.push(`/travel/${params.id}`)}
-        />{' '}
+        />
       </div>
     </div>
   );
