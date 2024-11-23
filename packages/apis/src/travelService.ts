@@ -3,6 +3,7 @@ import {
   ErrorResponse,
   SuccessResponse,
   TravelFormResponse,
+  TravelList,
 } from '@withbee/types';
 
 // 여행 생성
@@ -53,4 +54,9 @@ export const editTravel = async (
 };
 
 // //여행 목록
-// export const getTravelList = async
+export const getTravelList = async (): Promise<
+  SuccessResponse<TravelList> | ErrorResponse
+> => {
+  const response = instance.get<TravelList>(`/api/travels`);
+  return response;
+};

@@ -6,7 +6,8 @@ import travelExam from '../../public/imgs/travelselect/travel_exam.png';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { postInviteCode } from '@withbee/apis';
+import { postInviteCode, getTravelList } from '@withbee/apis';
+import useSWR from 'swr';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,9 @@ export default function page() {
       date: '2024/12/24~2025/01/05',
     },
   ];
+
+  const { data, error } = useSWR('travelList', getTravelList);
+  console.log('data', data);
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {

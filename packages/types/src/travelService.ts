@@ -11,3 +11,12 @@ export interface InviteCode {
   travelId: number;
   inviteCode: string;
 }
+
+export interface TravelList {
+  travelId: number;
+  travelName: string;
+  travelStartDate: string;
+  travelEndDate: string;
+  travelMainImage: number;
+  profileImage: number;
+}
