@@ -49,7 +49,7 @@ export default function Page({ params }: { params: Params }) {
         >
           <Image
             className={styles.image}
-            src={'/imgs/settlement/angryWibee.png'}
+            src="/imgs/settlement/angryWibee.png"
             alt="pending"
             width={150}
             height={200}

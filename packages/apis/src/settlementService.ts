@@ -25,6 +25,7 @@ interface Other {
 
 export interface SettlementDetails {
   myTotalPayment: MyTotalPayment;
+  disagreeCount: number;
   myDetailPayments: MyDetailPayment[];
   others: Other[];
 }
@@ -35,9 +36,6 @@ export const getSettlementDetails = async (
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
   const response = instance.get<SettlementDetails>(
     `/api/travels/${travelId}/settlements`,
-    {
-      cache: 'no-store',
-    },
   );
   return response;
 };
@@ -48,9 +46,6 @@ export const agreeSettlement = async (
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
   const response = instance.post<SettlementDetails>(
     `/api/travels/${travelId}/settlements/agreement`,
-    {
-      cache: 'no-store',
-    },
   );
   return response;
 };
