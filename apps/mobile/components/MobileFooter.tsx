@@ -3,9 +3,39 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileFooter.module.css';
+import { useEffect, useState } from 'react';
 
 export default function MobileFooter() {
   const pathname = usePathname();
+
+  const [shouldHideFooter, setShouldHideFooter] = useState(false);
+
+  // 여기 네비게이션 숨길 url 추가하면 됩니다
+  const hideFooterPaths = [
+    '/banking/[id]/transfer',
+    '/banking/[id]/deposit',
+    '/banking/[id]/payment',
+    '/banking/[id]/transfer/detail',
+    '/banking/create',
+  ];
+
+  useEffect(() => {
+    const checkFooterVisibility = async () => {
+      const isPathToHideFooter = hideFooterPaths.some((path) => {
+        const regexPath = path.replace(/\[id\]/g, '[^/]+');
+        const regex = new RegExp(`^${regexPath}$`);
+        return regex.test(pathname);
+      });
+
+      setShouldHideFooter(isPathToHideFooter);
+    };
+
+    checkFooterVisibility();
+  }, [pathname]);
+
+  if (shouldHideFooter) {
+    return null;
+  }
 
   const menuItems = [
     {
