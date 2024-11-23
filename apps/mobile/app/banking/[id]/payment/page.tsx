@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
@@ -38,17 +38,22 @@ export default function PaymentPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
   const [rqspeNm, setRqspeNm] = useState<string>(''); // 거래 내역(상호명) 상태
-  const [isWibeeCard, setIsWibeeCard] = useState<WibeeCardResponse | undefined>(); // 위비 카드 연결 여부
-  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] = useState<boolean>(false); // 위비 카드 결제 상태
+  const [isWibeeCard, setIsWibeeCard] = useState<
+    WibeeCardResponse | undefined
+  >(); // 위비 카드 연결 여부
+  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
+    useState<boolean>(false); // 위비 카드 결제 상태
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // PinNumberModal 열기/닫기 상태
 
-  const {showToast}   = useToast();
+  const { showToast } = useToast();
 
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(`/accounts/${myAccountId}/info`);
+        const response = await instance.get<AccountInfo>(
+          `/accounts/${myAccountId}/info`,
+        );
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -57,7 +62,9 @@ export default function PaymentPage() {
       })();
 
       (async () => {
-        const response = await instance.get<WibeeCardResponse>(`/accounts/${myAccountId}/check-wibee`);
+        const response = await instance.get<WibeeCardResponse>(
+          `/accounts/${myAccountId}/check-wibee`,
+        );
         if ('data' in response) {
           setIsWibeeCard(response.data);
         } else {
@@ -75,23 +82,24 @@ export default function PaymentPage() {
     }
 
     if (!rqspeNm) {
-      showToast.error({message:'거래 내역(상호명)을 입력해주세요!'}); // 상호명 입력 오류 메시지
+      showToast.error({ message: '거래 내역(상호명)을 입력해주세요!' }); // 상호명 입력 오류 메시지
       return;
     }
 
     if (accountInfo?.balance === undefined) {
-      showToast.error({message:'계좌 정보가 없습니다!'}); // 계좌 정보 오류 메시지
+      showToast.error({ message: '계좌 정보가 없습니다!' }); // 계좌 정보 오류 메시지
       return;
     }
 
     if (Number(payAm) > accountInfo.balance) {
-      showToast.error({message:'계좌에 잔액 부족!'}); // 잔액 부족 오류 메시지
+      showToast.error({ message: '계좌에 잔액 부족!' }); // 잔액 부족 오류 메시지
       return;
     }
 
-    const response = await instance.get<PinNumberResponse>('/verify/user-state');
+    const response =
+      await instance.get<PinNumberResponse>('/verify/user-state');
     if (Number(response.status) !== 200) {
-      showToast.error({message:'핀번호 재 설정 후 이용 가능'}); // 핀번호 설정 오류 메시지
+      showToast.error({ message: '핀번호 재 설정 후 이용 가능' }); // 핀번호 설정 오류 메시지
       return;
     }
 
@@ -112,7 +120,7 @@ export default function PaymentPage() {
       await instance.post(`/accounts/${myAccountId}/payment`, {
         body: JSON.stringify(historyRequest),
       });
-      showToast.success({message:'거래내역 등록 완료!'})
+      showToast.success({ message: '거래내역 등록 완료!' });
 
       router.push(`/banking/`);
     } catch (error) {
@@ -194,12 +202,12 @@ export default function PaymentPage() {
 
         {/* 등록하기 버튼 */}
         {!isSubmitDisabled && (
-        <Button
-           label="등록하기"
-           className={styles.submitButton}
-           onClick={handleSubmit}
-        />
-)}
+          <Button
+            label="등록하기"
+            className={styles.submitButton}
+            onClick={handleSubmit}
+          />
+        )}
       </div>
 
       {/* PinNumberModal 컴포넌트 호출 */}

@@ -18,7 +18,11 @@ interface PinNumberResponse {
   pinLocked: boolean;
 }
 
-const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const PinNumberModal: React.FC<PinNumberModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const [pin, setPin] = useState<string>(''); // 비밀번호 저장 상태
   const [error, setError] = useState<string | null>(''); // error 초기값을 빈 문자열로 설정
   const [failCnt, setFailCnt] = useState<number>();
@@ -34,14 +38,19 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
 
     if (isOpen) {
       const fetchUserState = async () => {
-        const response = await instance.get<PinNumberResponse>('/verify/user-state');
+        const response =
+          await instance.get<PinNumberResponse>('/verify/user-state');
         if ('data' in response) {
           if (response.data?.failedPinCount !== 0) {
-            setError(`5회 틀릴 시 Pin번호 재설정 필요. ${response.data?.failedPinCount}/5`);
+            setError(
+              `5회 틀릴 시 Pin번호 재설정 필요. ${response.data?.failedPinCount}/5`,
+            );
           }
           setFailCnt(response.data?.failedPinCount);
         } else {
-          showToast.error({ message: '핀번호 5회 이상 틀렸습니다.\n핀번호 재설정 후 이용 가능!' });
+          showToast.error({
+            message: '핀번호 5회 이상 틀렸습니다.\n핀번호 재설정 후 이용 가능!',
+          });
           onClose();
         }
       };
@@ -78,7 +87,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPin(e.target.value);
   };
-  
+
   const handleNumberPress = (key: string) => {
     if (key === 'backspace') {
       setPin(pin.slice(0, -1));
@@ -91,8 +100,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
         }, 100);
       }
       return;
-    } 
-    
+    }
+
     if (key === 'clear') {
       setPin('');
       // X 버튼만 활성화
@@ -100,45 +109,52 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
       if (element) {
         element.classList.add(styles.customActive ?? '');
         setTimeout(() => {
-          element.classList.remove(styles.customActive?? '');
+          element.classList.remove(styles.customActive ?? '');
         }, 100);
       }
       return;
     }
-    
+
     if (pin.length < 6) {
       setPin(pin + key);
-      
+
       // 숫자 버튼일 경우에만 랜덤한 두 개의 추가 버튼 활성화
       const randomKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       const randomIndices: (string | number)[] = [];
-  
+
       while (randomIndices.length < 2) {
         const randIndex = Math.floor(Math.random() * randomKeys.length);
-        if (!randomIndices.includes(randIndex) && randomKeys[randIndex] !== key) {
+        if (
+          !randomIndices.includes(randIndex) &&
+          randomKeys[randIndex] !== key
+        ) {
           randomIndices.push(randIndex);
         }
       }
-  
-      const activeKeys = [key, randomKeys[Number(randomIndices[0])], randomKeys[Number(randomIndices[1])]];
-  
+
+      const activeKeys = [
+        key,
+        randomKeys[Number(randomIndices[0])],
+        randomKeys[Number(randomIndices[1])],
+      ];
+
       // active 상태 처리
       ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].forEach((k) => {
         const element = document.getElementById(k);
         if (element) {
           if (activeKeys.includes(k)) {
-            element.classList.add(styles.customActive??'');
+            element.classList.add(styles.customActive ?? '');
           } else {
-            element.classList.remove(styles.customActive??'');
+            element.classList.remove(styles.customActive ?? '');
           }
         }
       });
-  
+
       setTimeout(() => {
         activeKeys.forEach((k) => {
-          const element = document.getElementById(k??'');
+          const element = document.getElementById(k ?? '');
           if (element) {
-            element.classList.remove(styles.customActive??'');
+            element.classList.remove(styles.customActive ?? '');
           }
         });
       }, 100);
@@ -148,19 +164,23 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
   // 가상 키보드 렌더링
   const renderKeyboard = () => (
     <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map((key) => (
-        <button
-          key={key}
-          id={key}
-          className={styles.keyboardKey}
-          onClick={() =>
-            handleNumberPress(key === '←' ? 'backspace' : key === 'X' ? 'clear' : key)
-          }
-          onTouchStart={(e) => e.preventDefault()} // 터치 시작 시 기본 동작 방지
-        >
-          {key}
-        </button>
-      ))}
+      {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
+        (key) => (
+          <button
+            key={key}
+            id={key}
+            className={styles.keyboardKey}
+            onClick={() =>
+              handleNumberPress(
+                key === '←' ? 'backspace' : key === 'X' ? 'clear' : key,
+              )
+            }
+            onTouchStart={(e) => e.preventDefault()} // 터치 시작 시 기본 동작 방지
+          >
+            {key}
+          </button>
+        ),
+      )}
     </div>
   );
 
@@ -198,7 +218,9 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({ isOpen, onClose, onSubm
           {renderPinInput()}
 
           {/* 에러 메시지가 있을 때만 텍스트를 변경하고, 없으면 빈 공간을 차지 */}
-          <p className={`${styles.error} ${error ? '' : styles.hidden}`}>{error}</p>
+          <p className={`${styles.error} ${error ? '' : styles.hidden}`}>
+            {error}
+          </p>
 
           {renderKeyboard()}
         </div>
