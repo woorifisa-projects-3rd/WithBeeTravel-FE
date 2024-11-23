@@ -20,6 +20,7 @@ interface TargetName {
 }
 
 export default function TransferDetailPage() {
+  const MAX_AMOUNT = 500000000;
   const router = useRouter();
   const params = useParams();
   const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
@@ -84,7 +85,13 @@ export default function TransferDetailPage() {
     if (num === 'backspace') {
       setAmount((prev) => prev.slice(0, -1)); // 마지막 문자 제거
     } else {
-      setAmount((prev) => prev + num); // 숫자 추가
+      // 새로운 금액을 계산하기 전, 현재 금액에 num을 추가해본 후, 5억을 초과하는지 확인
+      const newAmount = amount + num;
+      if (parseInt(newAmount) > MAX_AMOUNT) {
+        showToast.error({ message: '1회 최대 이체 한도는 5억원 입니다!' });
+        return; // 5억 원 이상은 입력되지 않도록 함
+      }
+      setAmount(newAmount); // 5억 미만일 경우 정상적으로 금액을 추가
     }
   };
 

@@ -24,8 +24,10 @@ export const useToast = () => {
     success: ({ message, options }: ToastProps) =>
       toast.success(message, { ...defaultOptions, ...options }),
 
-    error: ({ message, options }: ToastProps) =>
-      toast.error(message, { ...defaultOptions, ...options }),
+    error: ({ message, options }: ToastProps) => {
+      toast.dismiss();
+      toast.error(message, { ...defaultOptions, ...options });
+    },
 
     info: ({ message, options }: ToastProps) =>
       toast.info(message, { ...defaultOptions, ...options }),
