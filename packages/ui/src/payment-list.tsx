@@ -3,7 +3,7 @@
 import type { PageResponse, SharedPayment, TravelMember } from '@withbee/types';
 import styles from './payment-list.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
 import { usePaymentStore } from '@withbee/stores';
@@ -14,6 +14,7 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import { useToast } from '@withbee/hooks/useToast';
 import { getDateObject } from '@withbee/utils';
 import { PaymentSkeleton } from './payment-skeleton';
+import Image from 'next/image';
 
 interface PaymentListProps {
   travelId: number;
@@ -88,6 +89,7 @@ export default function PaymentList({
       {
         fallbackData: initialPayments ? [initialPayments] : undefined,
         suspense: true,
+        errorRetryInterval: 60000,
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
@@ -156,6 +158,24 @@ export default function PaymentList({
     setSize(1);
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
+  if (error) {
+    return (
+      <div className={styles.errorContainer}>
+        <Image
+          src="/imgs/friends/notfound.png"
+          alt="에러 이미지"
+          width={150}
+          height={150}
+          className={styles.errorImage}
+        />
+        <div>
+          <p className={styles.errorText}>해당하는 카테고리의</p>
+          <p className={styles.errorText}>공동결제내역이 존재하지 않아요.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <AnimatePresence>
       {data && !isLoading && !isValidating && (
@@ -197,7 +217,9 @@ export default function PaymentList({
 
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref}>
-        {isValidating && !error && size > 1 && <PaymentSkeleton count={1} />}
+        {(isLoading || (isValidating && !error && size > 1)) && (
+          <PaymentSkeleton count={2} />
+        )}
       </div>
     </AnimatePresence>
   );
