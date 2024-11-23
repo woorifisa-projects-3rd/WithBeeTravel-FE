@@ -7,6 +7,8 @@
     "./time-picker-modal": "./src/time-picker-modal.tsx",
     "./record-image": "./src/record-image.tsx",
     "./manual-shared-payment-form": "./src/manual-shared-payment-form.tsx",
+    "./payment-error-boundary": "./src/payment-error-boundary.tsx",
+    "./payment-skeleton": "./src/payment-skeleton.tsx",
     "./payment-list": "./src/payment-list.tsx",
     "./date-picker-modal": "./src/date-picker-modal.tsx",
     "./menu": "./src/menu.tsx",

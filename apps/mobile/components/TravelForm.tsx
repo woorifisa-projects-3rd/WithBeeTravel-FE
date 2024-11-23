@@ -13,6 +13,7 @@ import { validators } from '@withbee/utils';
 interface TravelFormProps {
   mode: 'create' | 'edit';
   travelData?: {
+    travelId: number;
     travelName: string;
     isDomesticTravel: boolean;
     travelCountries?: string[];
@@ -31,6 +32,7 @@ export default function TravelForm({
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
+    travelId: 12,
     travelName: '',
     isDomesticTravel: false,
     travelCountries: [] as string[],
@@ -72,6 +74,7 @@ export default function TravelForm({
   useEffect(() => {
     if (mode === 'edit' && travelData) {
       setFormData({
+        travelId: travelData.travelId,
         travelName: travelData.travelName,
         isDomesticTravel: travelData.isDomesticTravel,
         travelCountries: travelData.travelCountries || [],

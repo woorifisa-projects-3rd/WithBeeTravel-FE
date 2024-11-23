@@ -8,11 +8,8 @@ import ExpenseDetails from '../../../../components/ExpenseDetails';
 import Image from 'next/image';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { Key } from 'react';
-import {
-  SettlementDetails,
-  SuccessResponse,
-  getSettlementDetails,
-} from '@withbee/apis';
+import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
+import { SuccessResponse } from '@withbee/types';
 
 export default async function Page({ params }: { params: Params }) {
   const travelId = Number(params.id);
@@ -71,13 +68,13 @@ export default async function Page({ params }: { params: Params }) {
         <div className={styles.userList}>
           <ul>
             {others
-              .sort((a: { agreed: any }, b: { agreed: any }) => {
+              .sort((a: { agreed: boolean }, b: { agreed: boolean }) => {
                 return a.agreed === b.agreed ? 0 : a.agreed ? 1 : -1;
               })
               .map(
                 (user: {
-                  id: Key | null | undefined;
-                  agreed: any;
+                  id: Key;
+                  agreed: boolean;
                   name: string;
                   totalPaymentCost: number;
                 }) => (

@@ -11,6 +11,7 @@ export interface ModalProps {
   title: string;
   children: React.ReactNode;
   closeLabel?: string;
+  onSubmit?: () => void;
 }
 
 export const Modal = ({
@@ -19,8 +20,16 @@ export const Modal = ({
   title,
   children,
   closeLabel,
+  onSubmit,
 }: ModalProps) => {
   if (!isOpen) return null;
+
+  const handleButtonClick = () => {
+    if (onSubmit) {
+      onSubmit(); // 페이지 이동 등의 로직 실행
+    }
+    onClose(); // 모달 닫기
+  };
 
   return (
     <AnimatePresence>
@@ -41,7 +50,9 @@ export const Modal = ({
           </header>
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>
-            {closeLabel && <Button onClick={onClose} label={closeLabel} />}
+            {closeLabel && (
+              <Button onClick={handleButtonClick} label={closeLabel} />
+            )}
           </footer>
         </motion.div>
       </div>

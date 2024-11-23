@@ -3,3 +3,4 @@ export * from './sharedPaymentsService';
 export * from './travelService';
 export * from './getCurrencyDate';
 export * from './createManualSharedPayment';
+export * from './settlementService';
