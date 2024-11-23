@@ -23,7 +23,7 @@ export default function page() {
 
   const { data: travelData, error } = useSWR('travelList', getTravelList);
   if (travelData && 'data' in travelData) {
-    console.log(travelData.data);
+    // console.log(travelData.data);
   }
 
   if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
@@ -48,8 +48,9 @@ export default function page() {
     travelData && 'data' in travelData && Array.isArray(travelData.data)
       ? travelData.data
           .map((card) => {
-            const today = dayjs();
-            const startDate = dayjs(card.travelStartDate);
+            const today = dayjs().startOf('day');
+
+            const startDate = dayjs(card.travelStartDate).startOf('day');
             const dDay = startDate.diff(today, 'day');
             return { ...card, dDay };
           })
