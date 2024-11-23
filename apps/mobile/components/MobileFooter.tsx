@@ -21,24 +21,21 @@ export default function MobileFooter() {
 
   useEffect(() => {
     const checkFooterVisibility = async () => {
-      
       const isPathToHideFooter = hideFooterPaths.some((path) => {
-        const regexPath = path.replace(/\[id\]/g, '[^/]+'); 
-        const regex = new RegExp(`^${regexPath}$`); 
+        const regexPath = path.replace(/\[id\]/g, '[^/]+');
+        const regex = new RegExp(`^${regexPath}$`);
         return regex.test(pathname);
       });
 
-      
       setShouldHideFooter(isPathToHideFooter);
     };
 
     checkFooterVisibility();
-  }, [pathname]); 
+  }, [pathname]);
 
   if (shouldHideFooter) {
-    return null; 
+    return null;
   }
-
 
   const menuItems = [
     {
