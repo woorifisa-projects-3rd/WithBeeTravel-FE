@@ -232,7 +232,7 @@ export const ManualSharedPaymentForm = ({
               placeholder="화폐 단위를 설정해주세요."
               value={formData.paymentAmount === 0 ? '' : formData.paymentAmount}
               onChange={handlePaymentChange}
-              className={styles.paymentInput}
+              className={styles.input}
             />
           ) : (
             <input
