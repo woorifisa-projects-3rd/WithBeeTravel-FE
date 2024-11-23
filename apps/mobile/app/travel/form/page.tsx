@@ -22,7 +22,6 @@ function TravelFormContent() {
   const mode = searchParams.get('mode');
   const router = useRouter();
 
-
   const handleCreateTravel = async (formData: FormData) => {
     const {
       travelName,
@@ -48,7 +47,6 @@ function TravelFormContent() {
     }
   };
 
-
   // 편집 api
   const handleEditTravel = async (formData: any) => {
     const {
@@ -69,14 +67,13 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if (response.status == '200') {
+    if (response.status == '200' && 'travelId' in response) {
       router.push(`/travel/${response.travelId}`);
     }
   };
 
   const handleTravelSelect = (travel: FormData) => {
     setEditedTravel(travel);
-
   };
 
   const travelData =
