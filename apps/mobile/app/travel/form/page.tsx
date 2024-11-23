@@ -67,7 +67,7 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if (response.status == '200') {
+    if (response.status == '200' && 'travelId' in response) {
       router.push(`/travel/${response.travelId}`);
     }
   };
