@@ -199,8 +199,8 @@ export default function TransferDetailPage() {
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
-        <div className={styles.buttonLocation}> 
-        <Button label='송금하기' size='medium'  onClick={handleSendMoney}/>
+        <div className={styles.buttonLocation}>
+          <Button label="송금하기" size="medium" onClick={handleSendMoney} />
         </div>
       )}
 

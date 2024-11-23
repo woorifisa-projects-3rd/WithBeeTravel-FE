@@ -169,7 +169,7 @@ export default function TransferPage() {
       <div className={styles.buttonLocation}>
         <Button
           label="다음"
-          size ='medium'
+          size="medium"
           onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
         />
       </div>
