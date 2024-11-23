@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,41 +112,43 @@ export default function page() {
 
             return (
               <div key={index} className={styles.card}>
-                <Image
-                  src={
-                    card.travelMainImage
-                      ? `/${card.travelMainImage}`
-                      : '/imgs/travelselect/travel_base_mainImage.png'
-                  }
-                  alt={card.travelName}
-                  className={styles.cardImage}
-                  width={200}
-                  height={100}
-                />
-                <div className={styles.cardContent}>
-                  <div className={styles.cardText}>
-                    <Image
-                      src={`/${card.travelMainImage}`}
-                      alt="비행기 아이콘"
-                      className={styles.icon}
-                      width={50}
-                      height={50}
-                    />
-                    <div className={styles.travelNameWrap}>
-                      <span>{card.travelName}</span>
-                      <span className={styles.date}>
-                        {card.travelStartDate}
-                      </span>
+                <Link href={`/travel/${card.travelId}`}>
+                  <Image
+                    src={
+                      card.travelMainImage
+                        ? `/${card.travelMainImage}`
+                        : '/imgs/travelselect/travel_base_mainImage.png'
+                    }
+                    alt={card.travelName}
+                    className={styles.cardImage}
+                    width={200}
+                    height={100}
+                  />
+                  <div className={styles.cardContent}>
+                    <div className={styles.cardText}>
+                      <Image
+                        src={`/${card.travelMainImage}`}
+                        alt="비행기 아이콘"
+                        className={styles.icon}
+                        width={50}
+                        height={50}
+                      />
+                      <div className={styles.travelNameWrap}>
+                        <span>{card.travelName}</span>
+                        <span className={styles.date}>
+                          {card.travelStartDate}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.cardDay}>
+                      {dDay >= 0 ? (
+                        <span>{`D-${dDay}`}</span>
+                      ) : (
+                        <span>{`D+${Math.abs(dDay)}`}</span>
+                      )}
                     </div>
                   </div>
-                  <div className={styles.cardDay}>
-                    {dDay >= 0 ? (
-                      <span>{`D-${dDay}`}</span>
-                    ) : (
-                      <span>{`D+${Math.abs(dDay)}`}</span>
-                    )}
-                  </div>
-                </div>
+                </Link>
               </div>
             );
           })
