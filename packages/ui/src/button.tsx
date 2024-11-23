@@ -33,12 +33,9 @@ export const Button = ({
         styles[size],
         mode,
         styles.button,
-        className,
         shadow && styles.shadow,
+        className,
       ].join(' ')}
-      // initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-      // animate={{ opacity: 1, scale: [1, 1.2, 1], rotate: 0 }}
-
       transition={{
         duration: 1,
         ease: 'easeInOut',

@@ -32,6 +32,7 @@ export default function PaymentList({
     sortBy,
     isDateFiltered,
     memberId,
+    category,
   } = usePaymentStore();
   const { showToast } = useToast();
 
@@ -44,8 +45,15 @@ export default function PaymentList({
     const params = new URLSearchParams({
       page: pageIndex.toString(),
       sortBy,
-      memberId: memberId.toString(),
     });
+
+    if (memberId !== 0) {
+      params.append('memberId', memberId.toString());
+    }
+
+    if (category !== '전체') {
+      params.append('category', category);
+    }
 
     // 날짜 필터가 적용된 경우에만 날짜 파라미터 추가
     if (isDateFiltered) {
@@ -61,12 +69,14 @@ export default function PaymentList({
     useSWRInfinite(
       getKey,
       async (url) => {
+        console.log('url', url);
         const response = await getSharedPayments({
           travelId,
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
           sortBy,
           ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
-          ...(memberId !== 0 && { memberId }), // 조건부로 멤버 추가
+          ...(memberId !== 0 && { memberId }),
+          ...(category !== '전체' && { category }),
         });
 
         if ('code' in response) {
@@ -144,44 +154,46 @@ export default function PaymentList({
   // 정렬이나 날짜 필터가 변경될 때 리셋
   useEffect(() => {
     setSize(1);
-  }, [sortBy, startDate, endDate, setSize]);
+  }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
   return (
     <AnimatePresence>
-      <section className={styles.paymentContainer}>
-        <motion.div
-          key="content"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {sortBy === 'latest'
-            ? // 최신순일 때는 날짜별 그룹화
-              groupPaymentsByDate(payments).map(([date, payments], index) => (
-                <div
-                  className={styles.paymentWrapper}
-                  key={`payments-${index}`}
-                >
-                  <span className={styles.date}>{date}</span>
-                  {payments.map((payment, idx) => (
-                    <Payment
-                      key={`payment-${payment.id}-${idx}`}
-                      travelId={travelId}
-                      paymentInfo={payment}
-                    />
-                  ))}
-                </div>
-              ))
-            : // 금액순일 때는 그룹화 없이 바로 렌더링
-              payments.map((payment) => (
-                <Payment
-                  key={payment.id}
-                  travelId={travelId}
-                  paymentInfo={payment}
-                />
-              ))}
-        </motion.div>
-      </section>
+      {data && !isLoading && !isValidating && (
+        <section className={styles.paymentContainer}>
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {sortBy === 'latest'
+              ? // 최신순일 때는 날짜별 그룹화
+                groupPaymentsByDate(payments).map(([date, payments], index) => (
+                  <div
+                    className={styles.paymentWrapper}
+                    key={`payments-${index}`}
+                  >
+                    <span className={styles.date}>{date}</span>
+                    {payments.map((payment, idx) => (
+                      <Payment
+                        key={`payment-${payment.id}-${idx}`}
+                        travelId={travelId}
+                        paymentInfo={payment}
+                      />
+                    ))}
+                  </div>
+                ))
+              : // 금액순일 때는 그룹화 없이 바로 렌더링
+                payments.map((payment) => (
+                  <Payment
+                    key={payment.id}
+                    travelId={travelId}
+                    paymentInfo={payment}
+                  />
+                ))}
+          </motion.div>
+        </section>
+      )}
 
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref}>

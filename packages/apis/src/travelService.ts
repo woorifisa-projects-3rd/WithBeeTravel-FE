@@ -50,5 +50,10 @@ export const editTravel = async (
 
 // 여행 멤버 불러오기
 export const getTravelMembers = async (travelId: number) => {
-  return await instance.get<TravelMember[]>(`/api/travels/${travelId}/members`);
+  return await instance.get<TravelMember[]>(
+    `/api/travels/${travelId}/members`,
+    {
+      cache: 'no-cache',
+    },
+  );
 };
