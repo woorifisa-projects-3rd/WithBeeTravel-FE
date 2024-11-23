@@ -122,7 +122,7 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            잔액 {formatNumber(accountInfo.balance)} 원
+            ₩ {formatNumber(accountInfo.balance)} 원
           </p>
         ) : (
           <p>계좌 정보를 불러오는 중입니다...</p>
@@ -166,12 +166,11 @@ export default function TransferPage() {
       {renderAccountInput()}
       {renderKeyboard()}
 
-      <div>
+      <div className={styles.buttonLocation}>
         <Button
           label="다음"
           size ='medium'
-          onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
-        />
+          onClick={handleNextClick} />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
+import { Button } from '@withbee/ui/button';
 
 interface AccountInfo {
   accountId: number;
@@ -158,7 +159,7 @@ export default function TransferDetailPage() {
       </div>
 
       <div className={styles.targetAccount}>
-        <h3>송금할 계좌</h3>
+        <h3 className={styles.text}>송금할 계좌</h3>
         <p className={styles.accountNumber}>
           {targetAccountNumber} - {targetAccount?.name} 
         </p>
@@ -186,9 +187,9 @@ export default function TransferDetailPage() {
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
-        <button className={styles.nextButton} onClick={handleSendMoney}>
-          송금하기
-        </button>
+        <div className={styles.buttonLocation}> 
+        <Button label='송금하기' size='medium'  onClick={handleSendMoney}/>
+        </div>
       )}
 
       {/* PinNumberModal 컴포넌트 호출 */}

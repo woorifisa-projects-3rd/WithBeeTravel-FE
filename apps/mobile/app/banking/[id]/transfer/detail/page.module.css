@@ -1,19 +1,6 @@
-/* 전체 컨테이너 */
 .container {
     background-color: white;
-    display: flex;
     flex-direction: column;
-  }
-  
-
-  
-  .backButton {
-    background: none;
-    border: none;
-    font-size: 24px;
-    padding: 8px;
-    margin-right: 16px;
-    cursor: pointer;
   }
   
   .header h1 {
@@ -21,44 +8,35 @@
     font-weight: 600;
   }
   
-  /* 메인 콘텐츠 */
-  .main {
-    flex: 1;
-    padding: 6px 4px;
-  }
-  
-  /* 금액 입력 영역 */
-  .amountContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
   
   .accountInfo h2 {
+    margin-top: 7%;
+    margin-bottom: 3%;
     font-size: 20px;
-    
   }
   
   .balance {
     color: #666;
     font-size: 16px;
+    margin-bottom: 3%;
+
   }
   
   .targetAccount h3 {
     font-size: 20px;
-    margin-bottom: 8px;
   }
   
   .accountNumber {
     color: #666;
     font-size: 16px;
+    margin-top: 3%;
   }
   
   .amountDisplay {
     font-size: 32px;
     font-weight: 600;
     text-align: center;
-    padding: 12px 0;
+    padding-top: 15%; 
   }
   
   .currency {
@@ -73,17 +51,17 @@
   
   /* 숫자 입력 키패드 */
   .keyboard {
+    margin-top: 7%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 1px;
   }
   
   /* 키보드 버튼 스타일 */
   .keyboardKey {
     background-color: white;
     border: none;
-    padding: 16px;
-    font-size: 24px;
+    padding: 20%;
+    font-size: 175%;
     font-weight: 500;
     cursor: pointer;
     display: flex;
@@ -94,116 +72,23 @@
   .keyboardKey:active {
     background-color: #f8f8f8;
   }
-  
-  /* 송금하기 버튼 */
-  .nextButton {
-    padding: 16px;
-    background-color: var(--color-yellow-6);
-    color: var(--color-yellow-12);
-    border: none;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 10px;
 
-    z-index: 10;
-    margin-top: 16px; /* 버튼과 키보드 사이의 공간을 추가 */
-  }
-  
-  .nextButton:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
-  /* 계좌 선택 영역 */
-  .accountSelectContainer {
-    padding: 16px;
-  }
-  
-  .accountTypeTabs {
-    display: flex;
-    gap: 8px;
-    margin: 24px 0;
-  }
-  
-  .tabButton {
-    padding: 12px 24px;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
-    background: none;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .tabButton.active {
-    background-color: #f8f8f8;
-    font-weight: 600;
-  }
-  
-  .accountSearchBar {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  
-  .searchInput {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-  
-  .cameraButton {
-    padding: 12px;
-    background: none;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .recentAccounts h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-  
-  .accountsHint {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 16px;
-  }
-  
-  .accountItem {
-    display: flex;
-    align-items: center;
-    padding: 16px 0;
-    border-bottom: 1px solid #f2f2f2;
-  }
-  
-  .accountIcon {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: #f2f2f2;
-    margin-right: 16px;
-  }
-  
-  .accountInfo {
-    flex: 1;
-  }
   
   .accountName {
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 4px;
   }
+
+.buttonLocation{
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
   
-  .starButton {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0.3;
-  }
-  
+
  
