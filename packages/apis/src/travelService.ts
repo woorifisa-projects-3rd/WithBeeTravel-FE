@@ -53,7 +53,7 @@ export const editTravel = async (
   return response;
 };
 
-// //여행 목록
+//여행 목록
 export const getTravelList = async (): Promise<
   SuccessResponse<TravelList> | ErrorResponse
 > => {
