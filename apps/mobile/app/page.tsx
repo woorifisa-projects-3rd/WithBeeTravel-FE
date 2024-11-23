@@ -1,17 +1,17 @@
 import { Button } from '@withbee/ui/button';
-import { chooseParticipants } from '@withbee/apis';
 import '@withbee/styles';
+import styles from './page.module.css';
+import { Title } from '@withbee/ui/title';
 
-export default async function Home() {
-  // const response = await chooseParticipants(1, 1, [1, 2, 3]);
-
-  // console.log(response);
-
+export default function Home() {
   return (
-    <div>
+    <div className={styles.container}>
+      <Title label="카드 혜택" />
       <h1>윗비트래블</h1>
       <div>모두들 화이팅 합시다!!</div>
-      <Button label="기모철" />
+      <div className={styles.btnWrap}>
+        <Button label="발급받기" />
+      </div>
     </div>
   );
 }

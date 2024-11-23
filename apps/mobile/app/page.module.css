@@ -1,0 +1,9 @@
+.btnWrap {
+    max-width: 430px;
+    width: 100%;
+    bottom: 100px;
+    padding: 0 25px;
+    left: 50%;
+    transform: translate(-50%);
+    position: fixed;
+}
