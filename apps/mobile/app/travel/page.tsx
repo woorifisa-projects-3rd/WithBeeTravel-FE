@@ -2,12 +2,12 @@
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
-import travelExam from '../../public/imgs/travelselect/travel_exam.png';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import useSWR from 'swr';
+import dayjs from 'dayjs';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,21 +19,19 @@ export default function page() {
   });
   const router = useRouter();
 
-  const cards = [
-    {
-      image: '/api/placeholder/400/200',
-      travelName: '호초룰루랄라',
-      date: '2024/12/24',
-    },
-    {
-      image: '/api/placeholder/400/200',
-      travelName: '진콩패키지',
-      date: '2024/12/24~2025/01/05',
-    },
-  ];
+  const { data: travelData, error } = useSWR('travelList', getTravelList);
+  if (travelData && 'data' in travelData) {
+    console.log(travelData.data);
+  }
 
-  const { data, error } = useSWR('travelList', getTravelList);
-  console.log('data', data);
+  if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
+  if (!travelData) return <p>데이터를 불러오는 중...</p>;
+
+  // if ('travelStartDate' in travelData) {
+  //   const today = dayjs();
+  //   const startDate = dayjs(travelData.travelStartDate);
+  //   const dDay = startDate.diff(today, 'day');
+  // }
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
@@ -103,30 +101,57 @@ export default function page() {
 
       {/* 생성한 그룹 나열하기 */}
       <div className={styles.cardWrap}>
-        {cards.map((card, index) => (
-          <div key={index} className={styles.card}>
-            <Image
-              src={travelExam}
-              alt={card.travelName}
-              className={styles.cardImage}
-            />
-            <div className={styles.cardContent}>
-              <div className={styles.cardText}>
+        {travelData &&
+        'data' in travelData &&
+        Array.isArray(travelData.data) ? (
+          travelData.data.map((card, index) => {
+            const today = dayjs();
+            const startDate = dayjs(card.travelStartDate);
+            const dDay = startDate.diff(today, 'day');
+
+            return (
+              <div key={index} className={styles.card}>
                 <Image
-                  src="/imgs/travelselect/travel_select_plane.png"
-                  alt="비행기 아이콘"
-                  className={styles.icon}
-                  width={50}
-                  height={50}
+                  src={
+                    card.travelMainImage
+                      ? `/${card.travelMainImage}`
+                      : '/imgs/travelselect/travel_base_mainImage.png'
+                  }
+                  alt={card.travelName}
+                  className={styles.cardImage}
+                  width={200}
+                  height={100}
                 />
-                <div className={styles.travelNameWrap}>
-                  <span>{card.travelName}</span>
-                  <span className={styles.date}>{card.date}</span>
+                <div className={styles.cardContent}>
+                  <div className={styles.cardText}>
+                    <Image
+                      src={`/${card.travelMainImage}`}
+                      alt="비행기 아이콘"
+                      className={styles.icon}
+                      width={50}
+                      height={50}
+                    />
+                    <div className={styles.travelNameWrap}>
+                      <span>{card.travelName}</span>
+                      <span className={styles.date}>
+                        {card.travelStartDate}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.cardDay}>
+                    {dDay >= 0 ? (
+                      <span>{`D-${dDay}`}</span>
+                    ) : (
+                      <span>{`D+${Math.abs(dDay)}`}</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            );
+          })
+        ) : (
+          <p>여행 목록을 불러오는 중...</p>
+        )}
       </div>
 
       {/* 초대 코드 모달 */}
