@@ -31,6 +31,8 @@
     font-size: 32px;
     font-weight: 600;
     text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
   }
   
   .currency {
@@ -46,16 +48,14 @@
   .keyboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    padding: 1px;
   }
   
   /* 키보드 버튼 스타일 */
   .keyboardKey {
     background-color: white;
     border: none;
-    padding: 16px;
-    font-size: 24px;
+    padding: 20%;
+    font-size: 175%;
     font-weight: 500;
     cursor: pointer;
     display: flex;
@@ -70,12 +70,15 @@
   .accountInfo {
     flex: 1;
   }
-  
-
-
 
   .handleSendMoney{
-   margin-top: 12px;
+    width: 100%;
+    max-width: 430px;
+    padding: 0px 25px;
+    bottom: 100px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
   }
   
  
