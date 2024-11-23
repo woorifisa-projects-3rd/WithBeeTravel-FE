@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px);
+}
+
+.optionWrapper {
+  padding-top: 30px;
+  padding-bottom: 15px;
+}
+
+.dateSelect {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.historyWrapper {
+  height: 60%; /* 부모 div 높이의 50% 설정 */
+  overflow-y: auto; /* 내부 요소가 많아질 경우 스크롤 활성화 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 100px;
+}
+
+.submitButtonWrapper {
+}

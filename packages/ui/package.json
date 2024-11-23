@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./wibee-card-payment": "./src/wibee-card-payment.tsx",
     "./payment-error-boundary": "./src/payment-error-boundary.tsx",
     "./payment-skeleton": "./src/payment-skeleton.tsx",
     "./payment-list": "./src/payment-list.tsx",
