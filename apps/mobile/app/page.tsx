@@ -83,8 +83,6 @@ export default function Home(): JSX.Element {
       <div className={styles.btnWrap}>
         <Button label="발급받기" />
       </div>
-
-      <div></div>
     </div>
   );
 }
