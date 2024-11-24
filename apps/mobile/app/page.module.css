@@ -1,3 +1,7 @@
+.container {
+    padding-bottom: 90px;
+}
+
 .btnWrap {
     max-width: 430px;
     width: 100%;
@@ -7,3 +11,38 @@
     transform: translate(-50%);
     position: fixed;
 }
+
+.withbeeCardWrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.benefitCard {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1.5px solid var(--color-gray-200);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.benefitContent {
+    flex: 1;
+}
+
+.benefitTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.benefitDesc {
+    font-size: 14px;
+    color: var(--color-gray-500);
+    line-height: 1.5;
+}
+
+.iconImg {}
