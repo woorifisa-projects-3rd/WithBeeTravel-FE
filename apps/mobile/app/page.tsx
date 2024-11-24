@@ -127,7 +127,7 @@ const CardIssuancePage = () => {
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
-              카드를 발급하고 있습니다...
+              카드를 발급하고 있습니다✈️
             </motion.p>
           </motion.div>
         )}
@@ -146,7 +146,7 @@ const CardIssuancePage = () => {
               transition={{ type: 'spring', bounce: 0.4 }}
             >
               <Image
-                src="/imgs/cardBenefits/withbee_travel_checkcard.png"
+                src="/imgs/cardBenefits/withbee_checkcard.png"
                 alt="발급된 카드"
                 fill
                 className="object-contain"
@@ -169,7 +169,7 @@ const CardIssuancePage = () => {
               친구를 초대하고 여행을 만들어보세요
             </motion.p>
             <Link href="/travel">
-              <Button label="여행 생성" />
+              <Button label="여행 생성하러 가기" className={styles.goTrip} />
             </Link>
           </motion.div>
         )}
