@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { useEffect, useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { instance } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -22,12 +23,13 @@ export default function TransferPage() {
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
 
+  const { showToast } = useToast();
   // 계좌 정보 가져오기
   useEffect(() => {
     if (accountId) {
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${accountId}/info`,
+          `/api/accounts/${accountId}/info`,
         );
         console.log(response);
 
@@ -47,7 +49,12 @@ export default function TransferPage() {
   // 계좌번호 검증 후 금액 설정 페이지로 이동
   const handleNextClick = async () => {
     if (targetAccount.length < 10) {
-      alert('계좌번호가 너무 짧아용~');
+      showToast.error({ message: '계좌번호는 10자리 이상이에요!' });
+      return;
+    }
+
+    if (targetAccount === accountInfo?.accountNumber) {
+      showToast.error({ message: '동일 계좌로는 송금 할 수 없어요.' });
       return;
     }
 
@@ -59,17 +66,16 @@ export default function TransferPage() {
     localStorage.setItem('targetAccountNumber', targetAccount);
 
     try {
-      const response = await instance.post('/accounts/verify', {
+      const response = await instance.post('/api/accounts/verify', {
         body: JSON.stringify(AccountNumberRequest),
       });
 
       // 응답 처리
 
       if (Number(response.status) === 200) {
-        alert('계좌번호가 확인 완!! 돈 보내러 가는 중~');
         router.push(`/banking/${accountId}/transfer/detail`);
       } else {
-        alert('없는 계좌 같은데??');
+        showToast.error({ message: '존재 하지 않는 계좌번호예요!' });
       }
     } catch (error) {
       console.error('계좌번호 검증 중 오류 발생:', error);
@@ -116,7 +122,7 @@ export default function TransferPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)} 원
+            ₩ {formatNumber(accountInfo.balance)} 원
           </p>
         ) : (
           <p>계좌 정보를 불러오는 중입니다...</p>
@@ -156,21 +162,14 @@ export default function TransferPage() {
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
-      {/* {accountInfo && (
-        <div className={styles.accountDetails}>
-          <div>{accountInfo.accountName}</div>
-          <div>{accountInfo.accountNumber}</div>
-          <div>{formatNumber(accountInfo.balance)} 원</div>
-        </div>
-      )} */}
 
       {renderAccountInput()}
       {renderKeyboard()}
 
-      <div className={styles.submitContainer}>
+      <div className={styles.buttonLocation}>
         <Button
           label="다음"
-          size="large"
+          size="medium"
           onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
         />
       </div>
