@@ -6,10 +6,45 @@ export const createManualSharedPayment = async (
   travelId: string,
   formData: ManualPaymentFormData,
 ) => {
+  const getPaymentDate = (date: string, time: string): string => {
+    const [amPm, hourMinute] = time.split(' ');
+
+    // 시간 형식이 잘못된 경우 처리
+    if (!hourMinute) {
+      throw new Error('Invalid time format');
+    }
+
+    const [hourStr, minuteStr] = hourMinute.split(':');
+
+    // 시간 또는 분이 없는 경우 처리
+    if (!hourStr || !minuteStr) {
+      throw new Error('Invalid time format');
+    }
+
+    let hour = parseInt(hourStr, 10);
+
+    // 오전/오후 처리
+    if (amPm === '오후' && hour !== 12) {
+      hour += 12; // 오후는 12를 더해줌
+    } else if (amPm === '오전' && hour === 12) {
+      hour = 0; // 오전 12시는 자정이므로 0으로 처리
+    }
+
+    // 결과 문자열 반환 (분은 없을 경우 "00"으로 처리)
+    console.log(
+      `${date} ${hour.toString().padStart(2, '0')}:${minuteStr.padStart(2, '0')}`,
+    );
+
+    return `${date} ${hour.toString().padStart(2, '0')}:${minuteStr.padStart(2, '0')}`;
+  };
+
   const formDataToSend = new FormData();
 
   // 필수값
-  formDataToSend.append('paymentDate', `${formData.date} ${formData.time}`);
+  formDataToSend.append(
+    'paymentDate',
+    getPaymentDate(formData.date, formData.time),
+  );
   formDataToSend.append('storeName', formData.storeName);
   formDataToSend.append('paymentAmount', formData.paymentAmount.toString());
   formDataToSend.append('currencyUnit', formData.currencyUnit);

@@ -10,8 +10,12 @@ import 'swiper/css';
 interface TimePickerModalProps {
   title: string;
   isOpen: boolean;
-  initialTime: { hour: number | undefined; minute: number | undefined };
-  onSelectTime: (time: { hour: number; minute: number }) => void;
+  initialTime: {
+    amPm: string | undefined;
+    hour: string | undefined;
+    minute: string | undefined;
+  };
+  onSelectTime: (time: { amPm: string; hour: string; minute: string }) => void;
   onClose: () => void;
 }
 
@@ -22,22 +26,51 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
   onSelectTime,
   onClose,
 }) => {
-  const [selectedHour, setSelectedHour] = useState<number>(
-    initialTime?.hour || new Date().getHours(),
+  const getHourToString = (hour: number): string => {
+    // 12시 이상일 경우, 12시간제 형식으로 변환
+    if (hour === 0) {
+      return '12'; // 자정은 12로 반환
+    }
+
+    if (hour > 12) {
+      return String(hour % 12).padStart(2, '0'); // 13시 이상은 12시간제로 변환
+    }
+
+    // 1~11시 그대로 반환, 01~11로 두 자리로 맞추기
+    return String(hour).padStart(2, '0');
+  };
+
+  const [selectAmPm, setSelectAmPm] = useState<'오전' | '오후'>(
+    initialTime?.amPm || new Date().getHours() >= 12 ? '오후' : '오전',
   );
-  const [selectedMinute, setSelectedMinute] = useState<number>(
-    initialTime?.minute || new Date().getMinutes(),
+  const [selectedHour, setSelectedHour] = useState<string>(
+    initialTime?.hour || getHourToString(new Date().getHours()),
+  );
+  const [selectedMinute, setSelectedMinute] = useState<string>(
+    initialTime?.minute || new Date().getMinutes().toString().padStart(2, '0'),
   );
 
-  const hours = Array.from({ length: 24 }, (_, i) => i); // 0 to 23 hours
-  const minutes = Array.from({ length: 60 }, (_, i) => i); // 0 to 59 minutes
+  const hours = Array.from({ length: 12 }, (_, i) =>
+    String(i + 1).padStart(2, '0'),
+  ); // 01 to 12 hours
+  const minutes = Array.from({ length: 60 }, (_, i) =>
+    String(i).padStart(2, '0'),
+  ); // 0 to 59 minutes
 
-  const handleHourChange = (newHour: number) => setSelectedHour(newHour);
-  const handleMinuteChange = (newMinute: number) =>
+  const handleAmPmChange = (newAmPm: string) => {
+    setSelectAmPm(newAmPm as '오전' | '오후');
+  };
+
+  const handleHourChange = (newHour: string) => {
+    setSelectedHour(newHour);
+  };
+  const handleMinuteChange = (newMinute: string) => {
     setSelectedMinute(newMinute);
+  };
 
   const handleSetTime = () => {
     onSelectTime({
+      amPm: selectAmPm,
       hour: selectedHour,
       minute: selectedMinute,
     });
@@ -55,9 +88,15 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
         >
           <div className={styles.pickerContainer}>
             <PickerColumn
+              items={['오전', '오후']}
+              selectedItem={selectAmPm}
+              onItemChange={(newAmPm) => handleAmPmChange(newAmPm)}
+              label="amPm"
+            />
+            <PickerColumn
               items={hours}
               selectedItem={selectedHour}
-              onItemChange={handleHourChange}
+              onItemChange={(newHour) => handleHourChange(newHour)}
               label="hour"
             />
             <PickerColumn
@@ -75,15 +114,16 @@ export const TimePickerModal: React.FC<TimePickerModalProps> = ({
 };
 
 interface PickerColumnProps {
-  items: number[];
-  selectedItem: number;
-  onItemChange: (newItem: number) => void;
-  label: 'hour' | 'minute';
+  items: string[];
+  selectedItem: string;
+  onItemChange: (newItem: string) => void;
+  label: 'hour' | 'minute' | 'amPm';
 }
 
-const timeLabelMap: Record<'hour' | 'minute', string> = {
+const timeLabelMap: Record<'hour' | 'minute' | 'amPm', string> = {
   hour: '시',
   minute: '분',
+  amPm: '',
 };
 
 const PickerColumn: React.FC<PickerColumnProps> = ({
