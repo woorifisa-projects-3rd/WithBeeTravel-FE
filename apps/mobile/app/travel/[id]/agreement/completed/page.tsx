@@ -5,6 +5,11 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+
+export default function Page({ params }: { params: Params }) {
+  const router = useRouter();
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { useRouter } from 'next/navigation';
 

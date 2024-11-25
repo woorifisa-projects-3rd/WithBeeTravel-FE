@@ -67,8 +67,11 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if (response.status == '200') {
+    if (response && 'travelId' in response) {
       router.push(`/travel/${response.travelId}`);
+    } else {
+      // 에러 처리 로직
+      console.error('Travel edit failed');
     }
   };
 

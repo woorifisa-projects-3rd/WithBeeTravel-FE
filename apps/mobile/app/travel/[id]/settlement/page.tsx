@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: Params }) {
     travelId,
   )) as SuccessResponse<SettlementDetails>;
 
-  const { myTotalPayment, myDetailPayments, others } =
+  const { myTotalPayment, disagreeCount, myDetailPayments, others } =
     response.data as SettlementDetails;
 
   return (
@@ -128,9 +128,7 @@ export default async function Page({ params }: { params: Params }) {
         </div>
         <div className={styles.remainingUsers}>
           <span>정산 완료까지 남은 인원 : </span>
-          <strong>
-            {others.filter((person) => !person.agreed).length + 1}
-          </strong>
+          <strong>{disagreeCount}</strong>
           <span>명</span>
         </div>
         <div className={styles.btnWrapper}>
