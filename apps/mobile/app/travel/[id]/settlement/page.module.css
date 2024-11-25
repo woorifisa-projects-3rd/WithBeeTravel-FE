@@ -49,7 +49,7 @@
 .summaryInfo {
   display: flex;
   justify-content: space-between;
-  width: 45%;
+  width: 50%;
   color: var(--color-gray-500);
 }
 
