@@ -174,6 +174,8 @@ export const ManualSharedPaymentForm = ({
               height={21}
             />
           </span>
+        </div>
+        {isDateModalOpen && (
           <DatePickerModal
             title="결제일자 입력"
             isOpen={isDateModalOpen}
@@ -181,7 +183,7 @@ export const ManualSharedPaymentForm = ({
             onSelectDate={handleDateSelect}
             onClose={() => setIsDateModalOpen(false)}
           />
-        </div>
+        )}
       </div>
       <div className={styles.formWrapper}>
         <span className={styles.formTitle}>결제 시간</span>
