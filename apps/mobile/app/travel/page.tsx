@@ -7,6 +7,7 @@ import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 
 export default function page() {
@@ -38,10 +39,13 @@ export default function page() {
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
     const response = await postInviteCode(inviteCode);
+    console.log(response);
 
     if ('code' in response) {
-      alert(response.message);
-      throw response; // 에러 코드가 있는 응답은 그대로 throw
+      alert(response.message || '알 수 없는 오류가 발생했습니다.');
+      throw new Error(
+        ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+      ); // 에러 코드가 있는 응답은 그대로 throw
     }
 
     // 여행 존재하면 해당 여행 홈으로 이동

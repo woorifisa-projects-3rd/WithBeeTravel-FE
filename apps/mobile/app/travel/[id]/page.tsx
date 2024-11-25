@@ -24,11 +24,9 @@ export default function Page({ params }: { params: Params }) {
   });
   const router = useRouter();
   const travelId = Number(params.id);
-  console.log(travelId);
 
   const handleGetInviteCode = async (travelId: number) => {
     const response = await getInviteCode(travelId);
-    console.log(response);
 
     if ('code' in response) {
       alert(response.message);
