@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState } from 'react';
 import { Title } from '@withbee/ui/title'; // 제목 UI
 import { Button } from '@withbee/ui/button'; // 버튼 UI
