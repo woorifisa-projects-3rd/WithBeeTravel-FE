@@ -3,7 +3,6 @@
 import React from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
-import { handleCredentialsSignin } from '../../actions/authActions';
 
 export default function Page() {
   // 회원가입 페이지

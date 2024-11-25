@@ -20,15 +20,11 @@ const fetchInstance = async <T = undefined>(
   if (options.requireAuth !== false) {
     // 기본적으로 인증이 필요하도록
     const session = await auth();
-    // console.log('session:', session);
     const accessToken = session?.user!.accessToken;
 
     if (!accessToken) {
-      // console.error('없어요 accessToken');
       throw new Error('Authentication required');
     }
-
-    // console.log('있어요 accessToken:', accessToken);
 
     headers.Authorization = `Bearer ${accessToken}`;
   }
