@@ -6,6 +6,7 @@ interface MyTotalPayment {
   totalPaymentCost: number;
   ownPaymentCost: number;
   actualBurdenCost: number;
+  agreed: boolean;
 }
 
 interface MyDetailPayment {
