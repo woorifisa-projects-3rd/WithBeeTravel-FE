@@ -1,7 +1,30 @@
 .container {
+  width: 100%;
+  height: calc(100svh - 80px);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 70px);
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox용 */
+  -ms-overflow-style: none; /* IE/Edge용 */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari용 */
+}
+
+.headerBackground {
+  width: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
+.header {
+  width: calc(100% - 50px);
 }
 
 .optionWrapper {
@@ -17,13 +40,28 @@
 }
 
 .historyWrapper {
-  height: 60%; /* 부모 div 높이의 50% 설정 */
-  overflow-y: auto; /* 내부 요소가 많아질 경우 스크롤 활성화 */
+  margin-top: 180px;
+  padding-bottom: 85px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.submitButtonBackground {
+  width: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 0px;
   padding-bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
 }
 
 .submitButtonWrapper {
+  width: calc(100% - 50px);
 }

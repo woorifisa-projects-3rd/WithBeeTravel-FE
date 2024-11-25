@@ -84,12 +84,16 @@ export default async function Page({ params }: WibeeCardProps) {
 
   return (
     <div className={styles.container}>
-      <Title label="위비 카드 결제 내역 불러오기" />
-      <div className={styles.optionWrapper}>
-        <Button label="전체 선택" size="xsmall" />
-        <div className={styles.dateSelect}>
-          <span>2024.11.21 ~ 2024.11.23</span>
-          <Item label="기간 선택" size="small" type="select" />
+      <div className={styles.headerBackground}>
+        <div className={styles.header}>
+          <Title label="위비 카드 결제 내역 불러오기" />
+          <div className={styles.optionWrapper}>
+            <Button label="전체 선택" size="xsmall" />
+            <div className={styles.dateSelect}>
+              <span>2024.11.21 ~ 2024.11.23</span>
+              <Item label="기간 선택" size="small" type="select" />
+            </div>
+          </div>
         </div>
       </div>
       <div className={styles.historyWrapper}>
@@ -97,8 +101,10 @@ export default async function Page({ params }: WibeeCardProps) {
           <WibeeCardPayment key={history.id} payment={history} />
         ))}
       </div>
-      <div className={styles.submitButtonWrapper}>
-        <Button label="선택 완료" />
+      <div className={styles.submitButtonBackground}>
+        <div className={styles.submitButtonWrapper}>
+          <Button label="선택 완료" />
+        </div>
       </div>
     </div>
   );
