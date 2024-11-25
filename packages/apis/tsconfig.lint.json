@@ -1,5 +1,5 @@
 {
-  "extends": "@withbee/typescript-config/next.json",
+  "extends": "@withbee/typescript-config/nextjs.json",
   "compilerOptions": {
     "outDir": "dist"
   },
