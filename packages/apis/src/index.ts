@@ -3,4 +3,3 @@ export * from './sharedPaymentsService';
 export * from './travelService';
 export * from './settlementService';
 export * from './inviteCode';
-
