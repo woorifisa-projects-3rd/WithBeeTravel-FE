@@ -10,13 +10,28 @@ import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { Key } from 'react';
 import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
 import { SuccessResponse } from '@withbee/types';
+import { redirect } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 export default async function Page({ params }: { params: Params }) {
   const travelId = Number(params.id);
+  const { showToast } = useToast();
 
   const response = (await getSettlementDetails(
     travelId,
   )) as SuccessResponse<SettlementDetails>;
+
+  if ('code' in response) {
+    if (response.code === 'SETTLEMENT-002') {
+      redirect(`/travel/${travelId}/agreement/pending?error=${response.code}`);
+    } else {
+      showToast.error({
+        message: ERROR_MESSAGES['COMMON'],
+      });
+      return;
+    }
+  }
 
   const { myTotalPayment, disagreeCount, myDetailPayments, others } =
     response.data as SettlementDetails;
