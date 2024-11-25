@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
