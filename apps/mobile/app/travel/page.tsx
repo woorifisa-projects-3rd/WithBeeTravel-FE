@@ -3,13 +3,21 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import travelExam from '../../public/imgs/travelselect/travel_exam.png';
-import { Modal } from '@withbee/ui/modal';
+import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { postInviteCode, getTravelList } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
+import useSWR from 'swr';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
-  const [code, setCode] = useState('');
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    title: '초대 코드를 입력하세요.',
+    closeLabel: '입력 완료',
+    subtitle: '초대 코드를 입력하여 그룹에 가입하세요.',
+  });
   const router = useRouter();
 
   const cards = [
@@ -25,19 +33,24 @@ export default function page() {
     },
   ];
 
-  // 초대코드에 맞는 그룹으로 이동하는 함수
-  const handleInviteCodeSubmit = () => {
-    // 여기서 초대 코드로 그룹을 찾는 로직을 구현
-    // 예를 들어, 입력된 초대 코드가 특정 그룹 ID와 일치한다고 가정할 수 있습니다.
+  const { data, error } = useSWR('travelList', getTravelList);
+  console.log('data', data);
 
-    // 그룹 ID가 일치하는지 확인 (실제 상황에서는 서버에서 그룹을 조회해야 할 수도 있습니다)
-    // const group = cards.find((card) => card.groupId === code);
+  // 초대코드에 맞는 여행 홈으로 이동
+  const handleInviteCodeSubmit = async (inviteCode: string) => {
+    const response = await postInviteCode(inviteCode);
+    console.log(response);
 
-    if (true) {
-      // 그룹이 존재하면 해당 그룹의 홈으로 이동
-      router.push(`/travel/1`);
-    } else {
-      alert('잘못된 초대 코드입니다.');
+    if ('code' in response) {
+      alert(response.message || '알 수 없는 오류가 발생했습니다.');
+      throw new Error(
+        ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+      ); // 에러 코드가 있는 응답은 그대로 throw
+    }
+
+    // 여행 존재하면 해당 여행 홈으로 이동
+    if ('data' in response && response.data) {
+      router.push(`/travel/${response.data.travelId}`);
     }
   };
 
@@ -71,6 +84,7 @@ export default function page() {
               className={styles.icon}
               width={50}
               height={50}
+              layout="intrinsic"
             />
           </div>
         </button>
@@ -85,6 +99,7 @@ export default function page() {
               className={styles.icon}
               width={50}
               height={50}
+              layout="intrinsic"
             />
           </div>
         </button>
@@ -118,26 +133,13 @@ export default function page() {
         ))}
       </div>
 
-      {/* 모달 */}
-      <Modal
+      {/* 초대 코드 모달 */}
+      <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="초대코드를 입력해주세요."
-        closeLabel="입력 완료"
         onSubmit={handleInviteCodeSubmit}
-      >
-        <p className={styles.subtitle}>
-          초대 코드를 입력하여 그룹에 가입하세요.
-        </p>
-        <input
-          id="inviteCode"
-          type="text"
-          className={styles.input}
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="초대코드"
-        />
-      </Modal>
+        modalState={modalState}
+      />
     </div>
   );
 }

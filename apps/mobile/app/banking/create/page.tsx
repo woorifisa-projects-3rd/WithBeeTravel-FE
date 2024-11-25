@@ -5,6 +5,8 @@ import { Button } from '@withbee/ui/button'; // 버튼 UI
 import styles from './page.module.css'; // CSS 모듈
 import { instance } from '@withbee/apis'; // API 요청을 위한 instance
 import { useRouter } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
+import PinNumberModal from '../../../components/PinNumberModal';
 
 interface ProductOption {
   label: string;
@@ -17,6 +19,9 @@ export default function CreateAccountPage() {
   const [selectedProduct, setSelectedProduct] = useState<string>(''); // 선택된 계좌 유형
   const [errorMessage, setErrorMessage] = useState<string>(''); // 에러 메시지 상태
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
+
+  const { showToast } = useToast();
   // Product 목록
   const productOptions = [
     'WON통장',
@@ -39,12 +44,12 @@ export default function CreateAccountPage() {
     };
 
     try {
-      const response = await instance.post('/accounts', {
+      const response = await instance.post('/api/accounts', {
         body: JSON.stringify(CreateAccount),
       });
 
       if (Number(response.status) === 201) {
-        alert('계좌 생성 완료');
+        showToast.success({ message: '계좌 생성 완료!' });
         router.push('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
@@ -62,8 +67,14 @@ export default function CreateAccountPage() {
       {/* 계좌 유형 선택 */}
       <div className={styles.formSection}>
         <label htmlFor="product" className={styles.label}>
-          계좌 유형 선택
+          어떤 계좌를 만들까요?
         </label>
+        <img
+          src="/imgs/friends/agreeWibee.png"
+          alt="계좌 유형 이미지"
+          className={styles.image}
+        />
+
         <select
           id="product"
           value={selectedProduct}
@@ -82,14 +93,21 @@ export default function CreateAccountPage() {
       {/* 에러 메시지 */}
       {errorMessage && <div className={styles.error}>{errorMessage}</div>}
 
-      {/* 계좌 생성 버튼 */}
-      <div className={styles.formSection}>
-        <Button
-          label="계좌 생성하기"
-          onClick={handleCreateAccount}
-          size="medium"
-        />
-      </div>
+      {/* 계좌 생성 버튼 (선택된 계좌가 있을 때만 버튼 표시) */}
+      {selectedProduct && (
+        <div className={styles.formSection}>
+          <Button
+            label="계좌 생성하기"
+            onClick={() => setIsModalOpen(true)}
+            size="medium"
+          />
+        </div>
+      )}
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // 모달 닫기
+        onSubmit={handleCreateAccount} // PIN 입력 후 제출 처리
+      />
     </div>
   );
 }

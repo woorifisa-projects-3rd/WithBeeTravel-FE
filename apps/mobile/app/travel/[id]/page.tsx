@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import styles from './page.module.css';
@@ -8,9 +9,41 @@ import Image from 'next/image';
 import { BarChart } from '@withbee/ui/chart';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { InviteCodeModal } from '../../../components/InviteCodeModal';
+import { getInviteCode } from '@withbee/apis';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
-export default function Page() {
+export default function Page({ params }: { params: Params }) {
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    title: '초대 코드를 공유하세요.',
+    closeLabel: '닫기',
+    subtitle: '초대 코드를 복사하여 친구를 초대하세요.',
+    isCopyMode: false,
+    inviteCode: '',
+  });
   const router = useRouter();
+  const travelId = Number(params.id);
+
+  const handleGetInviteCode = async (travelId: number) => {
+    const response = await getInviteCode(travelId);
+
+    if ('code' in response) {
+      alert(response.message);
+      throw response; // 에러 코드가 있는 응답은 그대로 throw
+    }
+
+    if ('data' in response && response.data) {
+      // 초대 코드 처리 로직
+      setModalState((prevState) => ({
+        ...prevState,
+        isOpen: true,
+        isCopyMode: true, // 복사 모드 활성화
+        inviteCode: response.data!.inviteCode,
+      }));
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
@@ -43,8 +76,18 @@ export default function Page() {
         <Link href="/travel/1/payments">
           <Button label="그룹 결제 내역" />
         </Link>
-        <Button label="친구 초대" primary={false} />
+        <Button
+          label="친구 초대"
+          primary={false}
+          onClick={() => handleGetInviteCode(travelId)}
+        />
       </div>
+
+      <InviteCodeModal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ ...modalState, isOpen: false })}
+        modalState={modalState}
+      />
       <BarChart />
     </div>
   );
