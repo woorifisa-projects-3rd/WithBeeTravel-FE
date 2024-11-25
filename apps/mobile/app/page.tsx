@@ -135,8 +135,8 @@ const CardIssuancePage = () => {
                   <img
                     src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Honeybee.png"
                     alt="Honeybee"
-                    width="60"
-                    height="60"
+                    width="55"
+                    height="50"
                     className="object-contain"
                   />
                 </div>
@@ -153,8 +153,14 @@ const CardIssuancePage = () => {
             <motion.p
               className={styles.processingText2}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
+              animate={{ opacity: [0, 1, 0] }} // opacity를 0과 1 사이로 애니메이션
+              transition={{
+                delay: 0.3,
+                duration: 1.5, // 깜빡이는 속도 (1초 간격으로 깜빡임)
+                repeat: Infinity, // 반복
+                repeatType: 'loop', // 루프 설정
+                ease: 'easeInOut', // 부드러운 애니메이션
+              }}
             >
               조금만 기다려주세요.
             </motion.p>
@@ -169,9 +175,16 @@ const CardIssuancePage = () => {
           >
             <motion.div
               className={styles.completeCard}
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ type: 'spring', bounce: 0.4 }}
+              initial={{ y: 20, rotateY: 0 }} // 초기 상태: 아래에 위치, 회전 없음
+              animate={{ y: 0, rotateY: [0, 180, 270, 360] }} // keyframes로 회전 각도 설정
+              transition={{
+                type: 'spring',
+                stiffness: 100, // 스프링 강도
+                damping: 12, // 감쇠 설정으로 부드럽게
+                times: [0, 0.4, 0.6, 1], // 각 단계의 시간 분배
+                duration: 2.5, // 전체 애니메이션 시간
+              }}
+              style={{ perspective: 1000 }} // 3D 효과를 위한 원근감 추가
             >
               <Image
                 src="/imgs/cardBenefits/withbee_checkcard.png"
