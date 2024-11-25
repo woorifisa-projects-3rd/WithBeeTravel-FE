@@ -54,7 +54,7 @@ export default function TransferPage() {
     }
 
     if (targetAccount === accountInfo?.accountNumber) {
-      showToast.error({ message: '동일 계좌로는 송금 할 수 없어요' });
+      showToast.error({ message: '동일 계좌로는 송금 할 수 없어요.' });
       return;
     }
 
@@ -75,7 +75,7 @@ export default function TransferPage() {
       if (Number(response.status) === 200) {
         router.push(`/banking/${accountId}/transfer/detail`);
       } else {
-        showToast.error({ message: '존재 하지 않는 계좌번호에요!' });
+        showToast.error({ message: '존재 하지 않는 계좌번호예요!' });
       }
     } catch (error) {
       console.error('계좌번호 검증 중 오류 발생:', error);

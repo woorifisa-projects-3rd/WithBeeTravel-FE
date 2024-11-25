@@ -43,13 +43,13 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
         if ('data' in response) {
           if (response.data?.failedPinCount !== 0) {
             setError(
-              `5회 틀릴 시 Pin번호 재설정 필요. ${response.data?.failedPinCount}/5`,
+              `5회 이상 잘못 입력 시 재설정 필요 ${response.data?.failedPinCount}/5`,
             );
           }
           setFailCnt(response.data?.failedPinCount);
         } else {
           showToast.error({
-            message: '핀번호 5회 이상 틀렸습니다.\n핀번호 재설정 후 이용 가능!',
+            message: 'PIN 번호를 5회 이상 잘못 입력하셨습니다. PIN 번호를 재설정한 후 이용 가능합니다.',
           });
           onClose();
         }
@@ -73,7 +73,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
       onClose(); // 모달 닫기
     } else {
       setFailCnt(Number(failCnt) + 1);
-      setError(`5회 틀릴 시 Pin번호 재설정 필요. ${Number(failCnt) + 1}/5`);
+      setError(`5회 이상 잘못 입력 시 재설정 필요 ${Number(failCnt) + 1}/5`);
       setTimeout(() => {
         setPin(''); // PIN을 초기화
       }, 500); // 500ms 후에 PIN과 에러 메시지 초기화

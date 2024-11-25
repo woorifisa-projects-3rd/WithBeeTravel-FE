@@ -111,7 +111,7 @@ export default function AccountPage() {
               <div className={styles.productName}>{accountInfo.product}</div>
               <div className={styles.addHistory}>
                 <Button
-                  className={styles.greyButton}
+                  primary={false}
                   label="+ 내역"
                   size="xsmall"
                   onClick={() => router.push(`/banking/${id}/payment`)}
@@ -128,7 +128,7 @@ export default function AccountPage() {
             </div>
             <div className={styles.default}>
               <Button
-                className={styles.greyButton}
+                primary={false}
                 label="입금"
                 size={'medium'}
                 onClick={() => router.push(`/banking/${id}/deposit`)}
