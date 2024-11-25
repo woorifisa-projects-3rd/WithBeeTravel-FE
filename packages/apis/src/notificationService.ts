@@ -16,6 +16,8 @@ export interface Notifications {
 export const getNotifications = async (): Promise<
   SuccessResponse<Notifications> | ErrorResponse
 > => {
-  const response = instance.get<Notifications>(`/api/notifications`);
+  const response = instance.get<Notifications>(`/api/notifications`, {
+    cache: 'no-store',
+  });
   return response;
 };
