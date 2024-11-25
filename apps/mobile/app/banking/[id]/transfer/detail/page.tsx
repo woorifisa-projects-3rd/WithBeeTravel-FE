@@ -130,7 +130,7 @@ export default function TransferDetailPage() {
 
     try {
       const response = await instance.post(
-        `/accounts/${myAccountId}/transfer`,
+        `/api/accounts/${myAccountId}/transfer`,
         { body: JSON.stringify(transferRequest) },
       );
 
@@ -142,7 +142,7 @@ export default function TransferDetailPage() {
       router.push('/banking/');
     } catch (error) {
       console.error('송금 오류:', error);
-      showToast.error({ message: '송금 중 오류 발생' });
+      showToast.error({ message: `${error}` });
     } finally {
       setIsModalOpen(false); // 송금 후 모달 닫기
     }
