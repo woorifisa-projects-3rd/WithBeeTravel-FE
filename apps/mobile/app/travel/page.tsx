@@ -33,7 +33,6 @@ export default function page() {
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
     const response = await postInviteCode(inviteCode);
-    console.log(response);
 
     if ('code' in response) {
       alert(response.message || '알 수 없는 오류가 발생했습니다.');

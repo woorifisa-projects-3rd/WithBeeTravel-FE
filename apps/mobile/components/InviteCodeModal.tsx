@@ -40,6 +40,7 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     if (onSubmit) {
       onSubmit(inputValue);
     }
+    onClose();
   };
 
   const handleCopy = async () => {

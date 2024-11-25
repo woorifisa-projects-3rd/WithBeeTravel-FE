@@ -3,12 +3,34 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@withbee/ui/button';
 import { Title } from '@withbee/ui/title';
+import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
 
+interface Account {
+  id: number;
+  bankName: string;
+  accountNumber: string;
+}
+
+const dummyAccounts: Account[] = [
+  {
+    id: 1,
+    bankName: 'Withbee Bank',
+    accountNumber: '123-456-789',
+  },
+  {
+    id: 2,
+    bankName: 'Another Bank',
+    accountNumber: '987-654-321',
+  },
+];
+
 const CardIssuancePage = () => {
   const [issuanceState, setIssuanceState] = useState('initial');
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
 
   const handleIssuance = () => {
     setIssuanceState('processing');
@@ -16,6 +38,28 @@ const CardIssuancePage = () => {
       setIssuanceState('complete');
     }, 7000);
   };
+
+  const handleAccountSelection = (account: Account) => {
+    if (selectedAccount?.id === account.id) {
+      setSelectedAccount(null);
+    } else {
+      setSelectedAccount(account);
+    }
+  };
+
+  const handleTravel = () => {
+    if (selectedAccount) {
+      // 선택된 계좌를 백엔드에 전달
+      console.log('선택된 계좌:', selectedAccount);
+      // 예: API 호출 및 여행 페이지로 이동
+      alert(`계좌 ${selectedAccount.accountNumber}로 연결합니다.`);
+      setIsOpen(false); // 모달 닫기
+      window.location.href = '/travel'; // 여행 선택 페이지로 이동
+    } else {
+      alert('계좌를 선택해주세요.');
+    }
+  };
+
   const rotationDuration = 2.8;
   const circleSegments = Array.from({ length: 25 }, (_, i) => i);
 
@@ -86,9 +130,9 @@ const CardIssuancePage = () => {
 
             <div className={styles.btnWrap}>
               <Button label="발급받기" onClick={handleIssuance} />
-              <button className={styles.skipText}>
+              <div className={styles.skipText} onClick={() => setIsOpen(true)}>
                 카드 발급 없이 참가하기
-              </button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -221,6 +265,47 @@ const CardIssuancePage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="여행에 연결할 계좌를 선택해주세요."
+        closeLabel="선택 완료"
+        onSubmit={handleTravel}
+      >
+        <div className={styles.accountList}>
+          {dummyAccounts.map((account) => (
+            <div
+              key={account.id}
+              className={`${styles.accountItem} ${
+                selectedAccount?.id === account.id ? styles.selected : ''
+              }`}
+              onClick={() => handleAccountSelection(account)}
+            >
+              <div className={styles.accountInfo}>
+                <p className={styles.accountNumber}>{account.accountNumber}</p>
+                <p className={styles.bankName}>{account.bankName}</p>
+              </div>
+              {selectedAccount?.id === account.id ? (
+                <Image
+                  src="/check.png"
+                  alt="select"
+                  width={30}
+                  height={30}
+                  className={styles.selectIcon}
+                />
+              ) : (
+                <Image
+                  src="/uncheck.png"
+                  alt="not select"
+                  width={30}
+                  height={30}
+                  className={styles.notSelectIcon}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 };
