@@ -35,40 +35,51 @@ export default function AccountPage() {
 
   const [histories, setHistories] = useState<AccountHistory[] | undefined>([]);
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [error, setError] = useState<boolean>(false); // 에러 상태 추가
 
   useEffect(() => {
     if (id) {
-      // 계좌 정보 가져오기
+      const fetchData = async () => {
+        try {
+          // 계좌 정보 가져오기
+          const responseInfo = await instance.get<AccountInfo>(`/api/accounts/${id}/info`);
+          if (Number(responseInfo.status) !== 200) {
+            setError(true);
+            router.push('/mypage'); // 오류 발생 시 리디렉션
+            return;
+          }
+          if ('data' in responseInfo) {
+            setAccountInfo(responseInfo.data);
+          }
 
-      (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${id}/info`,
-        );
-        console.log(response);
+          // 거래 내역 가져오기
+          const responseHistory = await instance.get<AccountHistory[]>(`/api/accounts/${id}`);
+          if (Number(responseHistory.status) !== 200) {
+            setError(true);
+            router.push('/mypage'); // 오류 발생 시 리디렉션
+            return;
+          }
+          if ('data' in responseHistory) {
+            setHistories(responseHistory.data);
+          }
 
-        if ('data' in response) {
-          setAccountInfo(response.data);
-        } else {
-          console.error(response.message);
+        } catch (err) {
+          setError(true);
+          router.push('/mypage'); // 오류 발생 시 리디렉션
+        } finally {
+          setLoading(false); // 데이터 가져오기가 끝났으면 로딩 상태를 false로 변경
         }
-      })();
+      };
 
-      // 거래 내역 가져오기
-      (async () => {
-        const response = await instance.get<AccountHistory[]>(
-          `/api/accounts/${id}`,
-        );
-        console.log('상세 내역: ', response);
-
-        if ('data' in response) {
-          setHistories(response.data);
-        } // 거래 내역 업데이트
-        else {
-          console.error(response.message);
-        }
-      })();
+      fetchData();
     }
-  }, []);
+  }, [id]);
+
+  // 로딩 중이거나 오류가 발생한 경우 렌더링을 하지 않음
+  if (loading || error) {
+    return null;
+  }
 
   const formatNumber = (num: number | null | undefined): string => {
     if (num == null) return '0'; // null 또는 undefined 처리
