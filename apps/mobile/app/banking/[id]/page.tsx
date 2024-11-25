@@ -42,7 +42,7 @@ export default function AccountPage() {
 
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${id}/info`,
+          `/api/accounts/${id}/info`,
         );
         console.log(response);
 
@@ -56,7 +56,7 @@ export default function AccountPage() {
       // 거래 내역 가져오기
       (async () => {
         const response = await instance.get<AccountHistory[]>(
-          `/accounts/${id}`,
+          `/api/accounts/${id}`,
         );
         console.log('상세 내역: ', response);
 
@@ -91,7 +91,7 @@ export default function AccountPage() {
 
   const handleTransferClick = async () => {
     const response =
-      await instance.get<PinNumberResponse>('/verify/user-state');
+      await instance.get<PinNumberResponse>('/api/verify/user-state');
     if (Number(response.status) != 200) {
       alert('핀번호 재 설정 후 이용 가능');
       return;

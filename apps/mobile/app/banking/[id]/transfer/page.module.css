@@ -31,7 +31,7 @@
   
   /* 숫자 입력 키패드 */
   .keyboard {
-    margin-top: 7%;
+    margin-top: 17%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
@@ -75,7 +75,7 @@
   width: 100%;
   max-width: 430px;
   padding: 0px 25px;
-  bottom: 100px;
+  bottom: 50px;
   position: fixed;
   left: 50%;
   transform: translate(-50%);

@@ -28,7 +28,7 @@ export default function BankingPage() {
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      const response = await instance.get<AccountInfo[]>(`/accounts`);
+      const response = await instance.get<AccountInfo[]>(`/api/accounts`);
 
       if ('data' in response) {
         setAccounts(response.data);
@@ -58,7 +58,7 @@ export default function BankingPage() {
     event.stopPropagation();
 
     const response =
-      await instance.get<PinNumberResponse>('/verify/user-state');
+      await instance.get<PinNumberResponse>('/api/verify/user-state');
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
@@ -69,7 +69,7 @@ export default function BankingPage() {
 
   const createAccountHandle = async () => {
     const response =
-      await instance.get<PinNumberResponse>('/verify/user-state');
+      await instance.get<PinNumberResponse>('/api/verify/user-state');
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
