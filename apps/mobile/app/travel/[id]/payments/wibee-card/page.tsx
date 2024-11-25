@@ -8,6 +8,7 @@ import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import { useToast } from '@withbee/hooks/useToast';
 import { useState, useEffect } from 'react';
+import { BottomModal } from '@withbee/ui/modal';
 // import DatePickerModal from '@withbee/ui/date-picker-modal';
 
 interface WibeeCardProps {
@@ -16,7 +17,7 @@ interface WibeeCardProps {
   };
 }
 
-export default async function Page({ params }: WibeeCardProps) {
+export default function Page({ params }: WibeeCardProps) {
   const { id } = params;
   // const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const response: {
@@ -108,14 +109,11 @@ export default async function Page({ params }: WibeeCardProps) {
           : [...prevIds, id], // 선택되지 않은 경우 추가
     );
   };
-
-  useEffect(() => {
-    console.log(selectedHistoryIds);
-  }, [selectedHistoryIds]);
-
   const alreadyAddedError = (id: number): void => {
     showToast.info({ message: `이미 추가된 결제 내역입니다.` });
   };
+
+  const [isDateModalOpen, setIsDateModalOpen] = useState<boolean>(false);
 
   return (
     <div className={styles.container}>
@@ -126,11 +124,76 @@ export default async function Page({ params }: WibeeCardProps) {
             <Button label="전체 선택" size="xsmall" />
             <div className={styles.dateSelect}>
               <span>2024.11.21 ~ 2024.11.23</span>
-              <Item label="기간 선택" size="small" type="select" />
+              <Item
+                label="기간 선택"
+                size="small"
+                type="select"
+                onClick={() => setIsDateModalOpen(true)}
+              />
             </div>
           </div>
         </div>
       </div>
+      {isDateModalOpen && (
+        <BottomModal
+          isOpen={isDateModalOpen}
+          onClose={() => setIsDateModalOpen(false)}
+          title="날짜 선택"
+        >
+          <div className={styles.dateModalGroup}>
+            {/* <div className={styles.dateInput}>
+              <span>시작일</span>
+              <div
+                className={styles.customDateModalInput}
+                onClick={() => setIsStartDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelStartDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+                <DatePickerModal
+                  title="시작일"
+                  isOpen={isStartDateModalOpen}
+                  initialDate={getDateObject(formData.travelStartDate)}
+                  onSelectDate={handleDateSelect('start')}
+                  onClose={() => setIsStartDateModalOpen(false)}
+                />
+              </div>
+            </div>
+            <div className={styles.dateInput}>
+              <span>종료일</span>
+              <div
+                className={styles.customDateInput}
+                onClick={() => setIsEndDateModalOpen(true)}
+              >
+                <p className={styles.date}>{formData.travelEndDate}</p>
+                <span className={styles.customIcon}>
+                  <Image
+                    src="/imgs/travelform/cal.png"
+                    alt="달력 아이콘"
+                    className={styles.cal}
+                    width={21}
+                    height={21}
+                  />
+                </span>
+              </div>
+              <DatePickerModal
+                title="종료일"
+                isOpen={isEndDateModalOpen}
+                initialDate={getDateObject(formData.travelEndDate)}
+                onSelectDate={handleDateSelect('end')}
+                onClose={() => setIsEndDateModalOpen(false)}
+              />
+            </div> */}
+          </div>
+        </BottomModal>
+      )}
 
       <div className={styles.historyWrapper}>
         {initialData?.map((history) => (
@@ -139,8 +202,8 @@ export default async function Page({ params }: WibeeCardProps) {
             payment={history}
             handleSelectHistory={
               history.isAddedSharedPayment
-                ? handleSelectHistories
-                : alreadyAddedError
+                ? alreadyAddedError
+                : handleSelectHistories
             }
           />
         ))}

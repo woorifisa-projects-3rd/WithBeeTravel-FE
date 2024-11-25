@@ -18,10 +18,14 @@ export default function WibeeCardPayment({
 }: WibeeCardProps) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
+  const handleSelected = (id: number) => {
+    setIsSelected(!isSelected);
+    handleSelectHistory(id);
+  };
   return (
     <div
-      className={`${styles.container} ${payment.isAddedSharedPayment ? '' : styles.isAlreadyAdded}`}
-      onClick={() => handleSelectHistory(payment.id)}
+      className={`${styles.container} ${payment.isAddedSharedPayment ? styles.isAlreadyAdded : ''}`}
+      onClick={() => handleSelected(payment.id)}
     >
       <div className={styles.info}>
         <span className={styles.date}>
@@ -33,7 +37,7 @@ export default function WibeeCardPayment({
         <span className={styles.storeName}>{payment.storeName}</span>
       </div>
       <div className={styles.check}>
-        {isSelected ? (
+        {!payment.isAddedSharedPayment && isSelected ? (
           <Image
             src={selectIcon}
             alt="select"
