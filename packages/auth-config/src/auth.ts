@@ -1,6 +1,6 @@
 import NextAuth, { User } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { refresh, login } from '@withbee/apis';
+import { refresh, login } from './instance';
 import { JWT } from 'next-auth/jwt';
 
 // 59분
