@@ -49,7 +49,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
           setFailCnt(response.data?.failedPinCount);
         } else {
           showToast.error({
-            message: 'PIN 번호를 5회 이상 잘못 입력하셨습니다. PIN 번호를 재설정한 후 이용 가능합니다.',
+            message:
+              'PIN 번호를 5회 이상 잘못 입력하셨습니다. PIN 번호를 재설정한 후 이용 가능합니다.',
           });
           onClose();
         }
