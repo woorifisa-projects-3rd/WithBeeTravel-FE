@@ -4,6 +4,8 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import { Button } from '@withbee/ui/button';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -20,6 +22,7 @@ export default function DepositPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(); // 내 계좌 정보 상태
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
+  const { showToast } = useToast();
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
@@ -50,11 +53,10 @@ export default function DepositPage() {
   // 송금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
     if (!amount || amount == '0') {
-      alert('금액을 입력해주세요!');
+      showToast.error({ message: '0원은 입금 할 수 없어요' });
       return;
     }
 
-    alert(`₩${amount}를 입금합니다.`);
     // 입금 로직 api
     const DepositRequest = {
       amount: amount,
@@ -64,8 +66,9 @@ export default function DepositPage() {
       const response = await instance.post(`/accounts/${myAccountId}/deposit`, {
         body: JSON.stringify(DepositRequest),
       });
-      console.log('호초루: ', response);
-      alert('입금 완료');
+      showToast.success({
+        message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
+      });
       // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);
 
@@ -130,11 +133,9 @@ export default function DepositPage() {
 
       <div className={styles.actions}>{renderKeyboard()}</div>
 
-      {amount && (
-        <button className={styles.nextButton} onClick={handleSendMoney}>
-          입금하기
-        </button>
-      )}
+      <div className={styles.handleSendMoney}>
+        {amount && <Button label="입금하기" onClick={handleSendMoney} />}
+      </div>
     </div>
   );
 }

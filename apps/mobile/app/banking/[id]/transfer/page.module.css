@@ -1,72 +1,55 @@
-/* 전체 컨테이너 */
+
 .container {
-    min-height: 100vh;
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 80px; /* 버튼과 키보드 간 간격 */
+    flex-direction: coumn;
   }
   
   /* 내 계좌 정보 */
   .accountInfo h2 {
+    margin-top: 7%;
+    margin-bottom: 3%;
     font-size: 20px;
-    margin-bottom: 8px;
   }
   
   .balance {
     color: #666;
     font-size: 16px;
+    margin-bottom: 3%;
   }
   
   /* 송금할 계좌 입력 폼 */
   .targetAccount h3 {
     font-size: 20px;
-    margin-bottom: 8px;
   }
   
   .input {
     width: 100%;
-    padding: 12px;
     border: 1px solid #e8e8e8;
-    border-radius: 8px;
     font-size: 16px;
     margin-bottom: 16px;
   }
   
   /* 숫자 입력 키패드 */
   .keyboard {
+    margin-top: 7%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background-color: #f2f2f2;
-    padding: 1px;
   }
   
   .keyboardKey {
     background-color: white;
     border: none;
-    padding: 20px;
-    font-size: 24px;
+    padding: 20%;
+    font-size: 175%;
     font-weight: 500;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .keyboardKey:active {
     background-color: #f8f8f8;
-  }
-  
-  /* 송금하기 버튼 */
-  .submitContainer {
-    padding-top: 16px;
-    text-align: center;
-  }
-  
-  .submitContainer button {
-    margin-top: 16px;
-  }
-
-  .text{
-    padding-bottom: 15px;
   }
 
   /* 계좌번호 입력란 레이블 스타일 */
@@ -87,3 +70,14 @@
   outline: none;
   padding: 8px 0;
 }
+
+.buttonLocation{
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+

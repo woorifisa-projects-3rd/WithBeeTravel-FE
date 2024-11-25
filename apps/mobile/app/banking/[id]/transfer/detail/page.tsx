@@ -4,6 +4,9 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import PinNumberModal from '../../../../../components/PinNumberModal';
+import { useToast } from '@withbee/hooks/useToast';
+import { Button } from '@withbee/ui/button';
 
 interface AccountInfo {
   accountId: number;
@@ -17,6 +20,7 @@ interface TargetName {
 }
 
 export default function TransferDetailPage() {
+  const MAX_AMOUNT = 500000000;
   const router = useRouter();
   const params = useParams();
   const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
@@ -29,7 +33,9 @@ export default function TransferDetailPage() {
   );
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
+  const { showToast } = useToast();
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,17 +63,14 @@ export default function TransferDetailPage() {
   // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {
     if (targetAccountNumber) {
-      const AccountNumberRequest = {
-        accountNumber: targetAccountNumber,
-      };
+      const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
         const response = await instance.post<TargetName>(
-          `/accounts/find-user`,
+          '/accounts/find-user',
           {
             body: JSON.stringify(AccountNumberRequest),
           },
         );
-        console.log(response);
         if ('data' in response) {
           setTargetAccount(response.data);
         } else {
@@ -82,52 +85,66 @@ export default function TransferDetailPage() {
     if (num === 'backspace') {
       setAmount((prev) => prev.slice(0, -1)); // 마지막 문자 제거
     } else {
-      setAmount((prev) => prev + num); // 숫자 추가
+      // 새로운 금액을 계산하기 전, 현재 금액에 num을 추가해본 후, 5억을 초과하는지 확인
+      const newAmount = amount + num;
+      if (parseInt(newAmount) > MAX_AMOUNT) {
+        showToast.error({ message: '1회 최대 이체 한도는 5억원 입니다!' });
+        return; // 5억 원 이상은 입력되지 않도록 함
+      }
+      setAmount(newAmount); // 5억 미만일 경우 정상적으로 금액을 추가
     }
   };
 
   // 송금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
-    if (!amount || amount == '0') {
-      alert('금액을 입력해주세요!');
-      return;
-    }
-    if (accountInfo !== null && parseInt(amount) >= accountInfo!.balance) {
-      // accountInfo가 null일 수도 있어서
-      alert('아니 돈도 없으면서 송금을 하시겠다??');
-      return;
-    }
-    if (targetAccount == undefined) {
-      console.error('계좌번호 오류');
+    // 금액 유효성 검사
+    if (!amount || amount === '0') {
+      showToast.error({ message: '0원은 송금할 수 없어요!' });
       return;
     }
 
-    alert(`${targetAccount.name}님에게 ₩${amount}를 송금합니다.`);
+    // 잔액 검증
+    if (accountInfo && parseInt(amount) > accountInfo.balance) {
+      showToast.error({ message: '잔액이 부족해요!' });
+      return;
+    }
 
-    const TransferRequest = {
+    // 타겟 계좌 정보가 없을 때
+    if (!targetAccount) {
+      alert('타겟 계좌 정보가 잘못되었습니다.');
+      return;
+    }
+
+    // 모달 열기
+    setIsModalOpen(true);
+  };
+
+  // PIN 번호 제출 처리
+  const handlePinSubmit = async (pin: string) => {
+    const transferRequest = {
       accountId: myAccountId,
       amount: amount,
       accountNumber: targetAccountNumber,
-      rqspeNm: targetAccount.name,
+      rqspeNm: targetAccount?.name,
     };
 
     try {
       const response = await instance.post(
         `/accounts/${myAccountId}/transfer`,
-        {
-          body: JSON.stringify(TransferRequest),
-        },
+        { body: JSON.stringify(transferRequest) },
       );
 
-      alert('송금 완료');
-      // 송금 완료되면 페이지 이동되야됨
-      router.push(`/banking/`);
+      showToast.success({
+        message: `${targetAccount?.name}님이게
+        \n${transferRequest.amount}원 송금 완료`,
+      });
 
-      return;
+      router.push('/banking/');
     } catch (error) {
-      console.error('오류: ', error);
-
-      alert('송금 중 오류 발생');
+      console.error('송금 오류:', error);
+      showToast.error({ message: '송금 중 오류 발생' });
+    } finally {
+      setIsModalOpen(false); // 송금 후 모달 닫기
     }
   };
 
@@ -153,8 +170,7 @@ export default function TransferDetailPage() {
         <h2>내 계좌</h2>
         {accountInfo ? (
           <p className={styles.balance}>
-            {accountInfo.product} ({accountInfo.accountNumber}) - ₩
-            {accountInfo.balance.toLocaleString()}
+            ₩{accountInfo.balance.toLocaleString()}원
           </p>
         ) : (
           <p>내 계좌 정보를 불러오는 중...</p>
@@ -162,9 +178,9 @@ export default function TransferDetailPage() {
       </div>
 
       <div className={styles.targetAccount}>
-        <h3>송금할 계좌</h3>
+        <h3 className={styles.text}>송금할 계좌</h3>
         <p className={styles.accountNumber}>
-          {targetAccount?.name} {targetAccountNumber}
+          {targetAccountNumber} - {targetAccount?.name}
         </p>
       </div>
 
@@ -186,16 +202,21 @@ export default function TransferDetailPage() {
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
-
       <main className={styles.main}>{renderAmountInput()}</main>
-
       <div className={styles.actions}>{renderKeyboard()}</div>
 
       {amount && (
-        <button className={styles.nextButton} onClick={handleSendMoney}>
-          송금하기
-        </button>
+        <div className={styles.buttonLocation}>
+          <Button label="송금하기" size="medium" onClick={handleSendMoney} />
+        </div>
       )}
+
+      {/* PinNumberModal 컴포넌트 호출 */}
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // 모달 닫기
+        onSubmit={handlePinSubmit} // PIN 입력 후 제출 처리
+      />
     </div>
   );
 }
