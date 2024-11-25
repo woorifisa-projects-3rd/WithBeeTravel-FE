@@ -52,7 +52,7 @@ export default function PaymentPage() {
     if (myAccountId) {
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${myAccountId}/info`,
+          `/api/accounts/${myAccountId}/info`,
         );
         if ('data' in response) {
           setAccountInfo(response.data);
@@ -63,7 +63,7 @@ export default function PaymentPage() {
 
       (async () => {
         const response = await instance.get<WibeeCardResponse>(
-          `/accounts/${myAccountId}/check-wibee`,
+          `/api/accounts/${myAccountId}/check-wibee`,
         );
         if ('data' in response) {
           setIsWibeeCard(response.data);
@@ -96,8 +96,9 @@ export default function PaymentPage() {
       return;
     }
 
-    const response =
-      await instance.get<PinNumberResponse>('/verify/user-state');
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
     if (Number(response.status) !== 200) {
       showToast.error({ message: '핀번호 재 설정 후 이용 가능' }); // 핀번호 설정 오류 메시지
       return;
@@ -117,7 +118,7 @@ export default function PaymentPage() {
         isWibeeCard: isWibeeCardCheckbox,
       };
 
-      await instance.post(`/accounts/${myAccountId}/payment`, {
+      await instance.post(`/api/accounts/${myAccountId}/payment`, {
         body: JSON.stringify(historyRequest),
       });
       showToast.success({ message: '거래내역 등록 완료!' });

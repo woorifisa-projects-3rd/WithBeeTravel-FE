@@ -28,7 +28,7 @@ export default function DepositPage() {
     if (myAccountId) {
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${myAccountId}/info`,
+          `/api/accounts/${myAccountId}/info`,
         );
         console.log(response);
 
@@ -63,9 +63,12 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await instance.post(`/accounts/${myAccountId}/deposit`, {
-        body: JSON.stringify(DepositRequest),
-      });
+      const response = await instance.post(
+        `/api/accounts/${myAccountId}/deposit`,
+        {
+          body: JSON.stringify(DepositRequest),
+        },
+      );
       showToast.success({
         message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
       });

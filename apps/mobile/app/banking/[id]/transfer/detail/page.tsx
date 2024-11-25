@@ -49,7 +49,7 @@ export default function TransferDetailPage() {
     if (myAccountId) {
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${myAccountId}/info`,
+          `/api/accounts/${myAccountId}/info`,
         );
         if ('data' in response) {
           setAccountInfo(response.data);
@@ -66,7 +66,7 @@ export default function TransferDetailPage() {
       const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
         const response = await instance.post<TargetName>(
-          '/accounts/find-user',
+          '/api/accounts/find-user',
           {
             body: JSON.stringify(AccountNumberRequest),
           },

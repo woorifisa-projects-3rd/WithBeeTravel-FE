@@ -44,7 +44,7 @@ export default function CreateAccountPage() {
     };
 
     try {
-      const response = await instance.post('/accounts', {
+      const response = await instance.post('/api/accounts', {
         body: JSON.stringify(CreateAccount),
       });
 

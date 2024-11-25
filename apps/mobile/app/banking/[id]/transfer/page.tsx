@@ -29,7 +29,7 @@ export default function TransferPage() {
     if (accountId) {
       (async () => {
         const response = await instance.get<AccountInfo>(
-          `/accounts/${accountId}/info`,
+          `/api/accounts/${accountId}/info`,
         );
         console.log(response);
 
@@ -66,7 +66,7 @@ export default function TransferPage() {
     localStorage.setItem('targetAccountNumber', targetAccount);
 
     try {
-      const response = await instance.post('/accounts/verify', {
+      const response = await instance.post('/api/accounts/verify', {
         body: JSON.stringify(AccountNumberRequest),
       });
 
