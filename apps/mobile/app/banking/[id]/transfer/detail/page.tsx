@@ -142,7 +142,7 @@ export default function TransferDetailPage() {
       router.push('/banking/');
     } catch (error) {
       console.error('송금 오류:', error);
-      showToast.error({message:'송금 중 오류 발생'});
+      showToast.error({ message: '송금 중 오류 발생' });
     } finally {
       setIsModalOpen(false); // 송금 후 모달 닫기
     }
