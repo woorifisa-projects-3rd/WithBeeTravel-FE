@@ -106,7 +106,7 @@ export default function MobileFooter() {
     },
     {
       href: '/mypage',
-      label: '마이',
+      label: 'MY',
       icon: (
         <svg
           width="28"

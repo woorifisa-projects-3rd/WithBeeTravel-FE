@@ -16,7 +16,7 @@ const CardIssuancePage = () => {
       setIssuanceState('complete');
     }, 7000);
   };
-
+  const rotationDuration = 2.8;
   const circleSegments = Array.from({ length: 25 }, (_, i) => i);
 
   return (
@@ -36,8 +36,8 @@ const CardIssuancePage = () => {
               <Image
                 src="/imgs/cardBenefits/withbee_travel_checkcard.png"
                 alt="위비트래블 카드"
-                width={270}
-                height={250}
+                width={250}
+                height={235}
                 quality={100}
               />
             </motion.div>
@@ -45,15 +45,16 @@ const CardIssuancePage = () => {
             <div className={styles.benefitsContainer}>
               {[
                 {
+                  icon: '/imgs/cardBenefits/2.png',
+                  title: '여행 공동 지출 관리 서비스',
+                  desc: '여행 종료 후 결제 내역을 바탕으로 멤버별 지출 금액을 자동 계산',
+                },
+                {
                   icon: '/imgs/cardBenefits/1.png',
                   title: '해외 가맹점 이용수수료 면제',
                   desc: '국제브랜드 수수료(Mastercard 1%) 및 해외서비스 수수료(거래 건당 US$0.5)면제',
                 },
-                {
-                  icon: '/imgs/cardBenefits/2.png',
-                  title: '해외, 간편결제 5% 캐시백',
-                  desc: '해외 이용금액은 우리카드 전산상 해외 가맹점 매출로 분류된 경우에 한함',
-                },
+
                 {
                   icon: '/imgs/cardBenefits/3.png',
                   title: '쿠팡, 배민, 스타벅스 5% 캐시백',
@@ -106,15 +107,15 @@ const CardIssuancePage = () => {
                     key={index}
                     className={styles.trailSegment}
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 1, 1, 0] }}
+                    animate={{ opacity: [0, 1, 0] }}
                     transition={{
-                      duration: 3.6,
+                      duration: rotationDuration / 2,
                       repeat: Infinity,
-                      delay: (index * 2) / circleSegments.length,
+                      delay: (index * rotationDuration) / circleSegments.length,
                       ease: 'easeInOut',
                     }}
                     style={{
-                      transform: `rotate(${index * 14}deg)`,
+                      transform: `rotate(${index * (360 / circleSegments.length)}deg)`,
                     }}
                   />
                 ))}
@@ -125,7 +126,7 @@ const CardIssuancePage = () => {
                   rotate: 360,
                 }}
                 transition={{
-                  duration: 3,
+                  duration: rotationDuration,
                   repeat: Infinity,
                   ease: 'linear',
                 }}
