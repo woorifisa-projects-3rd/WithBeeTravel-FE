@@ -45,6 +45,7 @@ export default async function Page() {
                       <span className={styles.linkIcon}>
                         <Link
                           href={notification.link}
+                          target="_blank"
                           rel="noopener noreferrer"
                         >
                           <Image
@@ -57,9 +58,12 @@ export default async function Page() {
                       </span>
                     )}
                   </div>
-                  <div className={styles.logMessage}>
-                    {notification.logMessage}
-                  </div>
+                  <div
+                    className={styles.logMessage}
+                    dangerouslySetInnerHTML={{
+                      __html: notification.logMessage.replace(/\n/g, '<br />'),
+                    }}
+                  />
                 </div>
               </li>
             ))}
