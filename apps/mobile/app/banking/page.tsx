@@ -57,8 +57,9 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response =
-      await instance.get<PinNumberResponse>('/api/verify/user-state');
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
@@ -68,8 +69,9 @@ export default function BankingPage() {
   };
 
   const createAccountHandle = async () => {
-    const response =
-      await instance.get<PinNumberResponse>('/api/verify/user-state');
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;

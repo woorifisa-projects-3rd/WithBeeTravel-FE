@@ -96,8 +96,9 @@ export default function PaymentPage() {
       return;
     }
 
-    const response =
-      await instance.get<PinNumberResponse>('/api/verify/user-state');
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
     if (Number(response.status) !== 200) {
       showToast.error({ message: '핀번호 재 설정 후 이용 가능' }); // 핀번호 설정 오류 메시지
       return;

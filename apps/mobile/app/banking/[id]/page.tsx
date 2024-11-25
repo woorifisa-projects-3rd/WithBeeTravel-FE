@@ -90,8 +90,9 @@ export default function AccountPage() {
   };
 
   const handleTransferClick = async () => {
-    const response =
-      await instance.get<PinNumberResponse>('/api/verify/user-state');
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
     if (Number(response.status) != 200) {
       alert('핀번호 재 설정 후 이용 가능');
       return;

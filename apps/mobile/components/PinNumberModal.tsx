@@ -38,8 +38,9 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
 
     if (isOpen) {
       const fetchUserState = async () => {
-        const response =
-          await instance.get<PinNumberResponse>('/api/verify/user-state');
+        const response = await instance.get<PinNumberResponse>(
+          '/api/verify/user-state',
+        );
         if ('data' in response) {
           if (response.data?.failedPinCount !== 0) {
             setError(

@@ -63,9 +63,12 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await instance.post(`/api/accounts/${myAccountId}/deposit`, {
-        body: JSON.stringify(DepositRequest),
-      });
+      const response = await instance.post(
+        `/api/accounts/${myAccountId}/deposit`,
+        {
+          body: JSON.stringify(DepositRequest),
+        },
+      );
       showToast.success({
         message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
       });
