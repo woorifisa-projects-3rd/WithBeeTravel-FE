@@ -14,4 +14,4 @@ type AuthResultType = {
 
 export const { handlers, signIn, signOut, auth }: AuthResultType = authConfig;
 
-export type * from '../next-auth.d.ts';
+export type * from '../types/next-auth';

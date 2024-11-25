@@ -17,7 +17,7 @@ export default function Page() {
             event.preventDefault();
             const email = event.currentTarget.email.value;
             const password = event.currentTarget.password.value;
-            const name = event.currentTarget.name.value;
+            const name = event.currentTarget.registerName.value;
             const pinNumber = event.currentTarget.pinNumber.value;
 
             console.log({ email, password, name, pinNumber });
@@ -45,8 +45,8 @@ export default function Page() {
             <label htmlFor="name">이름</label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="registerName"
+              name="registerName"
               placeholder="이름을 입력해주세요."
             />
           </div>
