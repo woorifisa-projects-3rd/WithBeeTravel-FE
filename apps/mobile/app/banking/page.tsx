@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 
+const AccountContext = React.createContext<AccountInfo[] | undefined>([]);
+
+
 interface AccountInfo {
   accountId: number;
   accountNumber: string;
@@ -80,6 +83,8 @@ export default function BankingPage() {
   };
 
   return (
+    <AccountContext.Provider value={accounts}>
+
     <div className={styles.container}>
       <Title label="뱅킹 홈" />
       <div className={styles.space}></div>
@@ -134,5 +139,6 @@ export default function BankingPage() {
         ))}
       </div>
     </div>
+    </AccountContext.Provider>
   );
 }
