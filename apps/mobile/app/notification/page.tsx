@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { SuccessResponse } from '@withbee/types';
 import { Notification, getNotifications } from '@withbee/apis';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const response = (await getNotifications()) as SuccessResponse<
     Notification[]
