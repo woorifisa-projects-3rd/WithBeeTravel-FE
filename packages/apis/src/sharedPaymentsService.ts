@@ -1,3 +1,5 @@
+'use server';
+
 import { instance } from './instance';
 import type {
   PageResponse,

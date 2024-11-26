@@ -5,6 +5,7 @@ import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
 import { instance } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface AccountInfo {
   accountId: number;
@@ -13,14 +14,21 @@ interface AccountInfo {
   balance: number;
 }
 
+interface PinNumberResponse {
+  failedPinCount: number;
+  pinLocked: boolean;
+}
+
 export default function BankingPage() {
   const router = useRouter();
 
   const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
 
+  const { showToast } = useToast();
+
   useEffect(() => {
     const fetchAccounts = async () => {
-      const response = await instance.get<AccountInfo[]>(`/accounts`);
+      const response = await instance.get<AccountInfo[]>(`/api/accounts`);
 
       if ('data' in response) {
         setAccounts(response.data);
@@ -42,14 +50,33 @@ export default function BankingPage() {
   };
 
   // 송금 버튼 클릭 시 예외처리
-  const handleTransferClick = (
+  const handleTransferClick = async (
     event: React.MouseEvent<HTMLButtonElement>,
     accountId: number,
   ) => {
     // 이벤트 버블링 방지
     event.stopPropagation();
+
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
+    if (Number(response.status) != 200) {
+      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
+      return;
+    }
     // 송금 페이지로 이동
     router.push(`/banking/${accountId}/transfer`);
+  };
+
+  const createAccountHandle = async () => {
+    const response = await instance.get<PinNumberResponse>(
+      '/api/verify/user-state',
+    );
+    if (Number(response.status) != 200) {
+      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
+      return;
+    }
+    router.push(`/banking/create`);
   };
 
   return (
@@ -59,7 +86,7 @@ export default function BankingPage() {
       <Button
         size="medium"
         label="계좌 만들러 가기"
-        onClick={() => router.push(`/banking/create`)}
+        onClick={() => createAccountHandle()}
       />
       <div className={styles.space}></div>
 

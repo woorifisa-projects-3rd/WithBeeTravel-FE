@@ -1,9 +1,9 @@
-// import { auth } from '@/auth';
-
+import { auth } from '@withbee/auth-config';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;
+  requireAuth?: boolean;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
@@ -15,6 +15,19 @@ const fetchInstance = async <T = undefined>(
   const headers: Record<string, string> = {
     ...(options.headers as Record<string, string>),
   };
+
+  // auth 체크 및 토큰 추가
+  if (options.requireAuth !== false) {
+    // 기본적으로 인증이 필요하도록
+    const session = await auth();
+    const accessToken = session?.user!.accessToken;
+
+    if (!accessToken) {
+      throw new Error('Authentication required');
+    }
+
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
 
   if (options.body instanceof FormData) {
     delete headers['Content-Type'];
