@@ -1,7 +1,7 @@
 import styles from './manual-shared-payment-form.module.css';
-import plusIcon from './assets/plus.png';
-import arrowDownIcon from './assets/arrow_down.png';
-import clockIcon from './assets/clock.png';
+import plusIcon from 'assets/plus.png';
+import arrowDownIcon from 'assets/arrow_down.png';
+import clockIcon from 'assets/clock.png';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import DatePickerModal from './date-picker-modal';

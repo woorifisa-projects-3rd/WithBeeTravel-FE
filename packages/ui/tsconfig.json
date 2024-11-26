@@ -5,8 +5,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/assets/**/*", "custom.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
