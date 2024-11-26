@@ -55,7 +55,7 @@ export default async function TravelDetailPage({
 
         <div className={styles.friendsWrapper}>
           {travelDetails.friends.map((friend) => (
-            <FriendImage key={friend} src="" />
+            <FriendImage key={friend} src={`/imgs/friends/${friend}.png`} />
           ))}
         </div>
       </div>
