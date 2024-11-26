@@ -33,6 +33,12 @@ export default function Page({ params }: { params: Params }) {
           message:
             '유효하지 않은 정산 요청입니다.<br />올바른 경로로 다시 시도해주세요.',
         };
+      case 'TRAVEL-001':
+        return {
+          title: '정산 요청 오류',
+          message:
+            '유효하지 않은 여행입니다.<br />올바른 경로로 다시 시도해주세요.',
+        };
       default:
         return {
           title: '알 수 없는 오류',

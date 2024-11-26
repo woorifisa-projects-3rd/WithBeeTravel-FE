@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: Params }) {
   )) as SuccessResponse<SettlementDetails>;
 
   if ('code' in response) {
-    if (response.code === 'SETTLEMENT-002') {
+    if (response.code === 'SETTLEMENT-002' || 'TRAVEL-001') {
       redirect(`/travel/${travelId}/agreement/pending?error=${response.code}`);
     } else {
       showToast.error({
