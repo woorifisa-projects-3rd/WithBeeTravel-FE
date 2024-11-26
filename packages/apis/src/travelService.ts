@@ -5,6 +5,7 @@ import type { TravelMember } from '@withbee/types';
 import {
   ErrorResponse,
   SuccessResponse,
+  TravelHome,
   TravelFormResponse,
   TravelList,
 } from '@withbee/types';
@@ -56,11 +57,11 @@ export const editTravel = async (
   return response;
 };
 
-// //여행 목록
+//여행 목록
 export const getTravelList = async (): Promise<
-  SuccessResponse<TravelList> | ErrorResponse
+  SuccessResponse<TravelList[]> | ErrorResponse
 > => {
-  const response = instance.get<TravelList>(`/api/travels`);
+  const response = instance.get<TravelList[]>(`/api/travels`);
   return response;
 };
 
@@ -72,4 +73,11 @@ export const getTravelMembers = async (travelId: number) => {
       cache: 'no-cache',
     },
   );
+};
+
+// 여행 홈 불러오기
+export const getTravelHome = async (travelId: number) => {
+  return await instance.get<TravelHome>(`/api/travels/${travelId}`, {
+    cache: 'no-cache',
+  });
 };

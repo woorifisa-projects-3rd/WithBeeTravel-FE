@@ -1,0 +1,38 @@
+.pickerContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 120px;
+}
+
+.pickerColumn {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}
+
+.columnWrapper {
+  height: 100%;
+}
+
+.swiper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pickerItem {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--color-gray-400);
+}
+
+.selected {
+  color: var(--color-gray-600) !important;
+  font-weight: 500;
+}

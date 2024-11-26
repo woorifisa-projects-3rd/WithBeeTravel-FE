@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./currency-unit-picker-modal": "./src/currency-unit-picker-modal.tsx",
+    "./time-picker-modal": "./src/time-picker-modal.tsx",
+    "./record-image": "./src/record-image.tsx",
+    "./manual-shared-payment-form": "./src/manual-shared-payment-form.tsx",
     "./payment-error-boundary": "./src/payment-error-boundary.tsx",
     "./payment-skeleton": "./src/payment-skeleton.tsx",
     "./payment-list": "./src/payment-list.tsx",
