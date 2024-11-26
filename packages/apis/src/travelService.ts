@@ -1,10 +1,13 @@
+'use server';
+
 import { instance } from './instance';
 import type { TravelMember } from '@withbee/types';
 import {
   ErrorResponse,
   SuccessResponse,
-  TravelCreateResponse,
   TravelHome,
+  TravelFormResponse,
+  TravelList,
 } from '@withbee/types';
 
 // 여행 생성
@@ -14,8 +17,8 @@ export const createTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-): Promise<SuccessResponse<TravelCreateResponse> | ErrorResponse> => {
-  const response = instance.post<TravelCreateResponse>('/api/travels', {
+): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
+  const response = instance.post<TravelFormResponse>('/api/travels', {
     body: JSON.stringify({
       travelName,
       isDomesticTravel,
@@ -36,17 +39,30 @@ export const editTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-) => {
-  return instance.patch(`/api/travels/${travelId}`, {
-    body: JSON.stringify({
-      travelId,
-      travelName,
-      isDomesticTravel,
-      travelCountries,
-      travelStartDate,
-      travelEndDate,
-    }),
-  });
+): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
+  const response = instance.patch<TravelFormResponse>(
+    `/api/travels/${travelId}`,
+    {
+      body: JSON.stringify({
+        travelId,
+        travelName,
+        isDomesticTravel,
+        travelCountries,
+        travelStartDate,
+        travelEndDate,
+      }),
+    },
+  );
+
+  return response;
+};
+
+//여행 목록
+export const getTravelList = async (): Promise<
+  SuccessResponse<TravelList[]> | ErrorResponse
+> => {
+  const response = instance.get<TravelList[]>(`/api/travels`);
+  return response;
 };
 
 // 여행 멤버 불러오기

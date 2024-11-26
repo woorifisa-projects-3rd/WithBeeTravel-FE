@@ -14,7 +14,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "custom.d.ts",
-    "../../packages/ui/custom.d.ts"
+    "../../packages/ui/custom.d.ts",
+    "next-auth.d.ts"
   ],
   "exclude": ["node_modules"]
 }

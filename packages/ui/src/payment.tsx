@@ -60,15 +60,22 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
 
   const handleSubmit = async () => {
     // 정산 인원 선택 API 호출
-    await chooseParticipants({
+    const response = await chooseParticipants({
       travelId: travelId,
       paymentId: paymentInfo.id,
-      travelMembersId: selectedMembers.map((member) => member.id),
+      travelMembersId: tempSelectedMembers.map((member) => member.id),
     });
-    setSelectedMembers(tempSelectedMembers);
-    showToast.success({
-      message: '정산 인원이 변경되었습니다.',
-    });
+    if (response.status == '200') {
+      setSelectedMembers(tempSelectedMembers.sort((a, b) => a.id - b.id));
+      showToast.success({
+        message: '정산 인원이 변경되었습니다.',
+      });
+    } else {
+      showToast.error({
+        message: '정산 인원 변경에 실패했습니다.',
+      });
+      throw response;
+    }
   };
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌

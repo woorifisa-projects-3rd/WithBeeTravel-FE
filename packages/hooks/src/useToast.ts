@@ -10,7 +10,6 @@ interface ToastProps {
 export const useToast = () => {
   const defaultOptions: ToastOptions = {
     position: 'top-right',
-    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -24,8 +23,11 @@ export const useToast = () => {
     success: ({ message, options }: ToastProps) =>
       toast.success(message, { ...defaultOptions, ...options }),
 
-    error: ({ message, options }: ToastProps) =>
-      toast.error(message, { ...defaultOptions, ...options }),
+    error: ({ message, options }: ToastProps) => {
+      toast.dismiss();
+      toast.clearWaitingQueue();
+      toast.error(message, { ...defaultOptions, ...options });
+    },
 
     info: ({ message, options }: ToastProps) =>
       toast.info(message, { ...defaultOptions, ...options }),

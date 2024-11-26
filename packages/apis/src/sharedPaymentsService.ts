@@ -1,3 +1,5 @@
+'use server';
+
 import { instance } from './instance';
 import type { PageResponse, SharedPayment } from '@withbee/types';
 
@@ -8,6 +10,7 @@ interface GetSharedPaymentsParams {
   memberId?: number;
   startDate?: string;
   endDate?: string;
+  category?: string;
 }
 
 // 공유 결제 내역 가져오기
@@ -18,6 +21,7 @@ export const getSharedPayments = async ({
   memberId,
   startDate,
   endDate,
+  category,
 }: GetSharedPaymentsParams) => {
   const searchParams = new URLSearchParams({
     page: page.toString(),
@@ -28,6 +32,7 @@ export const getSharedPayments = async ({
   if (memberId) searchParams.append('memberId', memberId.toString());
   if (startDate) searchParams.append('startDate', startDate);
   if (endDate) searchParams.append('endDate', endDate);
+  if (category) searchParams.append('category', category);
 
   const response = await instance.get<PageResponse<SharedPayment>>(
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,

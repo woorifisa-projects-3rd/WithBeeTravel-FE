@@ -10,6 +10,7 @@ export interface SharedPayment {
   participatingMembers: ParticipatingMember[];
   isManuallyAdded: boolean;
   paymentDate: string;
+  category: string;
 }
 
 export interface ParticipatingMember {

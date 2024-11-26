@@ -94,7 +94,7 @@
 }
 
 .cardContent {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -103,7 +103,7 @@
 .cardText {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1.3rem;
 }
 
 
@@ -117,22 +117,10 @@
   color: var(--color-gray-400)
 }
 
-/* 초대 코드 모달 */
-.input {
-  width: 100%;
-  padding: 20px 0px 5px 0px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 1rem;
-  font-size: 18px;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #000;
-}
-
-.friendsWrapper {
-  display: flex;
-  align-items: center;
+.cardDay {
+  padding-left: 10px;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 500;
+  color: var(--color-gray-600);
 }

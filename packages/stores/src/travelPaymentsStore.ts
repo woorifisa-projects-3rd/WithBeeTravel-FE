@@ -13,6 +13,8 @@ interface PaymentStore {
   setIsDateFiltered: (filtered: boolean) => void;
   memberId: number;
   setMemberId: (id: number) => void;
+  category: string;
+  setCategory: (category: string) => void;
 }
 
 // YYYY-MM-DD 형식으로 변환
@@ -36,4 +38,6 @@ export const usePaymentStore = create<PaymentStore>((set) => ({
   setIsDateFiltered: (filtered) => set({ isDateFiltered: filtered }),
   memberId: 0,
   setMemberId: (id) => set({ memberId: id }),
+  category: '전체',
+  setCategory: (category) => set({ category }),
 }));
