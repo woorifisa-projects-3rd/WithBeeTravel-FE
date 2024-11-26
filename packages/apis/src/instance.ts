@@ -34,6 +34,9 @@ const fetchInstance = async <T = undefined>(
     delete headers['Content-Type'];
   } else {
     headers['Content-Type'] = 'application/json';
+    if (typeof options.body === 'object') {
+      options.body = JSON.stringify(options.body);
+    }
   }
 
   try {

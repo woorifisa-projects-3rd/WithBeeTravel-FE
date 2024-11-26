@@ -7,7 +7,7 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   padding: 0 3px;
 }
 
@@ -41,4 +41,20 @@
   display: inline-block;
   margin-left: 3px;
   text-decoration: underline;
+}
+
+/* JoinForm.module.css */
+.error {
+  border-color: #ff4d4f !important;
+}
+
+.errorMessage {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.successMessage {
+  color: #52c41a;
+  font-size: 14px;
+  margin-top: 4px;
 }
