@@ -6,7 +6,7 @@
 }
 
 .toastProgress {
-    background: linear-gradient(to right, #4f46e5, #818cf8);
+    background: #ef4444;
 }
 
 :global(.Toastify__toast--error) .toastBody {
