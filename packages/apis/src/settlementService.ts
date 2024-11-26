@@ -1,3 +1,5 @@
+'use server';
+
 import { instance } from './instance';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
 
@@ -6,6 +8,7 @@ interface MyTotalPayment {
   totalPaymentCost: number;
   ownPaymentCost: number;
   actualBurdenCost: number;
+  agreed: boolean;
 }
 
 interface MyDetailPayment {
@@ -25,6 +28,7 @@ interface Other {
 
 export interface SettlementDetails {
   myTotalPayment: MyTotalPayment;
+  disagreeCount: number;
   myDetailPayments: MyDetailPayment[];
   others: Other[];
 }
@@ -40,4 +44,22 @@ export const getSettlementDetails = async (
     },
   );
   return response;
+};
+
+// 정산 동의하기
+export const agreeSettlement = async (
+  travelId: number,
+): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
+  const response = instance.post<SettlementDetails>(
+    `/api/travels/${travelId}/settlements/agreement`,
+    {
+      cache: 'no-store',
+    },
+  );
+  return response;
+};
+
+// 정산 취소
+export const cancelSettlement = async (travelId: number) => {
+  return instance.delete(`/api/travels/${travelId}/settlements`);
 };

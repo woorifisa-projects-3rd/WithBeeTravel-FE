@@ -34,23 +34,35 @@ export default function ExpenseDetails({
               <li key={expense.id} className={styles.expenseItem}>
                 <div>
                   <div className={styles.expenseDate}>
-                    {(expense.paymentDate ?? '').split('T')[0] +
+                    {(expense.paymentDate ?? '')
+                      .split('T')[0]
+                      ?.replace(/-/g, '.') +
                       ' ' +
-                      (expense.paymentDate ?? '').split('T')[1]?.slice(0, 8)}
+                      (expense.paymentDate ?? '').split('T')[1]?.slice(0, 5)}
                   </div>
                   <div className={styles.storeName}>{expense.storeName}</div>
                 </div>
-                <div>
-                  <div className={styles.amountRow}>
-                    <span>결제 금액</span>
-                    <span className={styles.paymentAmout}>
-                      {expense.paymentAmount.toLocaleString()}
+                <div className={styles.amountRow}>
+                  <div className={styles.amountColumn}>
+                    <span className={styles.amountLabel}>결제 금액</span>
+                    <span className={styles.paymentAmount}>
+                      {`${expense.paymentAmount.toLocaleString()}원`}
                     </span>
                   </div>
-                  <div className={styles.amountRow}>
-                    <span>요청 금액</span>
-                    <span className={styles.requestedAmount}>
-                      {expense.requestedAmount.toLocaleString()}
+                  <div className={styles.amountColumn}>
+                    <span className={styles.amountLabel}>
+                      {expense.requestedAmount >= 0 ? '받을 금액' : '보낼 금액'}
+                    </span>
+                    <span
+                      className={
+                        expense.requestedAmount >= 0
+                          ? styles.positiveRequestedAmount
+                          : styles.negativeRequestedAmount
+                      }
+                    >
+                      {expense.requestedAmount >= 0
+                        ? `+${expense.requestedAmount.toLocaleString()}원`
+                        : `${expense.requestedAmount.toLocaleString()}원`}
                     </span>
                   </div>
                 </div>

@@ -11,6 +11,10 @@ interface PaymentStore {
   setEndDate: (date: DateObject) => void;
   isDateFiltered: boolean; // 날짜 필터링 여부
   setIsDateFiltered: (filtered: boolean) => void;
+  memberId: number;
+  setMemberId: (id: number) => void;
+  category: string;
+  setCategory: (category: string) => void;
 }
 
 // YYYY-MM-DD 형식으로 변환
@@ -32,4 +36,8 @@ export const usePaymentStore = create<PaymentStore>((set) => ({
     }),
   isDateFiltered: false,
   setIsDateFiltered: (filtered) => set({ isDateFiltered: filtered }),
+  memberId: 0,
+  setMemberId: (id) => set({ memberId: id }),
+  category: '전체',
+  setCategory: (category) => set({ category }),
 }));

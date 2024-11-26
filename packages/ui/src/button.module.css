@@ -3,8 +3,12 @@
   border-radius: 10px;
   /* 모서리를 둥글게 */
   cursor: pointer;
-  transition: transform 0.2s ease
-    /* 호버 효과를 위한 트랜지션 */
+  transition: transform 0.2s ease;
+  /* 호버 효과를 위한 트랜지션 */
+}
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 14px;
 }
 
 .xsmall {

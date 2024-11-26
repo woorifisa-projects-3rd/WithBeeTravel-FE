@@ -3,7 +3,11 @@
 import { motion } from 'framer-motion';
 import styles from './payment-skeleton.module.css';
 
-export const PaymentSkeleton = () => {
+interface PaymentSkeletonProps {
+  count?: number;
+}
+
+export const PaymentSkeleton = ({ count = 3 }: PaymentSkeletonProps) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -38,62 +42,16 @@ export const PaymentSkeleton = () => {
   };
 
   return (
-    <motion.div
-      className={styles.skeletonWrapper}
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.div className={styles.skeletonDate} variants={itemVariants}>
-        <motion.div
-          className={styles.shimmer}
-          variants={shimmerVariants}
-          initial="initial"
-          animate="animate"
-        />
-      </motion.div>
-
-      {[1, 2, 3].map((index) => (
+    <>
+      {Array.from({ length: count }).map((_, index) => (
         <motion.div
           key={index}
-          className={styles.skeletonItem}
-          variants={itemVariants}
+          className={styles.skeletonWrapper}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <div className={styles.skeletonLeft}>
-            <div className={styles.skeletonProfile}>
-              <motion.div
-                className={styles.shimmer}
-                variants={shimmerVariants}
-                initial="initial"
-                animate="animate"
-              />
-            </div>
-            <div className={styles.skeletonContent}>
-              <motion.div
-                className={styles.skeletonTitle}
-                variants={itemVariants}
-              >
-                <motion.div
-                  className={styles.shimmer}
-                  variants={shimmerVariants}
-                  initial="initial"
-                  animate="animate"
-                />
-              </motion.div>
-              <motion.div
-                className={styles.skeletonSubtitle}
-                variants={itemVariants}
-              >
-                <motion.div
-                  className={styles.shimmer}
-                  variants={shimmerVariants}
-                  initial="initial"
-                  animate="animate"
-                />
-              </motion.div>
-            </div>
-          </div>
-          <motion.div className={styles.skeletonAmount} variants={itemVariants}>
+          <motion.div className={styles.skeletonDate} variants={itemVariants}>
             <motion.div
               className={styles.shimmer}
               variants={shimmerVariants}
@@ -101,8 +59,62 @@ export const PaymentSkeleton = () => {
               animate="animate"
             />
           </motion.div>
+
+          {[1, 2, 3].map((index) => (
+            <motion.div
+              key={index}
+              className={styles.skeletonItem}
+              variants={itemVariants}
+            >
+              <div className={styles.skeletonLeft}>
+                <div className={styles.skeletonProfile}>
+                  <motion.div
+                    className={styles.shimmer}
+                    variants={shimmerVariants}
+                    initial="initial"
+                    animate="animate"
+                  />
+                </div>
+                <div className={styles.skeletonContent}>
+                  <motion.div
+                    className={styles.skeletonTitle}
+                    variants={itemVariants}
+                  >
+                    <motion.div
+                      className={styles.shimmer}
+                      variants={shimmerVariants}
+                      initial="initial"
+                      animate="animate"
+                    />
+                  </motion.div>
+                  <motion.div
+                    className={styles.skeletonSubtitle}
+                    variants={itemVariants}
+                  >
+                    <motion.div
+                      className={styles.shimmer}
+                      variants={shimmerVariants}
+                      initial="initial"
+                      animate="animate"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+              <motion.div
+                className={styles.skeletonAmount}
+                variants={itemVariants}
+              >
+                <motion.div
+                  className={styles.shimmer}
+                  variants={shimmerVariants}
+                  initial="initial"
+                  animate="animate"
+                />
+              </motion.div>
+            </motion.div>
+          ))}
         </motion.div>
       ))}
-    </motion.div>
+    </>
   );
 };

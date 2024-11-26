@@ -1,9 +1,10 @@
-// import { auth } from '@/auth';
-
+import { auth } from '@withbee/auth-config';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;
+  requireAuth?: boolean;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
@@ -15,6 +16,19 @@ const fetchInstance = async <T = undefined>(
   const headers: Record<string, string> = {
     ...(options.headers as Record<string, string>),
   };
+
+  // auth 체크 및 토큰 추가
+  if (options.requireAuth !== false) {
+    // 기본적으로 인증이 필요하도록
+    const session = await auth();
+    const accessToken = session?.user!.accessToken;
+
+    if (!accessToken) {
+      throw new Error('Authentication required');
+    }
+
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
 
   if (options.body instanceof FormData) {
     delete headers['Content-Type'];
@@ -34,14 +48,14 @@ const fetchInstance = async <T = undefined>(
 
     if (!response.ok) {
       const errorResult = result as ErrorResponse;
-      console.error('Fetch Error:', errorResult);
+      console.error(ERROR_MESSAGES['FETCH-FAILED'], errorResult);
       return errorResult;
     }
 
     return result as SuccessResponse<T>;
   } catch (error) {
-    console.error('Fetch Error:', error);
-    throw error;
+    console.error(ERROR_MESSAGES['FETCH-FAILED'], error);
+    throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
   }
 };
 
