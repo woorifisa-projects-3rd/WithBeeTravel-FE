@@ -17,7 +17,8 @@
     "@withbee/types": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
     "eslint": "^8.57.0",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "dayjs": "^1.11.13"
   },
   "dependencies": {
     "next": "14.2.6",

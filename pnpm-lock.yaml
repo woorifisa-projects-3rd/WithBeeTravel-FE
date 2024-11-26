@@ -633,6 +633,9 @@ importers:
       '@withbee/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
