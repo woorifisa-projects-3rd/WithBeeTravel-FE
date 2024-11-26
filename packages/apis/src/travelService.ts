@@ -1,6 +1,7 @@
 'use server';
 
 import { instance } from './instance';
+import type { TravelMember } from '@withbee/types';
 import {
   ErrorResponse,
   SuccessResponse,
@@ -61,4 +62,14 @@ export const getTravelList = async (): Promise<
 > => {
   const response = instance.get<TravelList>(`/api/travels`);
   return response;
+};
+
+// 여행 멤버 불러오기
+export const getTravelMembers = async (travelId: number) => {
+  return await instance.get<TravelMember[]>(
+    `/api/travels/${travelId}/members`,
+    {
+      cache: 'no-cache',
+    },
+  );
 };

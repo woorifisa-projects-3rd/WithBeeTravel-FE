@@ -68,7 +68,7 @@ export default function Page({ params }: { params: Params }) {
         </div>
         <div className={styles.friendsWrapper}>
           {[1, 2, 3, 4, 5].map((number) => (
-            <FriendImage src={''} />
+            <FriendImage src={number} />
           ))}
         </div>
       </div>

@@ -4,7 +4,7 @@ import styles from './friend-image.module.css';
 import { HTMLAttributes } from 'react';
 
 interface FriendImageProps extends HTMLAttributes<HTMLImageElement> {
-  src: string;
+  src: number;
   size?: number;
   className?: string;
 }

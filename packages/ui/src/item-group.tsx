@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useDragControls } from 'framer-motion';
 import styles from './item-group.module.css';
+import { usePaymentStore } from '@withbee/stores';
 
 const TabGroup = () => {
-  const [activeTab, setActiveTab] = useState('전체');
+  const { category, setCategory } = usePaymentStore();
   const constraintsRef = useRef(null);
   const dragControls = useDragControls();
 
@@ -21,6 +22,8 @@ const TabGroup = () => {
     '기타',
   ];
 
+  console.log('category', category);
+
   return (
     <div className={styles.container} ref={constraintsRef}>
       <motion.div
@@ -35,14 +38,14 @@ const TabGroup = () => {
         {tabs.map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => setCategory(tab)}
             className={[
               styles.tab,
-              activeTab === tab ? styles.activeTab : styles.inactiveTab,
+              category === tab ? styles.activeTab : styles.inactiveTab,
             ].join(' ')}
           >
             {tab}
-            {activeTab === tab && (
+            {category === tab && (
               <motion.div
                 className={styles.underline}
                 layoutId="underline"
