@@ -247,5 +247,5 @@
   white-space: nowrap; /* 텍스트를 한 줄로 제한 */
   overflow: hidden; /* 넘치는 부분은 잘라냄 */
   text-overflow: ellipsis; /* 잘린 텍스트 뒤에 '...'을 추가 */
-  max-width: 14ch; /* 13자까지만 표시 */
+  max-width: 13ch; /* 13자까지만 표시 */
 }

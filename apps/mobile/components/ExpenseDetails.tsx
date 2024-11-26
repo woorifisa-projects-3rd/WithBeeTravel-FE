@@ -34,9 +34,11 @@ export default function ExpenseDetails({
               <li key={expense.id} className={styles.expenseItem}>
                 <div>
                   <div className={styles.expenseDate}>
-                    {(expense.paymentDate ?? '').split('T')[0] +
+                    {(expense.paymentDate ?? '')
+                      .split('T')[0]
+                      ?.replace(/-/g, '.') +
                       ' ' +
-                      (expense.paymentDate ?? '').split('T')[1]?.slice(0, 8)}
+                      (expense.paymentDate ?? '').split('T')[1]?.slice(0, 5)}
                   </div>
                   <div className={styles.storeName}>{expense.storeName}</div>
                 </div>
