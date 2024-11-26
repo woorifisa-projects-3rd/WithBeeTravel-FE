@@ -10,7 +10,6 @@ interface ToastProps {
 export const useToast = () => {
   const defaultOptions: ToastOptions = {
     position: 'top-right',
-    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

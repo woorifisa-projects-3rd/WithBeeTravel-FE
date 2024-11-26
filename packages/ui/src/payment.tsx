@@ -9,44 +9,93 @@ import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
-import { SharedPayment } from '@withbee/types';
+import { ParticipatingMember, SharedPayment } from '@withbee/types';
+import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
+import { chooseParticipants } from '@withbee/apis';
+import { useTravelStore } from '@withbee/stores';
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
-const friends = [1, 2, 3, 4, 5, 7, 9, 6];
-
 interface PaymentProps {
+  travelId: number;
   paymentInfo: SharedPayment;
 }
 
-export const Payment = ({ paymentInfo }: PaymentProps) => {
+export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
+  const { showToast } = useToast();
   const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
-  const [selectedFriends, setSelectedFriends] = useState<number[]>(friends);
+  const [selectedMembers, setSelectedMembers] = useState<ParticipatingMember[]>(
+    paymentInfo.participatingMembers,
+  );
+  const [tempSelectedMembers, setTempSelectedMembers] =
+    useState<ParticipatingMember[]>(selectedMembers);
 
-  const handleSelectFriend = (friend: number) => {
-    if (selectedFriends.includes(friend)) {
-      setSelectedFriends((prev) => prev.filter((f) => f !== friend));
+  const { travelMembers } = useTravelStore();
+
+  const handleSelectMember = (member: ParticipatingMember) => {
+    // 선택된 멤버가 이미 선택된 경우 제거
+    if (
+      tempSelectedMembers.some(
+        (selectedMember) => selectedMember.id === member.id,
+      )
+    ) {
+      if (tempSelectedMembers.length === 1) {
+        showToast.warning({
+          message: '최소 1명은 선택되어야 합니다.',
+        });
+        return;
+      }
+
+      setTempSelectedMembers((prev) =>
+        prev.filter((selectedMember) => selectedMember.id !== member.id),
+      );
     } else {
-      setSelectedFriends((prev) => [...prev, friend]);
+      setTempSelectedMembers((prev) => [...prev, member]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // 정산 인원 선택 API 호출
+    const response = await chooseParticipants({
+      travelId: travelId,
+      paymentId: paymentInfo.id,
+      travelMembersId: tempSelectedMembers.map((member) => member.id),
+    });
+    if (response.status == '200') {
+      setSelectedMembers(tempSelectedMembers.sort((a, b) => a.id - b.id));
+      showToast.success({
+        message: '정산 인원이 변경되었습니다.',
+      });
+    } else {
+      showToast.error({
+        message: '정산 인원 변경에 실패했습니다.',
+      });
+      throw response;
     }
   };
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
-  const visibleFriendsLength =
+  const visibleMembersLength =
     paymentInfo.participatingMembers.length > 4
       ? windowWidth > 390
         ? 5
         : 4
-      : paymentInfo.participatingMembers.length;
+      : selectedMembers.length;
 
   useEffect(() => {
     // 초기 윈도우 너비 설정
     setWindowWidth(window.innerWidth);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTempSelectedMembers([...selectedMembers]);
+    }
+  }, [isOpen]);
 
   return (
     <article className={styles.payment}>
@@ -73,49 +122,60 @@ export const Payment = ({ paymentInfo }: PaymentProps) => {
               setIsOpen((prev) => !prev);
             }}
           >
-            {selectedFriends.slice(0, visibleFriendsLength).map((friend) => (
-              <FriendImage key={friend} src={''} size={35} />
+            {/* 정산 참여 멤버들을 보여주는 부분 */}
+            {selectedMembers.slice(0, visibleMembersLength).map((member) => (
+              <FriendImage
+                key={member.id}
+                src={member.profileImage}
+                size={35}
+              />
             ))}
             <motion.button className={styles.plusButton}>
               <button className={styles.moreFriends}>
-                {/* {selectedFriends.length > visibleFriendsLength &&
-                  selectedFriends.length - visibleFriendsLength} */}
-                {paymentInfo.participatingMembers.length}명
+                {selectedMembers.length}명
               </button>
             </motion.button>
           </div>
         </div>
         <div className={styles.contentWrapper}>
-          <Item
-            label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
-            size="small"
-          />
+          {paymentInfo.unit !== 'KRW' ? (
+            <Item
+              label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
+              size="small"
+            />
+          ) : (
+            <Item label="국내 여행" size="small" />
+          )}
           <div className={styles.optionsWrapper}>
             <button className={styles.option}>기록 추가</button>
           </div>
         </div>
       </div>
 
+      {/* 정산인원선택 모달 */}
       {isOpen && (
         <Modal
           isOpen={isOpen}
+          onSubmit={handleSubmit}
           onClose={() => setIsOpen(false)}
           title={`정산을 함께 할 <br />
             그룹원을 선택해주세요!`}
           closeLabel="확인"
         >
           <div className={styles.friendsModal}>
-            {friends.map((friend) => (
+            {travelMembers!.map((member) => (
               <div
                 className={styles.friendRow}
-                key={friend}
-                onClick={() => handleSelectFriend(friend)}
+                key={member.id}
+                onClick={() => handleSelectMember(member)}
               >
                 <div className={styles.friendInfo}>
-                  <FriendImage key={friend} src={''} size={35} />
-                  <span>콩이</span>
+                  <FriendImage src={member.profileImage} size={35} />
+                  <span>{member.name}</span>
                 </div>
-                {selectedFriends.includes(friend) ? (
+                {tempSelectedMembers.some(
+                  (selectedMember) => selectedMember.id === member.id,
+                ) ? (
                   <Image
                     src={selectIcon}
                     alt="select"

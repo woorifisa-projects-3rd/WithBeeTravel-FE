@@ -10,13 +10,28 @@ import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { Key } from 'react';
 import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
 import { SuccessResponse } from '@withbee/types';
+import { redirect } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 export default async function Page({ params }: { params: Params }) {
   const travelId = Number(params.id);
+  const { showToast } = useToast();
 
   const response = (await getSettlementDetails(
     travelId,
   )) as SuccessResponse<SettlementDetails>;
+
+  if ('code' in response) {
+    if (response.code === 'SETTLEMENT-002' || 'TRAVEL-001') {
+      redirect(`/travel/${travelId}/agreement/pending?error=${response.code}`);
+    } else {
+      showToast.error({
+        message: ERROR_MESSAGES['COMMON'],
+      });
+      return;
+    }
+  }
 
   const { myTotalPayment, disagreeCount, myDetailPayments, others } =
     response.data as SettlementDetails;
@@ -41,6 +56,7 @@ export default async function Page({ params }: { params: Params }) {
                     : styles.negativeAmount
                 }
               >
+                <span className={styles.suffixText}>총 </span>
                 {myTotalPayment.totalPaymentCost >= 0
                   ? `+${myTotalPayment.totalPaymentCost.toLocaleString()}원`
                   : `${myTotalPayment.totalPaymentCost.toLocaleString()}원`}
@@ -52,19 +68,22 @@ export default async function Page({ params }: { params: Params }) {
             </div>
             <div className={styles.summaryBody}>
               <div className={styles.summaryInfo}>
-                <span className={styles.label}>총 내 결제 금액 </span>
-                <span>{myTotalPayment.ownPaymentCost.toLocaleString()}</span>
+                <span className={styles.label}>받을 금액 </span>
+                <span
+                  className={styles.amount}
+                >{`${myTotalPayment.ownPaymentCost.toLocaleString()}원`}</span>
               </div>
               <div className={styles.summaryInfo}>
-                <span className={styles.label}>정산 요청 금액 </span>
-                <span>{myTotalPayment.actualBurdenCost.toLocaleString()}</span>
+                <span className={styles.label}>보낼 금액 </span>
+                <span
+                  className={styles.amount}
+                >{`${myTotalPayment.actualBurdenCost.toLocaleString()}원`}</span>
               </div>
             </div>
 
             <ExpenseDetails myDetailPayments={myDetailPayments} />
           </div>
         </div>
-
         <div className={styles.userList}>
           <ul>
             {others
@@ -119,27 +138,31 @@ export default async function Page({ params }: { params: Params }) {
               )}
           </ul>
         </div>
-        <div className={styles.comment}>
-          <span>
-            위 금액은 정산 후 개인이 최종적으로
-            <br />
-            송금하거나 수령할 금액입니다.{' '}
-          </span>
-        </div>
-        <div className={styles.remainingUsers}>
+        <div
+          className={
+            myTotalPayment.agreed
+              ? styles.remainingUsersCompleted
+              : styles.remainingUsers
+          }
+        >
           <span>정산 완료까지 남은 인원 : </span>
           <strong>{disagreeCount}</strong>
           <span>명</span>
         </div>
         <div className={styles.btnWrapper}>
-          <Link
-            href={{
-              pathname: `/travel/${params.id}/agreement`,
-            }}
-          >
-            <Button label="동의하기" />
-          </Link>
-          <ModalWrapper />
+          {myTotalPayment.agreed ? (
+            <Button
+              label="정산 완료"
+              className={styles.disabledButton}
+              disabled={true}
+              primary={false} // 정산 완료 상태일 경우 비활성화
+            />
+          ) : (
+            <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
+              <Button label="동의하기" />
+            </Link>
+          )}
+          {!myTotalPayment.agreed && <ModalWrapper travelId={params.id} />}
         </div>
       </div>
     </div>

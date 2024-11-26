@@ -31,8 +31,6 @@
   border-radius: 20px;
   padding: 16px 20px;
   border: 1px solid var(--color-gray-200);
-  background-color: var(--color-gray-50);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .cardRow {
@@ -46,11 +44,11 @@
 }
 
 .logTitle {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 18px;
 }
 
 .logMessage {
-  margin-top: 12px;
+  margin-top: 5px;
   font-size: 16px;
 }

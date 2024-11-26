@@ -8,6 +8,7 @@ interface MyTotalPayment {
   totalPaymentCost: number;
   ownPaymentCost: number;
   actualBurdenCost: number;
+  agreed: boolean;
 }
 
 interface MyDetailPayment {
@@ -38,6 +39,9 @@ export const getSettlementDetails = async (
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
   const response = instance.get<SettlementDetails>(
     `/api/travels/${travelId}/settlements`,
+    {
+      cache: 'no-store',
+    },
   );
   return response;
 };
@@ -48,6 +52,14 @@ export const agreeSettlement = async (
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
   const response = instance.post<SettlementDetails>(
     `/api/travels/${travelId}/settlements/agreement`,
+    {
+      cache: 'no-store',
+    },
   );
   return response;
+};
+
+// 정산 취소
+export const cancelSettlement = async (travelId: number) => {
+  return instance.delete(`/api/travels/${travelId}/settlements`);
 };
