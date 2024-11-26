@@ -1,14 +1,14 @@
 {
-  "name": "@withbee/apis",
+  "name": "@withbee/auth-config",
   "version": "0.0.0",
   "main": "./src/index.ts",
-  "types": "./src/index.d.ts",
+  "types": "./next-auth.d.ts",
   "private": true,
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc --noEmit --skipLibCheck",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,20 +17,20 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@withbee/eslint-config": "workspace:*",
-    "@withbee/typescript-config": "workspace:*",
-    "@withbee/exception": "workspace:*",
-    "@withbee/types": "workspace:*",
-    "@withbee/auth-config": "workspace:*",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
+    "@types/node": "^20.17.6",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@withbee/eslint-config": "workspace:*",
+    "@withbee/exception": "workspace:*",
+    "@withbee/types": "workspace:*",
+    "@withbee/typescript-config": "workspace:*",
     "eslint": "^8.57.0",
     "typescript": "5.5.4"
   },
   "dependencies": {
     "next": "14.2.6",
+    "next-auth": "5.0.0-beta.25",
     "react": "^18.2.0"
   }
 }
