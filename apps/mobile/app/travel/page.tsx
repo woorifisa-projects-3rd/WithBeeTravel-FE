@@ -2,7 +2,7 @@
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
-import travelExam from '../../public/imgs/travelselect/travel_exam.png';
+// import travelExam from '../../public/imgs/travelselect/travel_exam.png';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -110,9 +110,11 @@ export default function page() {
         {cards.map((card, index) => (
           <div key={index} className={styles.card}>
             <Image
-              src={travelExam}
+              src="/imgs/travelselect/travel_exam.png"
               alt={card.travelName}
               className={styles.cardImage}
+              width={328}
+              height={157}
             />
             <div className={styles.cardContent}>
               <div className={styles.cardText}>
