@@ -158,10 +158,10 @@ export default async function Page({ params }: { params: Params }) {
         <div className={styles.btnWrapper}>
           {myTotalPayment.agreed ? (
             <Button
-              label="정산 완료"
+              label="동의 완료"
               className={styles.disabledButton}
               disabled={true}
-              primary={false} // 정산 완료 상태일 경우 비활성화
+              primary={false} // 동의 완료 상태일 경우 비활성화
             />
           ) : (
             <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
