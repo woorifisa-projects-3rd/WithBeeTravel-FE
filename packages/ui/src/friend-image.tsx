@@ -4,7 +4,7 @@ import styles from './friend-image.module.css';
 import { HTMLAttributes } from 'react';
 
 interface FriendImageProps extends HTMLAttributes<HTMLImageElement> {
-  src: string;
+  src: number;
   size?: number;
   className?: string;
 }
@@ -19,7 +19,7 @@ export const FriendImage = ({
 
   return (
     <Image
-      src={`/imgs/friends/${safeNumber}.png`}
+      src={`https://withbee-travel.s3.ap-northeast-2.amazonaws.com/profile/${safeNumber}.png`}
       alt={`Friend ${safeNumber}`}
       width={size}
       height={size}

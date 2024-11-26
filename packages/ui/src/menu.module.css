@@ -33,7 +33,7 @@
   flex-direction: column;
   gap: 30px;
   padding: 0 2px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .list li {

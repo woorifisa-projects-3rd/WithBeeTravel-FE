@@ -94,7 +94,7 @@
 }
 
 .cardContent {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -103,7 +103,7 @@
 .cardText {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1.3rem;
 }
 
 
@@ -115,4 +115,12 @@
 .date {
   font-size: 14px;
   color: var(--color-gray-400)
+}
+
+.cardDay {
+  padding-left: 10px;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 500;
+  color: var(--color-gray-600);
 }

@@ -17,6 +17,6 @@ export interface TravelList {
   travelName: string;
   travelStartDate: string;
   travelEndDate: string;
-  travelMainImage: number;
+  travelMainImage: string;
   profileImage: number;
 }
