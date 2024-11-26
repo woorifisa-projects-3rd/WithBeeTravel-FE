@@ -29,14 +29,13 @@ const dummyAccounts: Account[] = [
 
 const CardIssuancePage = () => {
   const [issuanceState, setIssuanceState] = useState('initial');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
+  const [isCardIssuance, setIsCardIssuance] = useState(false);
 
   const handleIssuance = () => {
-    setIssuanceState('processing');
-    setTimeout(() => {
-      setIssuanceState('complete');
-    }, 7000);
+    setIsCardIssuance(true);
+    setIsAccountModalOpen(true);
   };
 
   const handleAccountSelection = (account: Account) => {
@@ -47,17 +46,27 @@ const CardIssuancePage = () => {
     }
   };
 
-  const handleTravel = () => {
+  const handleModalSubmit = () => {
     if (selectedAccount) {
-      // 선택된 계좌를 백엔드에 전달
-      console.log('선택된 계좌:', selectedAccount);
-      // 예: API 호출 및 여행 페이지로 이동
-      alert(`계좌 ${selectedAccount.accountNumber}로 연결합니다.`);
-      setIsOpen(false); // 모달 닫기
-      window.location.href = '/travel'; // 여행 선택 페이지로 이동
+      setIsAccountModalOpen(false);
+
+      if (isCardIssuance) {
+        setIssuanceState('processing');
+        setTimeout(() => {
+          setIssuanceState('complete');
+        }, 7000);
+      } else {
+        // 여행 선택 페이지로 이동
+        window.location.href = '/travel';
+      }
     } else {
       alert('계좌를 선택해주세요.');
     }
+  };
+
+  const handleSkipIssuance = () => {
+    setIsCardIssuance(false);
+    setIsAccountModalOpen(true);
   };
 
   const rotationDuration = 2.8;
@@ -130,7 +139,10 @@ const CardIssuancePage = () => {
 
             <div className={styles.btnWrap}>
               <Button label="발급받기" onClick={handleIssuance} />
-              <div className={styles.skipText} onClick={() => setIsOpen(true)}>
+              <div
+                className={styles.skipText}
+                onClick={() => setIsAccountModalOpen(true)}
+              >
                 카드 발급 없이 참가하기
               </div>
             </div>
@@ -197,19 +209,14 @@ const CardIssuancePage = () => {
             <motion.p
               className={styles.processingText2}
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }} // opacity를 0과 1 사이로 애니메이션
-              transition={{
-                delay: 0.3,
-                duration: 1.5, // 깜빡이는 속도 (1초 간격으로 깜빡임)
-                repeat: Infinity, // 반복
-                repeatType: 'loop', // 루프 설정
-                ease: 'easeInOut', // 부드러운 애니메이션
-              }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
             >
               조금만 기다려주세요.
             </motion.p>
           </motion.div>
         )}
+        {/* Complete state remains the same */}
         {issuanceState === 'complete' && (
           <motion.div
             className={styles.completeContainer}
@@ -219,16 +226,16 @@ const CardIssuancePage = () => {
           >
             <motion.div
               className={styles.completeCard}
-              initial={{ y: 20, rotateY: 0 }} // 초기 상태: 아래에 위치, 회전 없음
-              animate={{ y: 0, rotateY: [0, 180, 270, 360] }} // keyframes로 회전 각도 설정
+              initial={{ y: 20, rotateY: 0 }}
+              animate={{ y: 0, rotateY: [0, 180, 270, 360] }}
               transition={{
                 type: 'spring',
-                stiffness: 100, // 스프링 강도
-                damping: 12, // 감쇠 설정으로 부드럽게
-                times: [0, 0.4, 0.6, 1], // 각 단계의 시간 분배
-                duration: 2.5, // 전체 애니메이션 시간
+                stiffness: 100,
+                damping: 12,
+                times: [0, 0.4, 0.6, 1],
+                duration: 2.5,
               }}
-              style={{ perspective: 1000 }} // 3D 효과를 위한 원근감 추가
+              style={{ perspective: 1000 }}
             >
               <Image
                 src="/imgs/cardBenefits/withbee_checkcard.png"
@@ -265,12 +272,13 @@ const CardIssuancePage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
       <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isAccountModalOpen}
+        onClose={() => setIsAccountModalOpen(false)}
         title="여행에 연결할 계좌를 선택해주세요."
         closeLabel="선택 완료"
-        onSubmit={handleTravel}
+        onSubmit={handleModalSubmit}
       >
         <div className={styles.accountList}>
           {dummyAccounts.map((account) => (
