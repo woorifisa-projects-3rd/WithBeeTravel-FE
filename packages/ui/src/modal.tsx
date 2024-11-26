@@ -28,7 +28,6 @@ export const Modal = ({
     if (onSubmit) {
       onSubmit(); // 페이지 이동 등의 로직 실행
     }
-    onClose(); // 모달 닫기
   };
 
   return (

@@ -23,9 +23,9 @@
 }
 
 .imgWrapper {
-  width: calc(100% - 100px);
+  width: calc(100% - 20%);
   /* min-width: 280px; */
-  height: 207px;
+  height: 200px;
   border-radius: 20px;
   background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
     no-repeat center / 162px 156.67px;

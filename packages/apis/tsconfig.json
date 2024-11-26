@@ -1,8 +1,11 @@
 {
-  "extends": "@withbee/typescript-config/react-library.json",
+  "extends": "@withbee/typescript-config/nextjs.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "@withbee/auth-config": ["../auth-config/src/index.ts"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "custom.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

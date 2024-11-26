@@ -1,0 +1,9 @@
+{
+  "extends": "@withbee/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "include": ["src", "types/next-auth.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

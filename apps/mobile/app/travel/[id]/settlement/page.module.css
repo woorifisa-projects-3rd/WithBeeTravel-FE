@@ -49,12 +49,21 @@
 .summaryInfo {
   display: flex;
   justify-content: space-between;
+  width: 50%;
   color: var(--color-gray-500);
 }
 
 .label {
   margin-right: 4px;
   font-size: 16px;
+  flex-grow: 1; /* label도 늘어나도록 설정 */
+  text-align: left;
+}
+
+.amount {
+  font-size: 16px;
+  flex-grow: 1;
+  text-align: right;
 }
 
 .detailsButton {
@@ -98,20 +107,39 @@
 
 .amountRow {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
   font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.amountColumn {
+  display: flex;
+  justify-content: space-between; /* 텍스트와 금액 간 양쪽 정렬 */
   width: 100%;
 }
 
-.paymentAmout {
-  color: var(--color-blue-10);
-  margin-left: 4px;
+.amountLabel {
+  min-width: 40px;
+  margin-right: 8px;
+  text-align: left;
 }
 
-.requestedAmount {
-  color: #ef4444;
+.paymentAmout {
   margin-left: 4px;
+  text-align: right;
+}
+
+.positiveRequestedAmount {
+  color: var(--color-blue-10);
+  margin-left: 4px;
+  text-align: right;
+}
+
+.negativeRequestedAmount {
+  color: #dd2a2a;
+  margin-left: 4px;
+  text-align: right;
 }
 
 .userList {
@@ -136,7 +164,7 @@
 }
 
 .negativeAmount {
-  color: #ef4444;
+  color: #dd2a2a;
   font-weight: bold;
 }
 
@@ -181,16 +209,16 @@
 }
 
 .remainingUsers {
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
   font-size: 14px;
   color: var(--color-gray-500);
 }
 
-.comment {
-  margin-top: 20px;
-  margin-bottom: 5px;
+.remainingUsersCompleted {
+  margin-top: 100px;
+  margin-bottom: 80px;
   text-align: center;
   font-size: 14px;
   color: var(--color-gray-500);
@@ -201,4 +229,23 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.disabledButton {
+  pointer-events: none;
+  cursor: not-allowed; /* 비활성화 커서 */
+  max-width: 340px;
+  width: 100%;
+  bottom: 100px;
+  padding: 0 25px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
+}
+
+.storeName {
+  white-space: nowrap; /* 텍스트를 한 줄로 제한 */
+  overflow: hidden; /* 넘치는 부분은 잘라냄 */
+  text-overflow: ellipsis; /* 잘린 텍스트 뒤에 '...'을 추가 */
+  max-width: 13ch; /* 13자까지만 표시 */
 }

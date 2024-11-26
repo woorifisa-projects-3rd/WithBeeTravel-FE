@@ -2,13 +2,15 @@
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
-import travelExam from '../../public/imgs/travelselect/travel_exam.png';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
+import dayjs from 'dayjs';
+import Link from 'next/link';
+import { FriendImage } from '@withbee/ui/friend-image';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,26 +22,17 @@ export default function page() {
   });
   const router = useRouter();
 
-  const cards = [
-    {
-      image: '/api/placeholder/400/200',
-      travelName: '호초룰루랄라',
-      date: '2024/12/24',
-    },
-    {
-      image: '/api/placeholder/400/200',
-      travelName: '진콩패키지',
-      date: '2024/12/24~2025/01/05',
-    },
-  ];
+  const { data: travelData, error } = useSWR('travelList', getTravelList);
+  if (travelData && 'data' in travelData) {
+    // console.log(travelData.data);
+  }
 
-  const { data, error } = useSWR('travelList', getTravelList);
-  console.log('data', data);
+  if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
+  if (!travelData) return <p>데이터를 불러오는 중...</p>;
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
     const response = await postInviteCode(inviteCode);
-    console.log(response);
 
     if ('code' in response) {
       alert(response.message || '알 수 없는 오류가 발생했습니다.');
@@ -48,16 +41,39 @@ export default function page() {
       ); // 에러 코드가 있는 응답은 그대로 throw
     }
 
-    // 여행 존재하면 해당 여행 홈으로 이동
     if ('data' in response && response.data) {
       router.push(`/travel/${response.data.travelId}`);
     }
   };
 
+  // 여행 데이터 정렬
+  const sortedTravelData =
+    travelData && 'data' in travelData && Array.isArray(travelData.data)
+      ? travelData.data
+          .map((card) => {
+            const today = dayjs().startOf('day');
+
+            const startDate = dayjs(card.travelStartDate).startOf('day');
+            const dDay = startDate.diff(today, 'day');
+            return { ...card, dDay };
+          })
+          .sort((a, b) => {
+            // 둘 다 다가오는 여행인 경우 D-day 오름차순
+            if (a.dDay >= 0 && b.dDay >= 0) {
+              return a.dDay - b.dDay;
+            }
+            // 둘 다 지난 여행인 경우 시작일 기준 내림차순 (최신순)
+            if (a.dDay < 0 && b.dDay < 0) {
+              return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
+            }
+            // 다가오는 여행을 먼저 보여주기
+            return b.dDay - a.dDay;
+          })
+      : [];
+
   return (
     <div className={styles.travelSelectWrap}>
       <Title label="여행 선택" />
-      {/* 위비프렌즈이미지 */}
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
@@ -68,7 +84,6 @@ export default function page() {
         />
       </div>
 
-      {/* 여행생성, 초대코드 버튼 */}
       <div className={styles.buttonWrap}>
         <button
           className={styles.button}
@@ -105,35 +120,48 @@ export default function page() {
         </button>
       </div>
 
-      {/* 생성한 그룹 나열하기 */}
       <div className={styles.cardWrap}>
-        {cards.map((card, index) => (
-          <div key={index} className={styles.card}>
-            <Image
-              src={travelExam}
-              alt={card.travelName}
-              className={styles.cardImage}
-            />
-            <div className={styles.cardContent}>
-              <div className={styles.cardText}>
+        {sortedTravelData.map((card, index) => (
+          <div key={index}>
+            <div className={styles.cardDay}>
+              {card.dDay >= 0 ? (
+                <span>
+                  다가오는 여행 <span>D-{card.dDay}</span>
+                </span>
+              ) : (
+                <span>지난 여행</span>
+              )}
+            </div>
+            <div className={styles.card}>
+              <Link href={`/travel/${card.travelId}`}>
                 <Image
-                  src="/imgs/travelselect/travel_select_plane.png"
-                  alt="비행기 아이콘"
-                  className={styles.icon}
-                  width={50}
-                  height={50}
+                  src={
+                    card.travelMainImage
+                      ? `/${card.travelMainImage}`
+                      : '/imgs/travelselect/travel_exam.png'
+                  }
+                  alt={card.travelName}
+                  className={styles.cardImage}
+                  width={300}
+                  height={100}
                 />
-                <div className={styles.travelNameWrap}>
-                  <span>{card.travelName}</span>
-                  <span className={styles.date}>{card.date}</span>
+                <div className={styles.cardContent}>
+                  <div className={styles.cardText}>
+                    <FriendImage src={card.profileImage} />
+                    <div className={styles.travelNameWrap}>
+                      <span>{card.travelName}</span>
+                      <span className={styles.date}>
+                        {card.travelStartDate} ~ {card.travelEndDate}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         ))}
       </div>
 
-      {/* 초대 코드 모달 */}
       <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
