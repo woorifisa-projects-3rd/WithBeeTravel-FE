@@ -138,7 +138,13 @@ export default async function Page({ params }: { params: Params }) {
               )}
           </ul>
         </div>
-        <div className={styles.remainingUsers}>
+        <div
+          className={
+            myTotalPayment.agreed
+              ? styles.remainingUsersCompleted
+              : styles.remainingUsers
+          }
+        >
           <span>정산 완료까지 남은 인원 : </span>
           <strong>{disagreeCount}</strong>
           <span>명</span>

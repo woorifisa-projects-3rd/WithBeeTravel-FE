@@ -216,6 +216,14 @@
   color: var(--color-gray-500);
 }
 
+.remainingUsersCompleted {
+  margin-top: 100px;
+  margin-bottom: 80px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-gray-500);
+}
+
 .btnWrapper {
   width: 100%;
   display: flex;
@@ -226,6 +234,13 @@
 .disabledButton {
   pointer-events: none;
   cursor: not-allowed; /* 비활성화 커서 */
+  max-width: 340px;
+  width: 100%;
+  bottom: 100px;
+  padding: 0 25px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
 }
 
 .storeName {
