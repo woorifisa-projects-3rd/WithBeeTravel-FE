@@ -37,22 +37,26 @@ export default function WibeeCardPayment({
         <span className={styles.storeName}>{payment.storeName}</span>
       </div>
       <div className={styles.check}>
-        {!payment.isAddedSharedPayment && isSelected ? (
-          <Image
-            src={selectIcon}
-            alt="select"
-            width="30"
-            height="30"
-            className={styles.selectIcon}
-          />
+        {!payment.isAddedSharedPayment ? (
+          isSelected ? (
+            <Image
+              src={selectIcon}
+              alt="select"
+              width="30"
+              height="30"
+              className={styles.selectIcon}
+            />
+          ) : (
+            <Image
+              src={notSelectIcon}
+              alt="not select"
+              width="30"
+              height="30"
+              className={styles.notSelectIcon}
+            />
+          )
         ) : (
-          <Image
-            src={notSelectIcon}
-            alt="not select"
-            width="30"
-            height="30"
-            className={styles.notSelectIcon}
-          />
+          ''
         )}
       </div>
     </div>
