@@ -147,7 +147,7 @@ export default function page() {
                 />
                 <div className={styles.cardContent}>
                   <div className={styles.cardText}>
-                    <FriendImage src={`${card.profileImage}`} />
+                    <FriendImage src={card.profileImage} />
                     <div className={styles.travelNameWrap}>
                       <span>{card.travelName}</span>
                       <span className={styles.date}>
