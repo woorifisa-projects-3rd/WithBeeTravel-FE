@@ -76,7 +76,11 @@ export default function Page({ params }: { params: Params }) {
       <div className={styles.btnWrapper}>
         <Button
           label="돌아가기"
-          onClick={() => router.push(`/travel/${params.id}/payments`)}
+          onClick={() =>
+            errorCode && ['SETTLEMENT-002', 'TRAVEL-001'].includes(errorCode)
+              ? router.push(`/travel`)
+              : router.push(`/travel/${params.id}/payments`)
+          }
         />
       </div>
     </div>
