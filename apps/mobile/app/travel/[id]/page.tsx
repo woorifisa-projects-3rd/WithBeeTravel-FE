@@ -27,6 +27,9 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
 
   const { data } = response;
 
+  const statistics = Object.entries(data!.statistics);
+  const travelCountriesCount = data?.countries.length;
+
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />
@@ -43,16 +46,21 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
             </Link>
           </div>
         </div>
-
         <div className={styles.imgWrapper}>{/* Placeholder for image */}</div>
 
-        <div className={styles.tagWrapper}>
-          {!data!.isDomesticTravel &&
-            data!.countries.map((country, index) => (
-              <Item key={index} label={country} />
+        {data?.isDomesticTravel ? (
+          <Item label="국내여행" />
+        ) : (
+          <div className={styles.tagWrapper}>
+            {data!.countries.map((country) => (
+              /* 여행지가 2개 미만이면 label 뒤에 '여행'을 붙임 */
+              <Item
+                key={country}
+                label={travelCountriesCount! < 2 ? `${country} 여행` : country}
+              />
             ))}
-        </div>
-
+          </div>
+        )}
         <div className={styles.friendsWrapper}>
           {data!.travelMembers!.map((member) => (
             <FriendImage key={member} src={member} />
@@ -67,12 +75,14 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
 
         <InviteCodeButton travelId={travelId} />
       </div>
-      <BarChart
-        expenses={Object.entries(data!.statistics).map(([key, value]) => ({
-          category: key,
-          amount: value,
-        }))}
-      />
+      {statistics.length !== 0 && (
+        <BarChart
+          expenses={statistics.map(([key, value]) => ({
+            category: key,
+            amount: value,
+          }))}
+        />
+      )}
     </div>
   );
 }
