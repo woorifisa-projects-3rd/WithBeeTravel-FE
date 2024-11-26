@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 // utils/date.ts
 export const formatDate = (date: {
   year: number;
@@ -16,6 +18,7 @@ export const getDateObject = (dateString: string) => {
     day: date.getDate(),
   };
 };
+
 export function formatDateToKorean(date: Date): string {
   return new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
@@ -31,5 +34,8 @@ export function formatDateToKorean(date: Date): string {
     .replace('.', '월 ')
     .replace('.', '일');
 }
+
+export const formatDateWithSlash = (date: string) =>
+  dayjs(date).format('YYYY/MM/DD');
 
 export default formatDateToKorean;
