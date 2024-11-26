@@ -11,6 +11,6 @@
       "*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts", "src/assets/**/*"],
   "exclude": ["node_modules", "dist"]
 }
