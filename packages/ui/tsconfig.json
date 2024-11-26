@@ -8,7 +8,7 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "*": ["src/*"]
+      "assets/*": ["src/assets/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "custom.d.ts", "src/assets/**/*"],
