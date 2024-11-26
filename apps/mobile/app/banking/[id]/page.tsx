@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
-import { instance } from '@withbee/apis';
+import { getAccountHistories, getAccountInfo, getUserState, instance } from '@withbee/apis';
 import { error } from 'console';
 
 interface AccountHistory {
@@ -43,7 +43,7 @@ export default function AccountPage() {
       const fetchData = async () => {
         try {
           // 계좌 정보 가져오기
-          const responseInfo = await instance.get<AccountInfo>(`/api/accounts/${id}/info`);
+          const responseInfo = await getAccountInfo(Number(id));
           if (Number(responseInfo.status) !== 200) {
             setError(true);
             router.push('/mypage'); // 오류 발생 시 리디렉션
@@ -54,7 +54,7 @@ export default function AccountPage() {
           }
 
           // 거래 내역 가져오기
-          const responseHistory = await instance.get<AccountHistory[]>(`/api/accounts/${id}`);
+          const responseHistory = await getAccountHistories(Number(id));
           if (Number(responseHistory.status) !== 200) {
             setError(true);
             router.push('/mypage'); // 오류 발생 시 리디렉션
@@ -101,9 +101,7 @@ export default function AccountPage() {
   };
 
   const handleTransferClick = async () => {
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) != 200) {
       alert('핀번호 재 설정 후 이용 가능');
       return;

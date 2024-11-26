@@ -4,23 +4,14 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
+import { AccountInfo, PinNumberResponse } from '@withbee/types';
 
 const AccountContext = React.createContext<AccountInfo[] | undefined>([]);
 
 
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
 
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
-}
 
 export default function BankingPage() {
   const router = useRouter();
@@ -29,9 +20,9 @@ export default function BankingPage() {
 
   const { showToast } = useToast();
 
-  useEffect(() => {
+  useEffect( () => {
     const fetchAccounts = async () => {
-      const response = await instance.get<AccountInfo[]>(`/api/accounts`);
+      const response = await getAccounts();
 
       if ('data' in response) {
         setAccounts(response.data);
@@ -60,9 +51,7 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
@@ -72,9 +61,7 @@ export default function BankingPage() {
   };
 
   const createAccountHandle = async () => {
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;

@@ -3,17 +3,13 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import { getAccountInfo, getAccountOwnerName, instance, transfer } from '@withbee/apis';
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
+import { AccountInfo } from '@withbee/types';
 
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
+
 
 interface TargetName {
   name: string;
@@ -48,9 +44,7 @@ export default function TransferDetailPage() {
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${myAccountId}/info`,
-        );
+        const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -65,12 +59,7 @@ export default function TransferDetailPage() {
     if (targetAccountNumber) {
       const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
-        const response = await instance.post<TargetName>(
-          '/api/accounts/find-user',
-          {
-            body: JSON.stringify(AccountNumberRequest),
-          },
-        );
+        const response = await getAccountOwnerName(targetAccountNumber);
         if ('data' in response) {
           setTargetAccount(response.data);
         } else {
@@ -129,10 +118,8 @@ export default function TransferDetailPage() {
     };
 
     try {
-      const response = await instance.post(
-        `/api/accounts/${myAccountId}/transfer`,
-        { body: JSON.stringify(transferRequest) },
-      );
+      const response = await transfer(Number(myAccountId),Number(amount),
+      String(targetAccountNumber), String(targetAccount?.name));
 
       showToast.success({
         message: `${targetAccount?.name}님이게

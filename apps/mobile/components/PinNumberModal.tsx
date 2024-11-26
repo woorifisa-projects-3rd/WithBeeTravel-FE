@@ -1,6 +1,7 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import styles from './PinNumberModal.module.css';
-import { instance } from '@withbee/apis';
+import { getUserState, instance, verifyPin } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 
 interface PinNumberModalProps {
@@ -38,9 +39,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
 
     if (isOpen) {
       const fetchUserState = async () => {
-        const response = await instance.get<PinNumberResponse>(
-          '/api/verify/user-state',
-        );
+        const response = await getUserState();
         if ('data' in response) {
           if (response.data?.failedPinCount !== 0) {
             setError(
@@ -66,9 +65,8 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
       pinNumber: pin,
     };
 
-    const response = await instance.post(`/api/verify/pin-number`, {
-      body: JSON.stringify(pinNumberRequest),
-    });
+    const response = await verifyPin(pin);
+
 
     if (Number(response.status) === 200) {
       onSubmit(pin); // 올바른 PIN이면 제출

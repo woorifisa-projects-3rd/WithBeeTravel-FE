@@ -4,15 +4,10 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useEffect, useState } from 'react';
 import { Button } from '@withbee/ui/button';
-import { instance } from '@withbee/apis';
+import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
+import { AccountInfo } from '@withbee/types';
 
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
 
 export default function TransferPage() {
   const router = useRouter();
@@ -28,9 +23,7 @@ export default function TransferPage() {
   useEffect(() => {
     if (accountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${accountId}/info`,
-        );
+        const response = await getAccountInfo(Number(accountId));
         console.log(response);
 
         if ('data' in response) {
@@ -66,11 +59,7 @@ export default function TransferPage() {
     localStorage.setItem('targetAccountNumber', targetAccount);
 
     try {
-      const response = await instance.post('/api/accounts/verify', {
-        body: JSON.stringify(AccountNumberRequest),
-      });
-
-      // 응답 처리
+      const response = await verifyAccount(targetAccount);
 
       if (Number(response.status) === 200) {
         router.push(`/banking/${accountId}/transfer/detail`);
