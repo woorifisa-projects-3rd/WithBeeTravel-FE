@@ -23,13 +23,7 @@ export class PaymentErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <>
-          {[1, 2, 3].map((index) => (
-            <PaymentSkeleton key={index} />
-          ))}
-        </>
-      );
+      return <PaymentSkeleton />;
     }
 
     return this.props.children;

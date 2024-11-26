@@ -1,5 +1,6 @@
 import { auth } from '@withbee/auth-config';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;
@@ -47,14 +48,14 @@ const fetchInstance = async <T = undefined>(
 
     if (!response.ok) {
       const errorResult = result as ErrorResponse;
-      console.error('Fetch Error:', errorResult);
+      console.error(ERROR_MESSAGES['FETCH-FAILED'], errorResult);
       return errorResult;
     }
 
     return result as SuccessResponse<T>;
   } catch (error) {
-    console.error('Fetch Error:', error);
-    throw error;
+    console.error(ERROR_MESSAGES['FETCH-FAILED'], error);
+    throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
   }
 };
 

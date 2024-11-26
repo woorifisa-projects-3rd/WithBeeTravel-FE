@@ -11,6 +11,7 @@ type ValidationErrorCodes =
 
 type CustomErrorCode =
   | 'COMMON'
+  | 'FETCH-FAILED'
   | AuthErrorCodes
   | PaymentErrorCodes
   | BankingErrorCodes
@@ -20,6 +21,7 @@ type CustomErrorCode =
 
 export const ERROR_MESSAGES: Record<CustomErrorCode, string> = {
   COMMON: '알 수 없는 오류가 발생했습니다.',
+  'FETCH-FAILED': '데이터를 불러오는 중 오류가 발생했습니다.',
   'AUTH-001': '사용자 인증에 실패하였습니다.',
   'AUTH-002': '관리자 권한이 필요합니다.',
   'AUTH-003': '잘못된 이메일 또는 비밀번호입니다.',
@@ -36,7 +38,7 @@ export const ERROR_MESSAGES: Record<CustomErrorCode, string> = {
   'BANKING-005': '요청하신 거래 내역을 찾을 수 없습니다.',
   'BANKING-006': '해당 거래 내역의 접근 권한이 부족합니다.',
   'BANKING-007': '이미 추가된 결제 내역입니다',
-  'PAYMENT-001': '공동 결제 내역이 존재하지 않습니다.',
+  'PAYMENT-001': '해당하는 공동 결제 내역이 존재하지 않습니다.',
   'PAYMENT-002': '해당 공동 결제 내역에 대한 수정 권한이 없습니다.',
   'PAYMENT-003': '해당 공동 결제 내역에 대한 정보 접근 권한이 없습니다.',
   'PAYMENT-004': '여행 멤버가 아닌 유저가 포함되어 있습니다.',
