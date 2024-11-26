@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useParams, useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
@@ -7,7 +7,6 @@ import { Button } from '@withbee/ui/button';
 import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
-
 
 export default function TransferPage() {
   const router = useRouter();

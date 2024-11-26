@@ -1,15 +1,18 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { getAccountInfo, getAccountOwnerName, instance, transfer } from '@withbee/apis';
+import {
+  getAccountInfo,
+  getAccountOwnerName,
+  instance,
+  transfer,
+} from '@withbee/apis';
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo } from '@withbee/types';
-
-
 
 interface TargetName {
   name: string;
@@ -118,8 +121,12 @@ export default function TransferDetailPage() {
     };
 
     try {
-      const response = await transfer(Number(myAccountId),Number(amount),
-      String(targetAccountNumber), String(targetAccount?.name));
+      const response = await transfer(
+        Number(myAccountId),
+        Number(amount),
+        String(targetAccountNumber),
+        String(targetAccount?.name),
+      );
 
       showToast.success({
         message: `${targetAccount?.name}님이게
