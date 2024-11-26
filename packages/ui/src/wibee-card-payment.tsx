@@ -9,23 +9,19 @@ import Image from 'next/image';
 
 interface WibeeCardProps {
   payment: WibeeCardHistory;
+  isSelected: boolean;
   handleSelectHistory: (id: number) => void;
 }
 
 export default function WibeeCardPayment({
   payment,
+  isSelected,
   handleSelectHistory,
 }: WibeeCardProps) {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-
-  const handleSelected = (id: number) => {
-    setIsSelected(!isSelected);
-    handleSelectHistory(id);
-  };
   return (
     <div
       className={`${styles.container} ${payment.isAddedSharedPayment ? styles.isAlreadyAdded : ''}`}
-      onClick={() => handleSelected(payment.id)}
+      onClick={() => handleSelectHistory(payment.id)}
     >
       <div className={styles.info}>
         <span className={styles.date}>

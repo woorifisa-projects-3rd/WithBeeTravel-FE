@@ -41,24 +41,34 @@
   align-items: flex-end;
 }
 
-.dateModalGroup {
+.list {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 30px;
+  padding: 0 2px;
+  /* margin-bottom: 20px; */
 }
 
-.customDateModalInput {
+.list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 10px;
-  position: relative;
+  color: var(--color-gray-700);
 }
 
-.dateInput span {
-  color: var(--color-gray-500);
+.list span {
+  color: var(--color-gray-800);
+}
+
+.list span::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 10px;
+  background: url('/arrow_right.png') no-repeat center / contain;
+  margin-left: 8px;
+  margin-bottom: 2px;
 }
 
 .historyWrapper {
@@ -75,7 +85,7 @@
   left: 50%;
   transform: translate(-50%);
   bottom: 0px;
-  padding-bottom: 100px;
+  padding-bottom: 90px;
   position: fixed;
   left: 50%;
   transform: translate(-50%);
@@ -87,5 +97,4 @@
 
 .submitButtonWrapper {
   width: calc(100% - 50px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
