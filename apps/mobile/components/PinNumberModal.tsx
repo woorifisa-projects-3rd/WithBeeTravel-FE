@@ -4,6 +4,7 @@ import { instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 
 interface PinNumberModalProps {
+  isRegister?: boolean;
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (pin: string) => void;
@@ -19,6 +20,7 @@ interface PinNumberResponse {
 }
 
 const PinNumberModal: React.FC<PinNumberModalProps> = ({
+  isRegister = false,
   isOpen,
   onClose,
   onSubmit,
@@ -211,12 +213,13 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
 
   return (
     isOpen && (
-      <div className={styles.modal}>
+      <>
+        <div className={styles.modal} onClick={onClose} />
         <div className={styles.modalContent}>
-          <div className={styles.closeButton} onClick={onClose}>
-            ←
-          </div>
-          <h2 className={styles.inputPinNumberText}>핀번호 입력</h2>
+          <button className={styles.closeButton} onClick={onClose} />
+          <h2 className={styles.inputPinNumberText}>
+            PIN 번호 {isRegister ? '설정' : '입력'}
+          </h2>
           {renderPinInput()}
 
           {/* 에러 메시지가 있을 때만 텍스트를 변경하고, 없으면 빈 공간을 차지 */}
@@ -226,7 +229,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
 
           {renderKeyboard()}
         </div>
-      </div>
+      </>
     )
   );
 };
