@@ -47,10 +47,9 @@ const CardIssuancePage = () => {
 
   const handleModalSubmit = async () => {
     if (selectedAccount) {
+      isCardIssuance ? selectedAccount.accountNumber : '';
       const response = await postConnectedAccount(
         selectedAccount.accountId,
-        selectedAccount.accountNumber,
-        isCardIssuance ? selectedAccount.accountNumber : '',
         isCardIssuance,
       );
 

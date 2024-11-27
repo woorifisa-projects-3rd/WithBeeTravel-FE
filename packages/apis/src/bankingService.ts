@@ -26,8 +26,6 @@ export const getAccounts = async (): Promise<
 
 export const postConnectedAccount = async (
   accountId: number,
-  connectedAccountId: string,
-  wibeeCardAccountId: string,
   isWibeeCard: boolean,
 ): Promise<SuccessResponse<connectedAccountType> | ErrorResponse> => {
   const response = await instance.post<connectedAccountType>(
@@ -35,8 +33,6 @@ export const postConnectedAccount = async (
     {
       body: JSON.stringify({
         accountId,
-        connectedAccountId,
-        wibeeCardAccountId,
         isWibeeCard,
       }),
     },
