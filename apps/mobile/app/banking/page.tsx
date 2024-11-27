@@ -8,8 +8,6 @@ import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
 
-const AccountContext = React.createContext<AccountInfo[] | undefined>([]);
-
 
 
 
@@ -70,7 +68,6 @@ export default function BankingPage() {
   };
 
   return (
-    <AccountContext.Provider value={accounts}>
 
     <div className={styles.container}>
       <Title label="뱅킹 홈" />
@@ -126,6 +123,5 @@ export default function BankingPage() {
         ))}
       </div>
     </div>
-    </AccountContext.Provider>
   );
 }
