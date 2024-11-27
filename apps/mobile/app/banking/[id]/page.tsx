@@ -1,11 +1,16 @@
-"use client";
+'use client';
 
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
-import { getAccountHistories, getAccountInfo, getUserState, instance } from '@withbee/apis';
+import {
+  getAccountHistories,
+  getAccountInfo,
+  getUserState,
+  instance,
+} from '@withbee/apis';
 import { error } from 'console';
 
 interface AccountHistory {
@@ -63,7 +68,6 @@ export default function AccountPage() {
           if ('data' in responseHistory) {
             setHistories(responseHistory.data);
           }
-
         } catch (err) {
           setError(true);
           router.push('/mypage'); // 오류 발생 시 리디렉션

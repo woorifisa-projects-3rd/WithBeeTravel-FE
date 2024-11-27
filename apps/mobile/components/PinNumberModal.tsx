@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import styles from './PinNumberModal.module.css';
 import { getUserState, instance, verifyPin } from '@withbee/apis';
@@ -66,7 +66,6 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
     };
 
     const response = await verifyPin(pin);
-
 
     if (Number(response.status) === 200) {
       onSubmit(pin); // 올바른 PIN이면 제출

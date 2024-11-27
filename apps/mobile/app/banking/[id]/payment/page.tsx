@@ -1,15 +1,24 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { checkWibee, getAccountInfo, getUserState, instance, registerPayment } from '@withbee/apis';
+import {
+  checkWibee,
+  getAccountInfo,
+  getUserState,
+  instance,
+  registerPayment,
+} from '@withbee/apis';
 import PinNumberModal from '../../../../components/PinNumberModal';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-import { AccountInfo, HistoryRequest, PinNumberResponse, WibeeCardResponse } from '@withbee/types';
-
-
+import {
+  AccountInfo,
+  HistoryRequest,
+  PinNumberResponse,
+  WibeeCardResponse,
+} from '@withbee/types';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -97,7 +106,7 @@ export default function PaymentPage() {
         Number(myAccountId),
         parseInt(payAm),
         rqspeNm,
-        isWibeeCardCheckbox
+        isWibeeCardCheckbox,
       );
       showToast.success({ message: '거래내역 등록 완료!' });
 

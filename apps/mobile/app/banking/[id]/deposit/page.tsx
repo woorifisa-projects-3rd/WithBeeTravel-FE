@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
@@ -61,7 +61,11 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await deposit(Number(myAccountId),Number(amount),'입금')
+      const response = await deposit(
+        Number(myAccountId),
+        Number(amount),
+        '입금',
+      );
       showToast.success({
         message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
       });
