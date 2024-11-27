@@ -1,41 +1,36 @@
 'use client';
 
-import type { PageResponse, SharedPayment, TravelMember } from '@withbee/types';
+import type { PageResponse, SharedPayment, TravelHome } from '@withbee/types';
 import styles from './payment-list.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
-import { usePaymentStore } from '@withbee/stores';
 import useSWRInfinite from 'swr/infinite';
 import dayjs from 'dayjs';
 import { Payment } from './payment';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useToast } from '@withbee/hooks/useToast';
-import { getDateObject } from '@withbee/utils';
 import { PaymentSkeleton } from './payment-skeleton';
 import Image from 'next/image';
+import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
 
 interface PaymentListProps {
   travelId: number;
   initialPayments?: PageResponse<SharedPayment> | undefined;
+  travelInfo: TravelHome;
 }
 
 export default function PaymentList({
   travelId,
   initialPayments,
+  travelInfo,
 }: PaymentListProps) {
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    sortBy,
-    isDateFiltered,
-    memberId,
-    category,
-  } = usePaymentStore();
+  const { params, updateParam } = usePaymentParams();
+  const { sortBy, startDate, endDate, memberId, category } = params;
   const { showToast } = useToast();
+
+  const { travelStartDate, travelEndDate, travelMembers } = travelInfo;
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
@@ -43,26 +38,27 @@ export default function PaymentList({
   });
 
   const getKey = (pageIndex: number) => {
-    const params = new URLSearchParams({
+    const queryParams = new URLSearchParams({
       page: pageIndex.toString(),
-      sortBy,
+      sortBy: params.sortBy,
+      startDate: travelStartDate,
+      endDate: travelEndDate,
     });
 
     if (memberId !== 0) {
-      params.append('memberId', memberId.toString());
+      queryParams.append('memberId', memberId.toString());
     }
 
     if (category !== '전체') {
-      params.append('category', category);
+      queryParams.append('category', category);
     }
 
-    // 날짜 필터가 적용된 경우에만 날짜 파라미터 추가
-    if (isDateFiltered) {
-      params.append('startDate', startDate);
-      params.append('endDate', endDate);
+    if (startDate && endDate) {
+      queryParams.set('startDate', startDate);
+      queryParams.set('endDate', endDate);
     }
 
-    return `/api/travels/${travelId}/payments?${params.toString()}`;
+    return `/api/travels/${travelId}/payments?${queryParams.toString()}`;
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
@@ -70,12 +66,13 @@ export default function PaymentList({
     useSWRInfinite(
       getKey,
       async (url) => {
-        console.log('url', url);
+        console.log('ㅇㅇㅇㅇㅇㅇ url', url);
         const response = await getSharedPayments({
           travelId,
           page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
-          sortBy,
-          ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
+          sortBy: sortBy as 'latest' | 'amount',
+          startDate: startDate || travelStartDate,
+          endDate: endDate || travelEndDate,
           ...(memberId !== 0 && { memberId }),
           ...(category !== '전체' && { category }),
         });
@@ -93,10 +90,13 @@ export default function PaymentList({
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
-              if (new Date(startDate) > new Date(endDate)) {
-                setEndDate(getDateObject(startDate));
-              } else {
-                setStartDate(getDateObject(endDate));
+              if (startDate && endDate) {
+                if (new Date(startDate) > new Date(endDate)) {
+                  // URL 파라미터 업데이트
+                  updateParam('endDate', startDate);
+                } else {
+                  updateParam('startDate', endDate);
+                }
               }
             }
             showToast.warning({
@@ -203,6 +203,7 @@ export default function PaymentList({
                       <Payment
                         key={`payment-${payment.id}-${idx}`}
                         travelId={travelId}
+                        travelMembers={travelMembers}
                         paymentInfo={payment}
                       />
                     ))}
@@ -213,6 +214,7 @@ export default function PaymentList({
                   <Payment
                     key={payment.id}
                     travelId={travelId}
+                    travelMembers={travelMembers}
                     paymentInfo={payment}
                   />
                 ))}
@@ -220,11 +222,11 @@ export default function PaymentList({
         </section>
       )}
 
+      {isLoading && <PaymentSkeleton count={2} />}
+
       {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
       <div ref={ref}>
-        {(isLoading || (isValidating && !error && size > 1)) && (
-          <PaymentSkeleton count={2} />
-        )}
+        {isValidating && !error && size > 1 && <PaymentSkeleton count={1} />}
       </div>
     </AnimatePresence>
   );
