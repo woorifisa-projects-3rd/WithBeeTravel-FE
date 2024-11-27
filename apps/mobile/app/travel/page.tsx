@@ -38,7 +38,7 @@ export default function page() {
       alert(response.message || '알 수 없는 오류가 발생했습니다.');
       throw new Error(
         ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-      ); // 에러 코드가 있는 응답은 그대로 throw
+      );
     }
 
     if ('data' in response && response.data) {

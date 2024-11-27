@@ -7,25 +7,14 @@ import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { getAccounts, postConnectedAccount } from '@withbee/apis';
+import useSWR from 'swr';
 
 interface Account {
-  id: number;
-  bankName: string;
+  accountId: number;
+  product: string;
   accountNumber: string;
 }
-
-const dummyAccounts: Account[] = [
-  {
-    id: 1,
-    bankName: 'Withbee Bank',
-    accountNumber: '123-456-789',
-  },
-  {
-    id: 2,
-    bankName: 'Another Bank',
-    accountNumber: '987-654-321',
-  },
-];
 
 const CardIssuancePage = () => {
   const [issuanceState, setIssuanceState] = useState('initial');
@@ -33,21 +22,42 @@ const CardIssuancePage = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
+  const { data: AccountListData, error } = useSWR('accounts', getAccounts);
+  const accountList =
+    AccountListData && 'data' in AccountListData ? AccountListData.data : [];
+  console.log(accountList);
+
   const handleIssuance = () => {
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);
   };
 
   const handleAccountSelection = (account: Account) => {
-    if (selectedAccount?.id === account.id) {
+    if (selectedAccount?.accountId === account.accountId) {
       setSelectedAccount(null);
     } else {
       setSelectedAccount(account);
     }
   };
 
-  const handleModalSubmit = () => {
+  const handleModalSubmit = async () => {
     if (selectedAccount) {
+      console.log(
+        selectedAccount.accountId, // 첫 번째 인자: accountId
+        selectedAccount.accountNumber, // 두 번째 인자: connectedAccountId
+        isCardIssuance ? selectedAccount.accountNumber : '', // 세 번째 인자: wibeeCardAccountId
+        isCardIssuance, // 네 번째 인자: isWibeeCard);
+      );
+
+      const response = await postConnectedAccount(
+        selectedAccount.accountId, // 첫 번째 인자: accountId
+        selectedAccount.accountNumber, // 두 번째 인자: connectedAccountId
+        isCardIssuance ? selectedAccount.accountNumber : '', // 세 번째 인자: wibeeCardAccountId
+        isCardIssuance, // 네 번째 인자: isWibeeCard
+      );
+
+      console.log(response);
+
       setIsAccountModalOpen(false);
 
       if (isCardIssuance) {
@@ -216,7 +226,7 @@ const CardIssuancePage = () => {
             </motion.p>
           </motion.div>
         )}
-        {/* Complete state remains the same */}
+        {/* 발급 완료 */}
         {issuanceState === 'complete' && (
           <motion.div
             className={styles.completeContainer}
@@ -281,37 +291,41 @@ const CardIssuancePage = () => {
         onSubmit={handleModalSubmit}
       >
         <div className={styles.accountList}>
-          {dummyAccounts.map((account) => (
-            <div
-              key={account.id}
-              className={`${styles.accountItem} ${
-                selectedAccount?.id === account.id ? styles.selected : ''
-              }`}
-              onClick={() => handleAccountSelection(account)}
-            >
-              <div className={styles.accountInfo}>
-                <p className={styles.accountNumber}>{account.accountNumber}</p>
-                <p className={styles.bankName}>{account.bankName}</p>
+          {Array.isArray(accountList) && accountList.length > 0 ? (
+            accountList.map((account: Account) => (
+              <div
+                key={account.accountId}
+                className={styles.accountItem}
+                onClick={() => handleAccountSelection(account)}
+              >
+                <div className={styles.accountInfo}>
+                  <p className={styles.accountNumber}>
+                    {account.accountNumber}
+                  </p>
+                  <p className={styles.product}>{account.product}</p>
+                </div>
+                {selectedAccount?.accountId === account.accountId ? (
+                  <Image
+                    src="/check.png"
+                    alt="select"
+                    width={30}
+                    height={30}
+                    className={styles.selectIcon}
+                  />
+                ) : (
+                  <Image
+                    src="/uncheck.png"
+                    alt="not select"
+                    width={30}
+                    height={30}
+                    className={styles.notSelectIcon}
+                  />
+                )}
               </div>
-              {selectedAccount?.id === account.id ? (
-                <Image
-                  src="/check.png"
-                  alt="select"
-                  width={30}
-                  height={30}
-                  className={styles.selectIcon}
-                />
-              ) : (
-                <Image
-                  src="/uncheck.png"
-                  alt="not select"
-                  width={30}
-                  height={30}
-                  className={styles.notSelectIcon}
-                />
-              )}
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>연결된 계좌가 없습니다.</p> // accountList가 비어있으면 메시지 표시
+          )}
         </div>
       </Modal>
     </div>
