@@ -151,6 +151,12 @@ export default function TravelForm({
       return;
     }
 
+    // 해외 여행 시 국가 선택 검증
+    if (formData.isDomesticTravel && formData.travelCountries.length === 0) {
+      formValidation.invalidCountrySelection();
+      return;
+    }
+
     // 날짜 검증
     const dateValidation = validators.travelDates(
       formData.travelStartDate,

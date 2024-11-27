@@ -48,6 +48,9 @@ export const useToast = () => {
     invalidDateOrder: () =>
       toast.error('종료일이 시작일보다 빠를 수 없습니다.', defaultOptions),
 
+    invalidCountrySelection: () =>
+      toast.error('해외 여행 시 최소 1개 국가를 추가해주세요.', defaultOptions),
+
     formSuccess: (isEdit: boolean) =>
       toast.success(
         isEdit ? '여행이 수정되었습니다!' : '여행이 생성되었습니다!',
