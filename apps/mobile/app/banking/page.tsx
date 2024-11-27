@@ -8,9 +8,6 @@ import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
 
-
-
-
 export default function BankingPage() {
   const router = useRouter();
 
@@ -78,40 +75,40 @@ export default function BankingPage() {
       />
       <div className={styles.space}></div>
 
-        <div className={styles.balanceSection}>
-          <div className={styles.balanceHeader}>
-            <span>총 잔액</span>
-          </div>
-          <div className={styles.totalBalance}>
-            {formatNumber(totalBalance)}원
-          </div>
+      <div className={styles.balanceSection}>
+        <div className={styles.balanceHeader}>
+          <span>총 잔액</span>
         </div>
+        <div className={styles.totalBalance}>
+          {formatNumber(totalBalance)}원
+        </div>
+      </div>
 
-        <div className={styles.transactionList}>
-          {(accounts ?? []).map((transaction) => (
-            <div
-              key={transaction.accountId}
-              className={styles.transactionItem}
-              onClick={() => router.push(`/banking/${transaction.accountId}`)}
-            >
-              <div className={styles.transactionInfo}>
-                <div className={styles.accountType}>{transaction.product}</div>
-                <div className={styles.accountNumber}>
-                  {transaction.accountNumber}
-                </div>
+      <div className={styles.transactionList}>
+        {(accounts ?? []).map((transaction) => (
+          <div
+            key={transaction.accountId}
+            className={styles.transactionItem}
+            onClick={() => router.push(`/banking/${transaction.accountId}`)}
+          >
+            <div className={styles.transactionInfo}>
+              <div className={styles.accountType}>{transaction.product}</div>
+              <div className={styles.accountNumber}>
+                {transaction.accountNumber}
               </div>
+            </div>
 
-              {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
-              <div className={styles.transactionDetails}>
-                <div className={styles.sendButtonContainer}>
-                  <Button
-                    size="xsmall"
-                    label="송금"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                      handleTransferClick(e, transaction.accountId)
-                    }
-                  />
-                </div>
+            {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
+            <div className={styles.transactionDetails}>
+              <div className={styles.sendButtonContainer}>
+                <Button
+                  size="xsmall"
+                  label="송금"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    handleTransferClick(e, transaction.accountId)
+                  }
+                />
+              </div>
 
               {/* 금액을 오른쪽 정렬 */}
               <div className={styles.amount}>
