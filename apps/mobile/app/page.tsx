@@ -7,7 +7,8 @@ import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
-import { getAccounts, postConnectedAccount } from '@withbee/apis';
+import { getAccounts, getisCard, postConnectedAccount } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 
 interface Account {
@@ -22,10 +23,14 @@ const CardIssuancePage = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
+  // 계좌 리스트 조회
   const { data: AccountListData, error } = useSWR('accounts', getAccounts);
   const accountList =
     AccountListData && 'data' in AccountListData ? AccountListData.data : [];
-  console.log(accountList);
+
+  // 위비카드연결여부
+  const { data: isCardData } = useSWR('isCard', getisCard);
+  const hasCard = isCardData && 'data' in isCardData && isCardData.data;
 
   const handleIssuance = () => {
     setIsCardIssuance(true);
@@ -42,21 +47,19 @@ const CardIssuancePage = () => {
 
   const handleModalSubmit = async () => {
     if (selectedAccount) {
-      console.log(
-        selectedAccount.accountId, // 첫 번째 인자: accountId
-        selectedAccount.accountNumber, // 두 번째 인자: connectedAccountId
-        isCardIssuance ? selectedAccount.accountNumber : '', // 세 번째 인자: wibeeCardAccountId
-        isCardIssuance, // 네 번째 인자: isWibeeCard);
-      );
-
       const response = await postConnectedAccount(
-        selectedAccount.accountId, // 첫 번째 인자: accountId
-        selectedAccount.accountNumber, // 두 번째 인자: connectedAccountId
-        isCardIssuance ? selectedAccount.accountNumber : '', // 세 번째 인자: wibeeCardAccountId
-        isCardIssuance, // 네 번째 인자: isWibeeCard
+        selectedAccount.accountId,
+        selectedAccount.accountNumber,
+        isCardIssuance ? selectedAccount.accountNumber : '',
+        isCardIssuance,
       );
 
-      console.log(response);
+      if ('code' in response) {
+        alert(response.message || '알 수 없는 오류가 발생했습니다.');
+        throw new Error(
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+        );
+      }
 
       setIsAccountModalOpen(false);
 
@@ -66,7 +69,6 @@ const CardIssuancePage = () => {
           setIssuanceState('complete');
         }, 7000);
       } else {
-        // 여행 선택 페이지로 이동
         window.location.href = '/travel';
       }
     } else {
@@ -148,7 +150,15 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              <Button label="발급받기" onClick={handleIssuance} />
+              {hasCard ? (
+                <Link href="/travel">
+                  <Button label="여행 생성하러 가기" />
+                </Link>
+              ) : (
+                <>
+                  <Button label="발급받기" onClick={handleIssuance} />
+                </>
+              )}
               <div
                 className={styles.skipText}
                 onClick={() => setIsAccountModalOpen(true)}
@@ -324,7 +334,7 @@ const CardIssuancePage = () => {
               </div>
             ))
           ) : (
-            <p>연결된 계좌가 없습니다.</p> // accountList가 비어있으면 메시지 표시
+            <p>연결된 계좌가 없습니다.</p>
           )}
         </div>
       </Modal>

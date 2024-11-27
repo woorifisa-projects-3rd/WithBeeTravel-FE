@@ -8,6 +8,15 @@ import {
   connectedAccountType,
 } from '@withbee/types';
 
+export const getisCard = async (): Promise<
+  SuccessResponse<connectedAccountType> | ErrorResponse
+> => {
+  const response = await instance.get<connectedAccountType>(
+    '/api/travels/accounts',
+  );
+  return response;
+};
+
 export const getAccounts = async (): Promise<
   SuccessResponse<accountType> | ErrorResponse
 > => {
