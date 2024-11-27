@@ -94,8 +94,6 @@ export default function Page({ params }: WibeeCardProps) {
       }
 
       if (response.data) {
-        console.log(response.data);
-
         setData(response.data);
         setPeriodStartDate(response.data.startDate);
         setPeriodEndDate(response.data.endDate);
@@ -136,8 +134,6 @@ export default function Page({ params }: WibeeCardProps) {
   // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
   const handleSubmit = async () => {
     try {
-      console.log(selectedHistoryIds);
-
       const response = await postWibeeCardToSharedPayment(
         id,
         selectedHistoryIds,

@@ -26,7 +26,6 @@ export const postWibeeCardToSharedPayment = async (
   travelId: string,
   historyId: number[],
 ) => {
-  console.log(JSON.stringify(historyId));
   const historyRequest = {
     historyId,
   };
