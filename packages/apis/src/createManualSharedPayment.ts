@@ -30,11 +30,6 @@ export const createManualSharedPayment = async (
       hour = 0; // 오전 12시는 자정이므로 0으로 처리
     }
 
-    // 결과 문자열 반환 (분은 없을 경우 "00"으로 처리)
-    console.log(
-      `${date} ${hour.toString().padStart(2, '0')}:${minuteStr.padStart(2, '0')}`,
-    );
-
     return `${date} ${hour.toString().padStart(2, '0')}:${minuteStr.padStart(2, '0')}`;
   };
 
