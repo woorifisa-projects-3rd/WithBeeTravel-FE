@@ -1,21 +1,39 @@
+'use server';
+
 import type {
   LoginRequest,
   TokenResponse,
   RefreshTokenRequest,
 } from '@withbee/types';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 async function post<T>(url: string, data: unknown) {
-  const response = await fetch(`${BASE_URL}${url}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    console.log('auth data', JSON.stringify(data));
 
-  return response.json() as Promise<T>;
+    const response = await fetch(`${BASE_URL}${url}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      cache: 'no-cache',
+    });
+
+    if (!response.ok) {
+      console.error(ERROR_MESSAGES['FETCH-FAILED'], response.status);
+      throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
+    }
+
+    // console.log('response', response);
+
+    return await response.json();
+  } catch (error) {
+    console.error('Auth API error:', error);
+    return null;
+  }
 }
 
 export const login = (data: LoginRequest) => {
@@ -23,5 +41,5 @@ export const login = (data: LoginRequest) => {
 };
 
 export const refresh = (data: RefreshTokenRequest) => {
-  return post<{ data: TokenResponse }>('/api/auth/refresh', data);
+  return post<{ data: TokenResponse }>('/api/auth/token-refresh', data);
 };
