@@ -38,7 +38,7 @@ useEffect(()=>{
   if(error){
     //TODO : 토스트 두 번 뜨는거 고쳐야 함
     showToast.error({message:`로그인 후 이용할 수 있어요!`})
-    router.push(`/login`);
+    //router.push(`/login`);
   }
 
 },[error])
