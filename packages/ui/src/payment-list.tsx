@@ -43,9 +43,6 @@ export default function PaymentList({
   });
 
   const getKey = (pageIndex: number) => {
-    // 이전 페이지가 마지막이면 더 이상 로드하지 않음
-    if (data && data[pageIndex - 1]?.last) return null;
-
     return {
       travelId,
       page: pageIndex,
@@ -62,6 +59,7 @@ export default function PaymentList({
     useSWRInfinite(
       getKey,
       async (params) => {
+        console.log('params', params.page);
         const response = await getSharedPayments(params);
 
         if ('code' in response) {
@@ -73,7 +71,7 @@ export default function PaymentList({
       {
         fallbackData: initialPayments ? [initialPayments] : undefined,
         suspense: true,
-        errorRetryInterval: 60000,
+        errorRetryInterval: 60000, // 1분
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
@@ -85,10 +83,11 @@ export default function PaymentList({
                   updateParam('startDate', endDate);
                 }
               }
+              showToast.warning({
+                message:
+                  ERROR_MESSAGES[err.code as keyof typeof ERROR_MESSAGES],
+              });
             }
-            showToast.warning({
-              message: ERROR_MESSAGES[err.code as keyof typeof ERROR_MESSAGES],
-            });
           } else {
             showToast.error({
               message: ERROR_MESSAGES['FETCH-FAILED'],
@@ -170,7 +169,9 @@ export default function PaymentList({
 
   return (
     <AnimatePresence>
-      {data && !isLoading && !isValidating && (
+      {isLoading ? (
+        <PaymentSkeleton count={2} />
+      ) : (
         <section className={styles.paymentContainer}>
           <motion.div
             key="content"
@@ -198,23 +199,23 @@ export default function PaymentList({
                 ))
               : // 금액순일 때는 그룹화 없이 바로 렌더링
                 payments.map((payment) => (
-                  <Payment
-                    key={payment.id}
-                    travelId={travelId}
-                    travelMembers={travelMembers}
-                    paymentInfo={payment}
-                  />
+                  <>
+                    <Payment
+                      key={payment.id}
+                      travelId={travelId}
+                      travelMembers={travelMembers}
+                      paymentInfo={payment}
+                    />
+                  </>
                 ))}
+            <div ref={ref} />
           </motion.div>
         </section>
       )}
 
-      {isLoading && <PaymentSkeleton count={2} />}
-
-      {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
-      <div ref={ref}>
-        {isValidating && !error && size > 1 && <PaymentSkeleton count={1} />}
-      </div>
+      {!isLoading && isValidating && !error && size > 1 && (
+        <PaymentSkeleton count={2} />
+      )}
     </AnimatePresence>
   );
 }
