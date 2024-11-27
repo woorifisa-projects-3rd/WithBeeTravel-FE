@@ -13,6 +13,8 @@ import {
   AccountNumberRequest,
   TargetName,
   WibeeCardResponse,
+  accountType,
+  connectedAccountType,
 } from '@withbee/types';
 
 // 보유 계좌 목록 불러오기
@@ -99,6 +101,38 @@ export const deposit = async (
     `/api/accounts/${myAccountId}/deposit`,
     {
       body: JSON.stringify({ amount, rqspeNm }),
+    },
+  );
+  return response;
+};
+
+export const getisCard = async (): Promise<
+  SuccessResponse<connectedAccountType> | ErrorResponse
+> => {
+  const response = await instance.get<connectedAccountType>(
+    '/api/travels/accounts',
+  );
+  return response;
+};
+
+// export const getAccounts = async (): Promise<
+//   SuccessResponse<accountType> | ErrorResponse
+// > => {
+//   const response = await instance.get<accountType>('/api/accounts');
+//   return response;
+// };
+
+export const postConnectedAccount = async (
+  accountId: number,
+  isWibeeCard: boolean,
+): Promise<SuccessResponse<connectedAccountType> | ErrorResponse> => {
+  const response = await instance.post<connectedAccountType>(
+    '/api/travels/accounts',
+    {
+      body: JSON.stringify({
+        accountId,
+        isWibeeCard,
+      }),
     },
   );
   return response;

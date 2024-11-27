@@ -58,3 +58,15 @@ export interface DepositRequest {
 export interface AccountNumberRequest {
   accountNumber: string;
 }
+
+export interface connectedAccountType {
+  accountId: number;
+  connectedAccountId: String;
+  wibeeCardAccountId: string;
+  isWibeeCard: boolean;
+}
+
+export interface accountType {
+  accountNumber: String;
+  product: string;
+}

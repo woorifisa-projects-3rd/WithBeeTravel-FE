@@ -7,25 +7,15 @@ import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { getAccounts, getisCard, postConnectedAccount } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
+import useSWR from 'swr';
 
 interface Account {
-  id: number;
-  bankName: string;
+  accountId: number;
+  product: string;
   accountNumber: string;
 }
-
-const dummyAccounts: Account[] = [
-  {
-    id: 1,
-    bankName: 'Withbee Bank',
-    accountNumber: '123-456-789',
-  },
-  {
-    id: 2,
-    bankName: 'Another Bank',
-    accountNumber: '987-654-321',
-  },
-];
 
 const CardIssuancePage = () => {
   const [issuanceState, setIssuanceState] = useState('initial');
@@ -33,21 +23,43 @@ const CardIssuancePage = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
+  // 계좌 리스트 조회
+  const { data: AccountListData, error } = useSWR('accounts', getAccounts);
+  const accountList =
+    AccountListData && 'data' in AccountListData ? AccountListData.data : [];
+
+  // 위비카드연결여부
+  const { data: isCardData } = useSWR('isCard', getisCard);
+  const hasCard = isCardData && 'data' in isCardData && isCardData.data;
+
   const handleIssuance = () => {
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);
   };
 
   const handleAccountSelection = (account: Account) => {
-    if (selectedAccount?.id === account.id) {
+    if (selectedAccount?.accountId === account.accountId) {
       setSelectedAccount(null);
     } else {
       setSelectedAccount(account);
     }
   };
 
-  const handleModalSubmit = () => {
+  const handleModalSubmit = async () => {
     if (selectedAccount) {
+      isCardIssuance ? selectedAccount.accountNumber : '';
+      const response = await postConnectedAccount(
+        selectedAccount.accountId,
+        isCardIssuance,
+      );
+
+      if ('code' in response) {
+        alert(response.message || '알 수 없는 오류가 발생했습니다.');
+        throw new Error(
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+        );
+      }
+
       setIsAccountModalOpen(false);
 
       if (isCardIssuance) {
@@ -56,7 +68,6 @@ const CardIssuancePage = () => {
           setIssuanceState('complete');
         }, 7000);
       } else {
-        // 여행 선택 페이지로 이동
         window.location.href = '/travel';
       }
     } else {
@@ -138,7 +149,15 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              <Button label="발급받기" onClick={handleIssuance} />
+              {hasCard ? (
+                <Link href="/travel">
+                  <Button label="여행 생성하러 가기" />
+                </Link>
+              ) : (
+                <>
+                  <Button label="발급받기" onClick={handleIssuance} />
+                </>
+              )}
               <div
                 className={styles.skipText}
                 onClick={() => setIsAccountModalOpen(true)}
@@ -216,7 +235,7 @@ const CardIssuancePage = () => {
             </motion.p>
           </motion.div>
         )}
-        {/* Complete state remains the same */}
+        {/* 발급 완료 */}
         {issuanceState === 'complete' && (
           <motion.div
             className={styles.completeContainer}
@@ -281,37 +300,41 @@ const CardIssuancePage = () => {
         onSubmit={handleModalSubmit}
       >
         <div className={styles.accountList}>
-          {dummyAccounts.map((account) => (
-            <div
-              key={account.id}
-              className={`${styles.accountItem} ${
-                selectedAccount?.id === account.id ? styles.selected : ''
-              }`}
-              onClick={() => handleAccountSelection(account)}
-            >
-              <div className={styles.accountInfo}>
-                <p className={styles.accountNumber}>{account.accountNumber}</p>
-                <p className={styles.bankName}>{account.bankName}</p>
+          {Array.isArray(accountList) && accountList.length > 0 ? (
+            accountList.map((account: Account) => (
+              <div
+                key={account.accountId}
+                className={styles.accountItem}
+                onClick={() => handleAccountSelection(account)}
+              >
+                <div className={styles.accountInfo}>
+                  <p className={styles.accountNumber}>
+                    {account.accountNumber}
+                  </p>
+                  <p className={styles.product}>{account.product}</p>
+                </div>
+                {selectedAccount?.accountId === account.accountId ? (
+                  <Image
+                    src="/check.png"
+                    alt="select"
+                    width={30}
+                    height={30}
+                    className={styles.selectIcon}
+                  />
+                ) : (
+                  <Image
+                    src="/uncheck.png"
+                    alt="not select"
+                    width={30}
+                    height={30}
+                    className={styles.notSelectIcon}
+                  />
+                )}
               </div>
-              {selectedAccount?.id === account.id ? (
-                <Image
-                  src="/check.png"
-                  alt="select"
-                  width={30}
-                  height={30}
-                  className={styles.selectIcon}
-                />
-              ) : (
-                <Image
-                  src="/uncheck.png"
-                  alt="not select"
-                  width={30}
-                  height={30}
-                  className={styles.notSelectIcon}
-                />
-              )}
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>연결된 계좌가 없습니다.</p>
+          )}
         </div>
       </Modal>
     </div>
