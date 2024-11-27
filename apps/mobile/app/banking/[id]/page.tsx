@@ -55,6 +55,7 @@ export default function AccountPage() {
             return;
           }
           if ('data' in responseInfo) {
+            setLoading(false);
             setAccountInfo(responseInfo.data);
           }
 
