@@ -61,7 +61,9 @@ export const editTravel = async (
 export const getTravelList = async (): Promise<
   SuccessResponse<TravelList[]> | ErrorResponse
 > => {
-  const response = instance.get<TravelList[]>(`/api/travels`);
+  const response = instance.get<TravelList[]>(`/api/travels`, {
+    cache: 'no-cache',
+  });
   return response;
 };
 

@@ -35,6 +35,8 @@ const CardIssuancePage = () => {
       ? isCardData.data.connectedWibeeCard
       : undefined;
 
+  console.log(isCardData);
+
   console.log(hasCard);
 
   const handleIssuance = () => {
