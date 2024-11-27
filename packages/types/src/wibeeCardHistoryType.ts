@@ -3,7 +3,7 @@ export interface WibeeCardHistory {
   date: string;
   paymentAmount: number;
   storeName: string;
-  isAddedSharedPayment: boolean;
+  addedSharedPayment: boolean;
 }
 
 export interface WibeeCardHistoryListResponse {

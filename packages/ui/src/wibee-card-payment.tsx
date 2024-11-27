@@ -20,7 +20,7 @@ export default function WibeeCardPayment({
 }: WibeeCardProps) {
   return (
     <div
-      className={`${styles.container} ${payment.isAddedSharedPayment ? styles.isAlreadyAdded : ''}`}
+      className={`${styles.container} ${payment.addedSharedPayment ? styles.isAlreadyAdded : ''}`}
       onClick={() => handleSelectHistory(payment.id)}
     >
       <div className={styles.info}>
@@ -33,7 +33,7 @@ export default function WibeeCardPayment({
         <span className={styles.storeName}>{payment.storeName}</span>
       </div>
       <div className={styles.check}>
-        {!payment.isAddedSharedPayment ? (
+        {!payment.addedSharedPayment ? (
           isSelected ? (
             <Image
               src={selectIcon}

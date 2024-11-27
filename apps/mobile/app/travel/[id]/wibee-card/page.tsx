@@ -12,8 +12,12 @@ import { BottomModal } from '@withbee/ui/modal';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { validators } from '@withbee/utils';
-import { getWibeeCardHistory } from '@withbee/apis';
+import {
+  getWibeeCardHistory,
+  postWibeeCardToSharedPayment,
+} from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { useRouter } from 'next/navigation';
 
 interface WibeeCardProps {
   params: {
@@ -23,6 +27,7 @@ interface WibeeCardProps {
 
 export default function Page({ params }: WibeeCardProps) {
   const { id } = params;
+  const router = useRouter();
   const [data, setData] = useState<WibeeCardHistoryListResponse | undefined>();
 
   const [selectedHistoryIds, setSelectedHistoryIds] = useState<number[]>([]);
@@ -42,7 +47,7 @@ export default function Page({ params }: WibeeCardProps) {
   const handleOverallSelectHistories = (): void => {
     if (data?.histories) {
       const unselectedIds = data.histories
-        .filter((history) => !history.isAddedSharedPayment) // isAddedSharedPayment가 false인 항목만 필터링
+        .filter((history) => !history.addedSharedPayment) // addedSharedPayment가 false인 항목만 필터링
         .map((history) => history.id); // 해당 항목들의 id만 추출
 
       setSelectedHistoryIds(unselectedIds); // 상태를 업데이트
@@ -89,6 +94,8 @@ export default function Page({ params }: WibeeCardProps) {
       }
 
       if (response.data) {
+        console.log(response.data);
+
         setData(response.data);
         setPeriodStartDate(response.data.startDate);
         setPeriodEndDate(response.data.endDate);
@@ -124,6 +131,31 @@ export default function Page({ params }: WibeeCardProps) {
     // 기존의 날짜와 다르면 데이터 다시 요청
     if (periodStartDate !== data?.startDate || periodEndDate !== data?.endDate)
       handleGetWibeeCardHistories(periodStartDate, periodEndDate);
+  };
+
+  // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
+  const handleSubmit = async () => {
+    try {
+      console.log(selectedHistoryIds);
+
+      const response = await postWibeeCardToSharedPayment(
+        id,
+        selectedHistoryIds,
+      );
+
+      if ('code' in response) {
+        showToast.warning({
+          message:
+            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+            'Unknown Error',
+        });
+        throw new Error(response.code);
+      }
+
+      router.push(`/travel/${id}/payments`);
+    } catch (error) {
+      console.error(`결제 내역 추가 실패 ${error}`);
+    }
   };
 
   return (
@@ -195,7 +227,7 @@ export default function Page({ params }: WibeeCardProps) {
             payment={history}
             isSelected={selectedHistoryIds.includes(history.id)}
             handleSelectHistory={
-              history.isAddedSharedPayment
+              history.addedSharedPayment
                 ? alreadyAddedError
                 : handleSelectHistories
             }
@@ -204,7 +236,7 @@ export default function Page({ params }: WibeeCardProps) {
       </div>
       <div className={styles.submitButtonBackground}>
         <div className={styles.submitButtonWrapper}>
-          <Button label="선택 완료" />
+          <Button label="선택 완료" onClick={handleSubmit} />
         </div>
       </div>
     </div>

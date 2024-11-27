@@ -7,4 +7,4 @@ export * from './settlementService';
 export * from './notificationService';
 export * from './inviteCode';
 export * from './authService';
-export * from './getWibeeCardHistory';
+export * from './wibeeCardHistory';
