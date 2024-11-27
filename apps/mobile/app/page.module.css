@@ -63,8 +63,8 @@
 .btnWrap {
     max-width: 430px;
     width: 100%;
-    bottom: 85px;
-    padding: 0 25px;
+    bottom: 70px;
+    padding: 0 25px 20px;
     left: 50%;
     transform: translate(-50%);
     position: fixed;
@@ -78,6 +78,8 @@
     font-size: 14px;
     color: var(--color-gray-500);
 }
+
+
 
 
 /* 카드 발급 중 */

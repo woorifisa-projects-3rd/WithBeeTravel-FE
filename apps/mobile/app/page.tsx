@@ -108,7 +108,7 @@ const CardIssuancePage = () => {
                 src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="위비트래블 카드"
                 width={130}
-                height={180}
+                height={190}
                 quality={100}
                 className={styles.withbeeCard}
               />
