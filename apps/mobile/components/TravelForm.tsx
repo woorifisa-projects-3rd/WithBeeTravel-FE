@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from './TravelForm.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
@@ -9,6 +9,8 @@ import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
+import { getTravelHome } from '@withbee/apis';
+import useSWR from 'swr';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -29,6 +31,29 @@ export default function TravelForm({
   onSubmit,
 }: TravelFormProps) {
   const router = useRouter();
+
+  // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
+  const params = useParams();
+  const travelId = Number(params.id);
+  const { data, error } = useSWR(
+    mode === 'edit' ? `TravelHome-${travelId}` : null,
+    () => getTravelHome(travelId),
+  );
+
+  console.log(data);
+
+  // useEffect(() => {
+  //   if (mode === 'edit' && travelData) {
+  //     setFormData({
+  //       travelId: travelData.travelId,
+  //       travelName: travelData.travelName,
+  //       isDomesticTravel: travelData.isDomesticTravel,
+  //       travelCountries: travelData.travelCountries || [],
+  //       travelStartDate: travelData.travelStartDate,
+  //       travelEndDate: travelData.travelEndDate,
+  //     });
+  //   }
+  // }, [mode, travelData]);
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
@@ -68,21 +93,6 @@ export default function TravelForm({
     '이탈리아',
     '스페인',
   ];
-
-  // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
-  // 나중에 get해올때 useSWR로 변경하기
-  useEffect(() => {
-    if (mode === 'edit' && travelData) {
-      setFormData({
-        travelId: travelData.travelId,
-        travelName: travelData.travelName,
-        isDomesticTravel: travelData.isDomesticTravel,
-        travelCountries: travelData.travelCountries || [],
-        travelStartDate: travelData.travelStartDate,
-        travelEndDate: travelData.travelEndDate,
-      });
-    }
-  }, [mode, travelData]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
