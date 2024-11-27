@@ -12,6 +12,8 @@ import { BottomModal } from '@withbee/ui/modal';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { validators } from '@withbee/utils';
+import { getWibeeCardHistory } from '@withbee/apis';
+import { handleWebpackExternalForEdgeRuntime } from 'next/dist/build/webpack/plugins/middleware-plugin';
 
 interface WibeeCardProps {
   params: {
@@ -21,86 +23,11 @@ interface WibeeCardProps {
 
 export default function Page({ params }: WibeeCardProps) {
   const { id } = params;
-  // const [isDateModalOpen, setIsDateModalOpen] = useState(false);
-  const response: {
-    data: {
-      startDate: string;
-      endDate: string;
-      histories: WibeeCardHistory[];
-    };
-  } = {
-    data: {
-      startDate: '2024.11.21',
-      endDate: '2024.11.23',
-      histories: [
-        {
-          id: 1,
-          date: '2024-11-19T14:20',
-          paymentAmount: 50000,
-          storeName: '명수네 떡볶이',
-          isAddedSharedPayment: true,
-        },
-        {
-          id: 2,
-          date: '2024-11-20T13:29',
-          paymentAmount: 120000,
-          storeName: '호처루냉면',
-          isAddedSharedPayment: false,
-        },
-        {
-          id: 3,
-          date: '2024-11-20T15:34',
-          paymentAmount: 30000,
-          storeName: '콩에진보드게임카페',
-          isAddedSharedPayment: true,
-        },
-        {
-          id: 4,
-          date: '2024-11-19T14:20',
-          paymentAmount: 50000,
-          storeName: '명수네 떡볶이',
-          isAddedSharedPayment: true,
-        },
-        {
-          id: 5,
-          date: '2024-11-20T13:29',
-          paymentAmount: 120000,
-          storeName: '호처루냉면',
-          isAddedSharedPayment: false,
-        },
-        {
-          id: 6,
-          date: '2024-11-20T15:34',
-          paymentAmount: 30000,
-          storeName: '콩에진보드게임카페',
-          isAddedSharedPayment: true,
-        },
-        {
-          id: 7,
-          date: '2024-11-19T14:20',
-          paymentAmount: 50000,
-          storeName: '명수네 떡볶이',
-          isAddedSharedPayment: true,
-        },
-        {
-          id: 8,
-          date: '2024-11-20T13:29',
-          paymentAmount: 120000,
-          storeName: '호처루냉면',
-          isAddedSharedPayment: false,
-        },
-        {
-          id: 9,
-          date: '2024-11-20T15:34',
-          paymentAmount: 30000,
-          storeName: '콩에진보드게임카페',
-          isAddedSharedPayment: true,
-        },
-      ],
-    },
-  };
-
-  const data = 'data' in response ? response.data : null;
+  const [data, setData] = useState<{
+    startDate: string;
+    endDate: string;
+    histories: WibeeCardHistory[];
+  }>();
 
   const [selectedHistoryIds, setSelectedHistoryIds] = useState<number[]>([]);
   const { showToast, formValidation } = useToast();
@@ -165,9 +92,28 @@ export default function Page({ params }: WibeeCardProps) {
       }
       return;
     }
-
-    // API 요청
   };
+
+  // 위비 카드 결제 내역 API 요청
+  const handleGetWibeeCardHistories = async () => {
+    try {
+      const response = await getWibeeCardHistory(startDate, endDate);
+
+      if ('code' in response) {
+        showToast.warning({ message: response.message });
+      }
+
+      if ('data' in response && response.data) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.error('결제 내역 불러오기 실패');
+    }
+  };
+
+  useEffect(() => {
+    handleGetWibeeCardHistories();
+  }, [startDate, endDate]);
 
   return (
     <div className={styles.container}>

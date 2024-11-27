@@ -5,3 +5,9 @@ export interface WibeeCardHistory {
   storeName: string;
   isAddedSharedPayment: boolean;
 }
+
+export interface WibeeCardHistoryListResponse {
+  startDate: string;
+  endDate: string;
+  histories: WibeeCardHistory[];
+}
