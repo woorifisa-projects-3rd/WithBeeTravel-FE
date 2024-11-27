@@ -1,6 +1,11 @@
 'use client';
 
-import type { PageResponse, SharedPayment, TravelHome } from '@withbee/types';
+import type {
+  PageResponse,
+  SharedPayment,
+  SortBy,
+  TravelHome,
+} from '@withbee/types';
 import styles from './payment-list.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
@@ -34,51 +39,33 @@ export default function PaymentList({
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
-    threshold: 0.1, // 요소가 10% 보일 때 감지
+    threshold: 0.2, // 요소가 20% 보일 때 감지
   });
 
   const getKey = (pageIndex: number) => {
-    const queryParams = new URLSearchParams({
-      page: pageIndex.toString(),
-      sortBy: params.sortBy,
-      startDate: travelStartDate,
-      endDate: travelEndDate,
-    });
+    // 이전 페이지가 마지막이면 더 이상 로드하지 않음
+    if (data && data[pageIndex - 1]?.last) return null;
 
-    if (memberId !== 0) {
-      queryParams.append('memberId', memberId.toString());
-    }
-
-    if (category !== '전체') {
-      queryParams.append('category', category);
-    }
-
-    if (startDate && endDate) {
-      queryParams.set('startDate', startDate);
-      queryParams.set('endDate', endDate);
-    }
-
-    return `/api/travels/${travelId}/payments?${queryParams.toString()}`;
+    return {
+      travelId,
+      page: pageIndex,
+      sortBy: sortBy as SortBy,
+      startDate: startDate || travelStartDate,
+      endDate: endDate || travelEndDate,
+      ...(memberId !== 0 && { memberId }),
+      ...(category !== '전체' && { category }),
+    };
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
   const { data, error, size, setSize, isLoading, isValidating } =
     useSWRInfinite(
       getKey,
-      async (url) => {
-        console.log('ㅇㅇㅇㅇㅇㅇ url', url);
-        const response = await getSharedPayments({
-          travelId,
-          page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
-          sortBy: sortBy as 'latest' | 'amount',
-          startDate: startDate || travelStartDate,
-          endDate: endDate || travelEndDate,
-          ...(memberId !== 0 && { memberId }),
-          ...(category !== '전체' && { category }),
-        });
+      async (params) => {
+        const response = await getSharedPayments(params);
 
         if ('code' in response) {
-          throw response; // 에러 코드가 있는 응답은 그대로 throw
+          throw response;
         }
 
         return response.data;

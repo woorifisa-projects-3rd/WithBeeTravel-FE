@@ -1,12 +1,12 @@
 'use server';
 
 import { instance } from './instance';
-import type { PageResponse, SharedPayment } from '@withbee/types';
+import type { PageResponse, SharedPayment, SortBy } from '@withbee/types';
 
 interface GetSharedPaymentsParams {
   travelId: number;
   page?: number;
-  sortBy?: 'latest' | 'amount';
+  sortBy?: SortBy;
   memberId?: number;
   startDate?: string;
   endDate?: string;

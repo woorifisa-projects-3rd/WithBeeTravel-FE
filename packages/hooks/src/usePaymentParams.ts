@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import type { SortBy } from '@withbee/types';
 
 export type ParamKey =
   | 'sortBy'
@@ -8,7 +9,7 @@ export type ParamKey =
   | 'endDate'
   | 'memberId'
   | 'category';
-export type ParamValue = string | number | undefined;
+export type ParamValue = string | number | SortBy | undefined;
 
 export function usePaymentParams() {
   const searchParams = useSearchParams();
