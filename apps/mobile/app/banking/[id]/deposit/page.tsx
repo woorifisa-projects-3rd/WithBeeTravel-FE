@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import { deposit, getAccountInfo, instance } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 
@@ -27,9 +27,7 @@ export default function DepositPage() {
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${myAccountId}/info`,
-        );
+        const response = await getAccountInfo(Number(myAccountId));
         console.log(response);
 
         if ('data' in response) {
@@ -63,11 +61,10 @@ export default function DepositPage() {
       rqspeNm: '입금',
     };
     try {
-      const response = await instance.post(
-        `/api/accounts/${myAccountId}/deposit`,
-        {
-          body: JSON.stringify(DepositRequest),
-        },
+      const response = await deposit(
+        Number(myAccountId),
+        Number(amount),
+        '입금',
       );
       showToast.success({
         message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
