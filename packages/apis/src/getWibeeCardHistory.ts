@@ -1,3 +1,5 @@
+'use server';
+
 import { instance } from './instance';
 import {
   SuccessResponse,
@@ -12,9 +14,15 @@ export const getWibeeCardHistory = async (
   const params = new URLSearchParams();
   if (startDate) params.append('startDate', startDate);
   if (endDate) params.append('endDate', endDate);
-
-  const response = await instance.get<WibeeCardHistoryListResponse>(
+  console.log(
     `/api/accounts/wibeeCardHistory${params.toString() ? `?${params.toString()}` : ''}`,
   );
+
+  const response = instance.get<WibeeCardHistoryListResponse>(
+    `/api/accounts/wibeeCardHistory${params.toString() ? `?${params.toString()}` : ''}`,
+  );
+
+  console.log(response);
+
   return response;
 };

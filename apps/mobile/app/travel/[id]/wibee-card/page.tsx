@@ -2,7 +2,7 @@
 
 import styles from './page.module.css';
 import WibeeCardPayment from '@withbee/ui/wibee-card-payment';
-import { WibeeCardHistory } from '@withbee/types';
+import { WibeeCardHistoryListResponse } from '@withbee/types';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
@@ -13,7 +13,7 @@ import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { validators } from '@withbee/utils';
 import { getWibeeCardHistory } from '@withbee/apis';
-import { handleWebpackExternalForEdgeRuntime } from 'next/dist/build/webpack/plugins/middleware-plugin';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 interface WibeeCardProps {
   params: {
@@ -23,11 +23,7 @@ interface WibeeCardProps {
 
 export default function Page({ params }: WibeeCardProps) {
   const { id } = params;
-  const [data, setData] = useState<{
-    startDate: string;
-    endDate: string;
-    histories: WibeeCardHistory[];
-  }>();
+  const [data, setData] = useState<WibeeCardHistoryListResponse | undefined>();
 
   const [selectedHistoryIds, setSelectedHistoryIds] = useState<number[]>([]);
   const { showToast, formValidation } = useToast();
@@ -59,10 +55,8 @@ export default function Page({ params }: WibeeCardProps) {
   };
 
   // 기간 선택 관련 변수
-  const [startDate, setStartDate] = useState<string>(
-    data ? data.startDate : '',
-  );
-  const [endDate, setEndDate] = useState<string>(data ? data.endDate : '');
+  const [periodStartDate, setPeriodStartDate] = useState<string | undefined>();
+  const [periodEndDate, setPeriodEndDate] = useState<string | undefined>();
   const [isDateModalOpen, setIsDateModalOpen] = useState<boolean>(false);
   const [isStartDateModalOpen, setIsStartDateModalOpen] =
     useState<boolean>(false);
@@ -73,47 +67,64 @@ export default function Page({ params }: WibeeCardProps) {
     (date: { year: number; month: number; day: number }) => {
       const formattedDate = formatDate(date);
       type === 'start'
-        ? setStartDate(formattedDate)
-        : setEndDate(formattedDate);
+        ? setPeriodStartDate(formattedDate)
+        : setPeriodEndDate(formattedDate);
     };
+
+  // 위비 카드 결제 내역 API 요청
+  const handleGetWibeeCardHistories = async (
+    startDate?: string,
+    endDate?: string,
+  ) => {
+    try {
+      const response = await getWibeeCardHistory(startDate, endDate);
+
+      if ('code' in response) {
+        showToast.warning({
+          message:
+            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+            'Unknown Error',
+        });
+        throw new Error(response.code);
+      }
+
+      if (response.data) {
+        setData(response.data);
+        setPeriodStartDate(response.data.startDate);
+        setPeriodEndDate(response.data.endDate);
+      }
+    } catch (error) {
+      console.error(`결제 내역 불러오기 실패 ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    handleGetWibeeCardHistories();
+  }, []);
 
   // 기간이 변경되었을 때 검증 후 결제 내역 다시 불러오기
   const handleChangePeriod = () => {
     setIsDateModalOpen(false);
 
     // 날짜 범위 검증
-    const dateValidation = validators.paymentDates(startDate, endDate);
+    const dateValidation = validators.paymentDates(
+      periodStartDate,
+      periodEndDate,
+    );
     if (!dateValidation.isValid) {
       if (dateValidation.error === 'INVALID_ORDER') {
         formValidation.invalidDateOrder();
         // 기존의 날짜로 다시 변경
-        setStartDate(data ? data.startDate : '');
-        setEndDate(data ? data.endDate : '');
+        setPeriodStartDate(data ? data.startDate : '');
+        setPeriodEndDate(data ? data.endDate : '');
       }
       return;
     }
+
+    // 기존의 날짜와 다르면 데이터 다시 요청
+    if (periodStartDate !== data?.startDate || periodEndDate !== data?.endDate)
+      handleGetWibeeCardHistories(periodStartDate, periodEndDate);
   };
-
-  // 위비 카드 결제 내역 API 요청
-  const handleGetWibeeCardHistories = async () => {
-    try {
-      const response = await getWibeeCardHistory(startDate, endDate);
-
-      if ('code' in response) {
-        showToast.warning({ message: response.message });
-      }
-
-      if ('data' in response && response.data) {
-        setData(response.data);
-      }
-    } catch (error) {
-      console.error('결제 내역 불러오기 실패');
-    }
-  };
-
-  useEffect(() => {
-    handleGetWibeeCardHistories();
-  }, [startDate, endDate]);
 
   return (
     <div className={styles.container}>
@@ -128,8 +139,8 @@ export default function Page({ params }: WibeeCardProps) {
             />
             <div className={styles.dateSelect}>
               <span>
-                {startDate?.split('-').join('.')} ~{' '}
-                {endDate?.split('-').join('.')}
+                {data?.startDate?.split('-').join('.')} ~{' '}
+                {data?.endDate?.split('-').join('.')}
               </span>
               <Item
                 label="기간 설정"
@@ -150,19 +161,13 @@ export default function Page({ params }: WibeeCardProps) {
             disableDrag={true}
           >
             <ul className={styles.list}>
-              {/* <li onClick={handleSelectAllDate}>
-                전체
-                {selected.period === '전체' && (
-                  <Image src={selectIcon} alt="select" width={25} height={25} />
-                )}
-              </li> */}
               <li onClick={() => setIsStartDateModalOpen(true)}>
                 시작일
-                <span>{startDate?.split('-').join('.')}</span>
+                <span>{periodStartDate?.split('-').join('.')}</span>
               </li>
               <li onClick={() => setIsEndDateModalOpen(true)}>
                 종료일
-                <span>{endDate?.split('-').join('.')}</span>
+                <span>{periodEndDate?.split('-').join('.')}</span>
               </li>
             </ul>
           </BottomModal>

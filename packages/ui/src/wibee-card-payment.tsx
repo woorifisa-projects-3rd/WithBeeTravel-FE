@@ -25,7 +25,7 @@ export default function WibeeCardPayment({
     >
       <div className={styles.info}>
         <span className={styles.date}>
-          {payment.date.replace(/-/g, '.').replace('T', ' ')}
+          {payment.date.substring(0, 19).replace(/-/g, '.').replace('T', ' ')}
         </span>
         <span className={styles.paymentAmount}>
           {payment.paymentAmount.toLocaleString()}원

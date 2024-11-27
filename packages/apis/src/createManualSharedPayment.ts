@@ -1,3 +1,5 @@
+'use server';
+
 import { instance } from './instance';
 import { ManualPaymentFormData } from '../../ui/src/manual-shared-payment-form';
 import { SuccessResponse } from '@withbee/types';
