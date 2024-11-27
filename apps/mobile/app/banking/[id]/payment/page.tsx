@@ -3,32 +3,22 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import {
+  checkWibee,
+  getAccountInfo,
+  getUserState,
+  instance,
+  registerPayment,
+} from '@withbee/apis';
 import PinNumberModal from '../../../../components/PinNumberModal';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-
-interface HistoryRequest {
-  payAm: number;
-  rqspeNm: string;
-  isWibeeCard: boolean;
-}
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
-
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
-}
-
-interface WibeeCardResponse {
-  connectedWibeeCard: boolean;
-}
+import {
+  AccountInfo,
+  HistoryRequest,
+  PinNumberResponse,
+  WibeeCardResponse,
+} from '@withbee/types';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -51,9 +41,7 @@ export default function PaymentPage() {
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${myAccountId}/info`,
-        );
+        const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -62,9 +50,7 @@ export default function PaymentPage() {
       })();
 
       (async () => {
-        const response = await instance.get<WibeeCardResponse>(
-          `/api/accounts/${myAccountId}/check-wibee`,
-        );
+        const response = await checkWibee(Number(myAccountId));
         if ('data' in response) {
           setIsWibeeCard(response.data);
         } else {
@@ -96,9 +82,7 @@ export default function PaymentPage() {
       return;
     }
 
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) !== 200) {
       showToast.error({ message: '핀번호 재 설정 후 이용 가능' }); // 핀번호 설정 오류 메시지
       return;
@@ -118,9 +102,12 @@ export default function PaymentPage() {
         isWibeeCard: isWibeeCardCheckbox,
       };
 
-      await instance.post(`/api/accounts/${myAccountId}/payment`, {
-        body: JSON.stringify(historyRequest),
-      });
+      await registerPayment(
+        Number(myAccountId),
+        parseInt(payAm),
+        rqspeNm,
+        isWibeeCardCheckbox,
+      );
       showToast.success({ message: '거래내역 등록 완료!' });
 
       router.push(`/banking/`);
