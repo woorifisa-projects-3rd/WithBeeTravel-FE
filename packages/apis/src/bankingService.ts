@@ -106,7 +106,8 @@ export const deposit = async (
   return response;
 };
 
-export const getisCard = async (): Promise<
+// 위비카드여부확인
+export const getIsCard = async (): Promise<
   SuccessResponse<connectedAccountType> | ErrorResponse
 > => {
   const response = await instance.get<connectedAccountType>(
@@ -115,12 +116,12 @@ export const getisCard = async (): Promise<
   return response;
 };
 
-// export const getAccounts = async (): Promise<
-//   SuccessResponse<accountType> | ErrorResponse
-// > => {
-//   const response = await instance.get<accountType>('/api/accounts');
-//   return response;
-// };
+export const getAccountList = async (): Promise<
+  SuccessResponse<accountType> | ErrorResponse
+> => {
+  const response = await instance.get<accountType>('/api/accounts');
+  return response;
+};
 
 export const postConnectedAccount = async (
   accountId: number,

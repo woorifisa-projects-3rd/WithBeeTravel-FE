@@ -7,7 +7,7 @@ import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
-import { getAccounts, getisCard, postConnectedAccount } from '@withbee/apis';
+import { getAccountList, getIsCard, postConnectedAccount } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 
@@ -24,13 +24,18 @@ const CardIssuancePage = () => {
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
   // 계좌 리스트 조회
-  const { data: AccountListData, error } = useSWR('accounts', getAccounts);
+  const { data: AccountListData, error } = useSWR('accounts', getAccountList);
   const accountList =
     AccountListData && 'data' in AccountListData ? AccountListData.data : [];
 
   // 위비카드연결여부
-  const { data: isCardData } = useSWR('isCard', getisCard);
-  const hasCard = isCardData && 'data' in isCardData && isCardData.data;
+  const { data: isCardData } = useSWR('isCard', getIsCard);
+  const hasCard =
+    isCardData && 'data' in isCardData && isCardData.data
+      ? isCardData.data.connectedWibeeCard
+      : undefined;
+
+  console.log(hasCard);
 
   const handleIssuance = () => {
     setIsCardIssuance(true);
@@ -156,14 +161,14 @@ const CardIssuancePage = () => {
               ) : (
                 <>
                   <Button label="발급받기" onClick={handleIssuance} />
+                  <div
+                    className={styles.skipText}
+                    onClick={() => setIsAccountModalOpen(true)}
+                  >
+                    카드 발급 없이 참가하기
+                  </div>
                 </>
               )}
-              <div
-                className={styles.skipText}
-                onClick={() => setIsAccountModalOpen(true)}
-              >
-                카드 발급 없이 참가하기
-              </div>
             </div>
           </motion.div>
         )}

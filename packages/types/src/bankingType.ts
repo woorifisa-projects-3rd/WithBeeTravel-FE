@@ -64,6 +64,7 @@ export interface connectedAccountType {
   connectedAccountId: String;
   wibeeCardAccountId: string;
   isWibeeCard: boolean;
+  connectedWibeeCard: boolean;
 }
 
 export interface accountType {

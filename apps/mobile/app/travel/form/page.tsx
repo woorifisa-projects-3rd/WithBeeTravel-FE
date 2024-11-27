@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { createTravel, editTravel } from '@withbee/apis';
 import './page.module.css';
 import { useRouter } from 'next/navigation';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 interface FormData {
   travelName: string;
@@ -39,9 +40,12 @@ function TravelFormContent() {
       travelEndDate,
     );
 
+    console.log(response);
+
     if ('data' in response && response.data?.travelId) {
       router.push(`/travel/${response.data.travelId}`);
     } else {
+      throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
       // 에러 처리 로직
       console.error('Travel creation failed');
     }
