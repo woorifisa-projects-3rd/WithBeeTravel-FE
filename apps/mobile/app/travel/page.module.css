@@ -16,7 +16,6 @@
   bottom: 0;
   background: url('/imgs/travelselect/withbee_friends_background.png') center/contain no-repeat;
   z-index: -1;
-  /* 다른 이미지들 위에 배경이 위치하도록 */
 }
 
 .withbeeFriendsImg {

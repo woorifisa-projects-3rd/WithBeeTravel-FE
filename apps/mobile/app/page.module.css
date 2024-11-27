@@ -4,15 +4,30 @@
 
 .title {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     margin-top: 1.3rem;
 }
 
 .withbeeCardWrap {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 10px 0px;
+    margin: 20px 0px;
+}
+
+.withbeeCardWrap::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: url('/imgs/cardBenefits/background.png') center no-repeat;
+    background-size: 68%;
+    z-index: -1;
 }
 
 .benefitIcon {
@@ -149,7 +164,7 @@
 
 .completeTitle {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 5px;
 }
 

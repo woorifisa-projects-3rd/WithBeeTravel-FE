@@ -103,11 +103,12 @@ const CardIssuancePage = () => {
             <h1 className={styles.title}>위비 트래블 체크 카드</h1>
             <motion.div className={styles.withbeeCardWrap}>
               <Image
-                src="/imgs/cardBenefits/withbee_travel_checkcard.png"
+                src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="위비트래블 카드"
-                width={250}
-                height={235}
+                width={130}
+                height={180}
                 quality={100}
+                className={styles.withbeeCard}
               />
             </motion.div>
 
@@ -262,7 +263,7 @@ const CardIssuancePage = () => {
               style={{ perspective: 1000 }}
             >
               <Image
-                src="/imgs/cardBenefits/withbee_checkcard.png"
+                src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="발급된 카드"
                 fill
                 className="object-contain"
