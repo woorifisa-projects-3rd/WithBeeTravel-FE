@@ -83,8 +83,6 @@ export const createManualSharedPayment = async (
 export const getCurrencyUnitOptions = async (
   travelId: string,
 ): Promise<SuccessResponse<CurrencyUnitOptions> | ErrorResponse> => {
-  console.log('getCurrencyUnitOptions');
-
   const response = await instance.get<CurrencyUnitOptions>(
     `/api/travels/${travelId}/payments/currency-unit`,
   );
