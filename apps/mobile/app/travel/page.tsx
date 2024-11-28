@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FriendImage } from '@withbee/ui/friend-image';
 import { useToast } from '@withbee/hooks/useToast';
+import { motion } from 'framer-motion';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +30,16 @@ export default function page() {
   }
 
   if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
-  if (!travelData) return <p>데이터를 불러오는 중...</p>;
+  if (!travelData)
+    return (
+      <div className={styles.loadingContainer}>
+        <motion.div
+          className={styles.loadingSpinner}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+    );
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
