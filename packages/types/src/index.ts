@@ -4,3 +4,4 @@ export type * from './responseType';
 export type * from './travelType';
 export type * from './travelService';
 export type * from './authType';
+export type * from './bankingType';

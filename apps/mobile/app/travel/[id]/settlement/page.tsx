@@ -33,8 +33,14 @@ export default async function Page({ params }: { params: Params }) {
     }
   }
 
-  const { myTotalPayment, disagreeCount, myDetailPayments, others } =
-    response.data as SettlementDetails;
+  const {
+    myTotalPayment,
+    disagreeCount,
+    totalPaymentAmounts,
+    totalRequestedAmounts,
+    myDetailPayments,
+    others,
+  } = response.data as SettlementDetails;
 
   return (
     <div className={styles.container}>
@@ -71,13 +77,13 @@ export default async function Page({ params }: { params: Params }) {
                 <span className={styles.label}>받을 금액 </span>
                 <span
                   className={styles.amount}
-                >{`${myTotalPayment.ownPaymentCost?.toLocaleString()}원`}</span>
+                >{`${totalPaymentAmounts.toLocaleString()}원`}</span>
               </div>
               <div className={styles.summaryInfo}>
                 <span className={styles.label}>보낼 금액 </span>
                 <span
                   className={styles.amount}
-                >{`${myTotalPayment.actualBurdenCost?.toLocaleString()}원`}</span>
+                >{`${totalRequestedAmounts.toLocaleString()}원`}</span>
               </div>
             </div>
 
@@ -152,10 +158,10 @@ export default async function Page({ params }: { params: Params }) {
         <div className={styles.btnWrapper}>
           {myTotalPayment.agreed ? (
             <Button
-              label="정산 완료"
+              label="동의 완료"
               className={styles.disabledButton}
               disabled={true}
-              primary={false} // 정산 완료 상태일 경우 비활성화
+              primary={false} // 동의 완료 상태일 경우 비활성화
             />
           ) : (
             <Link href={{ pathname: `/travel/${params.id}/agreement` }}>

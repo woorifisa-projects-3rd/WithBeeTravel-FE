@@ -6,8 +6,6 @@ import { ErrorResponse, SuccessResponse } from '@withbee/types';
 interface MyTotalPayment {
   name: string;
   totalPaymentCost: number;
-  ownPaymentCost: number;
-  actualBurdenCost: number;
   agreed: boolean;
 }
 
@@ -29,6 +27,8 @@ interface Other {
 export interface SettlementDetails {
   myTotalPayment: MyTotalPayment;
   disagreeCount: number;
+  totalPaymentAmounts: number;
+  totalRequestedAmounts: number;
   myDetailPayments: MyDetailPayment[];
   others: Other[];
 }

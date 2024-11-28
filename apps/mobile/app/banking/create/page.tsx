@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Title } from '@withbee/ui/title'; // 제목 UI
 import { Button } from '@withbee/ui/button'; // 버튼 UI
 import styles from './page.module.css'; // CSS 모듈
-import { instance } from '@withbee/apis'; // API 요청을 위한 instance
+import { createAccount, instance } from '@withbee/apis'; // API 요청을 위한 instance
 import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
 import PinNumberModal from '../../../components/PinNumberModal';
@@ -44,9 +44,7 @@ export default function CreateAccountPage() {
     };
 
     try {
-      const response = await instance.post('/api/accounts', {
-        body: JSON.stringify(CreateAccount),
-      });
+      const response = await createAccount(selectedProduct);
 
       if (Number(response.status) === 201) {
         showToast.success({ message: '계좌 생성 완료!' });
