@@ -33,11 +33,22 @@ export interface SettlementDetails {
   others: Other[];
 }
 
+// 정산 요청하기
+export const requestSettlement = async (
+  travelId: number,
+): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
+  const response = await instance.post<SettlementDetails>(
+    `/api/travels/${travelId}/settlements`,
+  );
+  console.log(response, '정산 요청하기');
+  return response;
+};
+
 // 세부 정산 내역 조회하기
 export const getSettlementDetails = async (
   travelId: number,
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
-  const response = instance.get<SettlementDetails>(
+  const response = await instance.get<SettlementDetails>(
     `/api/travels/${travelId}/settlements`,
     {
       cache: 'no-store',
@@ -50,7 +61,7 @@ export const getSettlementDetails = async (
 export const agreeSettlement = async (
   travelId: number,
 ): Promise<SuccessResponse<SettlementDetails> | ErrorResponse> => {
-  const response = instance.post<SettlementDetails>(
+  const response = await instance.post<SettlementDetails>(
     `/api/travels/${travelId}/settlements/agreement`,
     {
       cache: 'no-store',
@@ -61,5 +72,5 @@ export const agreeSettlement = async (
 
 // 정산 취소
 export const cancelSettlement = async (travelId: number) => {
-  return instance.delete(`/api/travels/${travelId}/settlements`);
+  return await instance.delete(`/api/travels/${travelId}/settlements`);
 };

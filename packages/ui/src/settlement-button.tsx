@@ -3,6 +3,7 @@
 import { TravelHome } from '@withbee/types';
 import { AnimatedButton } from './animated-button';
 import { useRouter } from 'next/navigation';
+import { requestSettlement } from '@withbee/apis';
 
 interface SettlementButtonProps {
   travelInfo: TravelHome;
@@ -17,8 +18,9 @@ export function SettlementButton({ travelInfo }: SettlementButtonProps) {
         return {
           label: '정산 시작하기',
           variant: 'attentionSeek' as const,
-          onClick: () => {
+          onClick: async () => {
             router.push(`/travel/${travelInfo.id}/settlement`);
+            await requestSettlement(travelInfo.id);
           },
         };
       }

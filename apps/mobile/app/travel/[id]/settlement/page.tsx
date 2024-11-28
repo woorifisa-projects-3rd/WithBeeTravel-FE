@@ -58,8 +58,8 @@ export default async function Page({ params }: { params: Params }) {
               >
                 <span className={styles.suffixText}>총 </span>
                 {myTotalPayment.totalPaymentCost >= 0
-                  ? `+${myTotalPayment.totalPaymentCost.toLocaleString()}원`
-                  : `${myTotalPayment.totalPaymentCost.toLocaleString()}원`}
+                  ? `+${myTotalPayment.totalPaymentCost?.toLocaleString()}원`
+                  : `${myTotalPayment.totalPaymentCost?.toLocaleString()}원`}
                 <span className={styles.suffixText}>
                   을{' '}
                   {myTotalPayment.totalPaymentCost >= 0 ? '받아요' : '보내요'}
@@ -71,13 +71,13 @@ export default async function Page({ params }: { params: Params }) {
                 <span className={styles.label}>받을 금액 </span>
                 <span
                   className={styles.amount}
-                >{`${myTotalPayment.ownPaymentCost.toLocaleString()}원`}</span>
+                >{`${myTotalPayment.ownPaymentCost?.toLocaleString()}원`}</span>
               </div>
               <div className={styles.summaryInfo}>
                 <span className={styles.label}>보낼 금액 </span>
                 <span
                   className={styles.amount}
-                >{`${myTotalPayment.actualBurdenCost.toLocaleString()}원`}</span>
+                >{`${myTotalPayment.actualBurdenCost?.toLocaleString()}원`}</span>
               </div>
             </div>
 
@@ -117,8 +117,8 @@ export default async function Page({ params }: { params: Params }) {
                           }
                         >
                           {user.totalPaymentCost >= 0
-                            ? `+${user.totalPaymentCost.toLocaleString()}원`
-                            : `${user.totalPaymentCost.toLocaleString()}원`}
+                            ? `+${user.totalPaymentCost?.toLocaleString()}원`
+                            : `${user.totalPaymentCost?.toLocaleString()}원`}
                         </span>
                         <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
                       </span>

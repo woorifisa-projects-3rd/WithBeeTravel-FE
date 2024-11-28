@@ -31,6 +31,8 @@ export default async function Page({ params }: TravelPageProps) {
     );
   }
 
+  console.log(travelHomeResponse.data);
+
   return (
     <Suspense fallback={<PaymentSkeleton />}>
       <PaymentList
@@ -38,7 +40,7 @@ export default async function Page({ params }: TravelPageProps) {
         initialPayments={sharedPaymentsResponse.data}
         travelInfo={travelHomeResponse.data!}
       />
-      {travelHomeResponse.data?.settlementStatus !== 'PENDING' && (
+      {new Date(travelHomeResponse.data?.travelEndDate!) < new Date() && (
         <SettlementButton travelInfo={travelHomeResponse.data!} />
       )}
     </Suspense>
