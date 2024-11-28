@@ -16,32 +16,28 @@ export default function BankingPage() {
   const { showToast } = useToast();
   const [error, setError] = useState<boolean>(true);
 
-
-
   useEffect(() => {
-    const fetchAccounts = async () => {
-      const response = await getAccounts();
-
-      if ('data' in response) {
-        setAccounts(response.data);
-        setError(false);
-      } else {
-        console.error("에러 코드 ",response.status);
+    const checkLogin = async () => {
+      try {
+       
+        const accountResponse = await getAccounts();
+        if ('data' in accountResponse) {
+          setAccounts(accountResponse.data);
+          setError(false);
+        } else {
+          console.error("에러 코드 ", accountResponse.status);
+        }
+      } catch (error) {
+        console.error('로그인 확인 중 오류 발생:', error);
+        // TODO: 토스트 두 번 뜨는거 고쳐야 함
+        router.push('/login'); 
+        showToast.warning({message:'로그인 후 이용가능해요!'})
       }
     };
-    fetchAccounts();
-    
+
+    checkLogin();
   }, []);
 
-
-useEffect(()=>{
-  if(error){
-    //TODO : 토스트 두 번 뜨는거 고쳐야 함
-    showToast.error({message:`로그인 후 이용할 수 있어요!`})
-    //router.push(`/login`);
-  }
-
-},[error])
 
   // 총 잔액 계산
   const totalBalance = (accounts ?? []).reduce(
