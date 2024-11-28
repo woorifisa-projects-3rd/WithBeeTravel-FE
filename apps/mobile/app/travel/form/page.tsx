@@ -104,7 +104,7 @@ function TravelFormContent() {
       <Title label={mode == 'edit' ? '여행 편집' : '여행 생성'} />
       <TravelForm
         mode={mode as 'create' | 'edit'}
-        travelData={travelData}
+        // travelData={travelData}
         onSubmit={mode === 'create' ? handleCreateTravel : handleEditTravel}
       />
     </div>
