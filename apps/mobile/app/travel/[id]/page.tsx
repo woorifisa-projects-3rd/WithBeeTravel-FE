@@ -30,8 +30,6 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
   const statistics = Object.entries(data!.statistics);
   const travelCountriesCount = data?.countries.length;
 
-  console.log('data', data?.travelMembers);
-
   return (
     <div className={styles.container}>
       <Title label="여행 홈" />

@@ -24,8 +24,6 @@ const TabGroup = () => {
     '기타',
   ];
 
-  console.log('category', category);
-
   return (
     <div className={styles.container} ref={constraintsRef}>
       <motion.div

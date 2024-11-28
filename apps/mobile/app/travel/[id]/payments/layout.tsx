@@ -19,8 +19,6 @@ export default async function Layout({ children, params }: LayoutProps) {
     throw ERROR_MESSAGES['FETCH-FAILED'];
   }
 
-  console.log('travelHomeResponse from layout page: ', travelHomeResponse);
-
   return (
     <>
       {/* // StoreInitializer로 서버에서 가져온 데이터를 클라이언트 스토어에 초기화 */}
