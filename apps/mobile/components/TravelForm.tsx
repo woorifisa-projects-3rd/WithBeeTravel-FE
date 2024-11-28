@@ -9,6 +9,7 @@ import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
+import countriesList from './CountriesList';
 
 interface TravelFormProps {
   mode: 'create' | 'edit';
@@ -58,16 +59,6 @@ export default function TravelForm({
         [type === 'start' ? 'travelStartDate' : 'travelEndDate']: formattedDate,
       }));
     };
-
-  // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
-  const countriesList = [
-    '오스트리아',
-    '스위스',
-    '포르투갈',
-    '프랑스',
-    '이탈리아',
-    '스페인',
-  ];
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
