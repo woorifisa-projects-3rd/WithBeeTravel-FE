@@ -168,7 +168,7 @@ const CardIssuancePage = () => {
               ) : hasCard ? (
                 <Link href="/travel">
                   <Button
-                    label="여행 생성하러 가기"
+                    label="윗비트레블 시작하기"
                     className={styles.moveTrip}
                   />
                 </Link>
