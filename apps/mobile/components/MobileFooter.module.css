@@ -40,16 +40,16 @@
 
 .label {
     color: var(--color-gray-400);
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
 }
 
 .label.active {
-    color: var(--color-blue-9);
+    color: var(--color-blue-8);
 }
 
 .iconWrapper.active .svg path {
     fill: #ADE2FF;
-    stroke: var(--color-blue-9);
+    stroke: var(--color-blue-8);
 }

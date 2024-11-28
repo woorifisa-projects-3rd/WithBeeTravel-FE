@@ -86,7 +86,7 @@ const CardIssuancePage = () => {
   };
 
   const rotationDuration = 2.8;
-  const circleSegments = Array.from({ length: 25 }, (_, i) => i);
+  const circleSegments = Array.from({ length: 22 }, (_, i) => i);
 
   return (
     <div className={styles.container}>
@@ -157,7 +157,10 @@ const CardIssuancePage = () => {
             <div className={styles.btnWrap}>
               {hasCard ? (
                 <Link href="/travel">
-                  <Button label="여행 생성하러 가기" />
+                  <Button
+                    label="여행 생성하러 가기"
+                    className={styles.moveTrip}
+                  />
                 </Link>
               ) : (
                 <>
