@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { PaymentSkeleton } from '@withbee/ui/payment-skeleton';
 import { getSharedPayments, getTravelHome } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { SettlementButton } from '@withbee/ui/settlement-button';
 
 interface TravelPageProps {
   params: {
@@ -16,11 +17,19 @@ export default async function Page({ params }: TravelPageProps) {
     getSharedPayments({ travelId: Number(id) }),
   ]);
 
-  if ('code' in travelHomeResponse || 'code' in sharedPaymentsResponse) {
-    throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
+  if ('code' in travelHomeResponse) {
+    throw new Error(
+      ERROR_MESSAGES[travelHomeResponse.code as keyof typeof ERROR_MESSAGES],
+    );
   }
 
-  console.log('travelHomeResponse from payments page: ', travelHomeResponse);
+  if ('code' in sharedPaymentsResponse) {
+    throw new Error(
+      ERROR_MESSAGES[
+        sharedPaymentsResponse.code as keyof typeof ERROR_MESSAGES
+      ],
+    );
+  }
 
   return (
     <Suspense fallback={<PaymentSkeleton />}>
@@ -29,15 +38,9 @@ export default async function Page({ params }: TravelPageProps) {
         initialPayments={sharedPaymentsResponse.data}
         travelInfo={travelHomeResponse.data!}
       />
-      {/* <div className={styles.btnWrapper}>
-          <Button
-            label="정산 시작하기" // 동의하러 가기 | 정산 현황 확인 | 정산 시작하기
-            primary={false}
-            // size="large"
-            className={styles.info}
-            shadow={true}
-          />
-        </div> */}
+      {travelHomeResponse.data?.settlementStatus !== 'PENDING' && (
+        <SettlementButton travelInfo={travelHomeResponse.data!} />
+      )}
     </Suspense>
   );
 }

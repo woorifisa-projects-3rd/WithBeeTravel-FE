@@ -21,6 +21,7 @@ export const Button = ({
   type = 'button',
   className = '',
   shadow = false,
+  disabled = false,
   ...props
 }: ButtonProps) => {
   const mode = primary ? styles.primary : styles.secondary;
@@ -42,6 +43,7 @@ export const Button = ({
         repeat: Infinity,
         repeatType: 'mirror',
       }}
+      disabled={disabled}
       {...props}
     >
       {label}

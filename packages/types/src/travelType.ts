@@ -26,5 +26,7 @@ export interface TravelHome {
     [K in CategoryType]?: number;
   };
   travelMembers: TravelMember[];
-  isCaptain: boolean;
+  captain: boolean;
+  isAgreed: boolean;
+  settlementStatus: 'PENDING' | 'ONGOING' | 'DONE';
 }

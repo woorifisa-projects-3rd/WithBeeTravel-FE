@@ -80,9 +80,10 @@ export const getTravelHome = async (
   travelId: number,
 ): Promise<SuccessResponse<TravelHome> | ErrorResponse> => {
   return await instance.get<TravelHome>(`/api/travels/${travelId}`, {
+    // cache: 'no-cache',
     next: {
       tags: [`travel-${travelId}`], // 태그 기반 캐싱
-      revalidate: 3600, // 1시간마다 재검증
+      revalidate: 1000 * 1 * 60, // 1분
     },
   });
 };
