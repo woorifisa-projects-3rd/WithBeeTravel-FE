@@ -123,3 +123,19 @@
   font-weight: 500;
   color: var(--color-gray-600);
 }
+
+/* 여행 데이터 없을 경우 */
+
+.emptyState {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.emptyStateMessage {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--color-gray-500);
+}
