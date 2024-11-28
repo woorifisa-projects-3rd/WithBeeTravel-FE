@@ -29,7 +29,7 @@ export function SettlementButton({ travelInfo }: SettlementButtonProps) {
     }
     if (travelInfo.settlementStatus === 'ONGOING') {
       return {
-        label: travelInfo.isAgreed ? '정산 현황 확인' : '동의하러 가기',
+        label: travelInfo.isAgreed ? '정산 현황 확인' : '정산 동의하러 가기',
         onClick: () => {
           router.push(`/travel/${travelInfo.id}/settlement`);
         },
