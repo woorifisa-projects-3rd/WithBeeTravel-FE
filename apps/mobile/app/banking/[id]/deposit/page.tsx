@@ -8,14 +8,12 @@ import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
 
-
-
 export default function DepositPage() {
   const router = useRouter();
   const params = useParams();
   const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo| undefined>(); // 내 계좌 정보 상태
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(); // 내 계좌 정보 상태
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
   const { showToast } = useToast();

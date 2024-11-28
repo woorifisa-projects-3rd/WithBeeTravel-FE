@@ -14,8 +14,6 @@ import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
 
-
-
 export default function TransferDetailPage() {
   const MAX_AMOUNT = 500000000;
   const router = useRouter();
@@ -52,7 +50,7 @@ export default function TransferDetailPage() {
           setAccountInfo(response.data);
         } else {
           // TODO: 에러페이지로 이동시키기
-          router.push(`/mypage`)
+          router.push(`/mypage`);
           console.error(response.message);
         }
       })();

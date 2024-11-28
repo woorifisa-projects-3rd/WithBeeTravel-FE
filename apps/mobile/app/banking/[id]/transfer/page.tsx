@@ -31,7 +31,7 @@ export default function TransferPage() {
         } else {
           console.error(response.message);
           // TODO: 에러 페이지로 이동 예정
-          router.push('/mypage')
+          router.push('/mypage');
         }
       })();
     }
@@ -40,7 +40,6 @@ export default function TransferPage() {
   if (loading) {
     return null;
   }
-
 
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');

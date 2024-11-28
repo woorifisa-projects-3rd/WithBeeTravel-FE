@@ -39,18 +39,17 @@ export default function PaymentPage() {
 
   const [loading, setLoading] = useState<boolean>(true);
 
-
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
         const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
-          setLoading(false)
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
           // TODO: 에러 페이지로 이동시키기
-          router.push(`/mypage`)
+          router.push(`/mypage`);
           console.error(response.message);
         }
       })();

@@ -14,7 +14,6 @@ import {
 import { error } from 'console';
 import { AccountHistory, AccountInfo } from '@withbee/types';
 
-
 export default function AccountPage() {
   const router = useRouter();
   const params = useParams();
@@ -33,7 +32,7 @@ export default function AccountPage() {
           const responseInfo = await getAccountInfo(Number(id));
           if (Number(responseInfo.status) !== 200) {
             setError(true);
-            router.push('/not-found'); // 오류 발생 시 리디렉션     
+            router.push('/not-found'); // 오류 발생 시 리디렉션
             return;
           }
           if ('data' in responseInfo) {
