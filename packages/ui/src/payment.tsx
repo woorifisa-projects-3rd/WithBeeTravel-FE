@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { ParticipatingMember, SharedPayment } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
+import { RecordModal } from './record-modal';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 import { chooseParticipants } from '@withbee/apis';
@@ -97,6 +98,9 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
     }
   }, [isOpen]);
 
+  const [isRecordModalOpen, setIsRecordModalOpen] = useState<boolean>(false);
+  const handleRecordSubmit = () => {};
+
   return (
     <article className={styles.payment}>
       <FriendImage
@@ -146,7 +150,10 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
           ) : (
             <Item label="국내 여행" size="small" />
           )}
-          <div className={styles.optionsWrapper}>
+          <div
+            className={styles.optionsWrapper}
+            onClick={() => setIsRecordModalOpen(true)}
+          >
             <button className={styles.option}>기록 추가</button>
           </div>
         </div>
@@ -196,6 +203,17 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
             ))}
           </div>
         </Modal>
+      )}
+
+      {/* 기록 추가 모달 */}
+      {isRecordModalOpen && (
+        <RecordModal
+          isOpen={isRecordModalOpen}
+          onClose={() => setIsRecordModalOpen(false)}
+          onSubmit={handleRecordSubmit}
+          travelId={travelId.toString()}
+          sharedId={paymentInfo.id.toString()}
+        />
       )}
     </article>
   );

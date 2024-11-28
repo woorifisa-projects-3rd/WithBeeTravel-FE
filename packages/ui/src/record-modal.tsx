@@ -1,3 +1,5 @@
+'use client';
+
 import { Modal } from './modal';
 import styles from './record-modal.module.css';
 import {
@@ -6,6 +8,8 @@ import {
 } from '@withbee/types';
 import { useState } from 'react';
 import Image from 'next/image';
+import notSelectIcon from './assets/not_select.png';
+import selectIcon from './assets/select.png';
 import plusIcon from './assets/plus.png';
 
 interface RecordModalProps {
@@ -30,7 +34,14 @@ export const RecordModal: React.FC<RecordModalProps> = ({
   });
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
-  const handleFileChange = () => {};
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.files && e.target.files[0]) {
+      setRecord({ ...record, paymentImage: e.target.files[0] });
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
   return (
     <Modal
@@ -40,8 +51,8 @@ export const RecordModal: React.FC<RecordModalProps> = ({
       closeLabel="입력 완료"
       onSubmit={onSubmit}
     >
-      <div>
-        <div>
+      <div className={styles.record}>
+        <div className={styles.image}>
           <input
             id="paymentImageFileInput"
             type="file"
@@ -72,7 +83,34 @@ export const RecordModal: React.FC<RecordModalProps> = ({
             )}
           </label>
         </div>
-        <div></div>
+        <div
+          className={styles.isMainImage}
+          onClick={() =>
+            setRecord({
+              ...record,
+              isMainImage: !record.isMainImage,
+            })
+          }
+        >
+          {record.isMainImage ? (
+            <Image
+              src={selectIcon}
+              alt="select"
+              width="18"
+              height="18"
+              className={styles.selectIcon}
+            />
+          ) : (
+            <Image
+              src={notSelectIcon}
+              alt="not select"
+              width="18"
+              height="18"
+              className={styles.notSelectIcon}
+            />
+          )}
+          <span>그룹 대표 이미지로 설정</span>
+        </div>
         <textarea
           value={record.paymentComment}
           onChange={(e) =>
