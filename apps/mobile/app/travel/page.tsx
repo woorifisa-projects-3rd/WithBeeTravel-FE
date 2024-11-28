@@ -11,6 +11,7 @@ import useSWR from 'swr';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FriendImage } from '@withbee/ui/friend-image';
+import { useToast } from '@withbee/hooks/useToast';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +33,14 @@ export default function page() {
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
+    const { showToast } = useToast();
+
     const response = await postInviteCode(inviteCode);
 
     if ('code' in response) {
-      alert(response.message || '알 수 없는 오류가 발생했습니다.');
+      showToast.error({
+        message: response.message || '알 수 없는 오류가 발생했습니다.',
+      });
       throw new Error(
         ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
       );

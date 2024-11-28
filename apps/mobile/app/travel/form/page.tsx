@@ -8,6 +8,7 @@ import './page.module.css';
 import { useRouter, useParams } from 'next/navigation';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { getTravelHome } from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
 import useSWR from 'swr';
 
 interface FormData {
@@ -43,13 +44,17 @@ function TravelFormContent() {
     );
 
     console.log(response);
-
+    const { showToast } = useToast();
     if ('data' in response && response.data?.travelId) {
+      showToast.success({
+        message: '여행이 성공적으로 생성되었습니다.',
+      });
       router.push(`/travel/${response.data.travelId}`);
     } else {
+      showToast.error({
+        message: '여행 생성에 실패했습니다. 다시 시도해주세요.',
+      });
       throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
-      // 에러 처리 로직
-      console.error('Travel creation failed');
     }
   };
 
