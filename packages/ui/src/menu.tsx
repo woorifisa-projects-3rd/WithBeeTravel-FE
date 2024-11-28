@@ -11,10 +11,12 @@ import DatePickerModal from './date-picker-modal';
 import { usePaymentStore, useTravelStore } from '@withbee/stores';
 import { getDateObject } from '@withbee/utils';
 import { TravelMember } from '@withbee/types';
+import { useRouter } from 'next/navigation';
 
 interface MenuProps {
   // travelMembers: TravelMember[];
   className?: string;
+  travelId: string;
 }
 
 const AllMembers: TravelMember = {
@@ -23,7 +25,7 @@ const AllMembers: TravelMember = {
   profileImage: 0,
 };
 
-export const Menu = ({ className, ...props }: MenuProps) => {
+export const Menu = ({ className, travelId, ...props }: MenuProps) => {
   const {
     startDate,
     setStartDate,
@@ -83,6 +85,13 @@ export const Menu = ({ className, ...props }: MenuProps) => {
     // handleModal('member');
   };
 
+  const router = useRouter();
+
+  // 직접 결제 내역 추가 페이지 이동 핸들러
+  const handleRouteManualSharedPaymentPage = () => {
+    router.push(`/travel/${travelId}/manual`);
+  };
+
   return (
     <section className={[styles.menu, className].join(' ')} {...props}>
       <Image
@@ -118,7 +127,12 @@ export const Menu = ({ className, ...props }: MenuProps) => {
       ) : (
         <div className={styles.default}>
           <Button label="불러오기" size={'small'} />
-          <Button label="직접 추가" size={'small'} primary={false} />
+          <Button
+            label="직접 추가"
+            size={'small'}
+            primary={false}
+            onClick={handleRouteManualSharedPaymentPage}
+          />
         </div>
       )}
 

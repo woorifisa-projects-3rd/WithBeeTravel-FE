@@ -6,8 +6,11 @@ import {
   ManualSharedPaymentForm,
   ManualPaymentFormData,
 } from '@withbee/ui/manual-shared-payment-form';
-import { useState } from 'react';
-import { createManualSharedPayment } from '@withbee/apis';
+import { useState, useEffect } from 'react';
+import {
+  createManualSharedPayment,
+  getCurrencyUnitOptions,
+} from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
@@ -21,6 +24,7 @@ interface ManualRegisterSharedPaymentProps {
 export default function Page({ params }: ManualRegisterSharedPaymentProps) {
   const { id } = params;
   const router = useRouter();
+  const { showToast, formValidation } = useToast();
   const [formData, setFormData] = useState<ManualPaymentFormData>({
     date: '',
     time: '',
@@ -33,50 +37,30 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     paymentComment: '',
     isMainImage: false,
   });
-  const [currencyUnitOptions, setCurrencyUnitOptions] = useState([
-    'USD',
-    'EUR',
-    'JPY',
-    'CNY',
-    'KRW',
-    'GBP',
-    'AUD',
-    'CAD',
-    'NZD',
-    'MXN',
-    'INR',
-    'BRL',
-    'ZAR',
-    'SEK',
-    'NOK',
-    'DKK',
-    'CHF',
-    'HKD',
-    'SGD',
-    'THB',
-    'TRY',
-    'MYR',
-    'PHP',
-    'AED',
-    'SAR',
-    'KWD',
-    'BHD',
-    'QAR',
-    'OMR',
-    'JOD',
-    'LBP',
-    'EGP',
-    'IDR',
-    'PKR',
-    'TWD',
-    'VND',
-    'COP',
-    'PEN',
-    'CLP',
-    'ARS',
-  ]);
+  const [currencyUnitOptions, setCurrencyUnitOptions] = useState<string[]>([]);
 
-  const { showToast, formValidation } = useToast();
+  const handleGetCurrencyUnitOptions = async () => {
+    const response = await getCurrencyUnitOptions(id);
+
+    if ('code' in response) {
+      showToast.warning({
+        message:
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          'Unknown Error',
+      });
+
+      throw new Error(response.code);
+    }
+
+    if (response.data)
+      setCurrencyUnitOptions(response.data.currencyUnitOptions);
+  };
+
+  useEffect(() => {
+    // 통화 코드 목록 불러오기
+    handleGetCurrencyUnitOptions();
+  }, []);
+
   const handleSubmit = async () => {
     // 결제일자 입력 검증
     if (!validateInputForm('date')) {
