@@ -64,6 +64,7 @@ export const getTravelList = async (): Promise<
   const response = instance.get<TravelList[]>(`/api/travels`, {
     cache: 'no-cache',
   });
+
   return response;
 };
 
@@ -79,7 +80,10 @@ export const getTravelMembers = async (travelId: number) => {
 
 // 여행 홈 불러오기
 export const getTravelHome = async (travelId: number) => {
-  return await instance.get<TravelHome>(`/api/travels/${travelId}`, {
+  const response = await instance.get<TravelHome>(`/api/travels/${travelId}`, {
     cache: 'no-cache',
   });
+  console.log(response);
+
+  return response;
 };

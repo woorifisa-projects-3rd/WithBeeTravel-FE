@@ -5,8 +5,10 @@ import { Title } from '@withbee/ui/title';
 import { useSearchParams } from 'next/navigation';
 import { createTravel, editTravel } from '@withbee/apis';
 import './page.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { getTravelHome } from '@withbee/apis';
+import useSWR from 'swr';
 
 interface FormData {
   travelName: string;
@@ -83,17 +85,14 @@ function TravelFormContent() {
     setEditedTravel(travel);
   };
 
-  const travelData =
-    mode === 'edit'
-      ? {
-          travelId: 12,
-          travelName: '기존 여행 이름',
-          isDomesticTravel: true,
-          travelCountries: ['프랑스', '이탈리아'],
-          travelStartDate: '2024-10-28',
-          travelEndDate: '2024-11-02',
-        }
-      : undefined;
+  // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
+  const params = useParams();
+  const travelId = Number(params.id);
+  const { data: travelData, error } = useSWR('travelHome', () =>
+    getTravelHome(travelId),
+  );
+
+  console.log(travelData);
 
   return (
     <div>
