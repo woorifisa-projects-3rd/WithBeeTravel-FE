@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { getAccountList, getIsCard, postConnectedAccount } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
+import { useRouter } from 'next/navigation';
 
 interface Account {
   accountId: number;
@@ -23,13 +24,18 @@ const CardIssuancePage = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
+  const router = useRouter();
+
   // 계좌 리스트 조회
   const { data: AccountListData, error } = useSWR('accounts', getAccountList);
   const accountList =
     AccountListData && 'data' in AccountListData ? AccountListData.data : [];
 
   // 위비카드연결여부
-  const { data: isCardData } = useSWR('isCard', getIsCard);
+  const { data: isCardData, isLoading: isCardLoading } = useSWR(
+    'isCard',
+    getIsCard,
+  );
   const hasCard =
     isCardData && 'data' in isCardData && isCardData.data
       ? isCardData.data.connectedWibeeCard
@@ -71,9 +77,9 @@ const CardIssuancePage = () => {
         setIssuanceState('processing');
         setTimeout(() => {
           setIssuanceState('complete');
-        }, 7000);
+        }, 4000);
       } else {
-        window.location.href = '/travel';
+        router.push('/travel');
       }
     } else {
       alert('계좌를 선택해주세요.');
@@ -155,7 +161,11 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              {hasCard ? (
+              {isCardLoading ? (
+                <div className={styles.btnLoading}>
+                  <div className={styles.btnLoadingSpinner}></div>
+                </div>
+              ) : hasCard ? (
                 <Link href="/travel">
                   <Button
                     label="여행 생성하러 가기"
@@ -305,8 +315,19 @@ const CardIssuancePage = () => {
         isOpen={isAccountModalOpen}
         onClose={() => setIsAccountModalOpen(false)}
         title="여행에 연결할 계좌를 선택해주세요."
-        closeLabel="선택 완료"
-        onSubmit={handleModalSubmit}
+        closeLabel={
+          Array.isArray(accountList) && accountList.length > 0
+            ? '선택 완료'
+            : '계좌 생성하러 가기'
+        }
+        onSubmit={
+          Array.isArray(accountList) && accountList.length > 0
+            ? handleModalSubmit
+            : () => {
+                // 계좌 목록이 비어있을 때 링크로 이동
+                router.push('/banking/create');
+              }
+        }
       >
         <div className={styles.accountList}>
           {Array.isArray(accountList) && accountList.length > 0 ? (
