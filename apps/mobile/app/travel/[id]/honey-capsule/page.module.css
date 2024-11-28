@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.downloadWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrap {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 90%;
+  height: 25vh;
+  margin-top: 10px;
+}
+
+.imageWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/imgs/travelselect/withbee_friends_background.png')
+    center/contain no-repeat;
+  z-index: -1;
+  /* 다른 이미지들 위에 배경이 위치하도록 */
+}
+
+.withbeeFriendsImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.comment {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  margin-bottom: 10px;
+}

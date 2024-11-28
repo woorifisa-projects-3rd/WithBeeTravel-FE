@@ -6,3 +6,4 @@ export type * from './travelService';
 export type * from './authType';
 export type * from './bankingType';
 export type * from './manualSharedPayment';
+export type * from './honeyCapsuleType';
