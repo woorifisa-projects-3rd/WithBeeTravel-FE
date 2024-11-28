@@ -6,33 +6,38 @@ import {
   SharedPaymentRecordRequest,
   SharedPaymentRecordResponse,
 } from '@withbee/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import plusIcon from './assets/plus.png';
+import {
+  getSharedPaymentRecord,
+  updateSharedPaymentRecord,
+} from '@withbee/apis';
+import { useToast } from '@withbee/hooks/useToast';
+import { ERROR_MESSAGES } from '@withbee/exception';
 
 interface RecordModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
   travelId: string;
-  sharedId: string;
+  sharedPaymentId: string;
 }
 
 export const RecordModal: React.FC<RecordModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
   travelId,
-  sharedId,
+  sharedPaymentId,
 }) => {
-  const [record, setRecord] = useState<SharedPaymentRecordResponse>({
+  const [record, setRecord] = useState<SharedPaymentRecordRequest>({
     paymentImage: null,
-    paymentComment: undefined,
+    paymentComment: '',
     isMainImage: false,
   });
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -43,13 +48,57 @@ export const RecordModal: React.FC<RecordModalProps> = ({
     }
   };
 
+  const handleGetSharedPaymentRecord = async () => {
+    const response = await getSharedPaymentRecord(travelId, sharedPaymentId);
+
+    if ('code' in response) {
+      showToast.warning({
+        message:
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          'Unknown Error',
+      });
+
+      throw new Error(response.code);
+    }
+
+    if ('data' in response) {
+      if (response.data?.paymentImage) setImageSrc(response.data.paymentImage);
+      if (response.data?.paymentComment)
+        setRecord({ ...record, paymentComment: response.data?.paymentComment });
+    }
+  };
+
+  useEffect(() => {
+    handleGetSharedPaymentRecord();
+  }, [isOpen === true]);
+
+  const handleSubmit = async () => {
+    const response = await updateSharedPaymentRecord(
+      travelId,
+      sharedPaymentId,
+      record,
+    );
+
+    if ('code' in response) {
+      showToast.warning({
+        message:
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          'Unknown Error',
+      });
+
+      throw new Error(response.code);
+    }
+
+    onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       title="기록 추가"
       closeLabel="입력 완료"
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       <div className={styles.record}>
         <div className={styles.image}>

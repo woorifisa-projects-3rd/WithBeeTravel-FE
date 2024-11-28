@@ -1,7 +1,14 @@
 'use server';
 
 import { instance } from './instance';
-import type { PageResponse, SharedPayment } from '@withbee/types';
+import type {
+  PageResponse,
+  SharedPayment,
+  SharedPaymentRecordRequest,
+  SharedPaymentRecordResponse,
+  SuccessResponse,
+  ErrorResponse,
+} from '@withbee/types';
 
 interface GetSharedPaymentsParams {
   travelId: number;
@@ -64,4 +71,39 @@ export const chooseParticipants = async ({
       }),
     },
   );
+};
+
+export const getSharedPaymentRecord = async (
+  travelId: string,
+  sharedPaymentId: string,
+): Promise<SuccessResponse<SharedPaymentRecordResponse> | ErrorResponse> => {
+  console.log('API 요청');
+
+  const response = instance.get<SharedPaymentRecordResponse>(
+    `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
+  );
+  return response;
+};
+
+export const updateSharedPaymentRecord = async (
+  travelId: string,
+  sharedPaymentId: string,
+  formData: SharedPaymentRecordRequest,
+) => {
+  const formDataToSend = new FormData();
+  formDataToSend.append(
+    'paymentImage',
+    formData.paymentImage ? formData.paymentImage : new Blob(),
+  );
+  formDataToSend.append('paymentComment', formData.paymentComment);
+  formDataToSend.append('isMainImage', formData.isMainImage.toString());
+
+  const response = await instance.patch(
+    `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
+    {
+      body: formDataToSend,
+      isMultipart: true,
+    },
+  );
+  return response;
 };

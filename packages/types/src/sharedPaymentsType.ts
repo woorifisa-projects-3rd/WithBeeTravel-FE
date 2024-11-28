@@ -19,13 +19,13 @@ export interface ParticipatingMember {
 }
 
 export interface SharedPaymentRecordRequest {
-  sharedPaymentId: number;
-  paymentImage: string;
+  paymentImage: File | null;
   paymentComment: string;
+  isMainImage: boolean;
 }
 
 export interface SharedPaymentRecordResponse {
-  paymentImage: File | null;
+  sharedPaymentId: number;
+  paymentImage: string | undefined;
   paymentComment: string | undefined;
-  isMainImage: boolean;
 }

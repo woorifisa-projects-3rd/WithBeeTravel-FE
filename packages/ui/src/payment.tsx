@@ -99,7 +99,6 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
   }, [isOpen]);
 
   const [isRecordModalOpen, setIsRecordModalOpen] = useState<boolean>(false);
-  const handleRecordSubmit = () => {};
 
   return (
     <article className={styles.payment}>
@@ -210,9 +209,8 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
         <RecordModal
           isOpen={isRecordModalOpen}
           onClose={() => setIsRecordModalOpen(false)}
-          onSubmit={handleRecordSubmit}
           travelId={travelId.toString()}
-          sharedId={paymentInfo.id.toString()}
+          sharedPaymentId={paymentInfo.id.toString()}
         />
       )}
     </article>
