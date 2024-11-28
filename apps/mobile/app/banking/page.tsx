@@ -19,25 +19,23 @@ export default function BankingPage() {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-       
         const accountResponse = await getAccounts();
         if ('data' in accountResponse) {
           setAccounts(accountResponse.data);
           setError(false);
         } else {
-          console.error("에러 코드 ", accountResponse.status);
+          console.error('에러 코드 ', accountResponse.status);
         }
       } catch (error) {
         console.error('로그인 확인 중 오류 발생:', error);
         // TODO: 토스트 두 번 뜨는거 고쳐야 함
-        router.push('/login'); 
-        showToast.warning({message:'로그인 후 이용가능해요!'})
+        router.push('/login');
+        showToast.warning({ message: '로그인 후 이용가능해요!' });
       }
     };
 
     checkLogin();
   }, []);
-
 
   // 총 잔액 계산
   const totalBalance = (accounts ?? []).reduce(
