@@ -19,6 +19,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { PaymentSkeleton } from './payment-skeleton';
 import Image from 'next/image';
 import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
+import { PaymentError } from './payment-error';
 
 interface PaymentListProps {
   travelId: number;
@@ -59,7 +60,6 @@ export default function PaymentList({
     useSWRInfinite(
       getKey,
       async (params) => {
-        console.log('params', params.page);
         const response = await getSharedPayments(params);
 
         if ('code' in response) {
@@ -145,26 +145,7 @@ export default function PaymentList({
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
   if (error) {
-    return (
-      <motion.div
-        className={styles.errorContainer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <Image
-          src="/imgs/friends/notfound.png"
-          alt="에러 이미지"
-          width={140}
-          height={140}
-          className={styles.errorImage}
-        />
-        <div>
-          <p className={styles.errorText}>해당하는 카테고리의</p>
-          <p className={styles.errorText}>공동결제내역이 존재하지 않아요.</p>
-        </div>
-      </motion.div>
-    );
+    return <PaymentError />;
   }
 
   return (
@@ -191,8 +172,8 @@ export default function PaymentList({
                       <Payment
                         key={`payment-${payment.id}-${idx}`}
                         travelId={travelId}
-                        travelMembers={travelMembers}
                         paymentInfo={payment}
+                        travelInfo={travelInfo}
                       />
                     ))}
                   </div>
@@ -203,8 +184,8 @@ export default function PaymentList({
                     <Payment
                       key={payment.id}
                       travelId={travelId}
-                      travelMembers={travelMembers}
                       paymentInfo={payment}
+                      travelInfo={travelInfo}
                     />
                   </>
                 ))}
