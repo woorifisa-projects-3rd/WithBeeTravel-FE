@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./honey-capsule": "./src/honey-capsule.tsx",
     "./currency-unit-picker-modal": "./src/currency-unit-picker-modal.tsx",
     "./time-picker-modal": "./src/time-picker-modal.tsx",
     "./record-image": "./src/record-image.tsx",

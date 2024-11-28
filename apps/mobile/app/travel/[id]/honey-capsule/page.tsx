@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { getHoneyCapsule } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { HoneyCapsuleBox } from '@withbee/ui/honey-capsule';
 
 interface HoneyCapsuleProps {
   params: {
@@ -41,10 +42,6 @@ export default function Page({ params }: HoneyCapsuleProps) {
     handleGetHoneyCapsule();
   }, []);
 
-  useEffect(() => {
-    console.log(honeyCapsuleData);
-  }, [honeyCapsuleData]);
-
   return (
     <div>
       <Title label="HONEY CAPSULE" />
@@ -67,6 +64,12 @@ export default function Page({ params }: HoneyCapsuleProps) {
           <Button label="허니캡슐 생성하기" />
         </div>
       </div>
+      {honeyCapsuleData?.map((honeyCapsule) => (
+        <HoneyCapsuleBox
+          key={honeyCapsule.sharedPaymentId}
+          data={honeyCapsule}
+        />
+      ))}
     </div>
   );
 }
