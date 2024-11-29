@@ -26,11 +26,11 @@ function TravelFormContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
+  const params = useParams();
 
   // 편집 api
   const handleEditTravel = async (formData: any) => {
     const {
-      travelId,
       travelName,
       isDomesticTravel,
       travelCountries,
@@ -39,7 +39,7 @@ function TravelFormContent() {
     } = formData;
 
     const response = await editTravel(
-      travelId,
+      Number(params.id),
       travelName,
       isDomesticTravel,
       travelCountries,
@@ -47,12 +47,12 @@ function TravelFormContent() {
       travelEndDate,
     );
 
-    if ('data' in response && response.data?.travelId) {
-      showToast.success({ message: '여행이 성공적으로 생성되었습니다.' });
-      router.push(`/travel/${response.data.travelId}`);
+    if (response) {
+      showToast.success({ message: '여행이 편집이 완료되었습니다.' });
+      router.push(`/travel/${params.id}`);
     } else {
       showToast.error({
-        message: '여행 생성에 실패했습니다. 다시 시도해주세요.',
+        message: '여행 편집에 실패했습니다. 다시 시도해주세요.',
       });
       throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
     }
@@ -65,7 +65,6 @@ function TravelFormContent() {
   const { showToast } = useToast();
 
   // 여행 데이터 가져오기
-  const params = useParams();
 
   const { data: travelData, isLoading } = useSWR(
     mode === 'edit' ? `${params.id}` : null,
