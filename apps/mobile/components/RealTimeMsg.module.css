@@ -1,0 +1,74 @@
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.background {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    width: 400px;
+}
+
+.slideIn {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.slide-out {
+    animation: slideOutRight 0.5s ease forwards;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%;
+}
+
+.cardRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.logTitle {
+    font-weight: bold;
+    color: #333;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+}
+
+.logMessage {
+    color: #666;
+}
