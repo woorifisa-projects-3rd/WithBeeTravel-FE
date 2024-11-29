@@ -41,8 +41,6 @@ const CardIssuancePage = () => {
       ? isCardData.data.connectedWibeeCard
       : undefined;
 
-  console.log(hasCard);
-
   const handleIssuance = () => {
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);

@@ -83,7 +83,7 @@ export const getTravelHome = async (travelId: number) => {
   const response = await instance.get<TravelHome>(`/api/travels/${travelId}`, {
     cache: 'no-cache',
   });
-  console.log(response);
+  console.log('응답값-----', response);
 
   return response;
 };

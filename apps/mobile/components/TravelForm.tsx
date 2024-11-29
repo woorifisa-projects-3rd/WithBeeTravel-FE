@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -14,7 +14,6 @@ import countriesList from './CountriesList';
 interface TravelFormProps {
   mode: 'create' | 'edit';
   travelData?: {
-    travelId: number;
     travelName: string;
     isDomesticTravel: boolean;
     travelCountries?: string[];
@@ -30,15 +29,15 @@ export default function TravelForm({
   onSubmit,
 }: TravelFormProps) {
   const router = useRouter();
+  console.log('부모컴포넌트', travelData);
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
-    travelId: 12,
-    travelName: '',
-    isDomesticTravel: false,
-    travelCountries: [] as string[],
-    travelStartDate: '2024-10-28',
-    travelEndDate: '2024-11-02',
+    travelName: travelData?.travelName || '',
+    isDomesticTravel: travelData?.isDomesticTravel || false,
+    travelCountries: travelData?.travelCountries || [],
+    travelStartDate: travelData?.travelStartDate || '',
+    travelEndDate: travelData?.travelEndDate || '',
   });
 
   // 검색 관련 상태
