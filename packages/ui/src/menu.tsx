@@ -11,10 +11,12 @@ import DatePickerModal from './date-picker-modal';
 import { formatDate, getDateObject } from '@withbee/utils';
 import { DateObject, TravelHome, TravelMember } from '@withbee/types';
 import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
+import { useRouter } from 'next/navigation';
 
 interface MenuProps {
   travelInfo: TravelHome;
   className?: string;
+  travelId: string;
 }
 
 const AllMembers: TravelMember = {
@@ -33,7 +35,12 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
     start: false,
     end: false,
   });
-  const { travelStartDate, travelEndDate, travelMembers } = travelInfo;
+  const {
+    id: travelId,
+    travelStartDate,
+    travelEndDate,
+    travelMembers,
+  } = travelInfo;
 
   const [isFilter, setIsFilter] = useState(false); // 필터 메뉴인지 여부
 
@@ -85,6 +92,13 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
       travelMembers?.find((m) => m.id === params.memberId)?.name || '전체',
   };
 
+  const router = useRouter();
+
+  // 직접 결제 내역 추가 페이지 이동 핸들러
+  const handleRouteManualSharedPaymentPage = () => {
+    router.push(`/travel/${travelId}/manual`);
+  };
+
   return (
     <section className={[styles.menu, className].join(' ')} {...props}>
       <Image
@@ -120,7 +134,12 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
       ) : (
         <div className={styles.default}>
           <Button label="불러오기" size={'small'} />
-          <Button label="직접 추가" size={'small'} primary={false} />
+          <Button
+            label="직접 추가"
+            size={'small'}
+            primary={false}
+            onClick={handleRouteManualSharedPaymentPage}
+          />
         </div>
       )}
 

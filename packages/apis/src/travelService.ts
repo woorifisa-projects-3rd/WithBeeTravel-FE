@@ -61,7 +61,10 @@ export const editTravel = async (
 export const getTravelList = async (): Promise<
   SuccessResponse<TravelList[]> | ErrorResponse
 > => {
-  const response = instance.get<TravelList[]>(`/api/travels`);
+  const response = instance.get<TravelList[]>(`/api/travels`, {
+    cache: 'no-cache',
+  });
+
   return response;
 };
 
@@ -76,14 +79,15 @@ export const getTravelMembers = async (travelId: number) => {
 };
 
 // 여행 홈 불러오기
-export const getTravelHome = async (
-  travelId: number,
-): Promise<SuccessResponse<TravelHome> | ErrorResponse> => {
-  return await instance.get<TravelHome>(`/api/travels/${travelId}`, {
+export const getTravelHome = async (travelId: number) => {
+  const response = await instance.get<TravelHome>(`/api/travels/${travelId}`, {
     cache: 'no-cache',
     // next: {
     //   tags: [`travel-${travelId}`], // 태그 기반 캐싱
     //   revalidate: 1000 * 1 * 60, // 1분
     // },
   });
+  console.log('응답값-----', response);
+
+  return response;
 };

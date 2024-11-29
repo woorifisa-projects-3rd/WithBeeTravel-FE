@@ -41,7 +41,10 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
           </p>
           <div className={styles.subtitleWrapper}>
             <h2 className={styles.subtitle}>{data!.travelName}</h2>
-            <Link href="/travel/form?mode=edit" className={styles.button}>
+            <Link
+              href={`/travel/${travelId}/form?mode=edit`}
+              className={styles.button}
+            >
               <Image src="/edit.png" alt="edit" width={19} height={17.94} />
             </Link>
           </div>

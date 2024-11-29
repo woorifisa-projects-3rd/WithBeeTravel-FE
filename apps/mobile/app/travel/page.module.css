@@ -16,7 +16,6 @@
   bottom: 0;
   background: url('/imgs/travelselect/withbee_friends_background.png') center/contain no-repeat;
   z-index: -1;
-  /* 다른 이미지들 위에 배경이 위치하도록 */
 }
 
 .withbeeFriendsImg {
@@ -123,4 +122,41 @@
   line-height: 40px;
   font-weight: 500;
   color: var(--color-gray-600);
+}
+
+/* 여행 데이터 없을 경우 */
+
+.emptyState {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.emptyStateMessage {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+/* 로딩표시 */
+.loadingContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+}
+
+.loadingSpinner {
+  border: 4px solid transparent;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }
