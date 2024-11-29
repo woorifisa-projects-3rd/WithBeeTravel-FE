@@ -53,28 +53,35 @@ export const useSwipe = (
   // 터치 이벤트
   const handleTouchStart = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
+      const touch = e.touches?.[0]; // optional chaining 사용
+      if (!touch) return; // touch가 없으면 함수 종료
+
       isMouseDown.current = true;
       isSwiping.current = false;
-      offsetX.current = e.touches[0].clientX;
-      setStartX(e.touches[0].clientX);
+      offsetX.current = touch.clientX;
+      setStartX(touch.clientX);
     },
     [],
   );
 
   const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isMouseDown.current) return;
+    const touch = e.touches?.[0]; // optional chaining 사용
+    if (!isMouseDown.current || !touch) return; // touch가 없으면 함수 종료
+
     isSwiping.current = true;
-    setEndX(e.touches[0].clientX);
+    setEndX(touch.clientX);
   }, []);
 
   const handleTouchEnd = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
-      if (!isMouseDown.current) return;
+      const touch = e.changedTouches?.[0]; // optional chaining 사용
+      if (!isMouseDown.current || !touch) return; // touch가 없으면 함수 종료
+
       isMouseDown.current = false;
       if (!isSwiping.current) {
         onClickEventAction && onClickEventAction();
       } else {
-        setEndX(e.changedTouches[0].clientX);
+        setEndX(touch.clientX);
         calculateDragDistance();
       }
     },
