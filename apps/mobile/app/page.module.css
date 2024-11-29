@@ -3,6 +3,7 @@
 }
 
 .title {
+    text-align: center;
     font-size: 20px;
     font-weight: 500;
     margin-top: 1.3rem;
@@ -50,7 +51,7 @@
 
 .benefitTitle {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 4px;
 }
 

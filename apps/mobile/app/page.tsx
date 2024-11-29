@@ -164,11 +164,12 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              {isCardLoading ? (
+              {/* {isCardLoading ? (
                 <div className={styles.btnLoading}>
                   <div className={styles.btnLoadingSpinner}></div>
                 </div>
-              ) : hasCard ? (
+              ) :  */}
+              {hasCard ? (
                 <Link href="/travel">
                   <Button
                     label="윗비트레블 시작하기"
