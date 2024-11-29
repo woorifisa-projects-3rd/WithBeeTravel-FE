@@ -10,6 +10,7 @@ import { getHoneyCapsule } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { HoneyCapsuleBox } from '@withbee/ui/honey-capsule';
+import dayjs from 'dayjs';
 
 interface HoneyCapsuleProps {
   params: {
@@ -42,6 +43,18 @@ export default function Page({ params }: HoneyCapsuleProps) {
     handleGetHoneyCapsule();
   }, []);
 
+  // 날짜별로 허니캡슐을 그룹화하는 함수
+  const groupPaymentsByDate = (capsules: HoneyCapsule[]) => {
+    return capsules.reduce((acc: Record<string, HoneyCapsule[]>, capsule) => {
+      const date = dayjs(capsule.paymentDate).format('YYYY년 MM월 DD일');
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(capsule);
+      return acc;
+    }, {});
+  };
+
   return (
     <div>
       <Title label="HONEY CAPSULE" />
@@ -59,17 +72,27 @@ export default function Page({ params }: HoneyCapsuleProps) {
           <span className={styles.comment}>
             여행 기록을 간직해보세요!
             <br />
-            결제 내역에 남긴 기록을 모아 PDF로 생성해드립니다.
+            결제 내역에 남긴 기록을 모아 이미지로 생성해드립니다.
           </span>
           <Button label="허니캡슐 생성하기" />
         </div>
+        <div className={styles.record}>
+          {honeyCapsuleData &&
+            Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
+              ([date, capsules]) => (
+                <div key={date} className={styles.recordWrapper}>
+                  <span className={styles.date}>{date}</span>
+                  {capsules.map((capsule) => (
+                    <HoneyCapsuleBox
+                      key={capsule.sharedPaymentId}
+                      data={capsule}
+                    />
+                  ))}
+                </div>
+              ),
+            )}
+        </div>
       </div>
-      {honeyCapsuleData?.map((honeyCapsule) => (
-        <HoneyCapsuleBox
-          key={honeyCapsule.sharedPaymentId}
-          data={honeyCapsule}
-        />
-      ))}
     </div>
   );
 }
