@@ -17,3 +17,5 @@ export interface ParticipatingMember {
   id: number;
   profileImage: number;
 }
+
+export type SortBy = 'latest' | 'amount';
