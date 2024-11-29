@@ -42,7 +42,7 @@ const AccountSelection: React.FC<{
     }
   }, [currentIndex, currentProduct, onSelect]);
 
-  if (!currentProduct) return null; // 또는 다른 대체 UI를 넣을 수 있습니다.
+  if (!currentProduct ||!prevProduct ||!nextProduct) return null; // 또는 다른 대체 UI를 넣을 수 있습니다.
 
   return (
     <div className={styles.container}>
