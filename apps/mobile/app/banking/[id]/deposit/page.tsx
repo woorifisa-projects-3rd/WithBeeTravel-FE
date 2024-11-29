@@ -9,18 +9,12 @@ import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
-
-
- 
-
-
 interface AccountInfo {
   accountId: number;
   accountNumber: string;
   product: string;
   balance: number;
 }
-
 
 const MAX_DEPOSIT_AMOUNT = 500000000; // 5억원
 
@@ -60,7 +54,6 @@ export default function DepositPage() {
         showToast.error({ message: '최대 5억원까지 입금 가능합니다.' });
       }
     }
-    
   };
 
   // 입금 버튼 클릭 시 처리
@@ -141,7 +134,6 @@ export default function DepositPage() {
           <p style={{ height: '32px' }}> </p>
         )}
       </div>
-
       <div className={styles.amountDisplay}>
         {amount ? (
           <>
@@ -160,10 +152,12 @@ export default function DepositPage() {
             얼마나 입금할까요?
           </motion.span>
         )}
-        <p className={styles.won} style={{ height: '36px' }}>{numberToKorean(Number(amount))}</p> 
-      </div> {/* 한글 변환 결과 */}
+        <p className={styles.won} style={{ height: '36px' }}>
+          {numberToKorean(Number(amount))}
+        </p>
+      </div>{' '}
+      {/* 한글 변환 결과 */}
     </motion.div>
-    
   );
 
   return (
