@@ -126,9 +126,9 @@ export default function AccountPage() {
         {accountInfo && (
           <motion.div
             className={styles.accountDetails}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 0.4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
           >
             <div className={styles.accountInfo}>

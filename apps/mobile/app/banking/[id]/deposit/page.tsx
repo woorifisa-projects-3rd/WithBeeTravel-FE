@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion'; // Import motion from framer-motion
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { deposit, getAccountInfo, instance } from '@withbee/apis';
+import { deposit, getAccountInfo } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 
@@ -23,13 +24,12 @@ export default function DepositPage() {
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
   const { showToast } = useToast();
+  
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
         const response = await getAccountInfo(Number(myAccountId));
-        console.log(response);
-
         if ('data' in response) {
           setAccountInfo(response.data);
         } else {
@@ -48,14 +48,13 @@ export default function DepositPage() {
     }
   };
 
-  // 송금 버튼 클릭 시 처리
+  // 입금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
     if (!amount || amount == '0') {
       showToast.error({ message: '0원은 입금 할 수 없어요' });
       return;
     }
 
-    // 입금 로직 api
     const DepositRequest = {
       amount: amount,
       rqspeNm: '입금',
@@ -69,19 +68,20 @@ export default function DepositPage() {
       showToast.success({
         message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
       });
-      // 송금 완료되면 페이지 이동되야됨
       router.push(`/banking/`);
-
-      return;
     } catch (error) {
       console.error('오류: ', error);
-
       alert('입금 중 오류 발생');
     }
   };
 
   const renderKeyboard = () => (
-    <div className={styles.keyboard}>
+    <motion.div
+      className={styles.keyboard}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.4 }} // Slight delay for smooth entry
+    >
       {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
         (key) => (
           <button
@@ -93,21 +93,39 @@ export default function DepositPage() {
           </button>
         ),
       )}
-    </div>
+    </motion.div>
   );
 
   const renderAmountInput = () => (
-    <div className={styles.amountContainer}>
+    <motion.div
+      className={styles.amountContainer}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }} // Smooth animation for amount input
+    >
       <div className={styles.accountInfo}>
-        <h2>입금 할 계좌</h2>
-        {accountInfo ? (
-          <p className={styles.balance}>
-            {accountInfo.product} ({accountInfo.accountNumber}) - ₩
-            {accountInfo.balance.toLocaleString()}
-          </p>
-        ) : (
-          <p>내 계좌 정보를 불러오는 중...</p>
-        )}
+      <h2>내 계좌</h2>
+{accountInfo ? (
+  <motion.p
+    className={styles.balance}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.3 }}
+  >
+    {accountInfo.product}{' '}
+    <motion.span
+      className={styles.balanceAmount}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.2, duration: 0.3 }}
+    >
+      ₩ {accountInfo.balance.toLocaleString()}
+    </motion.span>
+  </motion.p>
+) : (
+  <p style={{ height: '32px'}}> </p>
+)}
+
       </div>
 
       <div className={styles.amountDisplay}>
@@ -119,22 +137,41 @@ export default function DepositPage() {
             </span>
           </>
         ) : (
-          <span className={styles.placeholder}>얼마나 입금할까요?</span>
+          <motion.span
+            className={styles.placeholder}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            얼마나 입금할까요?
+          </motion.span>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 
   return (
     <div className={styles.container}>
       <Title label="입금하기" />
+      
+      <main className={styles.main}>
+        {renderAmountInput()}
+      </main>
 
-      <main className={styles.main}>{renderAmountInput()}</main>
-
-      <div className={styles.actions}>{renderKeyboard()}</div>
+      <div className={styles.actions}>
+        {renderKeyboard()}
+      </div>
 
       <div className={styles.handleSendMoney}>
-        {amount && <Button label="입금하기" onClick={handleSendMoney} />}
+        {amount && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+          >
+            <Button label="입금하기" onClick={handleSendMoney} />
+          </motion.div>
+        )}
       </div>
     </div>
   );
