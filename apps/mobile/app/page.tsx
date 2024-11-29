@@ -11,6 +11,7 @@ import { getAccountList, getIsCard, postConnectedAccount } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface Account {
   accountId: number;
@@ -54,6 +55,8 @@ const CardIssuancePage = () => {
     }
   };
 
+  const { showToast } = useToast();
+
   const handleModalSubmit = async () => {
     if (selectedAccount) {
       isCardIssuance ? selectedAccount.accountNumber : '';
@@ -63,7 +66,9 @@ const CardIssuancePage = () => {
       );
 
       if ('code' in response) {
-        alert(response.message || '알 수 없는 오류가 발생했습니다.');
+        showToast.error({
+          message: response.message || '알 수 없는 오류가 발생했습니다.',
+        });
         throw new Error(
           ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         );
