@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface InviteCodeModalProps {
   isOpen: boolean;
@@ -36,7 +37,16 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     }
   }, [isOpen, isCopyMode, inviteCode]);
 
+  const { showToast } = useToast();
+
   const handleSubmit = () => {
+    if (inputValue.trim() === '') {
+      showToast.error({
+        message: '초대 코드를 입력해주세요.',
+      });
+      return;
+    }
+
     if (onSubmit) {
       onSubmit(inputValue);
     }
@@ -46,9 +56,13 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(inputValue);
-      alert('초대 코드가 복사되었습니다.');
+      showToast.success({
+        message: '초대 코드가 복사되었습니다.',
+      });
     } catch (err) {
-      alert('복사에 실패했습니다. 다시 시도해주세요.');
+      showToast.error({
+        message: '복사에 실패했습니다. 다시 시도해주세요.',
+      });
     }
   };
 

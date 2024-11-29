@@ -7,25 +7,17 @@ import { Modal } from '@withbee/ui/modal';
 import Image from 'next/image';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { getAccountList, getIsCard, postConnectedAccount } from '@withbee/apis';
+import { ERROR_MESSAGES } from '@withbee/exception';
+import useSWR from 'swr';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@withbee/hooks/useToast';
 
 interface Account {
-  id: number;
-  bankName: string;
+  accountId: number;
+  product: string;
   accountNumber: string;
 }
-
-const dummyAccounts: Account[] = [
-  {
-    id: 1,
-    bankName: 'Withbee Bank',
-    accountNumber: '123-456-789',
-  },
-  {
-    id: 2,
-    bankName: 'Another Bank',
-    accountNumber: '987-654-321',
-  },
-];
 
 const CardIssuancePage = () => {
   const [issuanceState, setIssuanceState] = useState('initial');
@@ -33,31 +25,64 @@ const CardIssuancePage = () => {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [isCardIssuance, setIsCardIssuance] = useState(false);
 
+  const router = useRouter();
+
+  // 계좌 리스트 조회
+  const { data: AccountListData, error } = useSWR('accounts', getAccountList);
+  const accountList =
+    AccountListData && 'data' in AccountListData ? AccountListData.data : [];
+
+  // 위비카드연결여부
+  const { data: isCardData, isLoading: isCardLoading } = useSWR(
+    'isCard',
+    getIsCard,
+  );
+  const hasCard =
+    isCardData && 'data' in isCardData && isCardData.data
+      ? isCardData.data.connectedWibeeCard
+      : undefined;
+
   const handleIssuance = () => {
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);
   };
 
   const handleAccountSelection = (account: Account) => {
-    if (selectedAccount?.id === account.id) {
+    if (selectedAccount?.accountId === account.accountId) {
       setSelectedAccount(null);
     } else {
       setSelectedAccount(account);
     }
   };
 
-  const handleModalSubmit = () => {
+  const { showToast } = useToast();
+
+  const handleModalSubmit = async () => {
     if (selectedAccount) {
+      isCardIssuance ? selectedAccount.accountNumber : '';
+      const response = await postConnectedAccount(
+        selectedAccount.accountId,
+        isCardIssuance,
+      );
+
+      if ('code' in response) {
+        showToast.error({
+          message: response.message || '알 수 없는 오류가 발생했습니다.',
+        });
+        throw new Error(
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
+        );
+      }
+
       setIsAccountModalOpen(false);
 
       if (isCardIssuance) {
         setIssuanceState('processing');
         setTimeout(() => {
           setIssuanceState('complete');
-        }, 7000);
+        }, 4000);
       } else {
-        // 여행 선택 페이지로 이동
-        window.location.href = '/travel';
+        router.push('/travel');
       }
     } else {
       alert('계좌를 선택해주세요.');
@@ -70,7 +95,7 @@ const CardIssuancePage = () => {
   };
 
   const rotationDuration = 2.8;
-  const circleSegments = Array.from({ length: 25 }, (_, i) => i);
+  const circleSegments = Array.from({ length: 22 }, (_, i) => i);
 
   return (
     <div className={styles.container}>
@@ -87,11 +112,12 @@ const CardIssuancePage = () => {
             <h1 className={styles.title}>위비 트래블 체크 카드</h1>
             <motion.div className={styles.withbeeCardWrap}>
               <Image
-                src="/imgs/cardBenefits/withbee_travel_checkcard.png"
+                src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="위비트래블 카드"
-                width={250}
-                height={235}
+                width={130}
+                height={190}
                 quality={100}
+                className={styles.withbeeCard}
               />
             </motion.div>
 
@@ -138,13 +164,28 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              <Button label="발급받기" onClick={handleIssuance} />
-              <div
-                className={styles.skipText}
-                onClick={() => setIsAccountModalOpen(true)}
-              >
-                카드 발급 없이 참가하기
-              </div>
+              {isCardLoading ? (
+                <div className={styles.btnLoading}>
+                  <div className={styles.btnLoadingSpinner}></div>
+                </div>
+              ) : hasCard ? (
+                <Link href="/travel">
+                  <Button
+                    label="윗비트레블 시작하기"
+                    className={styles.moveTrip}
+                  />
+                </Link>
+              ) : (
+                <>
+                  <Button label="발급받기" onClick={handleIssuance} />
+                  <div
+                    className={styles.skipText}
+                    onClick={() => setIsAccountModalOpen(true)}
+                  >
+                    카드 발급 없이 참가하기
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
         )}
@@ -216,7 +257,7 @@ const CardIssuancePage = () => {
             </motion.p>
           </motion.div>
         )}
-        {/* Complete state remains the same */}
+        {/* 발급 완료 */}
         {issuanceState === 'complete' && (
           <motion.div
             className={styles.completeContainer}
@@ -238,7 +279,7 @@ const CardIssuancePage = () => {
               style={{ perspective: 1000 }}
             >
               <Image
-                src="/imgs/cardBenefits/withbee_checkcard.png"
+                src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="발급된 카드"
                 fill
                 className="object-contain"
@@ -277,41 +318,56 @@ const CardIssuancePage = () => {
         isOpen={isAccountModalOpen}
         onClose={() => setIsAccountModalOpen(false)}
         title="여행에 연결할 계좌를 선택해주세요."
-        closeLabel="선택 완료"
-        onSubmit={handleModalSubmit}
+        closeLabel={
+          Array.isArray(accountList) && accountList.length > 0
+            ? '선택 완료'
+            : '계좌 생성하러 가기'
+        }
+        onSubmit={
+          Array.isArray(accountList) && accountList.length > 0
+            ? handleModalSubmit
+            : () => {
+                // 계좌 목록이 비어있을 때 링크로 이동
+                router.push('/banking/create');
+              }
+        }
       >
         <div className={styles.accountList}>
-          {dummyAccounts.map((account) => (
-            <div
-              key={account.id}
-              className={`${styles.accountItem} ${
-                selectedAccount?.id === account.id ? styles.selected : ''
-              }`}
-              onClick={() => handleAccountSelection(account)}
-            >
-              <div className={styles.accountInfo}>
-                <p className={styles.accountNumber}>{account.accountNumber}</p>
-                <p className={styles.bankName}>{account.bankName}</p>
+          {Array.isArray(accountList) && accountList.length > 0 ? (
+            accountList.map((account: Account) => (
+              <div
+                key={account.accountId}
+                className={styles.accountItem}
+                onClick={() => handleAccountSelection(account)}
+              >
+                <div className={styles.accountInfo}>
+                  <p className={styles.accountNumber}>
+                    {account.accountNumber}
+                  </p>
+                  <p className={styles.product}>{account.product}</p>
+                </div>
+                {selectedAccount?.accountId === account.accountId ? (
+                  <Image
+                    src="/check.png"
+                    alt="select"
+                    width={30}
+                    height={30}
+                    className={styles.selectIcon}
+                  />
+                ) : (
+                  <Image
+                    src="/uncheck.png"
+                    alt="not select"
+                    width={30}
+                    height={30}
+                    className={styles.notSelectIcon}
+                  />
+                )}
               </div>
-              {selectedAccount?.id === account.id ? (
-                <Image
-                  src="/check.png"
-                  alt="select"
-                  width={30}
-                  height={30}
-                  className={styles.selectIcon}
-                />
-              ) : (
-                <Image
-                  src="/uncheck.png"
-                  alt="not select"
-                  width={30}
-                  height={30}
-                  className={styles.notSelectIcon}
-                />
-              )}
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>연결된 계좌가 없습니다.</p>
+          )}
         </div>
       </Modal>
     </div>

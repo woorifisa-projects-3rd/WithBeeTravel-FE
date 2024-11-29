@@ -1,18 +1,33 @@
 .container {
-    padding-bottom: 90px;
+    padding-bottom: 70px;
 }
 
 .title {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     margin-top: 1.3rem;
 }
 
 .withbeeCardWrap {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
     width: 100%;
     display: flex;
     justify-content: center;
-    margin: 10px 0px;
+    margin: 20px 0px;
+}
+
+.withbeeCardWrap::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    background: url('/imgs/cardBenefits/background.png') center no-repeat;
+    background-size: 68%;
+    z-index: -1;
 }
 
 .benefitIcon {
@@ -26,7 +41,7 @@
 .benefitCard {
     padding: 12px 14px;
     border-radius: 10px;
-    margin-bottom: 17px;
+    margin-bottom: 12px;
     border: 1.5px solid var(--color-gray-200);
     display: flex;
     align-items: flex-start;
@@ -48,8 +63,8 @@
 .btnWrap {
     max-width: 430px;
     width: 100%;
-    bottom: 85px;
-    padding: 0 25px;
+    bottom: 50px;
+    padding: 0 25px 20px;
     left: 50%;
     transform: translate(-50%);
     position: fixed;
@@ -65,10 +80,12 @@
 }
 
 
+
+
 /* 카드 발급 중 */
 .beeCirclePath {
-    width: 180px;
-    height: 180px;
+    width: 165px;
+    height: 165px;
     position: relative;
     margin-bottom: 2rem;
 }
@@ -89,7 +106,7 @@
     border-radius: 50%;
     top: 0;
     left: 50%;
-    transform-origin: 0 100px;
+    transform-origin: 0 90px;
 }
 
 .beeWrapper {
@@ -149,7 +166,7 @@
 
 .completeTitle {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 5px;
 }
 
@@ -157,6 +174,10 @@
     font-size: 18px;
     color: var(--color-gray-400);
     margin-bottom: 2rem;
+}
+
+.moveTrip {
+    margin-bottom: 20px;
 }
 
 /* 계좌연결 */
