@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './AccountSelection.module.css';
-import { useSwipe } from '@withbee/hooks/useSwipe'; // 훅 import
+import { useSwipe } from '@withbee/hooks/useSwipe';
 import Image from 'next/image';
 
 interface ProductOption {
   label: string;
   value: string;
   imageUrl: string;
-  detail:string;
+  detail: string;
 }
 
 const AccountSelection: React.FC<{
@@ -15,48 +15,64 @@ const AccountSelection: React.FC<{
   onSelect: (product: string) => void;
 }> = ({ productOptions, onSelect }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [containerStyle, setContainerStyle] = useState<React.CSSProperties>({});
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // useSwipe 훅을 호출해서 여러 이벤트 핸들러를 구조 분해 할당
-  const { 
-    handleTouchStart, 
-    handleTouchMove, 
-    handleTouchEnd,
-    handleMouseDown, 
-    handleMouseUp, 
-    handleMouseMove,
-    handleWheel
-  } = useSwipe(
-    () => setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length), // 오른쪽 스와이프
-    () => setCurrentIndex((prevIndex) => (prevIndex - 1 + productOptions.length) % productOptions.length), // 왼쪽 스와이프
+  const { handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown, handleMouseUp, handleMouseMove, handleWheel } = useSwipe(
+    () => {
+      animateSwipe('right');
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length);
+    },
+    () => {
+      animateSwipe('left');
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + productOptions.length) % productOptions.length);
+    }
   );
 
-  // 왼쪽/현재/오른쪽 항목을 계산하여 반환
   const currentProduct = productOptions[currentIndex];
   const prevProduct = productOptions[(currentIndex - 1 + productOptions.length) % productOptions.length];
   const nextProduct = productOptions[(currentIndex + 1) % productOptions.length];
 
-  // 중앙에 위치한 항목이 자동으로 선택되도록 처리
   useEffect(() => {
     if (currentProduct) {
-      onSelect(currentProduct.label); // 중앙 항목이 변경되면 자동으로 선택됨
+      onSelect(currentProduct.label);
     }
   }, [currentIndex, currentProduct, onSelect]);
 
-  if (!currentProduct ||!prevProduct ||!nextProduct) return null; // 또는 다른 대체 UI를 넣을 수 있습니다.
+  const animateSwipe = (direction: 'left' | 'right') => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const containerWidth = container.offsetWidth;
+
+      if (direction === 'right') {
+        setContainerStyle({ transform: `translateX(-${containerWidth}px)`, transition: 'transform 0.2s' });
+      } else {
+        setContainerStyle({ transform: `translateX(${containerWidth}px)`, transition: 'transform 0.2s' });
+      }
+
+      // Reset the container position after the animation
+      setTimeout(() => {
+        setContainerStyle({ transform: 'translateX(0)', transition: '' });
+      }, 150);
+    }
+  };
+
+  if (!currentProduct || !prevProduct || !nextProduct) return null;
 
   return (
     <div className={styles.container}>
-      <div 
+      <div
         className={styles.swipeContainer}
-        onTouchStart={handleTouchStart} 
-        onTouchMove={handleTouchMove} 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown} 
-        onMouseUp={handleMouseUp} 
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
         onWheel={handleWheel}
+        ref={containerRef}
+        style={containerStyle}
       >
-        {/* 왼쪽 미리보기 항목 */}
         <div className={`${styles.cardPreview} ${styles.left}`}>
           <div className={styles.imageContainer}>
             <Image src={prevProduct.imageUrl} alt={prevProduct.label} width={120} height={180} />
@@ -66,7 +82,6 @@ const AccountSelection: React.FC<{
           </div>
         </div>
 
-        {/* 현재 선택된 항목 */}
         <div className={styles.cardSelected}>
           <div className={styles.imageContainer}>
             <Image src={currentProduct.imageUrl} alt={currentProduct.label} width={120} height={180} />
@@ -77,7 +92,6 @@ const AccountSelection: React.FC<{
           </div>
         </div>
 
-        {/* 오른쪽 미리보기 항목 */}
         <div className={`${styles.cardPreview} ${styles.right}`}>
           <div className={styles.imageContainer}>
             <Image src={nextProduct.imageUrl} alt={nextProduct.label} width={120} height={180} />
