@@ -18,20 +18,35 @@ const AccountSelection: React.FC<{
   const [containerStyle, setContainerStyle] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown, handleMouseUp, handleMouseMove, handleWheel } = useSwipe(
+  const {
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    handleWheel,
+  } = useSwipe(
     () => {
       animateSwipe('right');
       setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length);
     },
     () => {
       animateSwipe('left');
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + productOptions.length) % productOptions.length);
-    }
+      setCurrentIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + productOptions.length) % productOptions.length,
+      );
+    },
   );
 
   const currentProduct = productOptions[currentIndex];
-  const prevProduct = productOptions[(currentIndex - 1 + productOptions.length) % productOptions.length];
-  const nextProduct = productOptions[(currentIndex + 1) % productOptions.length];
+  const prevProduct =
+    productOptions[
+      (currentIndex - 1 + productOptions.length) % productOptions.length
+    ];
+  const nextProduct =
+    productOptions[(currentIndex + 1) % productOptions.length];
 
   useEffect(() => {
     if (currentProduct) {
@@ -45,9 +60,15 @@ const AccountSelection: React.FC<{
       const containerWidth = container.offsetWidth;
 
       if (direction === 'right') {
-        setContainerStyle({ transform: `translateX(-${containerWidth}px)`, transition: 'transform 0.2s' });
+        setContainerStyle({
+          transform: `translateX(-${containerWidth}px)`,
+          transition: 'transform 0.2s',
+        });
       } else {
-        setContainerStyle({ transform: `translateX(${containerWidth}px)`, transition: 'transform 0.2s' });
+        setContainerStyle({
+          transform: `translateX(${containerWidth}px)`,
+          transition: 'transform 0.2s',
+        });
       }
 
       // Reset the container position after the animation
@@ -75,7 +96,12 @@ const AccountSelection: React.FC<{
       >
         <div className={`${styles.cardPreview} ${styles.left}`}>
           <div className={styles.imageContainer}>
-            <Image src={prevProduct.imageUrl} alt={prevProduct.label} width={120} height={180} />
+            <Image
+              src={prevProduct.imageUrl}
+              alt={prevProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{prevProduct.label}</h2>
@@ -84,7 +110,12 @@ const AccountSelection: React.FC<{
 
         <div className={styles.cardSelected}>
           <div className={styles.imageContainer}>
-            <Image src={currentProduct.imageUrl} alt={currentProduct.label} width={120} height={180} />
+            <Image
+              src={currentProduct.imageUrl}
+              alt={currentProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{currentProduct.label}</h2>
@@ -94,7 +125,12 @@ const AccountSelection: React.FC<{
 
         <div className={`${styles.cardPreview} ${styles.right}`}>
           <div className={styles.imageContainer}>
-            <Image src={nextProduct.imageUrl} alt={nextProduct.label} width={120} height={180} />
+            <Image
+              src={nextProduct.imageUrl}
+              alt={nextProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{nextProduct.label}</h2>
