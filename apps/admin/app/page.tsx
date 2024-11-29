@@ -1,5 +1,5 @@
-import { render } from "react-dom";
-import React from "react";
+import { render } from 'react-dom';
+import React from 'react';
 import styles from './page.module.css'; // CSS 모듈 임포트
 
 const AdminDashboard = () => {
