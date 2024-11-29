@@ -76,6 +76,7 @@ export default function TravelForm({
       travelCountries: [], // 위치 변경 시 선택된 국가 초기화
     }));
     setSearchQuery(''); // 검색어 초기화
+    console.log('isDomesticTravel 상태 변경:', isDomesticTravel);
   };
 
   // 검색어 변경 처리
@@ -169,23 +170,23 @@ export default function TravelForm({
           <label>여행지</label>
           <div className={styles.locationButtons}>
             <Button
-              primary={!formData.isDomesticTravel}
+              primary={formData.isDomesticTravel}
               size="medium"
               label="국내"
-              onClick={() => handleLocationChange(false)}
+              onClick={() => handleLocationChange(true)}
               className={styles.domesticBtn}
             />
 
             <Button
-              primary={formData.isDomesticTravel}
+              primary={!formData.isDomesticTravel}
               size="medium"
               label="해외"
-              onClick={() => handleLocationChange(true)}
+              onClick={() => handleLocationChange(false)}
               className={styles.overseasBtn}
             />
           </div>
 
-          {formData.isDomesticTravel && (
+          {!formData.isDomesticTravel && (
             <div className={styles.searchSection}>
               <div className={styles.searchInputWrapper}>
                 <input
