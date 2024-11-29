@@ -8,6 +8,7 @@ import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
 import CountUp from 'react-countup';
+import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence
 
 export default function BankingPage() {
   const router = useRouter();
@@ -76,56 +77,75 @@ export default function BankingPage() {
       />
       <div className={styles.space}></div>
 
-      <div className={styles.balanceSection}>
+      {/* Total Balance Section with motion */}
+      <motion.div
+        className={styles.balanceSection}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className={styles.balanceHeader}>
           <span>총 잔액</span>
         </div>
         <div className={styles.totalBalance}>
-        <CountUp
-            start={0} 
-            end={totalBalance} 
-            duration={0.4} 
-            separator="," 
-            suffix=" 원" 
-            decimals={0} 
+          <CountUp
+            start={0}
+            end={totalBalance}
+            duration={0.8}
+            separator=","
+            suffix=" 원"
+            decimals={0}
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div className={styles.transactionList}>
-        {(accounts ?? []).map((transaction) => (
-          <div
-            key={transaction.accountId}
-            className={styles.transactionItem}
-            onClick={() => router.push(`/banking/${transaction.accountId}`)}
-          >
-            <div className={styles.transactionInfo}>
-              <div className={styles.accountType}>{transaction.product}</div>
-              <div className={styles.accountNumber}>
-                {transaction.accountNumber}
+      {/* Account List Section with AnimatePresence and motion */}
+      <motion.div
+        className={styles.transactionList}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <AnimatePresence>
+          {(accounts ?? []).map((transaction) => (
+            <motion.div
+              key={transaction.accountId}
+              className={styles.transactionItem}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+              onClick={() => router.push(`/banking/${transaction.accountId}`)}
+            >
+              <div className={styles.transactionInfo}>
+                <div className={styles.accountType}>{transaction.product}</div>
+                <div className={styles.accountNumber}>
+                  {transaction.accountNumber}
+                </div>
               </div>
-            </div>
 
-            {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
-            <div className={styles.transactionDetails}>
-              <div className={styles.sendButtonContainer}>
-                <Button
-                  size="xsmall"
-                  label="송금"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    handleTransferClick(e, transaction.accountId)
-                  }
-                />
-              </div>
+              {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
+              <div className={styles.transactionDetails}>
+                <div className={styles.sendButtonContainer}>
+                  <Button
+                    size="xsmall"
+                    label="송금"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleTransferClick(e, transaction.accountId)
+                    }
+                  />
+                </div>
 
-              {/* 금액을 오른쪽 정렬 */}
-              <div className={styles.amount}>
-                {formatNumber(transaction.balance)}원
+                {/* 금액을 오른쪽 정렬 */}
+                <div className={styles.amount}>
+                  {formatNumber(transaction.balance)}원
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

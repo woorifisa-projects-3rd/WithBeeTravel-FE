@@ -3,6 +3,7 @@
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence from framer-motion
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
 import {
@@ -11,7 +12,6 @@ import {
   getUserState,
   instance,
 } from '@withbee/apis';
-import { error } from 'console';
 import { AnimatedBalance } from '../../../components/TotalBalanceCountUp';
 
 interface AccountHistory {
@@ -86,9 +86,7 @@ export default function AccountPage() {
 
   // 로딩 중이거나 오류가 발생한 경우 렌더링을 하지 않음
   if (loading || error) {
-    return (
-      <div className={styles.loading}>로딩 중...</div> // 로딩 중일 때 표시할 메시지
-    );
+    return null;
   }
 
   const formatNumber = (num: number | null | undefined): string => {
@@ -124,74 +122,95 @@ export default function AccountPage() {
       <Title label="거래내역 조회" />
 
       {/* 계좌 정보 표시 */}
-      {accountInfo ? (
-        <div className={styles.accountDetails}>
-          <div className={styles.accountInfo}>
-            <div className={styles.productAndButton}>
-              <div className={styles.productName}>{accountInfo.product}</div>
-              <div className={styles.addHistory}>
+      <AnimatePresence>
+        {accountInfo && (
+          <motion.div
+            className={styles.accountDetails}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className={styles.accountInfo}>
+              <div className={styles.productAndButton}>
+                <div className={styles.productName}>{accountInfo.product}</div>
+                <div className={styles.addHistory}>
+                  <Button
+                    primary={false}
+                    label="+ 내역"
+                    size="xsmall"
+                    onClick={() => router.push(`/banking/${id}/payment`)}
+                  />
+                </div>
+              </div>
+              <div className={styles.accountNumber}>
+                {accountInfo.accountNumber}
+              </div>
+              <AnimatedBalance balance={accountInfo?.balance} />
+              <div className={styles.default}>
                 <Button
                   primary={false}
-                  label="+ 내역"
-                  size="xsmall"
-                  onClick={() => router.push(`/banking/${id}/payment`)}
+                  label="입금"
+                  size={'medium'}
+                  onClick={() => router.push(`/banking/${id}/deposit`)}
+                />
+                <Button
+                  label="송금"
+                  size={'medium'}
+                  onClick={() => handleTransferClick()}
                 />
               </div>
             </div>
-            <div className={styles.accountNumber}>
-              {accountInfo.accountNumber}
-            </div>
-            <AnimatedBalance balance={accountInfo?.balance} />
-            <div className={styles.default}>
-              <Button
-                primary={false}
-                label="입금"
-                size={'medium'}
-                onClick={() => router.push(`/banking/${id}/deposit`)}
-              />
-              <Button
-                label="송금"
-                size={'medium'}
-                onClick={() => handleTransferClick()}
-              />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>계좌 정보가 없습니다.</div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 거래 내역 표시 */}
       <div className={styles.transactionList}>
-        {histories && histories.length > 0 ? (
-          histories.map((history, index) => (
-            <div key={index} className={styles.transactionItem}>
-              <div className={styles.transactionDate}>
-                {formatDate(history.date)}
-              </div>
-              <div className={styles.detail}>{history.rqspeNm}</div>
-              <div className={styles.transactionDetails}>
-                {history.rcvAm === 0 || history.rcvAm == null ? (
-                  <div className={styles.payAmount}>
-                    <span className={styles.outflowLabel}>출금 : </span>
-                    {formatNumber(history.payAm)}원
-                  </div>
-                ) : (
-                  <div className={styles.rcvAmount}>
-                    <span className={styles.inflowLabel}>입금 : </span>
-                    {formatNumber(history.rcvAm)}원
-                  </div>
-                )}
-
-                <div className={styles.balance}>
-                  잔액 : {formatNumber(history.balance)}원
+        <AnimatePresence>
+          {histories && histories.length > 0 ? (
+            histories.map((history, index) => (
+              <motion.div
+                key={index}
+                className={styles.transactionItem}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: index * 0.1, duration: 0.3 }}
+              >
+                <div className={styles.transactionDate}>
+                  {formatDate(history.date)}
                 </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div>텅.</div>
-        )}
+                <div className={styles.detail}>{history.rqspeNm}</div>
+                <div className={styles.transactionDetails}>
+                  {history.rcvAm === 0 || history.rcvAm == null ? (
+                    <div className={styles.payAmount}>
+                      <span className={styles.outflowLabel}>출금 : </span>
+                      {formatNumber(history.payAm)}원
+                    </div>
+                  ) : (
+                    <div className={styles.rcvAmount}>
+                      <span className={styles.inflowLabel}>입금 : </span>
+                      {formatNumber(history.rcvAm)}원
+                    </div>
+                  )}
+
+                  <div className={styles.balance}>
+                    잔액 : {formatNumber(history.balance)}원
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              텅.
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
