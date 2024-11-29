@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
+import CountUp from 'react-countup';
 
 export default function BankingPage() {
   const router = useRouter();
@@ -80,7 +81,14 @@ export default function BankingPage() {
           <span>총 잔액</span>
         </div>
         <div className={styles.totalBalance}>
-          {formatNumber(totalBalance)}원
+        <CountUp
+            start={0} 
+            end={totalBalance} 
+            duration={0.4} 
+            separator="," 
+            suffix=" 원" 
+            decimals={0} 
+          />
         </div>
       </div>
 
