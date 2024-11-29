@@ -1,6 +1,7 @@
 import { auth } from '@withbee/auth-config';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { redirect } from 'next/dist/server/api-utils';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;

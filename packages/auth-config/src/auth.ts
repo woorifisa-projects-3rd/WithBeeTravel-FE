@@ -5,69 +5,39 @@ import { JWT } from 'next-auth/jwt';
 
 // 59분
 const ACCESS_TOKEN_EXPIRES = 59 * 60 * 1000;
-// const ACCESS_TOKEN_EXPIRES = 5 * 1000; // 테스트용 5초
-
-// 진행 중인 토큰 갱신 요청을 저장할 변수
-let refreshPromise: Promise<JWT> | null = null;
-let lastRefreshTime = 0;
-const REFRESH_COOLDOWN = 1000; // 1초 쿨다운
+// const ACCESS_TOKEN_EXPIRES = 30 * 1000; // 테스트용 5초
 
 const refreshAccessToken = async (token: JWT): Promise<JWT> => {
-  // 마지막 갱신 시도 후 쿨다운 시간이 지나지 않았으면 현재 토큰 반환
-  if (Date.now() - lastRefreshTime < REFRESH_COOLDOWN) {
-    return token;
+  const response = await refresh({
+    refreshToken: token.refreshToken!,
+  });
+
+  const { accessToken, refreshToken } = response || {};
+
+  console.log('토큰 갱신 성공', { accessToken, refreshToken });
+
+  if (!accessToken || !refreshToken) {
+    console.error('토큰 갱신 실패', { accessToken, refreshToken });
+    return {
+      ...token,
+      error: 'RefreshAccessTokenError',
+    };
   }
 
-  // 이미 진행 중인 갱신 요청이 있다면 그 결과를 기다림
-  if (refreshPromise) {
-    return await refreshPromise;
-  }
-
-  console.log('토큰을 갱신합니다.', token);
-  lastRefreshTime = Date.now();
-
-  // 새로운 갱신 요청 시작
-  refreshPromise = (async () => {
-    try {
-      const response = await refresh({
-        refreshToken: token.refreshToken!,
-      });
-
-      if ('code' in response!) {
-        console.error('토큰 갱신 실패', response);
-        throw new Error('RefreshAccessTokenError');
-      }
-
-      const { accessToken, refreshToken } = response?.data || {};
-
-      console.log('토큰 갱신 성공', response);
-
-      if (!accessToken || !refreshToken) {
-        throw new Error('RefreshAccessTokenError');
-      }
-
-      return {
-        ...token,
-        accessToken,
-        refreshToken,
-        expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
-        error: undefined,
-      };
-    } catch (error) {
-      return {
-        ...token,
-        error: 'RefreshAccessTokenError' as const,
-      };
-    }
-  })();
-
-  // 갱신 완료 후 Promise 초기화
-  const result = await refreshPromise;
-  refreshPromise = null;
-  return result;
+  return {
+    ...token,
+    accessToken,
+    refreshToken,
+    expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
+    error: undefined,
+  };
 };
 
 export const authConfig = NextAuth({
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60, // 1 Day
+  },
   trustHost: true,
   providers: [
     Credentials({
@@ -92,33 +62,33 @@ export const authConfig = NextAuth({
             password: credentials.password as string,
           });
 
-          if ('code' in response) {
-            return null;
-          }
-          const { accessToken, refreshToken } = response.data || {};
+          if (!response) throw new Error('로그인에 실패했습니다.');
 
-          console.log('Auth success:', refreshToken);
+          const { accessToken, refreshToken, role } = response;
 
           return {
             id: credentials.email as string,
             email: credentials.email as string,
             accessToken,
             refreshToken,
+            role,
           };
         } catch (error) {
           console.error('Auth error:', error);
-          return null;
+          // @ts-ignore
+          throw new Error(error?.message || '로그인에 실패했습니다.');
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }): Promise<JWT | null> {
+    jwt: async ({ token, user, account }): Promise<JWT | null> => {
       if (account && user) {
         return {
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
+          role: user.role,
           expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
           user,
         };
@@ -130,13 +100,12 @@ export const authConfig = NextAuth({
 
       return await refreshAccessToken(token);
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.accessToken = token.accessToken;
-        session.user.refreshToken = token.refreshToken;
-        session.user.expires_at = token.expires_at;
-        session.error = token.error;
-      }
+    session: async ({ session, token }) => {
+      session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
+      session.user.expires_at = token.expires_at;
+      session.user.role = token.role;
+      session.error = token.error;
       return session;
     },
   },

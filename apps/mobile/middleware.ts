@@ -1,19 +1,22 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { auth } from './auth';
-import { signOut } from 'next-auth/react';
 
 export default async function middleware(
   request: NextRequest,
   response: NextResponse,
 ) {
-  console.log('middleware 접속');
-
+  // console.log('미들웨어 실행', request.url);
   const session = await auth();
 
-  // console.log('session', session);
+  // console.log('미들웨어 세션', session);
+  if (!session || !session.user.accessToken) {
+    const response = NextResponse.redirect(new URL('/login', request.url));
 
-  if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    // response.cookies.delete('next-auth.session-token');
+    // response.cookies.delete('next-auth.csrf-token');
+    // response.cookies.delete('next-auth.callback-url');
+
+    return response;
   }
 
   return NextResponse.next();
@@ -23,5 +26,3 @@ export default async function middleware(
 export const config = {
   matcher: ['/travel/:path*', '/notification/:path*', '/banking/:path*'],
 };
-
-// export { auth as middleware } from './auth';
