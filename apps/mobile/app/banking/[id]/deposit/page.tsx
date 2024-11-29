@@ -7,6 +7,12 @@ import { useParams, useRouter } from 'next/navigation';
 import { deposit, getAccountInfo } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
+import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
+
+
+
+ 
+
 
 interface AccountInfo {
   accountId: number;
@@ -14,6 +20,9 @@ interface AccountInfo {
   product: string;
   balance: number;
 }
+
+
+const MAX_DEPOSIT_AMOUNT = 500000000; // 5억원
 
 export default function DepositPage() {
   const router = useRouter();
@@ -44,8 +53,14 @@ export default function DepositPage() {
     if (num === 'backspace') {
       setAmount((prev) => prev.slice(0, -1)); // 마지막 문자 제거
     } else {
-      setAmount((prev) => prev + num); // 숫자 추가
+      const newAmount = amount + num;
+      if (parseInt(newAmount) <= MAX_DEPOSIT_AMOUNT) {
+        setAmount(newAmount); // 5억원 이하일 경우 입력
+      } else {
+        showToast.error({ message: '최대 5억원까지 입금 가능합니다.' });
+      }
     }
+    
   };
 
   // 입금 버튼 클릭 시 처리
@@ -145,8 +160,10 @@ export default function DepositPage() {
             얼마나 입금할까요?
           </motion.span>
         )}
-      </div>
+        <p className={styles.won} style={{ height: '36px' }}>{numberToKorean(Number(amount))}</p> 
+      </div> {/* 한글 변환 결과 */}
     </motion.div>
+    
   );
 
   return (
