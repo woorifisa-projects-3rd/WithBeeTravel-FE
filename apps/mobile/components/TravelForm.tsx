@@ -29,7 +29,6 @@ export default function TravelForm({
   onSubmit,
 }: TravelFormProps) {
   const router = useRouter();
-  console.log('부모컴포넌트', travelData);
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({

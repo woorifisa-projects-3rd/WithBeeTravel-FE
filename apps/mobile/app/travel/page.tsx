@@ -25,9 +25,6 @@ export default function page() {
   const router = useRouter();
 
   const { data: travelData, error } = useSWR('travelList', getTravelList);
-  if (travelData && 'data' in travelData) {
-    // console.log(travelData.data);
-  }
 
   if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
   if (!travelData)
@@ -85,6 +82,9 @@ export default function page() {
             return b.dDay - a.dDay;
           })
       : [];
+
+  const upcomingTravels = sortedTravelData.filter((card) => card.dDay >= 0);
+  const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
   return (
     <div className={styles.travelSelectWrap}>
@@ -153,45 +153,85 @@ export default function page() {
           </div>
         ) : (
           <div className={styles.cardWrap}>
-            {sortedTravelData.map((card, index) => (
-              <div key={index}>
-                <div className={styles.cardDay}>
-                  {card.dDay >= 0 ? (
-                    <span>
-                      다가오는 여행 <span>D-{card.dDay}</span>
-                    </span>
-                  ) : (
-                    <span>지난 여행</span>
-                  )}
-                </div>
-                <div className={styles.card}>
-                  <Link href={`/travel/${card.travelId}`}>
-                    <Image
-                      src={
-                        card.travelMainImage
-                          ? `/${card.travelMainImage}`
-                          : '/imgs/travelselect/travel_exam.png'
-                      }
-                      alt={card.travelName}
-                      className={styles.cardImage}
-                      width={300}
-                      height={100}
-                    />
-                    <div className={styles.cardContent}>
-                      <div className={styles.cardText}>
-                        <FriendImage src={card.profileImage} />
-                        <div className={styles.travelNameWrap}>
-                          <span>{card.travelName}</span>
-                          <span className={styles.date}>
-                            {card.travelStartDate} ~ {card.travelEndDate}
-                          </span>
-                        </div>
-                      </div>
+            {/* 다가오는 여행 렌더링 */}
+            {upcomingTravels.length > 0 && (
+              <>
+                {upcomingTravels.map((card, index) => (
+                  <div key={index}>
+                    <div className={styles.cardDay}>
+                      <span>
+                        다가오는 여행 <span>D-{card.dDay}</span>
+                      </span>
                     </div>
-                  </Link>
+                    <div className={styles.card}>
+                      <Link href={`/travel/${card.travelId}`}>
+                        <Image
+                          src={
+                            card.travelMainImage
+                              ? `/${card.travelMainImage}`
+                              : '/imgs/travelselect/travel_exam.png'
+                          }
+                          alt={card.travelName}
+                          className={styles.cardImage}
+                          width={300}
+                          height={100}
+                        />
+                        <div className={styles.cardContent}>
+                          <div className={styles.cardText}>
+                            <FriendImage src={card.profileImage} />
+                            <div className={styles.travelNameWrap}>
+                              <span>{card.travelName}</span>
+                              <span className={styles.date}>
+                                {card.travelStartDate} ~ {card.travelEndDate}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+
+            {/* 지난 여행 렌더링 */}
+            {pastTravels.length > 0 && (
+              <>
+                <div className={styles.cardDay}>
+                  <span>지난 여행</span>
                 </div>
-              </div>
-            ))}
+                {pastTravels.map((card, index) => (
+                  <div key={index}>
+                    <div className={styles.card}>
+                      <Link href={`/travel/${card.travelId}`}>
+                        <Image
+                          src={
+                            card.travelMainImage
+                              ? `/${card.travelMainImage}`
+                              : '/imgs/travelselect/travel_exam.png'
+                          }
+                          alt={card.travelName}
+                          className={styles.cardImage}
+                          width={300}
+                          height={100}
+                        />
+                        <div className={styles.cardContent}>
+                          <div className={styles.cardText}>
+                            <FriendImage src={card.profileImage} />
+                            <div className={styles.travelNameWrap}>
+                              <span>{card.travelName}</span>
+                              <span className={styles.date}>
+                                {card.travelStartDate} ~ {card.travelEndDate}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         )}
       </div>
