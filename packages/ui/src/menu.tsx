@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 interface MenuProps {
   travelInfo: TravelHome;
   className?: string;
-  travelId: string;
+  travelId?: string;
 }
 
 const AllMembers: TravelMember = {
