@@ -7,7 +7,7 @@ interface ProductOption {
   label: string;
   value: string;
   imageUrl: string;
-  detail:string;
+  detail: string;
 }
 
 const AccountSelection: React.FC<{
@@ -17,23 +17,32 @@ const AccountSelection: React.FC<{
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // useSwipe 훅을 호출해서 여러 이벤트 핸들러를 구조 분해 할당
-  const { 
-    handleTouchStart, 
-    handleTouchMove, 
+  const {
+    handleTouchStart,
+    handleTouchMove,
     handleTouchEnd,
-    handleMouseDown, 
-    handleMouseUp, 
+    handleMouseDown,
+    handleMouseUp,
     handleMouseMove,
-    handleWheel
+    handleWheel,
   } = useSwipe(
-    () => setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length), // 오른쪽 스와이프
-    () => setCurrentIndex((prevIndex) => (prevIndex - 1 + productOptions.length) % productOptions.length), // 왼쪽 스와이프
+    () =>
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length), // 오른쪽 스와이프
+    () =>
+      setCurrentIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + productOptions.length) % productOptions.length,
+      ), // 왼쪽 스와이프
   );
 
   // 왼쪽/현재/오른쪽 항목을 계산하여 반환
   const currentProduct = productOptions[currentIndex];
-  const prevProduct = productOptions[(currentIndex - 1 + productOptions.length) % productOptions.length];
-  const nextProduct = productOptions[(currentIndex + 1) % productOptions.length];
+  const prevProduct =
+    productOptions[
+      (currentIndex - 1 + productOptions.length) % productOptions.length
+    ];
+  const nextProduct =
+    productOptions[(currentIndex + 1) % productOptions.length];
 
   // 중앙에 위치한 항목이 자동으로 선택되도록 처리
   useEffect(() => {
@@ -42,24 +51,29 @@ const AccountSelection: React.FC<{
     }
   }, [currentIndex, currentProduct, onSelect]);
 
-  if (!currentProduct ||!prevProduct ||!nextProduct) return null; // 또는 다른 대체 UI를 넣을 수 있습니다.
+  if (!currentProduct || !prevProduct || !nextProduct) return null; // 또는 다른 대체 UI를 넣을 수 있습니다.
 
   return (
     <div className={styles.container}>
-      <div 
+      <div
         className={styles.swipeContainer}
-        onTouchStart={handleTouchStart} 
-        onTouchMove={handleTouchMove} 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown} 
-        onMouseUp={handleMouseUp} 
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
         onWheel={handleWheel}
       >
         {/* 왼쪽 미리보기 항목 */}
         <div className={`${styles.cardPreview} ${styles.left}`}>
           <div className={styles.imageContainer}>
-            <Image src={prevProduct.imageUrl} alt={prevProduct.label} width={120} height={180} />
+            <Image
+              src={prevProduct.imageUrl}
+              alt={prevProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{prevProduct.label}</h2>
@@ -69,7 +83,12 @@ const AccountSelection: React.FC<{
         {/* 현재 선택된 항목 */}
         <div className={styles.cardSelected}>
           <div className={styles.imageContainer}>
-            <Image src={currentProduct.imageUrl} alt={currentProduct.label} width={120} height={180} />
+            <Image
+              src={currentProduct.imageUrl}
+              alt={currentProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{currentProduct.label}</h2>
@@ -80,7 +99,12 @@ const AccountSelection: React.FC<{
         {/* 오른쪽 미리보기 항목 */}
         <div className={`${styles.cardPreview} ${styles.right}`}>
           <div className={styles.imageContainer}>
-            <Image src={nextProduct.imageUrl} alt={nextProduct.label} width={120} height={180} />
+            <Image
+              src={nextProduct.imageUrl}
+              alt={nextProduct.label}
+              width={120}
+              height={180}
+            />
           </div>
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{nextProduct.label}</h2>
