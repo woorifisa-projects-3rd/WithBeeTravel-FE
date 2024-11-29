@@ -18,7 +18,6 @@ const AccountSelection: React.FC<{
   const [containerStyle, setContainerStyle] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
-
   // useSwipe 훅을 호출해서 여러 이벤트 핸들러를 구조 분해 할당
   const {
     handleTouchStart,
@@ -36,7 +35,6 @@ const AccountSelection: React.FC<{
         (prevIndex) =>
           (prevIndex - 1 + productOptions.length) % productOptions.length,
       ), // 왼쪽 스와이프
-
   );
 
   const currentProduct = productOptions[currentIndex];
@@ -59,9 +57,15 @@ const AccountSelection: React.FC<{
       const containerWidth = container.offsetWidth;
 
       if (direction === 'right') {
-        setContainerStyle({ transform: `translateX(-${containerWidth}px)`, transition: 'transform 0.2s' });
+        setContainerStyle({
+          transform: `translateX(-${containerWidth}px)`,
+          transition: 'transform 0.2s',
+        });
       } else {
-        setContainerStyle({ transform: `translateX(${containerWidth}px)`, transition: 'transform 0.2s' });
+        setContainerStyle({
+          transform: `translateX(${containerWidth}px)`,
+          transition: 'transform 0.2s',
+        });
       }
 
       // Reset the container position after the animation
@@ -72,7 +76,6 @@ const AccountSelection: React.FC<{
   };
 
   if (!currentProduct || !prevProduct || !nextProduct) return null;
-
 
   return (
     <div className={styles.container}>
