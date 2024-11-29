@@ -3,13 +3,16 @@ import React from 'react';
 import CountUp from 'react-countup';
 import styles from './TotalBalanceCountUp.module.css';
 
-export const AnimatedBalance = ({ balance }: { balance: number | undefined }) => {
+export const AnimatedBalance = ({
+  balance,
+}: {
+  balance: number | undefined;
+}) => {
   // balance가 null이면 0 원을 표시
   if (balance == null) {
     return (
       <div className={styles.accountBalance}>
-        <span className={styles.balanceLabel}></span>
-        0 원
+        <span className={styles.balanceLabel}></span>0 원
       </div>
     );
   }

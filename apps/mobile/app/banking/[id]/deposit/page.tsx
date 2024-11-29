@@ -24,7 +24,7 @@ export default function DepositPage() {
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
 
   const { showToast } = useToast();
-  
+
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
@@ -104,28 +104,27 @@ export default function DepositPage() {
       transition={{ duration: 0.5 }} // Smooth animation for amount input
     >
       <div className={styles.accountInfo}>
-      <h2>내 계좌</h2>
-{accountInfo ? (
-  <motion.p
-    className={styles.balance}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.3 }}
-  >
-    {accountInfo.product}{' '}
-    <motion.span
-      className={styles.balanceAmount}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
-    >
-      ₩ {accountInfo.balance.toLocaleString()}
-    </motion.span>
-  </motion.p>
-) : (
-  <p style={{ height: '32px'}}> </p>
-)}
-
+        <h2>내 계좌</h2>
+        {accountInfo ? (
+          <motion.p
+            className={styles.balance}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {accountInfo.product}{' '}
+            <motion.span
+              className={styles.balanceAmount}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+            >
+              ₩ {accountInfo.balance.toLocaleString()}
+            </motion.span>
+          </motion.p>
+        ) : (
+          <p style={{ height: '32px' }}> </p>
+        )}
       </div>
 
       <div className={styles.amountDisplay}>
@@ -153,14 +152,10 @@ export default function DepositPage() {
   return (
     <div className={styles.container}>
       <Title label="입금하기" />
-      
-      <main className={styles.main}>
-        {renderAmountInput()}
-      </main>
 
-      <div className={styles.actions}>
-        {renderKeyboard()}
-      </div>
+      <main className={styles.main}>{renderAmountInput()}</main>
+
+      <div className={styles.actions}>{renderKeyboard()}</div>
 
       <div className={styles.handleSendMoney}>
         {amount && (

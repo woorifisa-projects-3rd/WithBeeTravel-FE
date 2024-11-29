@@ -50,7 +50,7 @@ export default function AccountPage() {
         try {
           // 계좌 정보 가져오기
           const responseInfo = await getAccountInfo(Number(id));
-          console.log('Account Info Response:', responseInfo);  // Log API response
+          console.log('Account Info Response:', responseInfo); // Log API response
           if (Number(responseInfo.status) !== 200) {
             setError(true);
             router.push('/mypage'); // 오류 발생 시 리디렉션
@@ -73,7 +73,7 @@ export default function AccountPage() {
           }
         } catch (err) {
           setError(true);
-          console.error('Error fetching data:', err);  // Log error
+          console.error('Error fetching data:', err); // Log error
           router.push('/mypage'); // 오류 발생 시 리디렉션
         } finally {
           setLoading(false); // 데이터 가져오기가 끝났으면 로딩 상태를 false로 변경

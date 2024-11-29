@@ -110,19 +110,19 @@ export default function TransferPage() {
       <div className={styles.accountInfo}>
         <h2>내 계좌</h2>
         {accountInfo ? (
-           <motion.p
-           className={styles.balance}
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           transition={{ duration: 0.5 }}
-         >
-          <p className={styles.balance}>
-          ₩ {formatNumber(accountInfo.balance)}
-          </p>
+          <motion.p
+            className={styles.balance}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className={styles.balance}>
+              ₩ {formatNumber(accountInfo.balance)}
+            </p>
           </motion.p>
         ) : (
-          <p style={{ height: '36px'}}> </p>
-        )} 
+          <p style={{ height: '36px' }}> </p>
+        )}
       </div>
 
       <div className={styles.targetAccount}>
