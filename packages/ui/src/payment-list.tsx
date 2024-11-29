@@ -1,87 +1,69 @@
 'use client';
 
-import type { PageResponse, SharedPayment, TravelMember } from '@withbee/types';
+import type {
+  PageResponse,
+  SharedPayment,
+  SortBy,
+  TravelHome,
+} from '@withbee/types';
 import styles from './payment-list.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getSharedPayments } from '@withbee/apis';
-import { usePaymentStore } from '@withbee/stores';
 import useSWRInfinite from 'swr/infinite';
 import dayjs from 'dayjs';
 import { Payment } from './payment';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useToast } from '@withbee/hooks/useToast';
-import { getDateObject } from '@withbee/utils';
 import { PaymentSkeleton } from './payment-skeleton';
 import Image from 'next/image';
+import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
+import { PaymentError } from './payment-error';
 
 interface PaymentListProps {
   travelId: number;
   initialPayments?: PageResponse<SharedPayment> | undefined;
+  travelInfo: TravelHome;
 }
 
 export default function PaymentList({
   travelId,
   initialPayments,
+  travelInfo,
 }: PaymentListProps) {
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    sortBy,
-    isDateFiltered,
-    memberId,
-    category,
-  } = usePaymentStore();
+  const { params, updateParam } = usePaymentParams();
+  const { sortBy, startDate, endDate, memberId, category } = params;
   const { showToast } = useToast();
+
+  const { travelStartDate, travelEndDate, travelMembers } = travelInfo;
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
-    threshold: 0.1, // 요소가 10% 보일 때 감지
+    threshold: 0.2, // 요소가 20% 보일 때 감지
   });
 
   const getKey = (pageIndex: number) => {
-    const params = new URLSearchParams({
-      page: pageIndex.toString(),
-      sortBy,
-    });
-
-    if (memberId !== 0) {
-      params.append('memberId', memberId.toString());
-    }
-
-    if (category !== '전체') {
-      params.append('category', category);
-    }
-
-    // 날짜 필터가 적용된 경우에만 날짜 파라미터 추가
-    if (isDateFiltered) {
-      params.append('startDate', startDate);
-      params.append('endDate', endDate);
-    }
-
-    return `/api/travels/${travelId}/payments?${params.toString()}`;
+    return {
+      travelId,
+      page: pageIndex,
+      sortBy: sortBy as SortBy,
+      startDate: startDate || travelStartDate,
+      endDate: endDate || travelEndDate,
+      ...(memberId !== 0 && { memberId }),
+      ...(category !== '전체' && { category }),
+    };
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
   const { data, error, size, setSize, isLoading, isValidating } =
     useSWRInfinite(
       getKey,
-      async (url) => {
-        console.log('url', url);
-        const response = await getSharedPayments({
-          travelId,
-          page: parseInt(url.split('page=')[1]!, 10), // URL에서 페이지 번호 추출
-          sortBy,
-          ...(isDateFiltered && { startDate, endDate }), // 조건부로 날짜 추가
-          ...(memberId !== 0 && { memberId }),
-          ...(category !== '전체' && { category }),
-        });
+      async (params) => {
+        const response = await getSharedPayments(params);
 
         if ('code' in response) {
-          throw response; // 에러 코드가 있는 응답은 그대로 throw
+          throw response;
         }
 
         return response.data;
@@ -89,19 +71,23 @@ export default function PaymentList({
       {
         fallbackData: initialPayments ? [initialPayments] : undefined,
         suspense: true,
-        errorRetryInterval: 60000,
+        errorRetryInterval: 60000, // 1분
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
-              if (new Date(startDate) > new Date(endDate)) {
-                setEndDate(getDateObject(startDate));
-              } else {
-                setStartDate(getDateObject(endDate));
+              if (startDate && endDate) {
+                if (new Date(startDate) > new Date(endDate)) {
+                  // URL 파라미터 업데이트
+                  updateParam('endDate', startDate);
+                } else {
+                  updateParam('startDate', endDate);
+                }
               }
+              showToast.warning({
+                message:
+                  ERROR_MESSAGES[err.code as keyof typeof ERROR_MESSAGES],
+              });
             }
-            showToast.warning({
-              message: ERROR_MESSAGES[err.code as keyof typeof ERROR_MESSAGES],
-            });
           } else {
             showToast.error({
               message: ERROR_MESSAGES['FETCH-FAILED'],
@@ -159,31 +145,14 @@ export default function PaymentList({
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
   if (error) {
-    return (
-      <motion.div
-        className={styles.errorContainer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <Image
-          src="/imgs/friends/notfound.png"
-          alt="에러 이미지"
-          width={140}
-          height={140}
-          className={styles.errorImage}
-        />
-        <div>
-          <p className={styles.errorText}>해당하는 카테고리의</p>
-          <p className={styles.errorText}>공동결제내역이 존재하지 않아요.</p>
-        </div>
-      </motion.div>
-    );
+    return <PaymentError />;
   }
 
   return (
     <AnimatePresence>
-      {data && !isLoading && !isValidating && (
+      {isLoading ? (
+        <PaymentSkeleton count={2} />
+      ) : (
         <section className={styles.paymentContainer}>
           <motion.div
             key="content"
@@ -204,28 +173,30 @@ export default function PaymentList({
                         key={`payment-${payment.id}-${idx}`}
                         travelId={travelId}
                         paymentInfo={payment}
+                        travelInfo={travelInfo}
                       />
                     ))}
                   </div>
                 ))
               : // 금액순일 때는 그룹화 없이 바로 렌더링
                 payments.map((payment) => (
-                  <Payment
-                    key={payment.id}
-                    travelId={travelId}
-                    paymentInfo={payment}
-                  />
+                  <>
+                    <Payment
+                      key={payment.id}
+                      travelId={travelId}
+                      paymentInfo={payment}
+                      travelInfo={travelInfo}
+                    />
+                  </>
                 ))}
+            <div ref={ref} />
           </motion.div>
         </section>
       )}
 
-      {/* 이 요소가 화면에 보이면 다음 데이터를 로드 */}
-      <div ref={ref}>
-        {(isLoading || (isValidating && !error && size > 1)) && (
-          <PaymentSkeleton count={2} />
-        )}
-      </div>
+      {!isLoading && isValidating && !error && size > 1 && (
+        <PaymentSkeleton count={2} />
+      )}
     </AnimatePresence>
   );
 }

@@ -6,7 +6,7 @@
     width: 100%;
     max-width: 430px;
     background: #fff;
-    border-top: 1.5px solid var(--color-gray-300);
+    border-top: 1px solid var(--color-gray-300);
     z-index: 50;
 }
 
@@ -16,7 +16,7 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 3px 7px;
+    padding: 0px 7px;
 }
 
 
@@ -32,24 +32,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 25px;
-    height: 25px;
+    width: 23px;
+    height: 23px;
     margin-bottom: 4px;
 }
 
 
 .label {
     color: var(--color-gray-400);
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
 }
 
 .label.active {
-    color: var(--color-blue-9);
+    color: var(--color-blue-8);
 }
 
 .iconWrapper.active .svg path {
     fill: #ADE2FF;
-    stroke: var(--color-blue-9);
+    stroke: var(--color-blue-8);
 }

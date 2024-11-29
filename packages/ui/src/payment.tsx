@@ -9,23 +9,29 @@ import { Modal } from './modal';
 import notSelectIcon from './assets/not_select.png';
 import selectIcon from './assets/select.png';
 import Image from 'next/image';
-import { ParticipatingMember, SharedPayment } from '@withbee/types';
+import { ParticipatingMember, SharedPayment, TravelHome } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 import { chooseParticipants } from '@withbee/apis';
-import { useTravelStore } from '@withbee/stores';
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
 interface PaymentProps {
   travelId: number;
   paymentInfo: SharedPayment;
+  travelInfo: TravelHome;
 }
 
-export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
+export const Payment = ({
+  travelId,
+  paymentInfo,
+  travelInfo,
+}: PaymentProps) => {
   const { showToast } = useToast();
+  const { travelMembers, isDomesticTravel } = travelInfo;
+
   const [windowWidth, setWindowWidth] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // 정산 인원 선택 모달 열기/닫기
   const [selectedMembers, setSelectedMembers] = useState<ParticipatingMember[]>(
@@ -33,8 +39,6 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
   );
   const [tempSelectedMembers, setTempSelectedMembers] =
     useState<ParticipatingMember[]>(selectedMembers);
-
-  const { travelMembers } = useTravelStore();
 
   const handleSelectMember = (member: ParticipatingMember) => {
     // 선택된 멤버가 이미 선택된 경우 제거
@@ -104,15 +108,22 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
         size={50}
         className={styles.friendImage}
       />
-      <div className={styles.content}>
+      <div
+        className={[styles.content, !isDomesticTravel && styles.gap].join(' ')}
+      >
         <div className={styles.contentWrapper}>
           <div className={styles.info}>
             <span className={styles.time}>
               {dayjs(paymentInfo.paymentDate).format('HH:mm')}
             </span>
             <b className={styles.price}>
-              {paymentInfo.paymentAmount}원 ({paymentInfo.foreignPaymentAmount}
-              {paymentInfo.unit})
+              {paymentInfo.paymentAmount}원{' '}
+              {!isDomesticTravel && (
+                <>
+                  ({paymentInfo.foreignPaymentAmount}
+                  {paymentInfo.unit})
+                </>
+              )}
             </b>
             <span className={styles.location}>{paymentInfo.storeName}</span>
           </div>
@@ -135,18 +146,28 @@ export const Payment = ({ travelId, paymentInfo }: PaymentProps) => {
                 {selectedMembers.length}명
               </button>
             </motion.button>
+            {/* <div className={styles.optionWrapper}>
+              <button className={styles.option}>기록 추가</button>
+            </div> */}
           </div>
         </div>
-        <div className={styles.contentWrapper}>
-          {paymentInfo.unit !== 'KRW' ? (
+        <div
+          className={
+            isDomesticTravel ? styles.rightWrapper : styles.contentWrapper
+          }
+        >
+          {!isDomesticTravel && (
             <Item
               label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
               size="small"
             />
-          ) : (
-            <Item label="국내 여행" size="small" />
           )}
-          <div className={styles.optionsWrapper}>
+          <div
+            className={[
+              styles.optionWrapper,
+              isDomesticTravel && styles.mt,
+            ].join(' ')}
+          >
             <button className={styles.option}>기록 추가</button>
           </div>
         </div>
