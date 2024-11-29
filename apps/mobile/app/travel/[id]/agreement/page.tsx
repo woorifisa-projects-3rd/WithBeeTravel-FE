@@ -169,14 +169,14 @@ export default function ConsentPage({ params }: { params: Params }) {
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
             shadow={true}
-            onClick={()=>setIsModalOpen(true)}
+            onClick={() => setIsModalOpen(true)}
           />
         </div>
       </div>
       <PinNumberModal
-      isOpen ={isModalOpen}
-      onClose={()=>setIsModalOpen(false)}
-      onSubmit={handelAgreeSettlement}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handelAgreeSettlement}
       />
     </div>
   );
