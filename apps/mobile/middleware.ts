@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { auth } from './auth';
+import { sign } from 'crypto';
+import { signOut } from 'next-auth/react';
 
 export default async function middleware(
   request: NextRequest,
@@ -9,7 +11,12 @@ export default async function middleware(
   const session = await auth();
 
   // console.log('미들웨어 세션', session);
-  if (!session || !session.user.accessToken) {
+  if (
+    !session ||
+    !session.user.accessToken ||
+    session.error === 'RefreshAccessTokenError'
+  ) {
+    signOut();
     const response = NextResponse.redirect(new URL('/login', request.url));
 
     // response.cookies.delete('next-auth.session-token');
