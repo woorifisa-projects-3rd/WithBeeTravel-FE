@@ -4,7 +4,8 @@
   "private": true,
   "exports": {
     "./useToast": "./src/useToast.ts",
-    "./useSwipe": "./src/useSwipe.ts"
+    "./useSwipe": "./src/useSwipe.ts",
+    "./usePaymentParams": "./src/usePaymentParams.ts"
   },
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -22,10 +23,13 @@
     "@types/react-dom": "^18.2.19",
     "@withbee/eslint-config": "workspace:*",
     "@withbee/typescript-config": "workspace:*",
+    "@withbee/types": "workspace:*",
     "eslint": "^8.57.0",
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "react-toastify": "^10.0.6"
+    "react-toastify": "^10.0.6",
+    "next": "14.2.6",
+    "react": "^18.2.0"
   }
 }

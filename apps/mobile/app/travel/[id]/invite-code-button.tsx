@@ -17,24 +17,20 @@ export function InviteCodeButton({ travelId }: { travelId: number }) {
   });
 
   const handleGetInviteCode = async () => {
-    try {
-      const response = await getInviteCode(travelId);
+    const response = await getInviteCode(travelId);
 
-      if ('code' in response) {
-        alert(response.message);
-        return;
-      }
+    if ('code' in response) {
+      alert(response.message);
+      return;
+    }
 
-      if ('data' in response && response.data) {
-        setModalState((prevState) => ({
-          ...prevState,
-          isOpen: true,
-          isCopyMode: true,
-          inviteCode: response.data!.inviteCode,
-        }));
-      }
-    } catch (error) {
-      console.error('Failed to get invite code', error);
+    if ('data' in response && response.data) {
+      setModalState((prevState) => ({
+        ...prevState,
+        isOpen: true,
+        isCopyMode: true,
+        inviteCode: response.data!.inviteCode,
+      }));
     }
   };
 
