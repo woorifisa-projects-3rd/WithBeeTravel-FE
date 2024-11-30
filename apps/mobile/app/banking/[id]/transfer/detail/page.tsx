@@ -12,11 +12,7 @@ import {
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
-import { AccountInfo } from '@withbee/types';
-
-interface TargetName {
-  name: string;
-}
+import { AccountInfo, TargetName } from '@withbee/types';
 
 export default function TransferDetailPage() {
   const MAX_AMOUNT = 500000000;
@@ -33,6 +29,7 @@ export default function TransferDetailPage() {
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { showToast } = useToast();
   // 클라이언트에서만 localStorage 접근
@@ -49,13 +46,19 @@ export default function TransferDetailPage() {
       (async () => {
         const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
+          // TODO: 에러페이지로 이동시키기
+          router.push(`/mypage`);
           console.error(response.message);
         }
       })();
     }
   }, [myAccountId]);
+  if (loading) {
+    return null;
+  }
 
   // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {

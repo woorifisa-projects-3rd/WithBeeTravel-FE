@@ -16,7 +16,7 @@ export default function TransferPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
-
+  const [loading, setLoading] = useState<boolean>(true);
   const { showToast } = useToast();
   // 계좌 정보 가져오기
   useEffect(() => {
@@ -26,13 +26,20 @@ export default function TransferPage() {
         console.log(response);
 
         if ('data' in response) {
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
           console.error(response.message);
+          // TODO: 에러 페이지로 이동 예정
+          router.push('/mypage');
         }
       })();
     }
   }, [accountId]);
+
+  if (loading) {
+    return null;
+  }
 
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');

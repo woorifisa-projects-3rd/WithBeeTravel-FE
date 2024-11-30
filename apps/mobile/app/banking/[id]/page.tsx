@@ -12,26 +12,7 @@ import {
   instance,
 } from '@withbee/apis';
 import { error } from 'console';
-
-interface AccountHistory {
-  date: string;
-  rcvAm: number;
-  payAm: number;
-  balance: number;
-  rqspeNm: string;
-}
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
-
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
-}
+import { AccountHistory, AccountInfo } from '@withbee/types';
 
 export default function AccountPage() {
   const router = useRouter();
@@ -51,10 +32,11 @@ export default function AccountPage() {
           const responseInfo = await getAccountInfo(Number(id));
           if (Number(responseInfo.status) !== 200) {
             setError(true);
-            router.push('/mypage'); // 오류 발생 시 리디렉션
+            router.push('/not-found'); // 오류 발생 시 리디렉션
             return;
           }
           if ('data' in responseInfo) {
+            setLoading(false);
             setAccountInfo(responseInfo.data);
           }
 
@@ -62,7 +44,7 @@ export default function AccountPage() {
           const responseHistory = await getAccountHistories(Number(id));
           if (Number(responseHistory.status) !== 200) {
             setError(true);
-            router.push('/mypage'); // 오류 발생 시 리디렉션
+            router.push('/not-found'); // 오류 발생 시 리디렉션
             return;
           }
           if ('data' in responseHistory) {
@@ -70,7 +52,7 @@ export default function AccountPage() {
           }
         } catch (err) {
           setError(true);
-          router.push('/mypage'); // 오류 발생 시 리디렉션
+          router.push('/not-found'); // 오류 발생 시 리디렉션
         } finally {
           setLoading(false); // 데이터 가져오기가 끝났으면 로딩 상태를 false로 변경
         }

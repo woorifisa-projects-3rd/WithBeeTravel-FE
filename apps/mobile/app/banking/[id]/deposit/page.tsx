@@ -6,13 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { deposit, getAccountInfo, instance } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
+import { AccountInfo } from '@withbee/types';
 
 export default function DepositPage() {
   const router = useRouter();
