@@ -75,10 +75,16 @@
     width: 100%;
     max-width: 430px;
     padding: 0px 25px;
-    bottom: 100px;
+    bottom: 50px;
     position: fixed;
     left: 50%;
     transform: translate(-50%);
+  }
+
+  .won {
+    margin-top: 20px;
+    font-size: 12pt;  /* 글자 크기를 12포인트로 설정 */
+    font-weight: normal;  /* 글자 굵기를 보통으로 설정 */
   }
   
  

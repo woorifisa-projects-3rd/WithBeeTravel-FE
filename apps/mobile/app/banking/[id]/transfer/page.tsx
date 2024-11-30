@@ -7,6 +7,7 @@ import { Button } from '@withbee/ui/button';
 import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
+import { motion } from 'framer-motion';
 
 export default function TransferPage() {
   const router = useRouter();
@@ -116,11 +117,18 @@ export default function TransferPage() {
       <div className={styles.accountInfo}>
         <h2>내 계좌</h2>
         {accountInfo ? (
-          <p className={styles.balance}>
-            ₩ {formatNumber(accountInfo.balance)} 원
-          </p>
+          <motion.p
+            className={styles.balance}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className={styles.balance}>
+              ₩ {formatNumber(accountInfo.balance)}
+            </p>
+          </motion.p>
         ) : (
-          <p>계좌 정보를 불러오는 중입니다...</p>
+          <p style={{ height: '36px' }}> </p>
         )}
       </div>
 
