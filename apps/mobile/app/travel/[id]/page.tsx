@@ -66,7 +66,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
         )}
         <div className={styles.friendsWrapper}>
           {data!.travelMembers!.map((member) => (
-            <FriendImage key={member} src={member} />
+            <FriendImage key={member.id} src={member.profileImage} />
           ))}
         </div>
       </div>

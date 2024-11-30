@@ -1,8 +1,8 @@
 'use client';
 
-import { PaymentSkeleton } from '@withbee/ui/payment-skeleton';
 import { useToast } from '@withbee/hooks/useToast';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+import { PaymentError } from '@withbee/ui/payment-error';
 
 interface ErrorProps {
   error: Error;
@@ -11,13 +11,13 @@ interface ErrorProps {
 export default function Error({ error }: ErrorProps) {
   const { showToast } = useToast();
 
-  useEffect(() => {
-    showToast.error({
-      message: error.message,
-    });
-  }, [error, showToast]);
+  // useEffect(() => {
+  //   showToast.error({
+  //     message: error.message,
+  //   });
+  // }, [error, showToast]);
 
   console.error(error);
 
-  return <PaymentSkeleton />;
+  return <PaymentError />;
 }

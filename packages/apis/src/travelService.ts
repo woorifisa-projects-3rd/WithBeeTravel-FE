@@ -82,6 +82,10 @@ export const getTravelMembers = async (travelId: number) => {
 export const getTravelHome = async (travelId: number) => {
   const response = await instance.get<TravelHome>(`/api/travels/${travelId}`, {
     cache: 'no-cache',
+    // next: {
+    //   tags: [`travel-${travelId}`], // 태그 기반 캐싱
+    //   revalidate: 1000 * 1 * 60, // 1분
+    // },
   });
   console.log('응답값-----', response);
 

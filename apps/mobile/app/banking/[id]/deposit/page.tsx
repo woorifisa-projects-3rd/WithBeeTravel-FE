@@ -9,12 +9,7 @@ import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
+import { AccountInfo } from '@withbee/types';
 
 const MAX_DEPOSIT_AMOUNT = 500000000; // 5억원
 
