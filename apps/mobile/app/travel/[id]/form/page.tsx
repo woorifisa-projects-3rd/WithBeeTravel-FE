@@ -12,24 +12,18 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import { motion } from 'framer-motion';
 import styles from './page.module.css';
 import useSWR from 'swr';
-
-interface FormData {
-  travelName: string;
-  isDomesticTravel: boolean;
-  travelCountries: string[];
-  travelStartDate: string;
-  travelEndDate: string;
-}
+import { TravelFormData } from '@withbee/types';
 
 function TravelFormContent() {
-  const [editedTravel, setEditedTravel] = useState<FormData | null>(null);
+  const [editedTravel, setEditedTravel] = useState<TravelFormData | null>(null);
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
   const params = useParams();
+  const { showToast } = useToast();
 
   // 편집 api
-  const handleEditTravel = async (formData: any) => {
+  const handleEditTravel = async (formData: TravelFormData) => {
     const {
       travelName,
       isDomesticTravel,
@@ -58,13 +52,11 @@ function TravelFormContent() {
     }
   };
 
-  const handleTravelSelect = (travel: FormData) => {
+  const handleTravelSelect = (travel: TravelFormData) => {
     setEditedTravel(travel);
   };
 
-  const { showToast } = useToast();
-
-  // 여행 데이터 가져오기
+  // 여행 편집 get
 
   const { data: travelData, isLoading } = useSWR(
     mode === 'edit' ? `${params.id}` : null,
@@ -93,8 +85,6 @@ function TravelFormContent() {
           travelEndDate: travelData.data.travelEndDate,
         }
       : undefined;
-
-  console.log(formattedTravelData);
 
   return (
     <div>

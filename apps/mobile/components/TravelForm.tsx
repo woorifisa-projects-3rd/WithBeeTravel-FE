@@ -9,18 +9,7 @@ import DatePickerModal from '@withbee/ui/date-picker-modal';
 import { formatDate, getDateObject, countriesList } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
-
-interface TravelFormProps {
-  mode: 'create' | 'edit';
-  travelData?: {
-    travelName: string;
-    isDomesticTravel: boolean;
-    travelCountries?: string[];
-    travelStartDate: string;
-    travelEndDate: string;
-  };
-  onSubmit: (formData: any) => void;
-}
+import { TravelFormProps } from '@withbee/types';
 
 export default function TravelForm({
   mode,
@@ -66,6 +55,8 @@ export default function TravelForm({
       [name]: value,
     }));
   };
+
+  const { formValidation } = useToast();
 
   const handleLocationChange = (isDomesticTravel: boolean) => {
     setFormData((prev) => ({
@@ -113,8 +104,6 @@ export default function TravelForm({
       ),
     }));
   };
-
-  const { formValidation } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
