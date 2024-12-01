@@ -222,7 +222,7 @@ function SubmitButton() {
     <Button
       type="submit"
       label={pending ? '처리중...' : '회원가입'}
-      size="large"
+      // size="large"
       disabled={pending}
     />
   );

@@ -52,7 +52,7 @@ export default function LoginForm() {
         />
       </div>
       <div className={styles.buttonContainer}>
-        <Button type="submit" label="로그인" size="large" />
+        <Button type="submit" label="로그인" />
         <p className={styles.join}>
           아직 회원이 아니신가요?{' '}
           <Link href="/join" className={styles.joinLink}>

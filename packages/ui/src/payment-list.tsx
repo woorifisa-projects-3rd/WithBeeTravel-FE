@@ -145,7 +145,14 @@ export default function PaymentList({
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
   if (error) {
-    return <PaymentError />;
+    return (
+      <div className={styles.errorContainer}>
+        <PaymentError
+          message1="해당하는 카테고리의"
+          message2="결제 내역이 존재하지 않아요."
+        />
+      </div>
+    );
   }
 
   return (

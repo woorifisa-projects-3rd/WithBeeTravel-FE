@@ -1,6 +1,7 @@
+'use server';
+
 import { NextResponse, type NextRequest } from 'next/server';
 import { auth } from './auth';
-import { sign } from 'crypto';
 import { signOut } from 'next-auth/react';
 
 export default async function middleware(
