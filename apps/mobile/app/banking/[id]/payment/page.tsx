@@ -128,32 +128,6 @@ export default function PaymentPage() {
     }
   };
 
-  const renderAmountInput = () => (
-    <div className={styles.inputGroup}>
-      <label>거래 금액</label>
-      <input
-        type="text"
-        value={payAm}
-        onChange={(e) => setPayAm(e.target.value.replace(/\D/g, ''))} // 숫자만 입력되도록
-        placeholder="금액 입력"
-        className={styles.input}
-      />
-    </div>
-  );
-
-  const renderTransactionNameInput = () => (
-    <div className={styles.inputGroup}>
-      <label>거래 내역(상호명)</label>
-      <input
-        type="text"
-        value={rqspeNm}
-        onChange={(e) => setRqspeNm(e.target.value)}
-        placeholder="상호명을 입력해주세요"
-        className={styles.input}
-      />
-    </div>
-  );
-
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');
   };
@@ -164,47 +138,68 @@ export default function PaymentPage() {
   return (
     <div className={styles.container}>
       <Title label="결제 내역 추가" />
-      <div className={styles.accountInfo}>
-        <h2>내 계좌</h2>
-        {accountInfo ? (
-          <p className={styles.balance}>
-            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)} 원
-          </p>
-        ) : (
-          <p>계좌 정보를 불러오는 중입니다...</p>
-        )}
-      </div>
 
       <div className={styles.form}>
-        {renderTransactionNameInput()}
-        {renderAmountInput()}
+        <div className={styles.inputContainer}>
+          <label htmlFor="password">거래 내역(상호명)</label>
+          <input
+            type="text"
+            value={rqspeNm}
+            onChange={(e) => setRqspeNm(e.target.value)}
+            placeholder="상호명을 입력해주세요"
+            className={styles.input}
+          />
+        </div>
+        <div className={styles.inputContainer}>
+          <label htmlFor="password">거래 금액</label>
+          <input
+            type="text"
+            value={payAm}
+            onChange={(e) => setPayAm(e.target.value.replace(/\D/g, ''))} // 숫자만 입력되도록
+            placeholder="금액 입력"
+            className={styles.input}
+          />
+        </div>
 
         {/* 위비 카드 결제 버튼 (위비 카드 연결되어 있을 때만 보임) */}
         {isWibeeCard?.connectedWibeeCard && (
-          <div className={styles.wibeeCardButtonGroup}>
-            <Button
-              label="위비 카드"
-              size="medium"
-              className={`${styles.wibeeCardButton} ${isWibeeCardCheckbox ? styles.active : ''}`}
-              onClick={() => setIsWibeeCardCheckbox(true)} // 위비 카드 결제 활성화
-            />
-            <Button
-              label="일반 카드"
-              size="medium"
-              className={`${styles.wibeeCardButton} ${!isWibeeCardCheckbox ? styles.active : ''}`}
-              onClick={() => setIsWibeeCardCheckbox(false)} // 위비 카드 결제 비활성화
-            />
+          <div className={styles.wibeeCardInfo}>
+            <label htmlFor="password">카드 선택</label>
+            <div className={styles.wibeeCardButtonGroup}>
+              <Button
+                label="위비 카드"
+                size="medium"
+                className={`${styles.wibeeCardButton} ${isWibeeCardCheckbox ? styles.active : ''}`}
+                onClick={() => setIsWibeeCardCheckbox(true)} // 위비 카드 결제 활성화
+              />
+              <Button
+                label="일반 카드"
+                size="medium"
+                className={`${styles.wibeeCardButton} ${!isWibeeCardCheckbox ? styles.active : ''}`}
+                onClick={() => setIsWibeeCardCheckbox(false)} // 위비 카드 결제 비활성화
+              />
+            </div>
           </div>
         )}
 
+        <div className={styles.accountInfo}>
+          {/* <h2>내 계좌</h2> */}
+          {accountInfo ? (
+            <p className={styles.balance}>
+              {accountInfo.product} 잔액: {formatNumber(accountInfo.balance)}원
+            </p>
+          ) : (
+            <p>계좌 정보를 불러오는 중입니다...</p>
+          )}
+        </div>
+
         {/* 등록하기 버튼 */}
-        {!isSubmitDisabled && (
-          <Button
-            label="등록하기"
-            className={styles.submitButton}
-            onClick={handleSubmit}
-          />
-        )}
+        <Button
+          label="등록하기"
+          className={styles.submitButton}
+          onClick={handleSubmit}
+          disabled={isSubmitDisabled}
+        />
       </div>
 
       {/* PinNumberModal 컴포넌트 호출 */}

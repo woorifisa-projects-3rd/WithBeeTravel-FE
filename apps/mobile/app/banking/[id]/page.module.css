@@ -6,7 +6,7 @@
   color: rgb(0, 0, 0);
   margin-top: 20px;
   transition: transform 0.3s ease;
-  border: 1px solid var(--color-gray-300); /* 테두리 추가 */
+  border: 1px solid var(--color-gray-200); /* 테두리 추가 */
 }
 
 .productAndButton {
@@ -63,7 +63,7 @@
 /* 거래 내역 카드 */
 .transactionItem {
   padding: 20px 5px 20px 5px;
-  border-bottom: 1px solid var(--color-gray-300);
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .transactionDate {
@@ -109,7 +109,7 @@
 .payAmount {
   font-weight: bold;
   text-align: right;
-  color: #ff3b30;
+  color: var(--color-red);
 }
 
 .transactionItem:active {
@@ -126,5 +126,5 @@
 }
 
 .errorContainer {
-  padding: 45px 0;
+  padding: 10vh 0;
 }
