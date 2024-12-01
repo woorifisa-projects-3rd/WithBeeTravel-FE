@@ -23,6 +23,7 @@
 .accountInfo h2 {
   font-size: 20px;
   font-weight: 600;
+  color: var(--color-gray-700);
   /* margin-bottom: 5px; */
 }
 
@@ -40,7 +41,7 @@
   font-size: 30px;
   font-weight: 600;
   text-align: center;
-  padding-top: 8%;
+  padding-top: 18px;
   padding-bottom: 5%;
   color: var(--color-gray-900);
 }
@@ -86,7 +87,7 @@
 }
 
 .keyboardKey:active {
-  background-color: #f8f8f8;
+  background-color: var(--color-gray-100);
 }
 
 .accountInfo {
@@ -100,7 +101,7 @@
 }
 
 .won {
-  margin-top: 12px;
+  margin-top: 8px;
   font-size: 12pt; /* 글자 크기를 12포인트로 설정 */
   font-weight: normal; /* 글자 굵기를 보통으로 설정 */
 }

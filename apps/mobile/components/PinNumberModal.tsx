@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './PinNumberModal.module.css';
 import { getUserState, verifyPin } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface PinNumberModalProps {
   isRegister?: boolean;
@@ -37,7 +38,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
         if ('data' in response) {
           if (response.data?.failedPinCount !== 0) {
             setError(
-              `5회 이상 잘못 입력 시 재설정 필요 ${response.data?.failedPinCount}/5`,
+              `5회 이상 잘못 입력 시 재설정 필요, ${response.data?.failedPinCount}/5`,
             );
           }
           setFailCnt(response.data?.failedPinCount);
@@ -63,7 +64,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
         onClose(); // 모달 닫기
       } else {
         setFailCnt(Number(failCnt) + 1);
-        setError(`5회 이상 잘못 입력 시 재설정 필요 ${Number(failCnt) + 1}/5`);
+        setError(`5회 이상 잘못 입력 시 재설정 필요, ${Number(failCnt) + 1}/5`);
         setTimeout(() => {
           setPin(''); // PIN을 초기화
         }, 500); // 500ms 후에 PIN과 에러 메시지 초기화
@@ -131,41 +132,59 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
   }, [pin]); // pin이 변경될 때마다 자동 검증
 
   return (
-    isOpen && (
-      <>
-        <div className={styles.modal} onClick={onClose} />
-        <div className={styles.modalContent}>
-          <button className={styles.closeButton} onClick={onClose} />
-          <h2 className={styles.inputPinNumberText}>
-            PIN 번호 {isRegister ? '설정' : '입력'}
-          </h2>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            className={styles.modal}
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className={styles.modalContent}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{
+              type: 'spring',
+              damping: 30,
+              stiffness: 300,
+            }}
+          >
+            <div className={styles.topContainer}>
+              <h2 className={styles.inputPinNumberText}>
+                PIN 번호 {isRegister ? '설정' : '입력'}
+              </h2>
 
-          {/* PIN 입력 */}
-          <div className={styles.pinInputContainer}>
-            <div className={styles.pinInput}>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
-                  className={`${styles.pinCircle} ${pin.length > index ? styles.filled : ''}`}
-                />
-              ))}
+              {/* PIN 입력 */}
+              <div className={styles.pinInputContainer}>
+                <div className={styles.pinInput}>
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.pinCircle} ${pin.length > index ? styles.filled : ''}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <p className={`${styles.error} ${error ? '' : styles.hidden}`}>
+                {error}
+              </p>
             </div>
-          </div>
 
-          {/* 에러 메시지가 있을 때만 텍스트를 변경하고, 없으면 빈 공간을 차지 */}
-          <p className={`${styles.error} ${error ? '' : styles.hidden}`}>
-            {error}
-          </p>
-
-          {/* 키패드 */}
-          <div className={styles.keyboard}>
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
-              renderKeypadButton,
-            )}
-          </div>
-        </div>
-      </>
-    )
+            <div className={styles.keyboard}>
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
+                renderKeypadButton,
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -46,7 +46,7 @@ export default function DepositPage() {
       if (parseInt(newAmount) <= MAX_DEPOSIT_AMOUNT) {
         setAmount(newAmount); // 5억원 이하일 경우 입력
       } else {
-        showToast.error({ message: '최대 입금 가능 금액을 초과했어요' });
+        showToast.error({ message: '최대 입금 가능 금액을 초과했어요.' });
       }
     }
   };
@@ -164,15 +164,17 @@ export default function DepositPage() {
         </div>
 
         <div className={styles.handleSendMoney}>
-          {amount && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 }}
-            >
-              <Button label="입금하기" onClick={handleSendMoney} />
-            </motion.div>
-          )}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+          >
+            <Button
+              label="입금하기"
+              onClick={handleSendMoney}
+              disabled={!amount}
+            />
+          </motion.div>
         </div>
       </div>
     </div>
