@@ -80,7 +80,7 @@ const CardIssuancePage = () => {
         setIssuanceState('processing');
         setTimeout(() => {
           setIssuanceState('complete');
-        }, 4000);
+        }, 5000);
       } else {
         router.push('/travel');
       }

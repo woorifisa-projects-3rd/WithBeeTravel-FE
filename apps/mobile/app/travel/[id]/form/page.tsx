@@ -59,15 +59,12 @@ function TravelFormContent() {
 
   // 여행 편집 get
 
-  const {
-    data: travelData,
-    isLoading,
-    error,
-  } = useSWR(mode === 'edit' ? `${params.id}` : null, () =>
-    getTravelHome(Number(params.id)),
+  const { data: travelData, isLoading } = useSWR(
+    mode === 'edit' ? `${params.id}` : null,
+    () => getTravelHome(Number(params.id)),
   );
 
-  if (isLoading && error) {
+  if (isLoading) {
     return (
       <div className={styles.loadingContainer}>
         <motion.div
