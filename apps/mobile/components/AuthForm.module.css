@@ -1,0 +1,60 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 3px;
+}
+
+.inputContainer label {
+  font-size: 18px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1.5px solid var(--color-gray-200);
+  outline: none;
+  padding: 8px 0;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.buttonContainer {
+  text-align: center;
+}
+
+.buttonContainer button {
+  margin-bottom: 10px;
+}
+
+.buttonContainer a {
+  display: inline-block;
+  margin-left: 3px;
+  text-decoration: underline;
+}
+
+/* JoinForm.module.css */
+.error {
+  border-color: #ff4d4f !important;
+}
+
+.errorMessage {
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.successMessage {
+  color: #52c41a;
+  font-size: 14px;
+  margin-top: 4px;
+}
