@@ -15,6 +15,7 @@ type CategoryType =
   | '기타';
 
 export interface TravelHome {
+  travelId: number;
   id: number;
   travelName: string;
   travelStartDate: string;

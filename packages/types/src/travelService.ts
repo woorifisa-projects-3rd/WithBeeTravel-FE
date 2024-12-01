@@ -13,6 +13,7 @@ export interface TravelList {
 }
 
 export interface TravelFormData {
+  travelId: number;
   travelName: string;
   isDomesticTravel: boolean;
   travelCountries: string[];

@@ -84,7 +84,6 @@ export const getTravelHome = async (travelId: number) => {
     //   revalidate: 1000 * 1 * 60, // 1분
     // },
   });
-  console.log('응답값-----', response);
 
   return response;
 };

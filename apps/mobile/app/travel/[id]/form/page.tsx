@@ -25,6 +25,7 @@ function TravelFormContent() {
   // 편집 api
   const handleEditTravel = async (formData: TravelFormData) => {
     const {
+      travelId,
       travelName,
       isDomesticTravel,
       travelCountries,
@@ -78,6 +79,7 @@ function TravelFormContent() {
   const formattedTravelData =
     travelData && 'data' in travelData && travelData.data
       ? {
+          travelId: travelData.data.travelId,
           travelName: travelData.data.travelName,
           isDomesticTravel: travelData.data.isDomesticTravel,
           travelCountries: travelData.data.countries || [],

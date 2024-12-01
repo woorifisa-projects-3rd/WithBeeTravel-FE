@@ -20,11 +20,16 @@ export default function TravelForm({
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
+    travelId: travelData?.travelId ?? 1,
     travelName: travelData?.travelName || '',
     isDomesticTravel: travelData?.isDomesticTravel || false,
     travelCountries: travelData?.travelCountries || [],
-    travelStartDate: travelData?.travelStartDate || '',
-    travelEndDate: travelData?.travelEndDate || '',
+    travelStartDate:
+      travelData?.travelStartDate ||
+      formatDate(getDateObject(new Date().toISOString())),
+    travelEndDate:
+      travelData?.travelEndDate ||
+      formatDate(getDateObject(new Date().toISOString())),
   });
 
   // 검색 관련 상태
@@ -56,8 +61,6 @@ export default function TravelForm({
     }));
   };
 
-  const { formValidation } = useToast();
-
   const handleLocationChange = (isDomesticTravel: boolean) => {
     setFormData((prev) => ({
       ...prev,
@@ -65,7 +68,6 @@ export default function TravelForm({
       travelCountries: [], // 위치 변경 시 선택된 국가 초기화
     }));
     setSearchQuery(''); // 검색어 초기화
-    console.log('isDomesticTravel 상태 변경:', isDomesticTravel);
   };
 
   // 검색어 변경 처리
@@ -105,6 +107,8 @@ export default function TravelForm({
     }));
   };
 
+  const { formValidation } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -115,7 +119,7 @@ export default function TravelForm({
     }
 
     // 해외 여행 시 국가 선택 검증
-    if (formData.isDomesticTravel && formData.travelCountries.length === 0) {
+    if (!formData.isDomesticTravel && formData.travelCountries.length === 0) {
       formValidation.invalidCountrySelection();
       return;
     }
