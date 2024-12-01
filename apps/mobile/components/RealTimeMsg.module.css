@@ -1,4 +1,4 @@
-@keyframes slideInRight {
+/* @keyframes slideInRight {
     from {
         transform: translateX(100%);
         opacity: 0;
@@ -24,8 +24,8 @@
 
 .background {
     position: fixed;
-    bottom: 5px;
-    right: 5px;
+    top: 5px;
+    right: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,6 +58,7 @@
 
 .logTitle {
     font-weight: bold;
+    font-size: 16px;
     color: #333;
 }
 
@@ -71,4 +72,4 @@
 
 .logMessage {
     color: #666;
-}
+} */

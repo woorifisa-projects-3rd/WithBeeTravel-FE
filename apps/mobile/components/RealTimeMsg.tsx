@@ -22,7 +22,7 @@ export default function RealTimeMsg() {
 
   return (
     <div className={styles.background}>
-      <div className={`${styles.card} ${styles.slideIn}`}>
+      {/* <div className={`${styles.card} ${styles.slideIn}`}>
         <h1 className={styles.logTitle}>실시간 알림</h1>
         <ul>
           {notifications.map((notification, index) => (
@@ -31,7 +31,7 @@ export default function RealTimeMsg() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }
