@@ -3,6 +3,20 @@ export interface InviteCode {
   inviteCode: string;
 }
 
+export interface InviteCodeModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit?: (inviteCode: string) => void;
+  modalState: {
+    title: string;
+    closeLabel?: string;
+    placeholder?: string;
+    subtitle?: string;
+    isCopyMode?: boolean;
+    inviteCode?: string;
+  };
+}
+
 export interface TravelList {
   travelId: number;
   travelName: string;
