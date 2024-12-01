@@ -3,7 +3,7 @@
   border-radius: 16px;
   padding: 20px;
   margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-gray-200); /* 테두리 */
   width: 100%;
   position: relative;
   overflow: hidden;

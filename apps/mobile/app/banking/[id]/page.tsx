@@ -152,13 +152,11 @@ export default function AccountPage() {
                 <div className={styles.transactionDetails}>
                   {history.rcvAm === 0 || history.rcvAm == null ? (
                     <div className={styles.payAmount}>
-                      <span className={styles.outflowLabel}>출금: </span>
-                      {formatNumber(history.payAm)}원
+                      -{formatNumber(history.payAm)}원
                     </div>
                   ) : (
                     <div className={styles.rcvAmount}>
-                      <span className={styles.inflowLabel}>입금: </span>
-                      {formatNumber(history.rcvAm)}원
+                      +{formatNumber(history.rcvAm)}원
                     </div>
                   )}
                   <div className={styles.balance}>
