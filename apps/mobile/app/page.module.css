@@ -42,7 +42,7 @@
 .benefitCard {
     padding: 12px 14px;
     border-radius: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     border: 1.5px solid var(--color-gray-200);
     display: flex;
     align-items: flex-start;

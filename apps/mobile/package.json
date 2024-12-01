@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
+    "@types/event-source-polyfill": "^1.0.5",
     "@withbee/apis": "workspace:*",
     "@withbee/auth-config": "workspace:*",
     "@withbee/exception": "workspace:*",
@@ -18,9 +19,9 @@
     "@withbee/styles": "workspace:*",
     "@withbee/ui": "workspace:*",
     "@withbee/utils": "workspace:*",
-    "@withbee/exception": "workspace:*",
     "chart.js": "^4.4.6",
     "dayjs": "^1.11.13",
+    "event-source-polyfill": "^1.0.31",
     "next": "14.2.6",
     "next-auth": "5.0.0-beta.25",
     "react": "18.3.1",
