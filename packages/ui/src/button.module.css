@@ -14,7 +14,7 @@
 .xsmall {
   border-radius: 8px;
   /* 모서리를 둥글게 */
-  padding: 6px 9px;
+  padding: 6px 12px;
   /* 패딩 */
   font-size: 16px;
   /* 텍스트 크기 */
@@ -45,6 +45,7 @@
   /* 패딩 */
   font-size: 22px;
   /* 텍스트 크기 */
+  font-weight: 400;
 }
 
 .medium {
@@ -53,6 +54,7 @@
   /* 패딩 */
   font-size: 18px;
   /* 텍스트 크기 */
+  font-weight: 400;
 }
 
 .primary {

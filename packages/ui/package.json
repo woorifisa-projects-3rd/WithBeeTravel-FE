@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./account-card-skeleton": "./src/account-card-skeleton.tsx",
+    "./payment-history-skeleton": "./src/payment-history-skeleton.tsx",
     "./animated-button": "./src/animated-button.tsx",
     "./payment-error": "./src/payment-error.tsx",
     "./settlement-button": "./src/settlement-button.tsx",

@@ -138,7 +138,7 @@ export const Payment = ({
               <FriendImage
                 key={member.id}
                 src={member.profileImage}
-                size={35}
+                size={30}
               />
             ))}
             <motion.button className={styles.plusButton}>

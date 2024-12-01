@@ -56,9 +56,6 @@ export default function TransferDetailPage() {
       })();
     }
   }, [myAccountId]);
-  if (loading) {
-    return null;
-  }
 
   // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {
@@ -132,7 +129,7 @@ export default function TransferDetailPage() {
       );
 
       showToast.success({
-        message: `${targetAccount?.name}님이게
+        message: `${targetAccount?.name}님에게
         \n${transferRequest.amount}원 송금 완료`,
       });
 
@@ -195,6 +192,10 @@ export default function TransferDetailPage() {
       </div>
     </div>
   );
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
