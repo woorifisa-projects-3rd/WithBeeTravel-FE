@@ -32,9 +32,8 @@ export default function RealTimeMsg() {
     setIsVisible(false);
   };
 
-  // 알림이 보이는 상태에서만 컴포넌트를 렌더링하도록 조건부 처리
   if (!isVisible) {
-    return null; // 알림이 닫히면 null을 반환하여 컴포넌트가 렌더링되지 않게 함
+    return null;
   }
 
   return (

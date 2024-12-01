@@ -1,12 +1,10 @@
 .background {
     position: fixed;
-    top: 20px;
-    /* Adjust as needed */
-    right: 2px;
+    top: 0px;
+    right: 0px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    /* Align items to the start of the container */
     z-index: 9999;
     width: 400px;
 }
@@ -18,7 +16,7 @@
     padding: 15px;
     width: 100%;
     position: relative;
-    /* Ensure it stays within the fixed container */
+
 }
 
 .closeButton {
@@ -42,35 +40,35 @@
     color: #666;
 }
 
-/* Animations */
 @keyframes slideInRight {
     from {
-        transform: translateY(-100%);
+        transform: translateX(100%);
         opacity: 0;
     }
 
     to {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
 
 @keyframes slideOutRight {
     from {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
 
     to {
-        transform: translateY(-100%);
+        transform: translateX(-00%);
         opacity: 0;
     }
 }
 
+
 .slideIn {
-    animation: slideInRight 0.5s ease forwards;
+    animation: slideInRight 0.5s ease-out forwards;
 }
 
 .slide-out {
-    animation: slideOutRight 0.5s ease forwards;
+    animation: slideOutRight 0.5s ease-in forwards;
 }
