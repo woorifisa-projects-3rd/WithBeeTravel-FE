@@ -49,7 +49,17 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
             </Link>
           </div>
         </div>
-        <div className={styles.imgWrapper}>{/* Placeholder for image */}</div>
+        <div className={styles.imgWrapper}>
+          {data?.mainImage ? (
+            <Image
+              src={data!.mainImage}
+              alt="main image"
+              layout="fill"
+              objectFit="cover"
+              className={styles.mainImage}
+            />
+          ) : null}
+        </div>
 
         {data?.isDomesticTravel ? (
           <Item label="국내여행" />
