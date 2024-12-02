@@ -169,6 +169,7 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
                   keypadType="pin"
                   activeKeys={activeKeys}
                   buttonClassName={styles.customPinButton}
+                  disableAnimation={true}
                 />
               </div>
             </motion.div>

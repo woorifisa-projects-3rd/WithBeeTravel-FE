@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './AccountSelection.module.css';
 import { useSwipe } from '@withbee/hooks/useSwipe';
 import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProductOption {
   label: string;
   value: string;
   imageUrl: string;
+  width?: number;
   detail: string;
 }
 
@@ -18,6 +20,19 @@ const AccountSelection: React.FC<{
   const [containerStyle, setContainerStyle] = useState<React.CSSProperties>({});
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const handlePrevClick = () => {
+    animateSwipe('left');
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + productOptions.length) % productOptions.length,
+    );
+  };
+
+  const handleNextClick = () => {
+    animateSwipe('right');
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length);
+  };
+
   const {
     handleTouchStart,
     handleTouchMove,
@@ -26,27 +41,9 @@ const AccountSelection: React.FC<{
     handleMouseUp,
     handleMouseMove,
     handleWheel,
-  } = useSwipe(
-    () => {
-      animateSwipe('right');
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % productOptions.length);
-    },
-    () => {
-      animateSwipe('left');
-      setCurrentIndex(
-        (prevIndex) =>
-          (prevIndex - 1 + productOptions.length) % productOptions.length,
-      );
-    },
-  );
+  } = useSwipe(handleNextClick, handlePrevClick);
 
   const currentProduct = productOptions[currentIndex];
-  const prevProduct =
-    productOptions[
-      (currentIndex - 1 + productOptions.length) % productOptions.length
-    ];
-  const nextProduct =
-    productOptions[(currentIndex + 1) % productOptions.length];
 
   useEffect(() => {
     if (currentProduct) {
@@ -59,29 +56,29 @@ const AccountSelection: React.FC<{
       const container = containerRef.current;
       const containerWidth = container.offsetWidth;
 
-      if (direction === 'right') {
-        setContainerStyle({
-          transform: `translateX(-${containerWidth}px)`,
-          transition: 'transform 0.2s',
-        });
-      } else {
-        setContainerStyle({
-          transform: `translateX(${containerWidth}px)`,
-          transition: 'transform 0.2s',
-        });
-      }
+      setContainerStyle({
+        transform: `translateX(${direction === 'right' ? '-' : ''}${containerWidth}px)`,
+        transition: 'transform 0.2s',
+      });
 
-      // Reset the container position after the animation
       setTimeout(() => {
         setContainerStyle({ transform: 'translateX(0)', transition: '' });
       }, 150);
     }
   };
 
-  if (!currentProduct || !prevProduct || !nextProduct) return null;
+  if (!currentProduct) return null;
 
   return (
     <div className={styles.container}>
+      <button
+        className={[styles.arrowButton, styles.leftArrow].join(' ')}
+        onClick={handlePrevClick}
+        aria-label="Previous"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
       <div
         className={styles.swipeContainer}
         onTouchStart={handleTouchStart}
@@ -94,49 +91,28 @@ const AccountSelection: React.FC<{
         ref={containerRef}
         style={containerStyle}
       >
-        <div className={`${styles.cardPreview} ${styles.left}`}>
-          <div className={styles.imageContainer}>
-            <Image
-              src={prevProduct.imageUrl}
-              alt={prevProduct.label}
-              width={120}
-              height={180}
-            />
-          </div>
-          <div className={styles.textContainer}>
-            <h2 className={styles.title}>{prevProduct.label}</h2>
-          </div>
-        </div>
-
         <div className={styles.cardSelected}>
-          <div className={styles.imageContainer}>
-            <Image
-              src={currentProduct.imageUrl}
-              alt={currentProduct.label}
-              width={120}
-              height={180}
-            />
-          </div>
+          <Image
+            src={currentProduct.imageUrl}
+            alt={currentProduct.label}
+            width={currentProduct.width || 110}
+            height={165}
+            className={styles.image}
+          />
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{currentProduct.label}</h2>
             <h3 className={styles.des}>{currentProduct.value}</h3>
           </div>
         </div>
-
-        <div className={`${styles.cardPreview} ${styles.right}`}>
-          <div className={styles.imageContainer}>
-            <Image
-              src={nextProduct.imageUrl}
-              alt={nextProduct.label}
-              width={120}
-              height={180}
-            />
-          </div>
-          <div className={styles.textContainer}>
-            <h2 className={styles.title}>{nextProduct.label}</h2>
-          </div>
-        </div>
       </div>
+
+      <button
+        className={[styles.arrowButton, styles.rightArrow].join(' ')}
+        onClick={handleNextClick}
+        aria-label="Next"
+      >
+        <ChevronRight size={24} />
+      </button>
     </div>
   );
 };
