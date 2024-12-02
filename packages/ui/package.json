@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./record-modal": "./src/record-modal.tsx",
     "./wibee-card-payment": "./src/wibee-card-payment.tsx",
     "./keyboard": "./src/keyboard.tsx",
     "./account-card-skeleton": "./src/account-card-skeleton.tsx",

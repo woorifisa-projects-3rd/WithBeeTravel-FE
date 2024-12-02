@@ -234,7 +234,7 @@ export default function page() {
                         <Image
                           src={
                             card.travelMainImage
-                              ? `/${card.travelMainImage}`
+                              ? card.travelMainImage
                               : '/imgs/travelselect/travel_exam.png'
                           }
                           alt={card.travelName}
