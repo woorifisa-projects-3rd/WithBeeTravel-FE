@@ -1,44 +1,51 @@
-import { EventSourcePolyfill } from 'event-source-polyfill';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 export const connectSSE = (
   url: string,
-  onMessage: (data: string) => void,
+  onMessage: (data: any) => void,
   onConnect?: () => void,
   onError?: (error: any) => void,
   token?: string,
 ) => {
-  const eventSource = new EventSourcePolyfill(url, {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : '',
-      Connection: 'keep-alive',
-      Accept: 'text/event-stream',
-    },
-    heartbeatTimeout: 30000,
-  });
-
-  // 연결 성공 이벤트
-  eventSource.addEventListener('connect', (event: any) => {
-    const { data } = event;
-    if (data === 'SSE 연결이 완료되었습니다.') {
-      console.log('SSE CONNECTED');
-      onConnect?.();
+  return new Promise<EventSourcePolyfill>((resolve, reject) => {
+    if (!token) {
+      reject(new Error('Authentication required'));
+      return;
     }
-  });
 
-  // 메시지 수신 이벤트
-  (eventSource as EventSource).addEventListener(
-    'message',
-    (event: MessageEvent) => {
+    const eventSourceOptions = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'text/event-stream',
+        Connection: 'keep-alive',
+        'Cache-Control': 'no-cache',
+      },
+      withCredentials: true, // 중요: 크로스 오리진 요청 시 인증 정보 포함
+      heartbeatTimeout: 30000,
+    };
+
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    const eventSource = new EventSource(url, eventSourceOptions);
+    // 연결 성공 이벤트
+    eventSource.addEventListener('sse', () => {
+      console.log('SSE Connection Opened');
+      onConnect?.();
+      resolve(eventSource);
+    });
+
+    // 연결 실패 처리
+    eventSource.addEventListener('error', (error) => {
+      console.error('SSE Error:', error);
+      onError?.(error);
+      eventSource.close();
+      reject(error);
+    });
+
+    // 메시지 수신 이벤트
+    eventSource.addEventListener('message', (event) => {
       onMessage(event.data);
-    },
-  );
+    });
 
-  // 에러 처리
-  eventSource.onerror = (error) => {
-    console.error('SSE Error:', error);
-    onError?.(error);
-    eventSource.close();
-  };
-
-  return eventSource; // 이벤트 소스를 반환
+    return eventSource;
+  });
 };
