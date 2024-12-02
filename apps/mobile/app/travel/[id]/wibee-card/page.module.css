@@ -1,0 +1,100 @@
+.container {
+  width: 100%;
+  max-width: 430px;
+  height: calc(100svh - 80px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox용 */
+  -ms-overflow-style: none; /* IE/Edge용 */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari용 */
+}
+
+.headerBackground {
+  width: 100%;
+  max-width: 430px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
+.header {
+  width: calc(100% - 50px);
+}
+
+.optionWrapper {
+  padding-top: 30px;
+  padding-bottom: 15px;
+}
+
+.dateSelect {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0 2px;
+  /* margin-bottom: 20px; */
+}
+
+.list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-gray-700);
+}
+
+.list span {
+  color: var(--color-gray-800);
+}
+
+.list span::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 10px;
+  background: url('/arrow_right.png') no-repeat center / contain;
+  margin-left: 8px;
+  margin-bottom: 2px;
+}
+
+.historyWrapper {
+  margin-top: 180px;
+  padding-bottom: 85px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submitButtonBackground {
+  width: 100%;
+  max-width: 430px;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 0px;
+  padding-bottom: 90px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
+.submitButtonWrapper {
+  width: calc(100% - 50px);
+}

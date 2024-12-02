@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { ParticipatingMember, SharedPayment, TravelHome } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
+import { RecordModal } from './record-modal';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 import { chooseParticipants } from '@withbee/apis';
@@ -101,6 +102,8 @@ export const Payment = ({
     }
   }, [isOpen]);
 
+  const [isRecordModalOpen, setIsRecordModalOpen] = useState<boolean>(false);
+
   return (
     <article className={styles.payment}>
       <FriendImage
@@ -138,7 +141,7 @@ export const Payment = ({
               <FriendImage
                 key={member.id}
                 src={member.profileImage}
-                size={35}
+                size={30}
               />
             ))}
             <motion.button className={styles.plusButton}>
@@ -163,6 +166,7 @@ export const Payment = ({
             />
           )}
           <div
+            onClick={() => setIsRecordModalOpen(true)}
             className={[
               styles.optionWrapper,
               isDomesticTravel && styles.mt,
@@ -217,6 +221,16 @@ export const Payment = ({
             ))}
           </div>
         </Modal>
+      )}
+
+      {/* 기록 추가 모달 */}
+      {isRecordModalOpen && (
+        <RecordModal
+          isOpen={isRecordModalOpen}
+          onClose={() => setIsRecordModalOpen(false)}
+          travelId={travelId.toString()}
+          sharedPaymentId={paymentInfo.id.toString()}
+        />
       )}
     </article>
   );

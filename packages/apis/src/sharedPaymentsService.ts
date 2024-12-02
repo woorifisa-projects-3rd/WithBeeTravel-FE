@@ -1,7 +1,15 @@
 'use server';
 
 import { instance } from './instance';
-import type { PageResponse, SharedPayment, SortBy } from '@withbee/types';
+import type {
+  PageResponse,
+  SharedPayment,
+  SortBy,
+  SharedPaymentRecordRequest,
+  SharedPaymentRecordResponse,
+  SuccessResponse,
+  ErrorResponse,
+} from '@withbee/types';
 
 interface GetSharedPaymentsParams {
   travelId: number;
@@ -64,4 +72,29 @@ export const chooseParticipants = async ({
       }),
     },
   );
+};
+
+export const getSharedPaymentRecord = async (
+  travelId: string,
+  sharedPaymentId: string,
+): Promise<SuccessResponse<SharedPaymentRecordResponse> | ErrorResponse> => {
+  const response = instance.get<SharedPaymentRecordResponse>(
+    `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
+  );
+  return response;
+};
+
+export const updateSharedPaymentRecord = async (
+  travelId: string,
+  sharedPaymentId: string,
+  formDataToSend: FormData,
+) => {
+  const response = await instance.patch(
+    `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
+    {
+      body: formDataToSend,
+      isMultipart: true,
+    },
+  );
+  return response;
 };

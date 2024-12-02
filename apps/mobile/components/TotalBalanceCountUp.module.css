@@ -1,15 +1,13 @@
 .accountBalance {
-    font-size: 24px;
-    text-align: right;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-  }
+  font-size: 20px;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
 
-  .balanceLabel {
-    font-size: 24px;
-    opacity: 0.9;
-    font-weight: bold;
-  }
-  
+.balanceLabel {
+  opacity: 0.9;
+  font-weight: bold;
+}
