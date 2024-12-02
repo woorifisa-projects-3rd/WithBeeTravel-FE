@@ -13,6 +13,7 @@ import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
 
+// Account
 interface Account {
   accountId: number;
   product: string;
@@ -80,7 +81,7 @@ const CardIssuancePage = () => {
         setIssuanceState('processing');
         setTimeout(() => {
           setIssuanceState('complete');
-        }, 4000);
+        }, 5000);
       } else {
         router.push('/travel');
       }
@@ -282,8 +283,10 @@ const CardIssuancePage = () => {
               <Image
                 src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="발급된 카드"
-                fill
-                className="object-contain"
+                className={styles.completeCardImg}
+                width={140}
+                height={210}
+                quality={100}
               />
             </motion.div>
             <motion.h2
