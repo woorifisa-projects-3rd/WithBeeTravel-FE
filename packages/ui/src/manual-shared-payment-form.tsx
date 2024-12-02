@@ -226,6 +226,7 @@ export const ManualSharedPaymentForm = ({
                   formData.paymentAmount === 0 ? '' : formData.paymentAmount
                 }
                 onChange={handlePaymentChange}
+                onWheel={(e) => e.preventDefault()}
                 className={styles.input}
               />
             ) : (
@@ -238,6 +239,7 @@ export const ManualSharedPaymentForm = ({
                     : formData.foreignPaymentAmount
                 }
                 onChange={handleForeignPaymentChange}
+                onWheel={(e) => e.preventDefault()}
                 className={styles.input}
               />
             )}
