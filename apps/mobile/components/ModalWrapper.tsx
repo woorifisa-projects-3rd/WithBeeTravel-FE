@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { ERROR_MESSAGES } from '@withbee/exception';
 
 export default function ModalWrapper({ travelId }: { travelId: number }) {
-  console.log(travelId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { showToast } = useToast();
   const router = useRouter();

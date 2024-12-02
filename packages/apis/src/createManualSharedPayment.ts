@@ -2,7 +2,11 @@
 
 import { instance } from './instance';
 import { ManualPaymentFormData } from '../../ui/src/manual-shared-payment-form';
-import { SuccessResponse } from '@withbee/types';
+import {
+  SuccessResponse,
+  CurrencyUnitOptions,
+  ErrorResponse,
+} from '@withbee/types';
 
 export const createManualSharedPayment = async (
   travelId: string,
@@ -67,6 +71,15 @@ export const createManualSharedPayment = async (
       body: formDataToSend,
       isMultipart: true, // multipart/form-data로 전송
     },
+  );
+  return response;
+};
+
+export const getCurrencyUnitOptions = async (
+  travelId: string,
+): Promise<SuccessResponse<CurrencyUnitOptions> | ErrorResponse> => {
+  const response = await instance.get<CurrencyUnitOptions>(
+    `/api/travels/${travelId}/payments/currency-unit`,
   );
   return response;
 };

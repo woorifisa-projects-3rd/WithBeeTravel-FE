@@ -1,0 +1,93 @@
+.skeletonWrapper {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid var(--color-gray-100); /* 테두리 */
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accountTitle {
+  width: 120px;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.accountNumber {
+  width: 160px;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.historyButton {
+  width: 66px;
+  height: 35px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance {
+  width: 140px;
+  height: 35px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+}
+
+.button {
+  flex: 1;
+  height: 50px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+}

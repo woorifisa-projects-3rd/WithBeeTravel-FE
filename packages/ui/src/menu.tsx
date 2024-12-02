@@ -8,15 +8,15 @@ import { useState } from 'react';
 import { BottomModal } from './modal';
 import selectIcon from './assets/select.png';
 import DatePickerModal from './date-picker-modal';
-import { usePaymentStore, useTravelStore } from '@withbee/stores';
-import { getDateObject } from '@withbee/utils';
-import { TravelMember } from '@withbee/types';
+import { formatDate, getDateObject } from '@withbee/utils';
+import { DateObject, TravelHome, TravelMember } from '@withbee/types';
+import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
 import { useRouter } from 'next/navigation';
 
 interface MenuProps {
-  // travelMembers: TravelMember[];
+  travelInfo: TravelHome;
   className?: string;
-  travelId: string;
+  travelId?: string;
 }
 
 const AllMembers: TravelMember = {
@@ -25,18 +25,9 @@ const AllMembers: TravelMember = {
   profileImage: 0,
 };
 
-export const Menu = ({ className, travelId, ...props }: MenuProps) => {
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    sortBy,
-    setSortBy,
-    setIsDateFiltered,
-    memberId,
-    setMemberId,
-  } = usePaymentStore();
+export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
+  const { params, updateParam } = usePaymentParams();
+  const { startDate, endDate, memberId } = params;
   const [isOpen, setIsOpen] = useState({
     period: false,
     member: false,
@@ -44,48 +35,69 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
     start: false,
     end: false,
   });
-  const [selected, setSelected] = useState({
-    period: '전체',
-    member: '전체',
-    sort: sortBy === 'latest' ? '최신순' : '금액순',
-  });
+  const {
+    id: travelId,
+    travelStartDate,
+    travelEndDate,
+    travelMembers,
+  } = travelInfo;
 
   const [isFilter, setIsFilter] = useState(false); // 필터 메뉴인지 여부
 
-  const { travelMembers } = useTravelStore();
+  const dateRange = {
+    start: startDate || travelStartDate,
+    end: endDate || travelEndDate,
+  };
 
   // 모달 열기/닫기 핸들러
-  const handleModal = (key: 'period' | 'member' | 'sort' | 'start' | 'end') => {
+  const handleModal = (key: keyof typeof isOpen) => {
     setIsOpen((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   // 정렬 변경 핸들러
-  const handleSort = () => {
+  const handleSort = (sort: '최신순' | '금액순') => {
+    updateParam('sortBy', sort === '최신순' ? 'latest' : 'amount');
     handleModal('sort');
-    setSortBy(selected.sort === '최신순' ? 'latest' : 'amount');
   };
 
   // 전체 기간 선택 핸들러
   const handleSelectAllDate = () => {
-    setIsDateFiltered(false);
-    setSelected({ ...selected, period: '전체' });
+    updateParam('startDate', travelStartDate);
+    updateParam('endDate', travelEndDate);
+    handleModal('period');
   };
 
   // 시작일/종료일 선택 핸들러
   const handleDateSelect = (type: 'start' | 'end') => {
-    setIsDateFiltered(true);
     handleModal(type);
-    setSelected({ ...selected, period: '기간' });
+  };
+
+  // DatePickerModal의 onSelectDate 처리
+  const handleDateChange = (type: 'start' | 'end', date: DateObject) => {
+    updateParam(type === 'start' ? 'startDate' : 'endDate', formatDate(date));
+    // handleDateSelect(type);
+    // handleModal('period');
   };
 
   // 멤버 선택 핸들러
   const handleMemberSelect = (member: TravelMember) => {
-    setSelected({ ...selected, member: member.id.toString() });
-    setMemberId(member.id);
-    // handleModal('member');
+    updateParam('memberId', member.id);
+    handleModal('member');
+  };
+
+  const selected = {
+    sort: params.sortBy === 'latest' ? '최신순' : '금액순',
+    period: params.startDate && params.endDate ? '기간' : '전체',
+    member:
+      travelMembers?.find((m) => m.id === params.memberId)?.name || '전체',
   };
 
   const router = useRouter();
+
+  // 직접 결제 내역 추가 페이지 이동 핸들러
+  const handleRouteManualSharedPaymentPage = () => {
+    router.push(`/travel/${travelId}/manual`);
+  };
 
   // 위비 카드 결제 내역 불러오기 페이지 이동 핸들러
   const handleRouteGetWibeeCardHistoryPage = () => {
@@ -131,7 +143,12 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
             size={'small'}
             onClick={handleRouteGetWibeeCardHistoryPage}
           />
-          <Button label="직접 추가" size={'small'} primary={false} />
+          <Button
+            label="직접 추가"
+            size={'small'}
+            primary={false}
+            onClick={handleRouteManualSharedPaymentPage}
+          />
         </div>
       )}
 
@@ -171,11 +188,11 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
             </li>
             <li onClick={() => handleDateSelect('start')}>
               시작일
-              <span>{startDate.replace(/-/g, '.')}</span>
+              <span>{dateRange.start?.replace(/-/g, '.')}</span>
             </li>
             <li onClick={() => handleDateSelect('end')}>
               종료일
-              <span>{endDate.replace(/-/g, '.')}</span>
+              <span>{dateRange.end?.replace(/-/g, '.')}</span>
             </li>
           </ul>
         </BottomModal>
@@ -185,8 +202,8 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
       {isOpen.start && (
         <DatePickerModal
           isOpen={isOpen.start}
-          initialDate={getDateObject(startDate)}
-          onSelectDate={setStartDate}
+          initialDate={getDateObject(dateRange.start)}
+          onSelectDate={(date) => handleDateChange('start', date)}
           onClose={() => handleModal('start')}
           title={'시작일'}
         />
@@ -196,8 +213,8 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
       {isOpen.end && (
         <DatePickerModal
           isOpen={isOpen.end}
-          initialDate={getDateObject(endDate)}
-          onSelectDate={setEndDate}
+          initialDate={getDateObject(dateRange.end)}
+          onSelectDate={(date) => handleDateChange('end', date)}
           onClose={() => handleModal('end')}
           title={'종료일'}
         />
@@ -205,10 +222,17 @@ export const Menu = ({ className, travelId, ...props }: MenuProps) => {
 
       {/* 정렬 선택 모달 */}
       {isOpen.sort && (
-        <BottomModal isOpen={isOpen.sort} onClose={handleSort} title="정렬">
+        <BottomModal
+          isOpen={isOpen.sort}
+          onClose={() => handleModal('sort')}
+          title="정렬"
+        >
           <ul className={styles.list}>
             {['최신순', '금액순'].map((sort) => (
-              <li key={sort} onClick={() => setSelected({ ...selected, sort })}>
+              <li
+                key={sort}
+                onClick={() => handleSort(sort as '최신순' | '금액순')}
+              >
                 {sort}
                 {selected.sort === sort && (
                   <Image src={selectIcon} alt="select" width={25} height={25} />

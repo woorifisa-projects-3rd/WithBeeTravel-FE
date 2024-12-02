@@ -2,26 +2,21 @@
 
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './page.module.css';
 import { Button } from '@withbee/ui/button';
-import { instance } from '@withbee/apis';
-import { error } from 'console';
-
-interface AccountHistory {
-  date: string;
-  rcvAm: number;
-  payAm: number;
-  balance: number;
-  rqspeNm: string;
-}
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
+import {
+  getAccountHistories,
+  getAccountInfo,
+  getUserState,
+} from '@withbee/apis';
+import { AnimatedBalance } from '../../../components/TotalBalanceCountUp';
+import { TransactionHistorySkeleton } from '@withbee/ui/payment-history-skeleton';
+import { AccountCardSkeleton } from '@withbee/ui/account-card-skeleton';
+import { AccountHistory, AccountInfo } from '@withbee/types';
+import dayjs from 'dayjs';
+import { PaymentError } from '@withbee/ui/payment-error';
+import useSWR from 'swr';
 
 interface PinNumberResponse {
   failedPinCount: number;
@@ -33,68 +28,52 @@ export default function AccountPage() {
   const params = useParams();
   const id = params.id;
 
-  const [histories, setHistories] = useState<AccountHistory[] | undefined>([]);
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
+  // 계좌 정보 가져오기
+  const {
+    data: accountInfo,
+    error: accountError,
+    isLoading: accountIsLoading,
+  } = useSWR<AccountInfo>(id ? `account-info-${id}` : null, {
+    fetcher: async () => {
+      const response = await getAccountInfo(Number(id));
+      if ('data' in response) return response.data as AccountInfo;
+      throw new Error(response.message);
+    },
+  });
 
-  useEffect(() => {
-    if (id) {
-      // 계좌 정보 가져오기
+  // 거래 내역 가져오기
+  const {
+    data: histories,
+    error: historiesError,
+    isLoading: historiesIsLoading,
+  } = useSWR<AccountHistory[]>(id ? `account-histories-${id}` : null, {
+    fetcher: async () => {
+      const response = await getAccountHistories(Number(id));
+      if ('data' in response) return response.data as AccountHistory[];
+      throw new Error(response.message);
+    },
+  });
 
-      (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${id}/info`,
-        );
-        console.log(response);
-
-        if ('data' in response) {
-          setAccountInfo(response.data);
-        } else {
-          console.error(response.message);
-        }
-      })();
-
-      // 거래 내역 가져오기
-      (async () => {
-        const response = await instance.get<AccountHistory[]>(
-          `/api/accounts/${id}`,
-        );
-        console.log('상세 내역: ', response);
-
-        if ('data' in response) {
-          setHistories(response.data);
-        } // 거래 내역 업데이트
-        else {
-          console.error(response.message);
-        }
-      })();
-    }
-  }, []);
+  // 에러 처리
+  if (accountError || historiesError) {
+    router.push('/not-found');
+    return null;
+  }
 
   const formatNumber = (num: number | null | undefined): string => {
-    if (num == null) return '0'; // null 또는 undefined 처리
+    if (num == null) return '0';
     return num.toLocaleString('ko-KR');
   };
 
-  // 날짜 포맷 함수
   const formatDate = (date: string): string => {
-    if (!date) return 'Invalid Date'; // 날짜가 없으면 기본 텍스트 반환
-    return new Intl.DateTimeFormat('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false, // 24시간 형식으로 출력
-    }).format(new Date(date));
+    if (!date) return 'Invalid Date';
+    return dayjs(date).format('YYYY.MM.DD HH:mm:ss');
   };
 
   const handleTransferClick = async () => {
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
-    if (Number(response.status) != 200) {
-      alert('핀번호 재 설정 후 이용 가능');
+    const response = await getUserState();
+    if (Number(response.status) !== 200) {
+      alert('핀번호 재설정 후 이용 가능');
       return;
     }
     router.push(`/banking/${id}/transfer`);
@@ -104,85 +83,107 @@ export default function AccountPage() {
     <div className={styles.container}>
       <Title label="거래내역 조회" />
 
-      {/* 계좌 정보 표시 */}
-      {accountInfo ? (
-        <div className={styles.accountDetails}>
-          <div className={styles.accountInfo}>
-            <div className={styles.productAndButton}>
-              <div className={styles.productName}>{accountInfo.product}</div>
-              <div className={styles.addHistory}>
-                <Button
-                  primary={false}
-                  label="+ 내역"
-                  size="xsmall"
-                  onClick={() => router.push(`/banking/${id}/payment`)}
-                />
-              </div>
-            </div>
-            <div className={styles.accountNumber}>
-              {accountInfo.accountNumber}
-            </div>
+      <AnimatePresence>
+        {accountIsLoading ? (
+          <AccountCardSkeleton />
+        ) : (
+          accountInfo && (
+            <motion.div
+              className={styles.accountDetails}
+              initial={{ opacity: 0, y: 0.4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={styles.accountInfo}>
+                <div className={styles.productAndButton}>
+                  <div>
+                    <div className={styles.productName}>
+                      {accountInfo.product}
+                    </div>
+                    <div className={styles.accountNumber}>
+                      {accountInfo.accountNumber}
+                    </div>
+                  </div>
+                  <div className={styles.addHistory}>
+                    <Button
+                      primary={false}
+                      label="+ 내역"
+                      size="xsmall"
+                      onClick={() => router.push(`/banking/${id}/payment`)}
+                    />
+                  </div>
+                </div>
 
-            <div className={styles.accountBalance}>
-              <span className={styles.balanceLabel}></span>
-              {formatNumber(accountInfo.balance)} 원
-            </div>
-            <div className={styles.default}>
-              <Button
-                primary={false}
-                label="입금"
-                size={'medium'}
-                onClick={() => router.push(`/banking/${id}/deposit`)}
-              />
-              <Button
-                label="송금"
-                size={'medium'}
-                onClick={() => handleTransferClick()}
-              />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>계좌 정보가 없습니다.</div>
-      )}
+                <AnimatedBalance balance={accountInfo?.balance} />
+                <div className={styles.default}>
+                  <Button
+                    primary={false}
+                    label="입금"
+                    size={'medium'}
+                    onClick={() => router.push(`/banking/${id}/deposit`)}
+                  />
+                  <Button
+                    label="송금"
+                    size={'medium'}
+                    onClick={handleTransferClick}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )
+        )}
+      </AnimatePresence>
 
       {/* 거래 내역 표시 */}
       <div className={styles.transactionList}>
-        {histories && histories.length > 0 ? (
-          histories.map((history, index) => (
-            <div key={index} className={styles.transactionItem}>
-              <div className={styles.transactionDate}>
-                {formatDate(history.date)}
-              </div>
-
-              {/* 상세 내역은 날짜 바로 아래로 위치 */}
-              <div className={styles.detail}>{history.rqspeNm}</div>
-
-              {/* 거래 내역 상세 */}
-              <div className={styles.transactionDetails}>
-                {/* 입금 / 출금 금액 */}
-                {history.rcvAm === 0 || history.rcvAm == null ? (
-                  <div className={styles.payAmount}>
-                    <span className={styles.outflowLabel}>출금 : </span>
-                    {formatNumber(history.payAm)}원
-                  </div>
-                ) : (
-                  <div className={styles.rcvAmount}>
-                    <span className={styles.inflowLabel}>입금 : </span>
-                    {formatNumber(history.rcvAm)}원
-                  </div>
-                )}
-
-                <div className={styles.balance}>
-                  잔액 : {formatNumber(history.balance)}원
+        <AnimatePresence>
+          {historiesIsLoading ? (
+            <TransactionHistorySkeleton />
+          ) : histories && histories.length > 0 ? (
+            histories.map((history, index) => (
+              <motion.div
+                key={index}
+                className={styles.transactionItem}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: index * 0.1, duration: 0.3 }}
+              >
+                <div className={styles.transactionDate}>
+                  {formatDate(history.date)}
                 </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          //여기에 윗비 캐릭터 이미지 떠도 좋을듯(거래내역이 없어요~)
-          <div>텅.</div> // `histories`가 없거나 비었을 경우 처리
-        )}
+                <div className={styles.detail}>{history.rqspeNm}</div>
+                <div className={styles.transactionDetails}>
+                  {history.rcvAm === 0 || history.rcvAm == null ? (
+                    <div className={styles.payAmount}>
+                      -{formatNumber(history.payAm)}원
+                    </div>
+                  ) : (
+                    <div className={styles.rcvAmount}>
+                      +{formatNumber(history.rcvAm)}원
+                    </div>
+                  )}
+                  <div className={styles.balance}>
+                    잔액: {formatNumber(history.balance)}원
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className={styles.errorContainer}
+            >
+              <PaymentError
+                message1={`${accountInfo?.product}에`}
+                message2="거래 내역이 없어요."
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

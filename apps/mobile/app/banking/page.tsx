@@ -4,20 +4,11 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
-
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
-}
+import { AccountInfo, PinNumberResponse } from '@withbee/types';
+import CountUp from 'react-countup';
+import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence
 
 export default function BankingPage() {
   const router = useRouter();
@@ -25,18 +16,27 @@ export default function BankingPage() {
   const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
 
   const { showToast } = useToast();
+  const [error, setError] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchAccounts = async () => {
-      const response = await instance.get<AccountInfo[]>(`/api/accounts`);
-
-      if ('data' in response) {
-        setAccounts(response.data);
-      } else {
-        console.error(response.message);
+    const checkLogin = async () => {
+      try {
+        const accountResponse = await getAccounts();
+        if ('data' in accountResponse) {
+          setAccounts(accountResponse.data);
+          setError(false);
+        } else {
+          console.error('에러 코드 ', accountResponse.status);
+        }
+      } catch (error) {
+        console.error('로그인 확인 중 오류 발생:', error);
+        // TODO: 토스트 두 번 뜨는거 고쳐야 함
+        router.push('/login');
+        showToast.warning({ message: '로그인 후 이용가능해요!' });
       }
     };
-    fetchAccounts();
+
+    checkLogin();
   }, []);
 
   // 총 잔액 계산
@@ -57,9 +57,7 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
@@ -69,9 +67,7 @@ export default function BankingPage() {
   };
 
   const createAccountHandle = async () => {
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) != 200) {
       showToast.error({ message: '핀번호 재설정 후 송금 가능' });
       return;
@@ -85,54 +81,81 @@ export default function BankingPage() {
       <div className={styles.space}></div>
       <Button
         size="medium"
-        label="계좌 만들러 가기"
+        label="계좌 생성하기"
         onClick={() => createAccountHandle()}
       />
       <div className={styles.space}></div>
 
-      <div className={styles.balanceSection}>
+      {/* Total Balance Section with motion */}
+      <motion.div
+        className={styles.balanceSection}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className={styles.balanceHeader}>
           <span>총 잔액</span>
         </div>
         <div className={styles.totalBalance}>
-          {formatNumber(totalBalance)}원
+          <CountUp
+            start={0}
+            end={totalBalance}
+            duration={0.8}
+            separator=","
+            suffix="원"
+            decimals={0}
+          />
         </div>
-      </div>
+      </motion.div>
 
-      <div className={styles.transactionList}>
-        {(accounts ?? []).map((transaction) => (
-          <div
-            key={transaction.accountId}
-            className={styles.transactionItem}
-            onClick={() => router.push(`/banking/${transaction.accountId}`)}
-          >
-            <div className={styles.transactionInfo}>
-              <div className={styles.accountType}>{transaction.product}</div>
-              <div className={styles.accountNumber}>
-                {transaction.accountNumber}
+      {/* Account List Section with AnimatePresence and motion */}
+      <motion.div
+        className={styles.transactionList}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <AnimatePresence>
+          {(accounts ?? []).map((transaction) => (
+            <motion.div
+              key={transaction.accountId}
+              className={styles.transactionItem}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+              onClick={() => router.push(`/banking/${transaction.accountId}`)}
+            >
+              <div className={styles.transactionInfo}>
+                <div>
+                  <div className={styles.accountType}>
+                    {transaction.product}
+                  </div>
+                  <div className={styles.accountNumber}>
+                    {transaction.accountNumber}
+                  </div>
+                </div>
+                <div className={styles.buttonWrapper}>
+                  <Button
+                    size="xsmall"
+                    label="송금"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleTransferClick(e, transaction.accountId)
+                    }
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
-            <div className={styles.transactionDetails}>
-              <div className={styles.sendButtonContainer}>
-                <Button
-                  size="xsmall"
-                  label="송금"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    handleTransferClick(e, transaction.accountId)
-                  }
-                />
+              <div className={styles.transactionDetails}>
+                <div className={styles.amount}>
+                  {formatNumber(transaction.balance)}원
+                </div>
               </div>
-
-              {/* 금액을 오른쪽 정렬 */}
-              <div className={styles.amount}>
-                {formatNumber(transaction.balance)}원
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

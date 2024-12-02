@@ -3,32 +3,18 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import { instance } from '@withbee/apis';
+import {
+  checkWibee,
+  getAccountInfo,
+  getUserState,
+  instance,
+  registerPayment,
+} from '@withbee/apis';
 import PinNumberModal from '../../../../components/PinNumberModal';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-
-interface HistoryRequest {
-  payAm: number;
-  rqspeNm: string;
-  isWibeeCard: boolean;
-}
-
-interface AccountInfo {
-  accountId: number;
-  accountNumber: string;
-  product: string;
-  balance: number;
-}
-
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
-}
-
-interface WibeeCardResponse {
-  connectedWibeeCard: boolean;
-}
+import { AccountInfo, HistoryRequest, WibeeCardResponse } from '@withbee/types';
+import { motion } from 'framer-motion';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -47,24 +33,25 @@ export default function PaymentPage() {
 
   const { showToast } = useToast();
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
-        const response = await instance.get<AccountInfo>(
-          `/api/accounts/${myAccountId}/info`,
-        );
+        const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
+          // TODO: 에러 페이지로 이동시키기
+          router.push(`/mypage`);
           console.error(response.message);
         }
       })();
 
       (async () => {
-        const response = await instance.get<WibeeCardResponse>(
-          `/api/accounts/${myAccountId}/check-wibee`,
-        );
+        const response = await checkWibee(Number(myAccountId));
         if ('data' in response) {
           setIsWibeeCard(response.data);
         } else {
@@ -73,6 +60,10 @@ export default function PaymentPage() {
       })();
     }
   }, [myAccountId]);
+
+  if (loading) {
+    return null;
+  }
 
   // 등록하기 버튼 클릭 시 처리
   const handleSubmit = async () => {
@@ -96,9 +87,7 @@ export default function PaymentPage() {
       return;
     }
 
-    const response = await instance.get<PinNumberResponse>(
-      '/api/verify/user-state',
-    );
+    const response = await getUserState();
     if (Number(response.status) !== 200) {
       showToast.error({ message: '핀번호 재 설정 후 이용 가능' }); // 핀번호 설정 오류 메시지
       return;
@@ -112,15 +101,12 @@ export default function PaymentPage() {
   const handlePinSubmit = async (pin: string) => {
     // PIN 번호 확인 후 결제 요청
     try {
-      const historyRequest: HistoryRequest = {
-        payAm: parseInt(payAm),
+      await registerPayment(
+        Number(myAccountId),
+        parseInt(payAm),
         rqspeNm,
-        isWibeeCard: isWibeeCardCheckbox,
-      };
-
-      await instance.post(`/api/accounts/${myAccountId}/payment`, {
-        body: JSON.stringify(historyRequest),
-      });
+        isWibeeCardCheckbox,
+      );
       showToast.success({ message: '거래내역 등록 완료!' });
 
       router.push(`/banking/`);
@@ -132,32 +118,6 @@ export default function PaymentPage() {
     }
   };
 
-  const renderAmountInput = () => (
-    <div className={styles.inputGroup}>
-      <label>거래 금액</label>
-      <input
-        type="text"
-        value={payAm}
-        onChange={(e) => setPayAm(e.target.value.replace(/\D/g, ''))} // 숫자만 입력되도록
-        placeholder="금액 입력"
-        className={styles.input}
-      />
-    </div>
-  );
-
-  const renderTransactionNameInput = () => (
-    <div className={styles.inputGroup}>
-      <label>거래 내역(상호명)</label>
-      <input
-        type="text"
-        value={rqspeNm}
-        onChange={(e) => setRqspeNm(e.target.value)}
-        placeholder="상호명을 입력해주세요"
-        className={styles.input}
-      />
-    </div>
-  );
-
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');
   };
@@ -168,54 +128,111 @@ export default function PaymentPage() {
   return (
     <div className={styles.container}>
       <Title label="결제 내역 추가" />
-      <div className={styles.accountInfo}>
-        <h2>내 계좌</h2>
-        {accountInfo ? (
-          <p className={styles.balance}>
-            {accountInfo.product} 잔액 {formatNumber(accountInfo.balance)} 원
-          </p>
-        ) : (
-          <p>계좌 정보를 불러오는 중입니다...</p>
-        )}
-      </div>
 
-      <div className={styles.form}>
-        {renderTransactionNameInput()}
-        {renderAmountInput()}
+      <motion.div
+        className={styles.form}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          className={styles.inputContainer}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <label htmlFor="password">거래 내역(상호명)</label>
+          <input
+            type="text"
+            value={rqspeNm}
+            onChange={(e) => setRqspeNm(e.target.value)}
+            placeholder="상호명을 입력해주세요"
+            className={styles.input}
+          />
+        </motion.div>
 
-        {/* 위비 카드 결제 버튼 (위비 카드 연결되어 있을 때만 보임) */}
+        <motion.div
+          className={styles.inputContainer}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <label htmlFor="password">거래 금액</label>
+          <input
+            type="text"
+            value={payAm}
+            onChange={(e) => setPayAm(e.target.value.replace(/\D/g, ''))}
+            placeholder="금액 입력"
+            className={styles.input}
+          />
+        </motion.div>
+
+        {/* 위비 카드 결제 버튼 */}
         {isWibeeCard?.connectedWibeeCard && (
-          <div className={styles.wibeeCardButtonGroup}>
-            <Button
-              label="위비 카드"
-              size="medium"
-              className={`${styles.wibeeCardButton} ${isWibeeCardCheckbox ? styles.active : ''}`}
-              onClick={() => setIsWibeeCardCheckbox(true)} // 위비 카드 결제 활성화
-            />
-            <Button
-              label="일반 카드"
-              size="medium"
-              className={`${styles.wibeeCardButton} ${!isWibeeCardCheckbox ? styles.active : ''}`}
-              onClick={() => setIsWibeeCardCheckbox(false)} // 위비 카드 결제 비활성화
-            />
-          </div>
+          <motion.div
+            className={styles.wibeeCardInfo}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
+          >
+            <label htmlFor="password">카드 선택</label>
+            <div className={styles.wibeeCardButtonGroup}>
+              <Button
+                label="위비 카드"
+                size="medium"
+                className={`${styles.wibeeCardButton} ${isWibeeCardCheckbox ? styles.active : ''}`}
+                onClick={() => setIsWibeeCardCheckbox(true)}
+              />
+              <Button
+                label="일반 카드"
+                size="medium"
+                className={`${styles.wibeeCardButton} ${!isWibeeCardCheckbox ? styles.active : ''}`}
+                onClick={() => setIsWibeeCardCheckbox(false)}
+              />
+            </div>
+          </motion.div>
         )}
+
+        <motion.div
+          className={styles.accountInfo}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+        >
+          {accountInfo ? (
+            <motion.p
+              className={styles.balance}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6, duration: 0.3 }}
+            >
+              {accountInfo.product} 잔액: {formatNumber(accountInfo.balance)}원
+            </motion.p>
+          ) : (
+            <p>계좌 정보를 불러오는 중입니다...</p>
+          )}
+        </motion.div>
 
         {/* 등록하기 버튼 */}
-        {!isSubmitDisabled && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
+        >
           <Button
             label="등록하기"
             className={styles.submitButton}
             onClick={handleSubmit}
+            disabled={isSubmitDisabled}
           />
-        )}
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* PinNumberModal 컴포넌트 호출 */}
+      {/* PinNumberModal 컴포넌트 유지 */}
       <PinNumberModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} // 모달 닫기
-        onSubmit={handlePinSubmit} // PIN 입력 후 제출 처리
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handlePinSubmit}
       />
     </div>
   );
