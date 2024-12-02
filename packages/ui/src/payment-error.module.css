@@ -1,6 +1,6 @@
 .errorContainer {
   width: 100%;
-  padding: 110px 0;
+  /* padding: 110px 0; */
   display: flex;
   flex-direction: column;
   justify-content: center;
