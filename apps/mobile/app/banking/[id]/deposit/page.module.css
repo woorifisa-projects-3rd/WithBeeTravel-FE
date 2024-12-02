@@ -3,6 +3,7 @@
   background-color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .main {
@@ -62,6 +63,7 @@
   position: fixed;
   left: 50%;
   bottom: 0;
+  max-width: 430px;
   transform: translate(-50%);
 }
 

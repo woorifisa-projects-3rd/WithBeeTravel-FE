@@ -10,6 +10,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
 import { AccountInfo } from '@withbee/types';
+import Keyboard from '@withbee/ui/keyboard';
 
 export default function DepositPage() {
   const router = useRouter();
@@ -140,29 +141,7 @@ export default function DepositPage() {
       </main>
 
       <div className={styles.keyboardContainer}>
-        <div className={styles.actions}>
-          <motion.div
-            className={styles.keyboard}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 }} // Slight delay for smooth entry
-          >
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
-              (key) => (
-                <button
-                  key={key}
-                  className={styles.keyboardKey}
-                  onClick={() =>
-                    handleNumberPress(key === '←' ? 'backspace' : key)
-                  }
-                >
-                  {key}
-                </button>
-              ),
-            )}
-          </motion.div>
-        </div>
-
+        <Keyboard onKeyPress={handleNumberPress} />
         <div className={styles.handleSendMoney}>
           <motion.div
             initial={{ opacity: 0 }}

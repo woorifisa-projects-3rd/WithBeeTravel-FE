@@ -1,5 +1,5 @@
 /* 기본 모달 스타일 */
-.modal {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,15 +12,23 @@
   z-index: 1000;
 }
 
-.modalContent {
+.modal {
   position: fixed;
-  bottom: 0;
   left: 0;
-  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1001;
+  width: 100%;
+}
+
+.modalContent {
   background: white;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  z-index: 1001;
+  width: 100%;
+  max-width: 430px;
+  padding-bottom: 30px;
 }
 
 .topContainer {
@@ -61,35 +69,13 @@
 }
 
 /* 키패드 */
-.keyboard {
-  position: relative;
-  bottom: 0;
-  left: 0;
+.keyboardContainer {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding-bottom: 25px;
-}
-
-.keyboardKey {
-  background-color: white;
-  border: none;
-  max-height: 80px;
-  padding: 12%;
-  font-size: 28px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-gray-700);
-}
-
-.keyboardKey.active {
-  background-color: transparent; /* 기본 active 상태 스타일 제거 */
-}
-.keyboardKey.customActive {
-  background-color: var(--color-gray-100);
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  max-width: 430px;
 }
 
 /* 에러 메시지 */

@@ -14,6 +14,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
 import { motion } from 'framer-motion';
+import Keyboard from '@withbee/ui/keyboard';
 
 export default function TransferDetailPage() {
   const router = useRouter();
@@ -221,26 +222,7 @@ export default function TransferDetailPage() {
 
       <div className={styles.keyboardContainer}>
         <div className={styles.actions}>
-          <motion.div
-            className={styles.keyboard}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 }}
-          >
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
-              (key) => (
-                <button
-                  key={key}
-                  className={styles.keyboardKey}
-                  onClick={() =>
-                    handleNumberPress(key === '←' ? 'backspace' : key)
-                  }
-                >
-                  {key}
-                </button>
-              ),
-            )}
-          </motion.div>
+          <Keyboard onKeyPress={handleNumberPress} />
         </div>
 
         <motion.div

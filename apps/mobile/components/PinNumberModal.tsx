@@ -4,6 +4,7 @@ import styles from './PinNumberModal.module.css';
 import { getUserState, verifyPin } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AnimatePresence, motion } from 'framer-motion';
+import Keyboard from '@withbee/ui/keyboard';
 
 interface PinNumberModalProps {
   isRegister?: boolean;
@@ -109,21 +110,6 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
     }
   };
 
-  const renderKeypadButton = (key: string) => {
-    const isActive = activeKeys.includes(key);
-    const actualKey = key === '←' ? 'backspace' : key === 'X' ? 'clear' : key;
-
-    return (
-      <button
-        key={key}
-        className={`${styles.keyboardKey} ${isActive ? styles.customActive : ''}`}
-        onClick={() => handleNumberPress(actualKey)}
-      >
-        {key}
-      </button>
-    );
-  };
-
   // 자동 검증 처리: 6자리 PIN 입력 시 자동으로 검증
   useEffect(() => {
     if (pin.length === 6) {
@@ -136,51 +122,56 @@ const PinNumberModal: React.FC<PinNumberModalProps> = ({
       {isOpen && (
         <>
           <motion.div
-            className={styles.modal}
+            className={styles.overlay}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
           />
-          <motion.div
-            className={styles.modalContent}
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{
-              type: 'spring',
-              damping: 30,
-              stiffness: 300,
-            }}
-          >
-            <div className={styles.topContainer}>
-              <h2 className={styles.inputPinNumberText}>
-                PIN 번호 {isRegister ? '설정' : '입력'}
-              </h2>
+          <motion.div className={styles.modal}>
+            <motion.div
+              className={styles.modalContent}
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{
+                type: 'spring',
+                damping: 30,
+                stiffness: 300,
+              }}
+            >
+              <div className={styles.topContainer}>
+                <h2 className={styles.inputPinNumberText}>
+                  PIN 번호 {isRegister ? '설정' : '입력'}
+                </h2>
 
-              {/* PIN 입력 */}
-              <div className={styles.pinInputContainer}>
-                <div className={styles.pinInput}>
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <div
-                      key={index}
-                      className={`${styles.pinCircle} ${pin.length > index ? styles.filled : ''}`}
-                    />
-                  ))}
+                {/* PIN 입력 */}
+                <div className={styles.pinInputContainer}>
+                  <div className={styles.pinInput}>
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <div
+                        key={index}
+                        className={`${styles.pinCircle} ${pin.length > index ? styles.filled : ''}`}
+                      />
+                    ))}
+                  </div>
                 </div>
+
+                <p className={`${styles.error} ${error ? '' : styles.hidden}`}>
+                  {error}
+                </p>
               </div>
 
-              <p className={`${styles.error} ${error ? '' : styles.hidden}`}>
-                {error}
-              </p>
-            </div>
-
-            <div className={styles.keyboard}>
-              {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
-                renderKeypadButton,
-              )}
-            </div>
+              <div className={styles.keyboard}>
+                <Keyboard
+                  onKeyPress={handleNumberPress}
+                  keypadType="pin"
+                  activeKeys={activeKeys}
+                  buttonClassName={styles.customPinButton}
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </>
       )}

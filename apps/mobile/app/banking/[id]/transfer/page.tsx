@@ -8,6 +8,7 @@ import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
 import { motion } from 'framer-motion';
+import Keyboard from '@withbee/ui/keyboard';
 
 export default function TransferPage() {
   const router = useRouter();
@@ -150,28 +151,10 @@ export default function TransferPage() {
 
       <div className={styles.keyboardContainer}>
         <div className={styles.actions}>
-          <motion.div
-            className={styles.keyboard}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 }}
-          >
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
-              (key) => (
-                <button
-                  key={key}
-                  className={styles.keyboardKey}
-                  onClick={() =>
-                    handleNumberPress(
-                      key === '←' ? 'backspace' : key === 'X' ? 'clear' : key,
-                    )
-                  }
-                >
-                  {key}
-                </button>
-              ),
-            )}
-          </motion.div>
+          <Keyboard
+            onKeyPress={handleNumberPress}
+            keypadType="pin" // X 버튼이 있는 키패드 사용
+          />
         </div>
 
         <motion.div
