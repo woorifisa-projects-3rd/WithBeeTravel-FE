@@ -64,8 +64,8 @@ export default async function Page({ params }: { params: Params }) {
               >
                 <span className={styles.suffixText}>총 </span>
                 {myTotalPayment.totalPaymentCost >= 0
-                  ? `+${myTotalPayment.totalPaymentCost.toLocaleString()}원`
-                  : `${myTotalPayment.totalPaymentCost.toLocaleString()}원`}
+                  ? `+${myTotalPayment.totalPaymentCost?.toLocaleString()}원`
+                  : `${myTotalPayment.totalPaymentCost?.toLocaleString()}원`}
                 <span className={styles.suffixText}>
                   을{' '}
                   {myTotalPayment.totalPaymentCost >= 0 ? '받아요' : '보내요'}
@@ -123,8 +123,8 @@ export default async function Page({ params }: { params: Params }) {
                           }
                         >
                           {user.totalPaymentCost >= 0
-                            ? `+${user.totalPaymentCost.toLocaleString()}원`
-                            : `${user.totalPaymentCost.toLocaleString()}원`}
+                            ? `+${user.totalPaymentCost?.toLocaleString()}원`
+                            : `${user.totalPaymentCost?.toLocaleString()}원`}
                         </span>
                         <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
                       </span>

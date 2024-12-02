@@ -19,6 +19,13 @@
 }
 
 /* 초대코드 복사 스타일 */
+
+.btnWrap {
+    width: 70px;
+    display: flex;
+    justify-content: space-around;
+}
+
 .copyButtonWrap {
     margin: 20px 0px;
     padding: 0px 10px;

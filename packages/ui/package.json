@@ -4,6 +4,13 @@
   "private": true,
   "exports": {
     "./record-modal": "./src/record-modal.tsx",
+    "./wibee-card-payment": "./src/wibee-card-payment.tsx",
+    "./keyboard": "./src/keyboard.tsx",
+    "./account-card-skeleton": "./src/account-card-skeleton.tsx",
+    "./payment-history-skeleton": "./src/payment-history-skeleton.tsx",
+    "./animated-button": "./src/animated-button.tsx",
+    "./payment-error": "./src/payment-error.tsx",
+    "./settlement-button": "./src/settlement-button.tsx",
     "./currency-unit-picker-modal": "./src/currency-unit-picker-modal.tsx",
     "./time-picker-modal": "./src/time-picker-modal.tsx",
     "./record-image": "./src/record-image.tsx",

@@ -29,3 +29,4 @@ export interface SharedPaymentRecordResponse {
   paymentImage: string | undefined;
   paymentComment: string | undefined;
 }
+export type SortBy = 'latest' | 'amount';

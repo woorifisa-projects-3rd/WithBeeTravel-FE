@@ -4,6 +4,7 @@ import { instance } from './instance';
 import type {
   PageResponse,
   SharedPayment,
+  SortBy,
   SharedPaymentRecordRequest,
   SharedPaymentRecordResponse,
   SuccessResponse,
@@ -13,7 +14,7 @@ import type {
 interface GetSharedPaymentsParams {
   travelId: number;
   page?: number;
-  sortBy?: 'latest' | 'amount';
+  sortBy?: SortBy;
   memberId?: number;
   startDate?: string;
   endDate?: string;
