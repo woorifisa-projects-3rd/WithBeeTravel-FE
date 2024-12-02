@@ -1,0 +1,94 @@
+.container {
+    background-color: white;
+    flex-direction: column;
+  }
+  
+  .header h1 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  
+  .accountInfo h2 {
+    margin-top: 7%;
+    margin-bottom: 3%;
+    font-size: 20px;
+  }
+  
+  .balance {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 3%;
+
+  }
+  
+  .targetAccount h3 {
+    font-size: 20px;
+  }
+  
+  .accountNumber {
+    color: #666;
+    font-size: 16px;
+    margin-top: 3%;
+  }
+  
+  .amountDisplay {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 15%; 
+  }
+  
+  .currency {
+    color: var(--color-yellow-6);
+    margin-right: 8px;
+  }
+  
+  .placeholder {
+    color: #000000;
+    font-size: 24px;
+  }
+  
+  /* 숫자 입력 키패드 */
+  .keyboard {
+    margin-top: 4%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* 키보드 버튼 스타일 */
+  .keyboardKey {
+    background-color: white;
+    border: none;
+    padding: 20%;
+    font-size: 175%;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .keyboardKey:active {
+    background-color: #f8f8f8;
+  }
+
+  
+  .accountName {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+.buttonLocation{
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 50px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+  
+
+ 

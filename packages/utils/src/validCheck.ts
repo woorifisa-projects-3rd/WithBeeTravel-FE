@@ -26,4 +26,21 @@ export const validators = {
   travelName: (name: string): boolean => {
     return name.length >= 3 && name.length <= 20;
   },
+
+  paymentDates: (
+    startDate: string | undefined,
+    endDate: string | undefined,
+  ): DateValidationResult => {
+    if (startDate === undefined || endDate === undefined)
+      return { isValid: true };
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (end < start) {
+      return { isValid: false, error: 'INVALID_ORDER' };
+    }
+
+    return { isValid: true };
+  },
 };

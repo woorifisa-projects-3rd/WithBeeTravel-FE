@@ -29,6 +29,12 @@
   border-radius: 20px;
   background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
     no-repeat center / 162px 156.67px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mainImage {
+  object-fit: contain;
 }
 
 .btnWrapper {

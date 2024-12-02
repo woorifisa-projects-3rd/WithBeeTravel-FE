@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swipeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cardSelected {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+  z-index: 2; /* 가운데 항목이 항상 위에 오도록 */
+  transform: scale(0.9); /* 선택된 항목은 정상 크기 */
+  padding: 12px;
+  border-radius: 30;
+}
+
+.cardPreview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5; /* 미리보기 항목은 흐리게 표시 */
+  border-radius: 30;
+
+}
+
+.imageContainer {
+  width: 120px;
+  height: 180px;
+}
+
+.textContainer {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.des {
+  font-size: 14px;
+  color: gray;
+}
+
+
+.button {
+  margin-top: 15px;
+}
+
+.cardSelected,
+.cardPreview {
+  transition: transform 0.3s ease;
+}
+
+.cardPreview.left {
+  transform: scale(0.5)  rotate(-10deg); /* 왼쪽 미리보기 카드 기울기 */
+}
+
+.cardPreview.right {
+  transform: scale(0.5)rotate(10deg); /* 오른쪽 미리보기 카드 기울기 */
+}
+

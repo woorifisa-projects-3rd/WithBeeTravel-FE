@@ -11,6 +11,8 @@ import useSWR from 'swr';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { FriendImage } from '@withbee/ui/friend-image';
+import { useToast } from '@withbee/hooks/useToast';
+import { motion } from 'framer-motion';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,22 +25,58 @@ export default function page() {
   const router = useRouter();
 
   const { data: travelData, error } = useSWR('travelList', getTravelList);
-  if (travelData && 'data' in travelData) {
-    // console.log(travelData.data);
-  }
 
-  if (error) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
-  if (!travelData) return <p>데이터를 불러오는 중...</p>;
+  if (error && !travelData)
+    return (
+      <div className={styles.loadingContainer}>
+        <motion.div
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            ease: 'easeInOut', // 부드러운 자연스러움
+          }}
+        ></motion.div>
+        <motion.div
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
+          }}
+        ></motion.div>
+        <motion.div
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
+          }}
+        ></motion.div>
+      </div>
+    );
 
   // 초대코드에 맞는 여행 홈으로 이동
   const handleInviteCodeSubmit = async (inviteCode: string) => {
+    const { showToast } = useToast();
+
     const response = await postInviteCode(inviteCode);
 
     if ('code' in response) {
-      alert(response.message || '알 수 없는 오류가 발생했습니다.');
+      showToast.error({
+        message: response.message || '알 수 없는 오류가 발생했습니다.',
+      });
       throw new Error(
         ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
-      ); // 에러 코드가 있는 응답은 그대로 throw
+      );
     }
 
     if ('data' in response && response.data) {
@@ -70,6 +108,10 @@ export default function page() {
             return b.dDay - a.dDay;
           })
       : [];
+
+  const formatDday = (dDay: number) => (dDay === 0 ? 'D-DAY' : `D-${dDay}`);
+  const upcomingTravels = sortedTravelData.filter((card) => card.dDay >= 0);
+  const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
   return (
     <div className={styles.travelSelectWrap}>
@@ -121,45 +163,104 @@ export default function page() {
       </div>
 
       <div className={styles.cardWrap}>
-        {sortedTravelData.map((card, index) => (
-          <div key={index}>
-            <div className={styles.cardDay}>
-              {card.dDay >= 0 ? (
-                <span>
-                  다가오는 여행 <span>D-{card.dDay}</span>
-                </span>
-              ) : (
-                <span>지난 여행</span>
-              )}
-            </div>
-            <div className={styles.card}>
-              <Link href={`/travel/${card.travelId}`}>
-                <Image
-                  src={
-                    card.travelMainImage
-                      ? `/${card.travelMainImage}`
-                      : '/imgs/travelselect/travel_exam.png'
-                  }
-                  alt={card.travelName}
-                  className={styles.cardImage}
-                  width={300}
-                  height={100}
-                />
-                <div className={styles.cardContent}>
-                  <div className={styles.cardText}>
-                    <FriendImage src={card.profileImage} />
-                    <div className={styles.travelNameWrap}>
-                      <span>{card.travelName}</span>
-                      <span className={styles.date}>
-                        {card.travelStartDate} ~ {card.travelEndDate}
+        {sortedTravelData.length === 0 ? (
+          <div className={styles.emptyState}>
+            <Image
+              src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
+              alt="여행 데이터 없음"
+              className={styles.emptyStateImage}
+              width={230}
+              height={200}
+              quality={100}
+            />
+            <p className={styles.emptyStateMessage}>
+              현재 참여한 여행이 없습니다. <br />
+              여행을 생성하고 친구를 초대해보세요.
+            </p>
+          </div>
+        ) : (
+          <div className={styles.cardWrap}>
+            {/* 다가오는 여행 렌더링 */}
+            {upcomingTravels.length > 0 && (
+              <>
+                {upcomingTravels.map((card, index) => (
+                  <div key={index}>
+                    <div className={styles.cardDay}>
+                      <span>
+                        다가오는 여행 <span>{formatDday(card.dDay)}</span>
                       </span>
                     </div>
+                    <div className={styles.card}>
+                      <Link href={`/travel/${card.travelId}`}>
+                        <Image
+                          src={
+                            card.travelMainImage
+                              ? `/${card.travelMainImage}`
+                              : '/imgs/travelselect/travel_exam.png'
+                          }
+                          alt={card.travelName}
+                          className={styles.cardImage}
+                          width={300}
+                          height={100}
+                        />
+                        <div className={styles.cardContent}>
+                          <div className={styles.cardText}>
+                            <FriendImage src={card.profileImage} />
+                            <div className={styles.travelNameWrap}>
+                              <span>{card.travelName}</span>
+                              <span className={styles.date}>
+                                {card.travelStartDate} ~ {card.travelEndDate}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
+                ))}
+              </>
+            )}
+
+            {/* 지난 여행 렌더링 */}
+            {pastTravels.length > 0 && (
+              <>
+                <div className={styles.cardDay}>
+                  <span>지난 여행</span>
                 </div>
-              </Link>
-            </div>
+                {pastTravels.map((card, index) => (
+                  <div key={index}>
+                    <div className={styles.card}>
+                      <Link href={`/travel/${card.travelId}`}>
+                        <Image
+                          src={
+                            card.travelMainImage
+                              ? card.travelMainImage
+                              : '/imgs/travelselect/travel_exam.png'
+                          }
+                          alt={card.travelName}
+                          className={styles.cardImage}
+                          width={300}
+                          height={100}
+                        />
+                        <div className={styles.cardContent}>
+                          <div className={styles.cardText}>
+                            <FriendImage src={card.profileImage} />
+                            <div className={styles.travelNameWrap}>
+                              <span>{card.travelName}</span>
+                              <span className={styles.date}>
+                                {card.travelStartDate} ~ {card.travelEndDate}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
-        ))}
+        )}
       </div>
 
       <InviteCodeModal

@@ -1,27 +1,15 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './TravelForm.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import DatePickerModal from '@withbee/ui/date-picker-modal';
-import { formatDate, getDateObject } from '@withbee/utils';
+import { formatDate, getDateObject, countriesList } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
-
-interface TravelFormProps {
-  mode: 'create' | 'edit';
-  travelData?: {
-    travelId: number;
-    travelName: string;
-    isDomesticTravel: boolean;
-    travelCountries?: string[];
-    travelStartDate: string;
-    travelEndDate: string;
-  };
-  onSubmit: (formData: any) => void;
-}
+import { TravelFormProps } from '@withbee/types';
 
 export default function TravelForm({
   mode,
@@ -32,12 +20,16 @@ export default function TravelForm({
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
-    travelId: 12,
-    travelName: '',
-    isDomesticTravel: false,
-    travelCountries: [] as string[],
-    travelStartDate: '2024-10-28',
-    travelEndDate: '2024-11-02',
+    travelId: travelData?.travelId ?? 1,
+    travelName: travelData?.travelName || '',
+    isDomesticTravel: travelData?.isDomesticTravel ?? true,
+    travelCountries: travelData?.travelCountries || [],
+    travelStartDate:
+      travelData?.travelStartDate ||
+      formatDate(getDateObject(new Date().toISOString())),
+    travelEndDate:
+      travelData?.travelEndDate ||
+      formatDate(getDateObject(new Date().toISOString())),
   });
 
   // 검색 관련 상태
@@ -58,31 +50,6 @@ export default function TravelForm({
         [type === 'start' ? 'travelStartDate' : 'travelEndDate']: formattedDate,
       }));
     };
-
-  // 임시 국가 데이터 (실제로는 API에서 가져와야 함)
-  const countriesList = [
-    '오스트리아',
-    '스위스',
-    '포르투갈',
-    '프랑스',
-    '이탈리아',
-    '스페인',
-  ];
-
-  // 여행 편집 모드일 때 기존 데이터를 폼에 채워넣기
-  // 나중에 get해올때 useSWR로 변경하기
-  useEffect(() => {
-    if (mode === 'edit' && travelData) {
-      setFormData({
-        travelId: travelData.travelId,
-        travelName: travelData.travelName,
-        isDomesticTravel: travelData.isDomesticTravel,
-        travelCountries: travelData.travelCountries || [],
-        travelStartDate: travelData.travelStartDate,
-        travelEndDate: travelData.travelEndDate,
-      });
-    }
-  }, [mode, travelData]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -151,6 +118,12 @@ export default function TravelForm({
       return;
     }
 
+    // 해외 여행 시 국가 선택 검증
+    if (!formData.isDomesticTravel && formData.travelCountries.length === 0) {
+      formValidation.invalidCountrySelection();
+      return;
+    }
+
     // 날짜 검증
     const dateValidation = validators.travelDates(
       formData.travelStartDate,
@@ -188,23 +161,23 @@ export default function TravelForm({
           <label>여행지</label>
           <div className={styles.locationButtons}>
             <Button
-              primary={!formData.isDomesticTravel}
+              primary={formData.isDomesticTravel}
               size="medium"
               label="국내"
-              onClick={() => handleLocationChange(false)}
+              onClick={() => handleLocationChange(true)}
               className={styles.domesticBtn}
             />
 
             <Button
-              primary={formData.isDomesticTravel}
+              primary={!formData.isDomesticTravel}
               size="medium"
               label="해외"
-              onClick={() => handleLocationChange(true)}
+              onClick={() => handleLocationChange(false)}
               className={styles.overseasBtn}
             />
           </div>
 
-          {formData.isDomesticTravel && (
+          {!formData.isDomesticTravel && (
             <div className={styles.searchSection}>
               <div className={styles.searchInputWrapper}>
                 <input
