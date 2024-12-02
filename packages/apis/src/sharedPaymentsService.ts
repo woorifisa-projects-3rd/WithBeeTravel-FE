@@ -78,8 +78,6 @@ export const getSharedPaymentRecord = async (
   travelId: string,
   sharedPaymentId: string,
 ): Promise<SuccessResponse<SharedPaymentRecordResponse> | ErrorResponse> => {
-  console.log('API 요청');
-
   const response = instance.get<SharedPaymentRecordResponse>(
     `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
   );
