@@ -135,6 +135,14 @@ export const ManualSharedPaymentForm = ({
   }, [formData.currencyUnit, formData.date]);
 
   useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      foreignPaymentAmount: 0,
+      exchangeRate: 0,
+    }));
+  }, [formData.currencyUnit === 'KRW']);
+
+  useEffect(() => {
     const calculatedPaymentAmount = Math.floor(
       formData.foreignPaymentAmount * formData.exchangeRate,
     );
