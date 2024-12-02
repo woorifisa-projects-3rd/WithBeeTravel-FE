@@ -135,6 +135,14 @@ export const ManualSharedPaymentForm = ({
   }, [formData.currencyUnit, formData.date]);
 
   useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      foreignPaymentAmount: 0,
+      exchangeRate: 0,
+    }));
+  }, [formData.currencyUnit === 'KRW']);
+
+  useEffect(() => {
     const calculatedPaymentAmount = Math.floor(
       formData.foreignPaymentAmount * formData.exchangeRate,
     );
@@ -226,7 +234,6 @@ export const ManualSharedPaymentForm = ({
                   formData.paymentAmount === 0 ? '' : formData.paymentAmount
                 }
                 onChange={handlePaymentChange}
-                onWheel={(e) => e.preventDefault()}
                 className={styles.input}
               />
             ) : (
@@ -239,7 +246,6 @@ export const ManualSharedPaymentForm = ({
                     : formData.foreignPaymentAmount
                 }
                 onChange={handleForeignPaymentChange}
-                onWheel={(e) => e.preventDefault()}
                 className={styles.input}
               />
             )}
