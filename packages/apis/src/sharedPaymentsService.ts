@@ -89,16 +89,8 @@ export const getSharedPaymentRecord = async (
 export const updateSharedPaymentRecord = async (
   travelId: string,
   sharedPaymentId: string,
-  formData: SharedPaymentRecordRequest,
+  formDataToSend: FormData,
 ) => {
-  const formDataToSend = new FormData();
-  formDataToSend.append(
-    'paymentImage',
-    formData.paymentImage ? formData.paymentImage : new Blob(),
-  );
-  formDataToSend.append('paymentComment', formData.paymentComment);
-  formDataToSend.append('isMainImage', formData.isMainImage.toString());
-
   const response = await instance.patch(
     `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
     {

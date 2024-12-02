@@ -73,10 +73,19 @@ export const RecordModal: React.FC<RecordModalProps> = ({
   }, [isOpen === true]);
 
   const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+
+    formDataToSend.append(
+      'paymentImage',
+      record.paymentImage ? record.paymentImage : new Blob(),
+    );
+    formDataToSend.append('paymentComment', record.paymentComment);
+    formDataToSend.append('isMainImage', record.isMainImage.toString());
+
     const response = await updateSharedPaymentRecord(
       travelId,
       sharedPaymentId,
-      record,
+      formDataToSend,
     );
 
     if ('code' in response) {
