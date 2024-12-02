@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./wibee-card-payment": "./src/wibee-card-payment.tsx",
     "./keyboard": "./src/keyboard.tsx",
     "./account-card-skeleton": "./src/account-card-skeleton.tsx",
     "./payment-history-skeleton": "./src/payment-history-skeleton.tsx",
