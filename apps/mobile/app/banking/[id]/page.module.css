@@ -93,7 +93,7 @@
 .balance {
   font-size: 14px;
   text-align: right; /* 오른쪽 정렬 추가 */
-  color: var(--color-gray-700);
+  color: var(--color-gray-800);
 }
 
 .detail {

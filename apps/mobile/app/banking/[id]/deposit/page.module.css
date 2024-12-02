@@ -21,7 +21,7 @@
 }
 
 .accountInfo h2 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--color-gray-700);
   /* margin-bottom: 5px; */
@@ -53,7 +53,7 @@
 }
 
 .placeholder {
-  color: #000000;
+  color: var(--color-gray-800);
   font-size: 24px;
 }
 
