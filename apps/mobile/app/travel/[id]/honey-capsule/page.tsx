@@ -5,12 +5,13 @@ import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { HoneyCapsule } from '@withbee/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getHoneyCapsule } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { HoneyCapsuleBox } from '@withbee/ui/honey-capsule';
 import dayjs from 'dayjs';
+import html2canvas from 'html2canvas';
 
 interface HoneyCapsuleProps {
   params: {
@@ -22,6 +23,7 @@ export default function Page({ params }: HoneyCapsuleProps) {
   const { id } = params;
   const { showToast } = useToast();
   const [honeyCapsuleData, setHoneyCapsuleData] = useState<HoneyCapsule[]>();
+  const downloadComponentRef = useRef<HTMLDivElement>(null);
 
   const handleGetHoneyCapsule = async () => {
     const response = await getHoneyCapsule(id);
@@ -55,6 +57,26 @@ export default function Page({ params }: HoneyCapsuleProps) {
     }, {});
   };
 
+  const handleDownload = async () => {
+    if (!downloadComponentRef.current) return;
+
+    try {
+      // DOM 요소를 캔버스로 렌더링
+      const canvas = await html2canvas(downloadComponentRef.current);
+
+      // 캔버스를 이미지로 변환
+      const dataURL = canvas.toDataURL('image/png');
+
+      // 이미지 다운로드
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = `honeycapsule-${id}.png`;
+      link.click();
+    } catch (error) {
+      showToast.warning({ message: `Error generating PNG: ${error}` });
+    }
+  };
+
   return (
     <div>
       <Title label="HONEY CAPSULE" />
@@ -74,9 +96,9 @@ export default function Page({ params }: HoneyCapsuleProps) {
             <br />
             결제 내역에 남긴 기록을 모아 이미지로 생성해드립니다.
           </span>
-          <Button label="허니캡슐 생성하기" />
+          <Button label="허니캡슐 생성하기" onClick={handleDownload} />
         </div>
-        <div className={styles.record}>
+        <div ref={downloadComponentRef} className={styles.record}>
           {honeyCapsuleData &&
             Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
               ([date, capsules]) => (
