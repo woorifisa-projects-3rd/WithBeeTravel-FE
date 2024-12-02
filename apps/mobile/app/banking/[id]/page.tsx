@@ -14,7 +14,6 @@ import {
 } from '@withbee/apis';
 import { AnimatedBalance } from '../../../components/TotalBalanceCountUp';
 
-
 interface PinNumberResponse {
   failedPinCount: number;
   pinLocked: boolean;
