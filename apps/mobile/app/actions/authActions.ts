@@ -11,20 +11,20 @@ export const handleCredentialsSignin = async ({
   password: string;
 }) => {
   try {
-    await signIn('credentials', { email, password, redirectTo: '/' });
+    await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return {
-            message: 'Invalid credentials',
-          };
+          return { error: 'Invalid credentials' };
         default:
-          return {
-            message: 'Something went wrong.',
-          };
+          return { error: 'Something went wrong' };
       }
     }
-    throw error;
+    return { error: 'Unexpected error occurred' };
   }
 };

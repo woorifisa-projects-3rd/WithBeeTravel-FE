@@ -5,71 +5,61 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
-  background-color: rgba(255, 255, 255, 0.9); /* 배경을 밝은 색으로 변경 */
+  z-index: 0;
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0 20px;
+  align-items: flex-end;
 }
 
 .modalContent {
-  background-color: #FFFFFF; /* 밝은 배경색 */
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff; /* 밝은 배경색 */
   width: 100%;
-  max-width: 400px;
-  height: auto;
-  min-height: 500px;
+  max-width: 430px;
+  /* min-height: 500px; */
   display: flex;
+  gap: 0;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  border-radius: 16px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  padding: 20px 20px 40px;
+  border-radius: 20px 20px 0 0; /* 상단만 둥글게 */
+  z-index: 100;
 }
 
-/* 제목과 설명 텍스트 */
-.text {
-  color: #000000; /* 텍스트 색상 흰색에서 검정색으로 변경 */
-  text-align: center;
-  margin: 0;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  color: #000000; /* 제목 색상 검정 */
-}
-
-.subtitle {
-  font-size: 18px;
-  margin-bottom: 32px;
-  color: #333333; /* 부제목 색상 회색 */
+.inputPinNumberText {
+  margin-top: 35px;
+  margin-bottom: 40px;
+  color: var(--color-gray-800);
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .pinInputContainer {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   display: flex;
   justify-content: center;
-  gap: 40px;
 }
 
 .pinInput {
-  display: flex; 
-  justify-content: center; 
-  gap: 30px; 
+  display: flex;
+  justify-content: center;
+  gap: 28px;
 }
 
 .pinCircle {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-color: #D3D3D3; /* 기본 색상 */
+  background-color: var(--color-gray-300);
   transition: background-color 0.2s ease;
 }
+
 .filled {
-  background-color: var(--color-yellow-6); 
+  background-color: var(--color-yellow-6);
 }
 
 /* 키패드 */
@@ -85,13 +75,13 @@
   user-select: none; /* 텍스트 선택 방지 */
   background: white;
   border: none;
-  font-size: 28px;
-  font-weight: 500;
-  width: 100%;  /* 가로 꽉 차게 */
-  padding-top: 20%;  /* 세로 비율로 패딩 설정 */
-  padding-bottom: 20%;  /* 세로 비율로 패딩 설정 */
-  padding-right: 0;  /* 불필요한 오른쪽 패딩 제거 */
-  padding-left: 0;  /* 불필요한 왼쪽 패딩 제거 */
+  font-size: 22px;
+  /* font-weight: 500; */
+  width: 100%; /* 가로 꽉 차게 */
+  padding-top: 20%; /* 세로 비율로 패딩 설정 */
+  padding-bottom: 20%; /* 세로 비율로 패딩 설정 */
+  padding-right: 0; /* 불필요한 오른쪽 패딩 제거 */
+  padding-left: 0; /* 불필요한 왼쪽 패딩 제거 */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -101,40 +91,34 @@
   box-sizing: border-box; /* 패딩 포함해서 크기 계산 */
   touch-action: manipulation; /* 터치 시 클릭 모션 비활성화 */
   outline: none; /* 포커스 아웃라인 제거 */
+  color: var(--color-gray-700);
 }
-
 
 .keyboardKey.active {
   background-color: transparent; /* 기본 active 상태 스타일 제거 */
-
 }
 .keyboardKey.customActive {
-  background-color: #e0e0e0; /* 회색 색상 */
+  background-color: var(--color-gray-100);
 }
 
 /* 에러 메시지 */
 .error {
-  color: #D32F2F; /* 에러 메시지 색상 */
+  color: #d32f2f; /* 에러 메시지 색상 */
   font-size: 14px;
   text-align: center;
-  min-height: 20px; /* 최소 높이 지정하여 에러가 없을 때 자리를 차지하도록 함 */
   display: block; /* 항상 공간을 유지하게 설정 */
+  margin: 5px 0;
 }
 
 .hidden {
-  visibility: hidden; /* 에러 메시지가 없을 때는 숨기기 */
-}
-.inputPinNumberText{
-  margin-top: 40px;
-  margin-bottom: 40px;
+  opacity: 0;
 }
 
 .closeButton {
   position: absolute; /* 절대 위치 지정 */
-  top: 20px; 
-  right: 20px; 
-  font-size: 20px; 
-  color: #333; 
-  cursor: pointer; 
-  font-weight: bold; 
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: var(--color-gray-400); /* 회색 */
+  cursor: pointer;
 }
