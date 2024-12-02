@@ -19,5 +19,10 @@ export default function Error({ error }: ErrorProps) {
 
   console.error(error);
 
-  return <PaymentError />;
+  return (
+    <PaymentError
+      message1="해당하는 카테고리의"
+      message2="결제 내역이 존재하지 않아요."
+    />
+  );
 }

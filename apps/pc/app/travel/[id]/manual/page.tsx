@@ -88,7 +88,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     }
 
     // 결제 내역 저장 요청
-    const response = await createManualSharedPayment(id, formData);
+    const response = await createManualSharedPayment(id, formData as any);
 
     if ('code' in response) {
       showToast.warning({
