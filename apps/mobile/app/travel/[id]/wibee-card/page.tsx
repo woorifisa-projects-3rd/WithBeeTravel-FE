@@ -81,25 +81,21 @@ export default function Page({ params }: WibeeCardProps) {
     startDate?: string,
     endDate?: string,
   ) => {
-    try {
-      const response = await getWibeeCardHistory(startDate, endDate);
+    const response = await getWibeeCardHistory(startDate, endDate);
 
-      if ('code' in response) {
-        showToast.warning({
-          message:
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-            'Unknown Error',
-        });
-        throw new Error(response.code);
-      }
+    if ('code' in response) {
+      showToast.warning({
+        message:
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          'Unknown Error',
+      });
+      throw new Error(response.code);
+    }
 
-      if (response.data) {
-        setData(response.data);
-        setPeriodStartDate(response.data.startDate);
-        setPeriodEndDate(response.data.endDate);
-      }
-    } catch (error) {
-      console.error(`결제 내역 불러오기 실패 ${error}`);
+    if (response.data) {
+      setData(response.data);
+      setPeriodStartDate(response.data.startDate);
+      setPeriodEndDate(response.data.endDate);
     }
   };
 
@@ -133,25 +129,18 @@ export default function Page({ params }: WibeeCardProps) {
 
   // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
   const handleSubmit = async () => {
-    try {
-      const response = await postWibeeCardToSharedPayment(
-        id,
-        selectedHistoryIds,
-      );
+    const response = await postWibeeCardToSharedPayment(id, selectedHistoryIds);
 
-      if ('code' in response) {
-        showToast.warning({
-          message:
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-            'Unknown Error',
-        });
-        throw new Error(response.code);
-      }
-
-      router.push(`/travel/${id}/payments`);
-    } catch (error) {
-      console.error(`결제 내역 추가 실패 ${error}`);
+    if ('code' in response) {
+      showToast.warning({
+        message:
+          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+          'Unknown Error',
+      });
+      throw new Error(response.code);
     }
+
+    router.push(`/travel/${id}/payments`);
   };
 
   return (
