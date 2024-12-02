@@ -5,3 +5,7 @@
 .menu {
   margin-top: 16px;
 }
+
+.errorContainer {
+  padding: 15vh 0;
+}

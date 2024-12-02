@@ -12,25 +12,20 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import { motion } from 'framer-motion';
 import styles from './page.module.css';
 import useSWR from 'swr';
-
-interface FormData {
-  travelName: string;
-  isDomesticTravel: boolean;
-  travelCountries: string[];
-  travelStartDate: string;
-  travelEndDate: string;
-}
+import { TravelFormData } from '@withbee/types';
 
 function TravelFormContent() {
-  const [editedTravel, setEditedTravel] = useState<FormData | null>(null);
+  const [editedTravel, setEditedTravel] = useState<TravelFormData | null>(null);
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const router = useRouter();
   const params = useParams();
+  const { showToast } = useToast();
 
   // 편집 api
-  const handleEditTravel = async (formData: any) => {
+  const handleEditTravel = async (formData: TravelFormData) => {
     const {
+      travelId,
       travelName,
       isDomesticTravel,
       travelCountries,
@@ -58,13 +53,11 @@ function TravelFormContent() {
     }
   };
 
-  const handleTravelSelect = (travel: FormData) => {
+  const handleTravelSelect = (travel: TravelFormData) => {
     setEditedTravel(travel);
   };
 
-  const { showToast } = useToast();
-
-  // 여행 데이터 가져오기
+  // 여행 편집 get
 
   const { data: travelData, isLoading } = useSWR(
     mode === 'edit' ? `${params.id}` : null,
@@ -75,10 +68,37 @@ function TravelFormContent() {
     return (
       <div className={styles.loadingContainer}>
         <motion.div
-          className={styles.loadingSpinner}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-        />
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: 'easeOut', // 부드러운 자연스러움
+          }}
+        ></motion.div>
+        <motion.div
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: 'easeOut',
+            delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
+          }}
+        ></motion.div>
+        <motion.div
+          className={`${styles.loadingDot}`}
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: 'easeOut',
+            delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
+          }}
+        ></motion.div>
       </div>
     );
   }
@@ -86,6 +106,7 @@ function TravelFormContent() {
   const formattedTravelData =
     travelData && 'data' in travelData && travelData.data
       ? {
+          travelId: travelData.data.travelId,
           travelName: travelData.data.travelName,
           isDomesticTravel: travelData.data.isDomesticTravel,
           travelCountries: travelData.data.countries || [],
@@ -93,8 +114,6 @@ function TravelFormContent() {
           travelEndDate: travelData.data.travelEndDate,
         }
       : undefined;
-
-  console.log(formattedTravelData);
 
   return (
     <div>
