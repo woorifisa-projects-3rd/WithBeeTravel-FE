@@ -4,6 +4,7 @@
   "private": true,
   "exports": {
     "./useToast": "./src/useToast.ts",
+    "./useSwipe": "./src/useSwipe.ts",
     "./usePaymentParams": "./src/usePaymentParams.ts"
   },
   "scripts": {

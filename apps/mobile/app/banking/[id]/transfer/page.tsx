@@ -7,6 +7,7 @@ import { Button } from '@withbee/ui/button';
 import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
+import { motion } from 'framer-motion';
 
 export default function TransferPage() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function TransferPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [targetAccount, setTargetAccount] = useState(''); // 송금할 계좌번호 상태
   const [errorMessage, setErrorMessage] = useState(''); // 에러 메시지 상태
-
+  const [loading, setLoading] = useState<boolean>(true);
   const { showToast } = useToast();
   // 계좌 정보 가져오기
   useEffect(() => {
@@ -26,13 +27,20 @@ export default function TransferPage() {
         console.log(response);
 
         if ('data' in response) {
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
           console.error(response.message);
+          // TODO: 에러 페이지로 이동 예정
+          router.push('/mypage');
         }
       })();
     }
   }, [accountId]);
+
+  if (loading) {
+    return null;
+  }
 
   const formatNumber = (num: number): string => {
     return num.toLocaleString('ko-KR');
@@ -109,11 +117,18 @@ export default function TransferPage() {
       <div className={styles.accountInfo}>
         <h2>내 계좌</h2>
         {accountInfo ? (
-          <p className={styles.balance}>
-            ₩ {formatNumber(accountInfo.balance)} 원
-          </p>
+          <motion.p
+            className={styles.balance}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className={styles.balance}>
+              ₩ {formatNumber(accountInfo.balance)}
+            </p>
+          </motion.p>
         ) : (
-          <p>계좌 정보를 불러오는 중입니다...</p>
+          <p style={{ height: '36px' }}> </p>
         )}
       </div>
 
