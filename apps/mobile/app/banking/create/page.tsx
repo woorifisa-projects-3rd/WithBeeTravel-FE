@@ -23,6 +23,7 @@ const productOptions: ProductOption[] = [
     label: 'WON통장',
     value: '자유 입출금 통장!',
     imageUrl: '/imgs/friends/friends2.png',
+    width: 108,
     detail:
       'WON통장은 자유롭게 입출금이 가능하며, 언제든지 필요한 금액을 찾을 수 있는 유용한 통장입니다. 예금 이율은 1.5%로, 일정 잔액을 유지하면 높은 이율을 제공합니다. 통장 관리가 간편하고, 모바일 뱅킹으로 언제든지 확인할 수 있습니다.',
   },
@@ -30,6 +31,7 @@ const productOptions: ProductOption[] = [
     label: 'WON파킹통장',
     value: '돈을 모아봐요',
     imageUrl: '/imgs/friends/friends3.png',
+    width: 105,
     detail:
       'WON파킹통장은 저축의 목적을 가진 통장으로, 1년에 한 번씩 이자 지급을 받습니다. 이율은 2.5%로, 돈을 묶어놓고 장기적으로 관리하고 싶은 분들에게 적합합니다. 최소 잔액이 없고, 언제든지 자금을 이동할 수 있어 유연하게 사용할 수 있습니다.',
   },

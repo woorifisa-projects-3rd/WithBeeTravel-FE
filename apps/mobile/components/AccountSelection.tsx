@@ -96,7 +96,7 @@ const AccountSelection: React.FC<{
             src={currentProduct.imageUrl}
             alt={currentProduct.label}
             width={currentProduct.width || 110}
-            height={165}
+            height={160}
             className={styles.image}
           />
           <div className={styles.textContainer}>

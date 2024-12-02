@@ -3,8 +3,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: min-content;
+  justify-content: space-between;  /* 추가 */
+  min-height: calc(100vh - 58px);
   text-align: center;
   margin: 0 -25px -80px;
   background-color: var(--color-gray-50);
