@@ -27,7 +27,7 @@ export const AnimatedBalance = ({
         duration={0.3} // 애니메이션 지속 시간
         separator="," // 숫자에 천 단위 구분자 추가
         decimal="." // 소수점 구분자
-        suffix=" 원" // 끝에 붙는 단위
+        suffix="원" // 끝에 붙는 단위
         enableScrollSpy={true} // 스크롤 시 애니메이션 시작
         scrollSpyOnce={true} // 애니메이션이 한 번만 실행되도록 설정
       />

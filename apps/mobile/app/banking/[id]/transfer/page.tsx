@@ -8,6 +8,7 @@ import { getAccountInfo, instance, verifyAccount } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
 import { motion } from 'framer-motion';
+import Keyboard from '@withbee/ui/keyboard';
 
 export default function TransferPage() {
   const router = useRouter();
@@ -79,27 +80,6 @@ export default function TransferPage() {
     }
   };
 
-  // 가상 키보드 생성
-  const renderKeyboard = () => (
-    <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', '0', '←'].map(
-        (key) => (
-          <button
-            key={key}
-            className={styles.keyboardKey}
-            onClick={() =>
-              handleNumberPress(
-                key === '←' ? 'backspace' : key === 'X' ? 'clear' : key,
-              )
-            }
-          >
-            {key}
-          </button>
-        ),
-      )}
-    </div>
-  );
-
   // 숫자 버튼 클릭 처리
   const handleNumberPress = (key: string) => {
     if (key === 'backspace') {
@@ -110,47 +90,6 @@ export default function TransferPage() {
       setTargetAccount(targetAccount + key); // 숫자 추가
     }
   };
-
-  // 계좌번호 입력 부분 렌더링
-  const renderAccountInput = () => (
-    <div className={styles.amountContainer}>
-      <div className={styles.accountInfo}>
-        <h2>내 계좌</h2>
-        {accountInfo ? (
-          <motion.p
-            className={styles.balance}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className={styles.balance}>
-              ₩ {formatNumber(accountInfo.balance)}
-            </p>
-          </motion.p>
-        ) : (
-          <p style={{ height: '36px' }}> </p>
-        )}
-      </div>
-
-      <div className={styles.targetAccount}>
-        <h3 className={styles.text}>송금할 계좌</h3>
-
-        {/* 사용자가 직접 입력 가능하도록 수정 */}
-        <input
-          type="tel"
-          className={styles.input}
-          value={targetAccount}
-          onChange={handleAccountChange} // onChange 핸들러 수정
-          placeholder="계좌번호 입력"
-        />
-
-        {/* 오류 메시지 출력 */}
-        <p className={`${styles.error} ${errorMessage ? 'visible' : ''}`}>
-          {errorMessage}
-        </p>
-      </div>
-    </div>
-  );
 
   // onChange 핸들러: 숫자만 입력하도록 필터링
   const handleAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,15 +105,71 @@ export default function TransferPage() {
     <div className={styles.container}>
       <Title label="송금하기" />
 
-      {renderAccountInput()}
-      {renderKeyboard()}
+      <motion.div
+        className={styles.amountContainer}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className={styles.accountInfo}>
+          <h2>내 {accountInfo?.product} 계좌</h2>
+          {accountInfo ? (
+            <motion.p
+              className={styles.balance}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.span
+                className={styles.balance}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+              >
+                잔액: {formatNumber(accountInfo.balance)}원
+              </motion.span>
+            </motion.p>
+          ) : (
+            <p style={{ height: '36px' }}> </p>
+          )}
+        </div>
 
-      <div className={styles.buttonLocation}>
-        <Button
-          label="다음"
-          size="medium"
-          onClick={handleNextClick} // 계좌번호 검증 후 금액 설정 페이지로 이동
-        />
+        <div className={styles.targetAccount}>
+          <h3 className={styles.text}>송금할 계좌</h3>
+          <input
+            type="tel"
+            className={styles.input}
+            value={targetAccount}
+            onChange={handleAccountChange}
+            placeholder="계좌번호 입력"
+          />
+          <p className={`${styles.error} ${errorMessage ? 'visible' : ''}`}>
+            {errorMessage}
+          </p>
+        </div>
+      </motion.div>
+
+      <div className={styles.keyboardContainer}>
+        <div className={styles.actions}>
+          <Keyboard
+            onKeyPress={handleNumberPress}
+            keypadType="pin" // X 버튼이 있는 키패드 사용
+          />
+        </div>
+
+        <motion.div
+          className={styles.buttonLocation}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+        >
+          <Button
+            label="다음"
+            size="medium"
+            onClick={handleNextClick}
+            disabled={!targetAccount}
+          />
+        </motion.div>
       </div>
     </div>
   );
