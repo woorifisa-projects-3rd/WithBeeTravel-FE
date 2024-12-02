@@ -32,5 +32,10 @@ export default async function middleware(
 
 // 미들웨어가 적용될 경로 설정
 export const config = {
-  matcher: ['/travel/:path*', '/notification/:path*', '/banking/:path*'],
+  matcher: [
+    '/travel/:path*',
+    '/notification/:path*',
+    '/banking/:path*',
+    '/mypage/:path*',
+  ],
 };

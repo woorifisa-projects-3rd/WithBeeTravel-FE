@@ -18,6 +18,11 @@ import dayjs from 'dayjs';
 import { PaymentError } from '@withbee/ui/payment-error';
 import useSWR from 'swr';
 
+interface PinNumberResponse {
+  failedPinCount: number;
+  pinLocked: boolean;
+}
+
 export default function AccountPage() {
   const router = useRouter();
   const params = useParams();
