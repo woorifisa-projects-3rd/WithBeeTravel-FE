@@ -11,15 +11,12 @@ import {
   getUserState,
 } from '@withbee/apis';
 import { AnimatedBalance } from '../../../components/TotalBalanceCountUp';
-<<<<<<< HEAD
-=======
 import { TransactionHistorySkeleton } from '@withbee/ui/payment-history-skeleton';
 import { AccountCardSkeleton } from '@withbee/ui/account-card-skeleton';
 import { AccountHistory, AccountInfo } from '@withbee/types';
 import dayjs from 'dayjs';
 import { PaymentError } from '@withbee/ui/payment-error';
 import useSWR from 'swr';
->>>>>>> 84dc47bac1f7b0f63b759b2a40ab824161d993bd
 
 interface PinNumberResponse {
   failedPinCount: number;
