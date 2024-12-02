@@ -106,81 +106,81 @@ export default function CreateAccountPage() {
   );
 
   return (
-    <div className={styles.container}>
+    <>
       <Title label="계좌 생성하기" />
 
-      <motion.div
-        className={styles.accountContainer}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.label
-          htmlFor="product"
-          className={styles.label}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-        >
-          저축은 안전하고 꾸준하게
-        </motion.label>
+      <div className={styles.container}>
+        <div className={styles.mainContent}>
+          <motion.div
+            className={styles.accountContainer}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.label
+              htmlFor="product"
+              className={styles.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+            >
+              저축은 안전하고 꾸준하게
+            </motion.label>
 
-        <motion.div
-          className={styles.detail}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-        >
-          편리한 입출금 계좌를 생성해요
-        </motion.div>
+            <motion.div
+              className={styles.detail}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+            >
+              편리한 입출금 계좌를 생성해요
+            </motion.div>
 
-        <AccountSelection
-          productOptions={productOptions}
-          onSelect={handleAccountSelect}
+            <AccountSelection
+              productOptions={productOptions}
+              onSelect={handleAccountSelect}
+            />
+          </motion.div>
+
+          {selectedProduct && selectedProductDetails && (
+            <motion.div
+              className={styles.productDetail}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+            >
+              <p>{selectedProductDetails.detail}</p>
+            </motion.div>
+          )}
+        </div>
+
+        {errorMessage && (
+          <motion.div
+            className={styles.error}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {errorMessage}
+          </motion.div>
+        )}
+
+        {selectedProduct && (
+          <motion.div className={styles.buttonWrapper}>
+            <Button
+              label="계좌 생성하기"
+              onClick={() => setIsModalOpen(true)}
+              className={styles.button}
+            />
+          </motion.div>
+        )}
+
+        <PinNumberModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleCreateAccount}
         />
-      </motion.div>
-
-      {selectedProduct && selectedProductDetails && (
-        <motion.div
-          className={styles.productDetail}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.4 }}
-        >
-          <p>{selectedProductDetails.detail}</p>
-        </motion.div>
-      )}
-
-      {errorMessage && (
-        <motion.div
-          className={styles.error}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {errorMessage}
-        </motion.div>
-      )}
-
-      {selectedProduct && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-        >
-          <Button
-            label="계좌 생성하기"
-            onClick={() => setIsModalOpen(true)}
-            className={styles.button}
-          />
-        </motion.div>
-      )}
-
-      <PinNumberModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleCreateAccount}
-      />
-    </div>
+      </div>
+    </>
   );
 }

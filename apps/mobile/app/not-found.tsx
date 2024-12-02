@@ -19,8 +19,8 @@ export default function error() {
             className={styles.image}
             src="/imgs/friends/agreeWibee.png"
             alt="pending"
-            width={180}
-            height={180}
+            width={160}
+            height={170}
           />
         </motion.div>
         <div>
