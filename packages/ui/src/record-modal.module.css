@@ -1,0 +1,56 @@
+.record {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+.image {
+  width: 100%;
+}
+
+.paymentImage {
+  display: none;
+}
+
+.paymentImageBox {
+  position: relative;
+  width: 100%;
+  height: 207px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: var(--color-gray-100);
+}
+
+.imagePreview {
+  object-fit: contain;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.isMainImage {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.recordComment {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-gray-200);
+  font-size: 16px;
+}
+.recordComment::placeholder {
+  color: var(--color-gray-400);
+}

@@ -10,6 +10,11 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface LogoutRequest {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface RefreshTokenRequest {
   refreshToken: string;
 }
