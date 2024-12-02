@@ -6,7 +6,7 @@ import {
   ErrorResponse,
   SuccessResponse,
   TravelHome,
-  TravelFormResponse,
+  TravelFormData,
   TravelList,
 } from '@withbee/types';
 
@@ -17,8 +17,8 @@ export const createTravel = async (
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
-  const response = instance.post<TravelFormResponse>('/api/travels', {
+): Promise<SuccessResponse<TravelFormData> | ErrorResponse> => {
+  const response = instance.post<TravelFormData>('/api/travels', {
     body: JSON.stringify({
       travelName,
       isDomesticTravel,
@@ -34,25 +34,22 @@ export const createTravel = async (
 // 여행 편집
 export const editTravel = async (
   travelId: number,
-  travelName: number,
+  travelName: string,
   isDomesticTravel: Boolean,
   travelCountries: string[],
   travelStartDate: string,
   travelEndDate: string,
-): Promise<SuccessResponse<TravelFormResponse> | ErrorResponse> => {
-  const response = instance.patch<TravelFormResponse>(
-    `/api/travels/${travelId}`,
-    {
-      body: JSON.stringify({
-        travelId,
-        travelName,
-        isDomesticTravel,
-        travelCountries,
-        travelStartDate,
-        travelEndDate,
-      }),
-    },
-  );
+): Promise<SuccessResponse<TravelFormData> | ErrorResponse> => {
+  const response = instance.patch<TravelFormData>(`/api/travels/${travelId}`, {
+    body: JSON.stringify({
+      travelId,
+      travelName,
+      isDomesticTravel,
+      travelCountries,
+      travelStartDate,
+      travelEndDate,
+    }),
+  });
 
   return response;
 };
@@ -82,8 +79,11 @@ export const getTravelMembers = async (travelId: number) => {
 export const getTravelHome = async (travelId: number) => {
   const response = await instance.get<TravelHome>(`/api/travels/${travelId}`, {
     cache: 'no-cache',
+    // next: {
+    //   tags: [`travel-${travelId}`], // 태그 기반 캐싱
+    //   revalidate: 1000 * 1 * 60, // 1분
+    // },
   });
-  console.log('응답값-----', response);
 
   return response;
 };

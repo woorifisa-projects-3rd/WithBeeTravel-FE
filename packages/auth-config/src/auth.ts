@@ -5,37 +5,39 @@ import { JWT } from 'next-auth/jwt';
 
 // 59분
 const ACCESS_TOKEN_EXPIRES = 59 * 60 * 1000;
+// const ACCESS_TOKEN_EXPIRES = 30 * 1000; // 테스트용 5초
 
 const refreshAccessToken = async (token: JWT): Promise<JWT> => {
   const response = await refresh({
     refreshToken: token.refreshToken!,
   });
 
-  if ('code' in response) {
+  const { accessToken, refreshToken } = response || {};
+
+  console.log('토큰 갱신 성공', { accessToken, refreshToken });
+
+  if (!accessToken || !refreshToken) {
+    console.error('토큰 갱신 실패', { accessToken, refreshToken });
     return {
       ...token,
-      error: 'RefreshAccessTokenError' as const,
-    };
-  }
-
-  const { accessToken, refreshToken } = response.data || {};
-
-  if (accessToken && refreshToken) {
-    return {
-      ...token,
-      accessToken,
-      refreshToken,
-      expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
+      error: 'RefreshAccessTokenError',
     };
   }
 
   return {
     ...token,
-    error: 'RefreshAccessTokenError' as const,
+    accessToken,
+    refreshToken,
+    expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
+    error: undefined,
   };
 };
 
 export const authConfig = NextAuth({
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60, // 1 Day
+  },
   trustHost: true,
   providers: [
     Credentials({
@@ -60,31 +62,33 @@ export const authConfig = NextAuth({
             password: credentials.password as string,
           });
 
-          if ('code' in response) {
-            return null;
-          }
-          const { accessToken, refreshToken } = response.data || {};
+          if (!response) throw new Error('로그인에 실패했습니다.');
+
+          const { accessToken, refreshToken, role } = response;
 
           return {
             id: credentials.email as string,
             email: credentials.email as string,
             accessToken,
             refreshToken,
+            role,
           };
         } catch (error) {
           console.error('Auth error:', error);
-          return null;
+          // @ts-ignore
+          throw new Error(error?.message || '로그인에 실패했습니다.');
         }
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }): Promise<JWT | null> {
+    jwt: async ({ token, user, account }): Promise<JWT | null> => {
       if (account && user) {
         return {
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
+          role: user.role,
           expires_at: Date.now() + ACCESS_TOKEN_EXPIRES,
           user,
         };
@@ -96,13 +100,12 @@ export const authConfig = NextAuth({
 
       return await refreshAccessToken(token);
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.accessToken = token.accessToken;
-        session.user.refreshToken = token.refreshToken;
-        session.user.expires_at = token.expires_at;
-        session.error = token.error;
-      }
+    session: async ({ session, token }) => {
+      session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
+      session.user.expires_at = token.expires_at;
+      session.user.role = token.role;
+      session.error = token.error;
       return session;
     },
   },

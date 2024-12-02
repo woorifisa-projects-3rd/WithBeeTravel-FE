@@ -12,14 +12,11 @@ import {
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
-import { AccountInfo } from '@withbee/types';
-
-interface TargetName {
-  name: string;
-}
+import { AccountInfo, TargetName } from '@withbee/types';
+import { motion } from 'framer-motion';
+import Keyboard from '@withbee/ui/keyboard';
 
 export default function TransferDetailPage() {
-  const MAX_AMOUNT = 500000000;
   const router = useRouter();
   const params = useParams();
   const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
@@ -33,8 +30,12 @@ export default function TransferDetailPage() {
   const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
   const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { showToast } = useToast();
+
+  const MAX_AMOUNT = accountInfo?.balance || 500000000; // 최대 송금 가능 금액
+
   // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -49,8 +50,11 @@ export default function TransferDetailPage() {
       (async () => {
         const response = await getAccountInfo(Number(myAccountId));
         if ('data' in response) {
+          setLoading(false);
           setAccountInfo(response.data);
         } else {
+          // TODO: 에러페이지로 이동시키기
+          router.push(`/mypage`);
           console.error(response.message);
         }
       })();
@@ -80,7 +84,7 @@ export default function TransferDetailPage() {
       // 새로운 금액을 계산하기 전, 현재 금액에 num을 추가해본 후, 5억을 초과하는지 확인
       const newAmount = amount + num;
       if (parseInt(newAmount) > MAX_AMOUNT) {
-        showToast.error({ message: '1회 최대 이체 한도는 5억원 입니다!' });
+        showToast.error({ message: '최대 송금 가능 금액을 초과했어요.' });
         return; // 5억 원 이상은 입력되지 않도록 함
       }
       setAmount(newAmount); // 5억 미만일 경우 정상적으로 금액을 추가
@@ -129,7 +133,7 @@ export default function TransferDetailPage() {
       );
 
       showToast.success({
-        message: `${targetAccount?.name}님이게
+        message: `${targetAccount?.name}님에게
         \n${transferRequest.amount}원 송금 완료`,
       });
 
@@ -142,68 +146,99 @@ export default function TransferDetailPage() {
     }
   };
 
-  const renderKeyboard = () => (
-    <div className={styles.keyboard}>
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
-        (key) => (
-          <button
-            key={key}
-            className={styles.keyboardKey}
-            onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
-          >
-            {key}
-          </button>
-        ),
-      )}
-    </div>
-  );
-
-  const renderAmountInput = () => (
-    <div className={styles.amountContainer}>
-      <div className={styles.accountInfo}>
-        <h2>내 계좌</h2>
-        {accountInfo ? (
-          <p className={styles.balance}>
-            ₩{accountInfo.balance.toLocaleString()}원
-          </p>
-        ) : (
-          <p>내 계좌 정보를 불러오는 중...</p>
-        )}
-      </div>
-
-      <div className={styles.targetAccount}>
-        <h3 className={styles.text}>송금할 계좌</h3>
-        <p className={styles.accountNumber}>
-          {targetAccountNumber} - {targetAccount?.name}
-        </p>
-      </div>
-
-      <div className={styles.amountDisplay}>
-        {amount ? (
-          <>
-            <span className={styles.currency}>₩</span>
-            <span className={styles.amount}>
-              {parseInt(amount).toLocaleString()}
-            </span>
-          </>
-        ) : (
-          <span className={styles.placeholder}>얼마나 옮길까요?</span>
-        )}
-      </div>
-    </div>
-  );
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
-      <main className={styles.main}>{renderAmountInput()}</main>
-      <div className={styles.actions}>{renderKeyboard()}</div>
+      <main className={styles.main}>
+        <motion.div
+          className={styles.amountContainer}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className={styles.accountInfo}>
+            <h2>
+              내 {accountInfo?.product} 계좌<span>에서</span>
+            </h2>
+            {accountInfo ? (
+              <motion.p
+                className={styles.balance}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
+                  잔액: {accountInfo.balance.toLocaleString()}원
+                </motion.span>
+              </motion.p>
+            ) : (
+              <p style={{ height: '36px' }}> </p>
+            )}
+          </div>
 
-      {amount && (
-        <div className={styles.buttonLocation}>
-          <Button label="송금하기" size="medium" onClick={handleSendMoney} />
+          <div className={styles.targetAccount}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+            >
+              <h3 className={styles.text}>
+                {targetAccount?.name}
+                <span>님에게</span>
+              </h3>
+              <p className={styles.accountNumber}>{targetAccountNumber}</p>
+            </motion.div>
+          </div>
+
+          <div className={styles.amountDisplay}>
+            {amount ? (
+              <>
+                <span className={styles.currency}>₩</span>
+                <span className={styles.amount}>
+                  {parseInt(amount).toLocaleString()}
+                </span>
+              </>
+            ) : (
+              <motion.span
+                className={styles.placeholder}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              >
+                얼마나 보낼까요?
+              </motion.span>
+            )}
+          </div>
+        </motion.div>
+      </main>
+
+      <div className={styles.keyboardContainer}>
+        <div className={styles.actions}>
+          <Keyboard onKeyPress={handleNumberPress} />
         </div>
-      )}
+
+        <motion.div
+          className={styles.handleSendMoney}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+        >
+          <Button
+            label="송금하기"
+            size="medium"
+            onClick={handleSendMoney}
+            disabled={!amount}
+          />
+        </motion.div>
+      </div>
 
       {/* PinNumberModal 컴포넌트 호출 */}
       <PinNumberModal

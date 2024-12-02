@@ -15,6 +15,7 @@ type CategoryType =
   | '기타';
 
 export interface TravelHome {
+  travelId: number;
   id: number;
   travelName: string;
   travelStartDate: string;
@@ -25,5 +26,8 @@ export interface TravelHome {
   statistics: {
     [K in CategoryType]?: number;
   };
-  travelMembers: number[];
+  travelMembers: TravelMember[];
+  captain: boolean;
+  isAgreed: boolean;
+  settlementStatus: 'PENDING' | 'ONGOING' | 'DONE';
 }

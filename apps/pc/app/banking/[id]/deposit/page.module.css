@@ -1,0 +1,90 @@
+/* 전체 컨테이너 */
+.container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main {
+    flex: 1;
+    padding: 24px 18px;
+  }
+  
+  /* 금액 입력 영역 */
+  .amountContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .accountInfo h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .balance {
+    color: #666;
+    font-size: 16px;
+  }
+  
+  .amountDisplay {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  
+  .currency {
+    color: var(--color-yellow-6);
+  }
+  
+  .placeholder {
+    color: #000000;
+    font-size: 24px;
+  }
+  
+  /* 숫자 입력 키패드 */
+  .keyboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* 키보드 버튼 스타일 */
+  .keyboardKey {
+    background-color: white;
+    border: none;
+    padding: 20%;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .keyboardKey:active {
+    background-color: #f8f8f8;
+  }
+
+  .accountInfo {
+    flex: 1;
+  }
+
+  .handleSendMoney{
+    width: 100%;
+    max-width: 430px;
+    padding: 0px 25px;
+    bottom: 50px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .won {
+    margin-top: 20px;
+    font-size: 12pt;  /* 글자 크기를 12포인트로 설정 */
+    font-weight: normal;  /* 글자 굵기를 보통으로 설정 */
+  }
+  
+ 
