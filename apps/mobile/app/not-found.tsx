@@ -1,10 +1,6 @@
 'use client';
-import { Title } from '@withbee/ui/title';
-import styles from './page.module.css';
+import styles from './not-found.module.css';
 import { motion } from 'framer-motion';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { Button } from '@withbee/ui/button';
 import Image from 'next/image';
 
 export default function error() {
@@ -23,12 +19,16 @@ export default function error() {
             className={styles.image}
             src="/imgs/friends/agreeWibee.png"
             alt="pending"
-            width={240}
-            height={320}
+            width={180}
+            height={180}
           />
         </motion.div>
-        <p className={styles.errorTitle}>잘못된 페이지에요!</p>
-        <p>404 Error</p>
+        <div>
+          <p className={styles.errorTitle}>404</p>
+          <p className={styles.errorSubTitle}>PAGE NOT FOUND</p>
+        </div>
+        <div className={styles.divider} />
+        <p className={styles.errorDescription}>잘못된 페이지 접근</p>
       </div>
     </div>
   );

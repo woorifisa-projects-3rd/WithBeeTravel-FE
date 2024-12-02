@@ -1,0 +1,45 @@
+.subtitleContainer {
+  padding-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-gray-50);
+  width: 100%;
+  margin: 0 -25px -80px; /* 양쪽 margin만으로 처리 */
+  height: calc(100vh - 62.4px);
+  width: auto;
+  overflow: hidden;
+}
+
+.image {
+  margin-left: 8px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  margin-bottom: -10px;
+}
+
+.errorTitle {
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  /* margin-top: 25px; */
+}
+
+.errorSubTitle {
+  font-size: 18px;
+  color: var(--color-gray-700);
+}
+
+.divider {
+  width: 64px;
+  height: 1px;
+  background-color: var(--color-gray-200);
+  margin: 10px 0;
+}
+
+.errorDescription {
+  font-size: 16px;
+  color: var(--color-gray-600);
+}
