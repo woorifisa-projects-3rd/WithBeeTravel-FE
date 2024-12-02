@@ -4,3 +4,4 @@ export * from './consentItems';
 export * from './timeUtils';
 export * from './validation';
 export * from './numberToKorean';
+export * from './categoryItems';
