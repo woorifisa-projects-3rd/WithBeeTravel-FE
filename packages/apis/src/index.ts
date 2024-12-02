@@ -9,3 +9,4 @@ export * from './inviteCode';
 export * from './authService';
 export * from './wibeeCardHistory';
 export * from './bankingService';
+export * from './honeyCapsuleService';
