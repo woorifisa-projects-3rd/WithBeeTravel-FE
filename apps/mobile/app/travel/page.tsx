@@ -32,9 +32,9 @@ export default function page() {
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
+          animate={{ y: [0, -10, 0, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 0.5,
             repeat: Infinity,
             ease: 'easeInOut', // 부드러운 자연스러움
           }}
@@ -42,9 +42,9 @@ export default function page() {
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
+          animate={{ y: [0, -10, 0, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 0.5,
             repeat: Infinity,
             ease: 'easeInOut',
             delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
@@ -53,9 +53,9 @@ export default function page() {
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
+          animate={{ y: [0, -10, 0, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 0.5,
             repeat: Infinity,
             ease: 'easeInOut',
             delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
@@ -109,6 +109,7 @@ export default function page() {
           })
       : [];
 
+  const formatDday = (dDay: number) => (dDay === 0 ? 'D-DAY' : `D-${dDay}`);
   const upcomingTravels = sortedTravelData.filter((card) => card.dDay >= 0);
   const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
@@ -186,7 +187,7 @@ export default function page() {
                   <div key={index}>
                     <div className={styles.cardDay}>
                       <span>
-                        다가오는 여행 <span>D-{card.dDay}</span>
+                        다가오는 여행 <span>{formatDday(card.dDay)}</span>
                       </span>
                     </div>
                     <div className={styles.card}>

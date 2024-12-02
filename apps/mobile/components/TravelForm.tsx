@@ -22,7 +22,7 @@ export default function TravelForm({
   const [formData, setFormData] = useState({
     travelId: travelData?.travelId ?? 1,
     travelName: travelData?.travelName || '',
-    isDomesticTravel: travelData?.isDomesticTravel || false,
+    isDomesticTravel: travelData?.isDomesticTravel ?? true,
     travelCountries: travelData?.travelCountries || [],
     travelStartDate:
       travelData?.travelStartDate ||

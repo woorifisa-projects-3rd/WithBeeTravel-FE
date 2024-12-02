@@ -72,9 +72,9 @@ function TravelFormContent() {
           initial={{ y: 0 }}
           animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut', // 부드러운 자연스러움
+            ease: 'easeOut', // 부드러운 자연스러움
           }}
         ></motion.div>
         <motion.div
@@ -82,9 +82,9 @@ function TravelFormContent() {
           initial={{ y: 0 }}
           animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeOut',
             delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
           }}
         ></motion.div>
@@ -93,9 +93,9 @@ function TravelFormContent() {
           initial={{ y: 0 }}
           animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 1.2,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeOut',
             delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
           }}
         ></motion.div>

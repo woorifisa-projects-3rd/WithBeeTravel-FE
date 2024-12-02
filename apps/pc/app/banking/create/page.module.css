@@ -1,0 +1,79 @@
+/* page.module.css */
+
+.container {
+    margin: 0 auto;
+  }
+  
+.formSection {
+  position: fixed;   /* 고정 위치 */
+  bottom: 30;         /* 화면 하단에 배치 */
+  left: 0;           /* 화면 왼쪽에 배치 (전체 너비) */
+  width: 100%;       /* 화면의 전체 너비 */
+  padding: 16px;     /* 필요에 따라 패딩 추가 */
+}
+
+.detail {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.accountContainer {
+  display: flex;             
+  justify-content: center;     
+  align-items: center;         
+  flex-direction: column;       
+}
+
+
+  
+  .label {
+    display: block;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-align: center; 
+  }
+  
+  .select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .image {
+    width: 350px; /* 이미지 너비 350px */
+    height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
+    display: block; /* 이미지 자체는 block 요소로 설정 */
+    margin-left: auto; /* 수평 중앙 정렬 */
+    margin-right: auto; /* 수평 중앙 정렬 */
+  }
+
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+
+  .productDetail {
+    margin-top: 20px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .productDetail h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .productDetail p {
+    font-size: 14px;
+    color: #555;
+  }
+  
