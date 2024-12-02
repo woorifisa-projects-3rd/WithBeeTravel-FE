@@ -1,0 +1,101 @@
+/* 기본 모달 스타일 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1001;
+  width: 100%;
+}
+
+.modalContent {
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 100%;
+  max-width: 430px;
+  padding-bottom: 30px;
+}
+
+.topContainer {
+  padding: 20px 20px 10px 20px;
+}
+
+.inputPinNumberText {
+  margin-top: 25px;
+  margin-bottom: 30px;
+  color: var(--color-gray-800);
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pinInputContainer {
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+}
+
+.pinInput {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.pinCircle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--color-gray-300);
+  transition: background-color 0.2s ease;
+}
+
+.filled {
+  background-color: var(--color-yellow-6);
+}
+
+/* 키패드 */
+.keyboardContainer {
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  max-width: 430px;
+}
+
+/* 에러 메시지 */
+.error {
+  color: var(--color-red); /* 빨간색 */
+  font-size: 14px;
+  text-align: center;
+  display: block; /* 항상 공간을 유지하게 설정 */
+  margin: 10px 0 10px 0;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.closeButton {
+  position: absolute; /* 절대 위치 지정 */
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: var(--color-gray-400); /* 회색 */
+  cursor: pointer;
+}

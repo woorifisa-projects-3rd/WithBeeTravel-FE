@@ -22,6 +22,7 @@
     "chart.js": "^4.4.6",
     "dayjs": "^1.11.13",
     "event-source-polyfill": "^1.0.31",
+    "html2canvas": "^1.4.1",
     "next": "14.2.6",
     "next-auth": "5.0.0-beta.25",
     "react": "18.3.1",
