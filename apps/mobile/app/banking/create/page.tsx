@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
 import PinNumberModal from '../../../components/PinNumberModal';
 import AccountSelection from '../../../components/AccountSelection';
+import { motion } from 'framer-motion';
 
 interface ProductOption {
   label: string;
@@ -108,42 +109,77 @@ export default function CreateAccountPage() {
     <div className={styles.container}>
       <Title label="계좌 생성하기" />
 
-      {/* 계좌 유형 선택 */}
-      <div className={styles.accountContainer}>
-        <label htmlFor="product" className={styles.label}>
+      <motion.div
+        className={styles.accountContainer}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.label
+          htmlFor="product"
+          className={styles.label}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+        >
           저축은 안전하고 꾸준하게
-        </label>
-        <div className={styles.detail}>편리한 입출금 계좌를 생성해요</div>
+        </motion.label>
+
+        <motion.div
+          className={styles.detail}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+        >
+          편리한 입출금 계좌를 생성해요
+        </motion.div>
+
         <AccountSelection
           productOptions={productOptions}
           onSelect={handleAccountSelect}
         />
-      </div>
+      </motion.div>
 
-      {/* 선택된 계좌 설명 표시 */}
       {selectedProduct && selectedProductDetails && (
-        <div className={styles.productDetail}>
-          {/* <h3>{selectedProductDetails.label}</h3> */}
+        <motion.div
+          className={styles.productDetail}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.4 }}
+        >
           <p>{selectedProductDetails.detail}</p>
-        </div>
+        </motion.div>
       )}
 
-      {/* 에러 메시지 */}
-      {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+      {errorMessage && (
+        <motion.div
+          className={styles.error}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          {errorMessage}
+        </motion.div>
+      )}
 
-      {/* 계좌 생성 버튼 (선택된 계좌가 있을 때만 버튼 표시) */}
       {selectedProduct && (
-        <Button
-          label="계좌 생성하기"
-          onClick={() => setIsModalOpen(true)}
-          className={styles.button}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+        >
+          <Button
+            label="계좌 생성하기"
+            onClick={() => setIsModalOpen(true)}
+            className={styles.button}
+          />
+        </motion.div>
       )}
 
       <PinNumberModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} // 모달 닫기
-        onSubmit={handleCreateAccount} // PIN 입력 후 제출 처리
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleCreateAccount}
       />
     </div>
   );
