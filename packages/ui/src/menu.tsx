@@ -99,6 +99,11 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
     router.push(`/travel/${travelId}/manual`);
   };
 
+  // 위비 카드 결제 내역 불러오기 페이지 이동 핸들러
+  const handleRouteGetWibeeCardHistoryPage = () => {
+    router.push(`/travel/${travelId}/wibee-card`);
+  };
+
   return (
     <section className={[styles.menu, className].join(' ')} {...props}>
       <Image
@@ -133,7 +138,11 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
         </div>
       ) : (
         <div className={styles.default}>
-          <Button label="불러오기" size={'small'} />
+          <Button
+            label="불러오기"
+            size={'small'}
+            onClick={handleRouteGetWibeeCardHistoryPage}
+          />
           <Button
             label="직접 추가"
             size={'small'}
