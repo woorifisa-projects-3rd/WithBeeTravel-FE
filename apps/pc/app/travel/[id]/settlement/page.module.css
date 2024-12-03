@@ -1,5 +1,7 @@
 .container {
   height: 100%;
+  margin: auto;
+  max-width: 800px;
 }
 
 .mainContent {
@@ -218,7 +220,7 @@
 
 .remainingUsersCompleted {
   margin-top: 100px;
-  margin-bottom: 80px;
+  margin-bottom: 150px;
   text-align: center;
   font-size: 14px;
   color: var(--color-gray-500);
@@ -234,7 +236,7 @@
 .disabledButton {
   pointer-events: none;
   cursor: not-allowed; /* 비활성화 커서 */
-  max-width: 340px;
+  max-width: 800px;
   width: 100%;
   bottom: 100px;
   padding: 0 25px;
