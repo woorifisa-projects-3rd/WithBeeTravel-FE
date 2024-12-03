@@ -1,73 +1,83 @@
 .container {
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  padding: 0 8px;
 }
 
 .swipeContainer {
+  flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  max-width: 280px;
+  overflow: hidden;
 }
 
 .cardSelected {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease-in-out;
-  z-index: 2; /* 가운데 항목이 항상 위에 오도록 */
-  transform: scale(0.9); /* 선택된 항목은 정상 크기 */
-  padding: 12px;
-  border-radius: 30;
-}
-
-.cardPreview {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.5; /* 미리보기 항목은 흐리게 표시 */
-  border-radius: 30;
-
+  /* background-color: white; */
+  transition: all 0.3s ease;
 }
 
 .imageContainer {
-  width: 120px;
-  height: 180px;
+  width: 140px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.image {
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
 .textContainer {
   text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  padding-top: 14px;
 }
 
 .title {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 2px;
 }
 
 .des {
   font-size: 14px;
-  color: gray;
+  color: var(--color-gray-600);
+  font-weight: 500;
 }
 
-
-.button {
-  margin-top: 15px;
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.cardSelected,
-.cardPreview {
-  transition: transform 0.3s ease;
+.arrowButton:hover {
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-9);
 }
 
-.cardPreview.left {
-  transform: scale(0.5)  rotate(-10deg); /* 왼쪽 미리보기 카드 기울기 */
+.arrowButton:active {
+  transform: scale(0.95);
 }
-
-.cardPreview.right {
-  transform: scale(0.5)rotate(10deg); /* 오른쪽 미리보기 카드 기울기 */
-}
-

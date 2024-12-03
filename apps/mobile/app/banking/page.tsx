@@ -81,7 +81,7 @@ export default function BankingPage() {
       <div className={styles.space}></div>
       <Button
         size="medium"
-        label="계좌 생성하기"
+        label="통장 만들기"
         onClick={() => createAccountHandle()}
       />
       <div className={styles.space}></div>
