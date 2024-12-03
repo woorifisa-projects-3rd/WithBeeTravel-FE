@@ -1,6 +1,5 @@
 'use client';
 
-import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
 import '@withbee/styles';
 import { getNotifications, Notification } from '@withbee/apis';
@@ -44,9 +43,7 @@ export default function Page() {
 
   return (
     <div className={styles.container}>
-      <header>
-        <Title label="알림함" />
-      </header>
+      <h2 className="title">알림함</h2>
       <div className={styles.content}>
         {isLoading && <NotificationSkeleton count={3} />}
         {!isLoading && sortedNotifications.length === 0 && (
