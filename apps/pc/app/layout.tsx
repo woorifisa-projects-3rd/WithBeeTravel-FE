@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@withbee/styles/global.css';
-import './global.css';
+import './globals.css';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
 import { SessionProvider } from 'next-auth/react';
 
