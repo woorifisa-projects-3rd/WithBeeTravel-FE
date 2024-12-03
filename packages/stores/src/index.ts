@@ -1,3 +1,3 @@
 export * from './travelPaymentsStore';
 export * from './travelStore';
-export * from './useNotificationStore';
+export * from './notificationStore';

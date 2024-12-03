@@ -9,7 +9,7 @@ import styles from './title.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getNotifications } from '@withbee/apis';
-import { notificationStore } from '@withbee/stores'; // Zustand 스토어 임포트
+import { notificationStore } from '@withbee/stores';
 
 interface TitleProps {
   label: string;

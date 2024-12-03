@@ -1,13 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@withbee/styles/global.css';
-<<<<<<< HEAD
 import './global.css';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
 import { SessionProvider } from 'next-auth/react';
-=======
-import './globals.css';
->>>>>>> c250c4d2f4e9a8ea40d83dc5aa3f72b7e60809b8
 
 const pretendard = localFont({
   src: 'fonts/PretendardVariable.ttf',
@@ -31,16 +27,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className="layout">
       <body className={pretendard.variable}>
-<<<<<<< HEAD
         <div className="mobile">
           <SessionProvider>
             <CustomToastContainer />
             {children}
           </SessionProvider>
         </div>
-=======
-        <div className="pc">{children}</div>
->>>>>>> c250c4d2f4e9a8ea40d83dc5aa3f72b7e60809b8
       </body>
     </html>
   );
