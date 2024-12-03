@@ -15,6 +15,7 @@ interface ProductOption {
   value: string;
   imageUrl: string; // 이미지 URL도 포함
   width?: number; // 이미지 너비
+  className?: string;
   detail: string;
 }
 
@@ -47,7 +48,8 @@ const productOptions: ProductOption[] = [
     label: '우리닷컴통장',
     value: '모바일 전용 통장',
     imageUrl: '/imgs/friends/friends1.png',
-    width: 120,
+    width: 118,
+    className: styles.comBanking,
     detail:
       '우리닷컴통장은 모바일 전용 통장으로, 전통적인 은행 창구 없이 스마트폰으로만 계좌 관리가 가능합니다. 연 2.0%의 예금 이율을 제공하며, 온라인 전용 혜택과 빠른 송금 서비스를 지원합니다. 24시간 이용 가능한 모바일 뱅킹으로 언제든지 편리하게 사용 가능합니다.',
   },

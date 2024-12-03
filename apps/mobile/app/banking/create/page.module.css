@@ -7,7 +7,7 @@
   min-height: calc(100vh - 58px);
   text-align: center;
   margin: 0 -25px -80px;
-  background-color: var(--color-gray-50);
+  background-color: color-mix(in srgb, var(--color-gray-50) 70%, transparent);
 }
 
 .mainContent {
@@ -87,4 +87,8 @@
 
 .button {
   width: calc(100% - 50px);
+}
+
+.comBanking {
+  padding-top: 15px;
 }

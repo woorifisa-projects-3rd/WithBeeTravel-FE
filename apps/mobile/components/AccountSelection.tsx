@@ -9,6 +9,7 @@ interface ProductOption {
   value: string;
   imageUrl: string;
   width?: number;
+  className?: string;
   detail: string;
 }
 
@@ -97,7 +98,7 @@ const AccountSelection: React.FC<{
             alt={currentProduct.label}
             width={currentProduct.width || 110}
             height={160}
-            className={styles.image}
+            className={[styles.image, currentProduct.className].join(' ')}
           />
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{currentProduct.label}</h2>
