@@ -126,6 +126,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
         setFormData={setFormData}
         currencyUnitOptions={currencyUnitOptions}
         handleSubmitForm={handleSubmit}
+        isPcVer={true}
       />
     </div>
   );
