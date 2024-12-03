@@ -86,7 +86,13 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
           <Button label="그룹 결제 내역" />
         </Link>
 
-        <InviteCodeButton travelId={travelId} />
+        {data?.settlementStatus === 'PENDING' ? (
+          <InviteCodeButton travelId={travelId} />
+        ) : (
+          <Link href={`/travel/${travelId}/honey-capsule`}>
+            <Button label="허니캡슐 열어보기" primary={false} />
+          </Link>
+        )}
       </div>
       {statistics.length !== 0 && (
         <BarChart
