@@ -20,6 +20,7 @@
     "./payment-skeleton": "./src/payment-skeleton.tsx",
     "./payment-list": "./src/payment-list.tsx",
     "./date-picker-modal": "./src/date-picker-modal.tsx",
+    "./notification-skeleton": "./src/notification-skeleton.tsx",
     "./menu": "./src/menu.tsx",
     "./payment": "./src/payment.tsx",
     "./item-group": "./src/item-group.tsx",

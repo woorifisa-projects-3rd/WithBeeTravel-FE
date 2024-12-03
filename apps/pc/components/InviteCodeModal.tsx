@@ -1,23 +1,15 @@
-// components/InviteCodeModal.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';
 import { useToast } from '@withbee/hooks/useToast';
+import { Kakao, InviteCodeModalProps } from '@withbee/types';
 
-interface InviteCodeModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit?: (inviteCode: string) => void;
-  modalState: {
-    title: string;
-    closeLabel?: string;
-    placeholder?: string;
-    subtitle?: string;
-    isCopyMode?: boolean;
-    inviteCode?: string;
-  };
+declare global {
+  interface Window {
+    Kakao?: Kakao;
+  }
 }
 
 export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
@@ -30,6 +22,25 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   const [inputValue, setInputValue] = useState(inviteCode);
 
   const isReadOnly = modalState.closeLabel === '닫기' || isCopyMode;
+
+  useEffect(() => {
+    // Kakao SDK 로드
+    const script = document.createElement('script');
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      // Kakao SDK 초기화 (your Kakao JavaScript 앱 키로 대체)
+      if (window.Kakao && !(window.Kakao as Kakao).isInitialized()) {
+        (window.Kakao as Kakao).init('39295272243b35bf220357208c1ca580');
+      }
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   useEffect(() => {
     if (isOpen && isCopyMode) {
@@ -66,6 +77,41 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     }
   };
 
+  const handleKakaoShare = () => {
+    if (!window.Kakao) {
+      showToast.error({
+        message: '카카오 공유 기능을 사용할 수 없습니다.',
+      });
+      return;
+    }
+
+    try {
+      window.Kakao.Share.sendDefault({
+        objectType: 'text',
+        text: `초대 코드: ${inputValue}`,
+        link: {
+          // 웹페이지 링크 (선택사항)
+          webUrl: window.location.href,
+          mobileWebUrl: window.location.href,
+        },
+        buttons: [
+          {
+            title: '초대 코드 보기',
+            link: {
+              webUrl: window.location.href,
+              mobileWebUrl: window.location.href,
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      console.error('카카오톡 공유 중 오류 발생:', error);
+      showToast.error({
+        message: '카카오톡 공유에 실패했습니다.',
+      });
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -86,13 +132,29 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
           readOnly={isReadOnly}
         />
         {isCopyMode && (
-          <button
-            className={`${styles.copyButton} ${isCopyMode ? styles.copyButtonActive : ''}`}
-            onClick={handleCopy}
-            aria-label="복사하기"
-          >
-            <Image src="/copy.png" alt="복사하기" width={24} height={24} />
-          </button>
+          <div className={styles.btnWrap}>
+            <button aria-label="공유하기" onClick={handleKakaoShare}>
+              <Image
+                src="/imgs/travelform/share.png"
+                alt="공유하기"
+                width={25}
+                height={25}
+              />
+            </button>
+            <button
+              className={`${styles.copyButton} ${isCopyMode ? styles.copyButtonActive : ''}`}
+              onClick={handleCopy}
+              aria-label="복사하기"
+            >
+              <Image
+                src="/copy.png"
+                alt="복사하기"
+                width={22}
+                height={24}
+                quality={100}
+              />
+            </button>
+          </div>
         )}
       </div>
     </Modal>
