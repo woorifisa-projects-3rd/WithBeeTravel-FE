@@ -5,12 +5,12 @@
   width: 800px;
   height: 100%;
   margin: 0 auto;
-  padding: 40px 0 60px;
+  padding: 40px 0 80px;
 }
 
 .h2 {
   font-size: 24px;
-  color: var(--color-gray-800);
+  color: var(--color-gray-900);
   font-weight: 500;
   margin-bottom: 25px;
   text-align: center;
@@ -79,12 +79,12 @@
 }
 
 .date {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--color-gray-600);
 }
 
 .travelName {
-  font-size: 30px;
+  font-size: 24px;
   color: var(--color-gray-800);
   font-weight: 600;
 }
