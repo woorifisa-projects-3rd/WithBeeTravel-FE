@@ -159,13 +159,18 @@ export default async function Page({ params }: { params: Params }) {
           {myTotalPayment.agreed ? (
             <Button
               label="동의 완료"
+              size="xlarge"
               className={styles.disabledButton}
               disabled={true}
               primary={false} // 동의 완료 상태일 경우 비활성화
             />
           ) : (
             <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
-              <Button label="동의하기" />
+              <Button
+                label="동의하기"
+                size="xlarge"
+                className={styles.agreeBtn}
+              />
             </Link>
           )}
           {!myTotalPayment.agreed && <ModalWrapper travelId={params.id} />}
