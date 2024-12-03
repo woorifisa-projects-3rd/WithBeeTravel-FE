@@ -21,7 +21,7 @@ interface Account {
   accountNumber: string;
 }
 
-export default function AccountPage() {
+export default function Page() {
   const { showToast } = useToast();
   const [data, setData] = useState<MyPageInfoResponse>();
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
