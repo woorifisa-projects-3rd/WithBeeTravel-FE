@@ -21,3 +21,8 @@
   font-size: 16px;
   color: var(--color-gray-500);
 }
+
+.btnWrapper {
+  max-width: 480px;
+  margin: auto;
+}
