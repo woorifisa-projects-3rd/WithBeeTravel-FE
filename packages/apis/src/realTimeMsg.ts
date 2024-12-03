@@ -20,14 +20,14 @@ export const connectSSE = (
         Connection: 'keep-alive',
         'Cache-Control': 'no-cache',
       },
-      withCredentials: true, // 중요: 크로스 오리진 요청 시 인증 정보 포함
-      heartbeatTimeout: 30000,
+      withCredentials: true,
+      heartbeatTimeout: 3600000,
     };
 
     const EventSource = EventSourcePolyfill || NativeEventSource;
     const eventSource = new EventSource(url, eventSourceOptions);
     // 연결 성공 이벤트
-    eventSource.addEventListener('sse', () => {
+    eventSource.addEventListener('connection', () => {
       console.log('SSE Connection Opened');
       onConnect?.();
       resolve(eventSource);

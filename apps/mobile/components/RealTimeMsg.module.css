@@ -1,22 +1,23 @@
 .background {
     position: fixed;
     top: 0px;
-    right: 0px;
+    right: 1px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     z-index: 9999;
-    width: 400px;
+    max-width: 430px;
+    width: 99%;
 }
 
 .card {
-    background-color: white;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    padding: 15px 20px;
     width: 100%;
     position: relative;
-
+    /* border: 1px solid var(--color-gray-400); */
 }
 
 .closeButton {
@@ -24,20 +25,19 @@
     border: none;
     cursor: pointer;
     font-size: 18px;
-    color: #888;
+    color: var(--color-gray-500);
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 15px;
 }
 
-.logTitle {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-}
 
 .logMessage {
-    color: #666;
+    color: var(--color-gray-500);
+}
+
+.notificationLink {
+    color: var(--color-gray-500);
 }
 
 @keyframes slideInRight {
@@ -59,8 +59,8 @@
     }
 
     to {
-        transform: translateX(-00%);
-        opacity: 0;
+        transform: translateX(100%);
+        opacity: 1;
     }
 }
 

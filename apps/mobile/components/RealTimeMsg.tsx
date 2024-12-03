@@ -1,17 +1,23 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react'; // NextAuth 세션 훅
+import { useSession } from 'next-auth/react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import styles from './RealTimeMsg.module.css';
 import { connectSSE } from '@withbee/apis';
+import Link from 'next/link';
+
+interface Notification {
+  link: string;
+  title: string;
+  message: string;
+}
 
 export default function RealTimeMsg() {
-  const { data: session, status } = useSession(); // 세션 정보 가져오기
-  const [notifications, setNotifications] = useState<string[]>([]);
+  const { data: session, status } = useSession();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  console.log(notifications);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
   useEffect(() => {
     if (
@@ -25,16 +31,38 @@ export default function RealTimeMsg() {
 
   useEffect(() => {
     let eventSource: EventSourcePolyfill;
-    console.log(accessToken);
 
     if (accessToken) {
       (async () => {
         eventSource = await connectSSE(
           'http://localhost:8080/api/notifications/stream',
-          (data) => {
-            console.log(data);
+          (rawData) => {
+            try {
+              const parsedNotification: Notification = JSON.parse(rawData);
 
-            setNotifications((prev) => [...prev, data]);
+              setNotifications((prev) => [...prev, parsedNotification]);
+              setIsVisible(true);
+              setIsAnimatingOut(false);
+
+              const timer = setTimeout(() => {
+                setIsAnimatingOut(true);
+
+                const removeTimer = setTimeout(() => {
+                  setIsVisible(false);
+                  setNotifications((prev) => prev.slice(1));
+                }, 500);
+
+                return () => {
+                  clearTimeout(removeTimer);
+                };
+              }, 2000);
+
+              return () => {
+                clearTimeout(timer);
+              };
+            } catch (error) {
+              console.error('Failed to parse notification:', error);
+            }
           },
           () => console.log('SSE 연결 성공!!!!!!'),
           (error) => console.error('SSE 연결 실패:', error),
@@ -48,17 +76,45 @@ export default function RealTimeMsg() {
     };
   }, [accessToken]);
 
+  const handleClose = () => {
+    setIsAnimatingOut(true);
+    setTimeout(() => {
+      setIsVisible(false);
+      setNotifications((prev) => prev.slice(1));
+    }, 500); // 애니메이션 시간과 맞춤
+  };
+
+  if (!isVisible || notifications.length === 0) {
+    return null;
+  }
+
+  const notification = notifications[0];
+  if (!notification) {
+    return null;
+  }
+
   return (
     <div className={styles.background}>
-      <div className={`${styles.card} ${styles.slideIn}`}>
-        <h1 className={styles.logTitle}>실시간 알림</h1>
-        <ul>
-          {notifications.map((notification, index) => (
-            <li key={index} className={styles.logMessage}>
-              {notification}
-            </li>
-          ))}
-        </ul>
+      <div
+        className={`
+          ${styles.card} 
+          ${isAnimatingOut ? styles['slide-out'] : styles.slideIn}
+        `}
+      >
+        <button className={styles.closeButton} onClick={handleClose}>
+          ×
+        </button>
+        <h3 className={styles.logTitle}>{notification.title}</h3>
+        <p
+          className={styles.logMessage}
+          dangerouslySetInnerHTML={{ __html: notification.message }}
+        />
+        <Link
+          href={`/${notification.link}`}
+          className={styles.notificationLink}
+        >
+          자세히 보기
+        </Link>
       </div>
     </div>
   );
