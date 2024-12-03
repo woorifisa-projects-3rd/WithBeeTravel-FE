@@ -1,7 +1,6 @@
 'use client';
 
 import styles from './page.module.css';
-import { Title } from '@withbee/ui/title';
 import {
   ManualSharedPaymentForm,
   ManualPaymentFormData,
@@ -120,7 +119,6 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
 
   return (
     <div>
-      <Title label="결제 내역 직접 추가" />
       <ManualSharedPaymentForm
         formData={formData}
         setFormData={setFormData}
