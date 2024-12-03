@@ -61,9 +61,9 @@ export default function Page({ params }: { params: Params }) {
         >
           <Image
             className={styles.image}
-            src="/imgs/agreement/angryWibee.png"
+            src="/imgs/settlement/sadWibee.png"
             alt="pending"
-            width={150}
+            width={180}
             height={200}
           />
         </motion.div>
