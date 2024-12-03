@@ -220,7 +220,7 @@
 
 .remainingUsersCompleted {
   margin-top: 100px;
-  margin-bottom: 150px;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 14px;
   color: var(--color-gray-500);
@@ -243,13 +243,7 @@
 .disabledButton {
   pointer-events: none;
   cursor: not-allowed; /* 비활성화 커서 */
-  max-width: 800px;
-  width: 100%;
-  bottom: 100px;
   padding: 0 25px;
-  left: 50%;
-  transform: translate(-50%);
-  position: fixed;
 }
 
 .storeName {
