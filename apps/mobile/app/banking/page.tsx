@@ -1,12 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { useRouter } from 'next/navigation';
-import { getAccounts, getUserState, instance } from '@withbee/apis';
+import { getUserState } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
-import { AccountInfo, PinNumberResponse } from '@withbee/types';
+import { AccountInfo } from '@withbee/types';
 import CountUp from 'react-countup';
 import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence
 
@@ -16,28 +16,6 @@ export default function BankingPage() {
   const [accounts, setAccounts] = useState<AccountInfo[] | undefined>([]);
 
   const { showToast } = useToast();
-  const [error, setError] = useState<boolean>(true);
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const accountResponse = await getAccounts();
-        if ('data' in accountResponse) {
-          setAccounts(accountResponse.data);
-          setError(false);
-        } else {
-          console.error('에러 코드 ', accountResponse.status);
-        }
-      } catch (error) {
-        console.error('로그인 확인 중 오류 발생:', error);
-        // TODO: 토스트 두 번 뜨는거 고쳐야 함
-        router.push('/login');
-        showToast.warning({ message: '로그인 후 이용가능해요!' });
-      }
-    };
-
-    checkLogin();
-  }, []);
 
   // 총 잔액 계산
   const totalBalance = (accounts ?? []).reduce(
