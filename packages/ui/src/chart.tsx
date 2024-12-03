@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { useState, useEffect } from 'react';
 import '@withbee/styles';
+import { allCategories } from '@withbee/utils';
 
 // Register chart.js components
 ChartJS.register(
@@ -95,16 +96,32 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     },
   };
 
-  // 기본 데이터 (API 응답이 없을 경우를 대비)
-  const defaultExpenses: ExpenseData[] = [
-    { category: '교통', amount: 10 },
-    { category: '식비', amount: 20 },
-    { category: '숙박', amount: 6 },
-    { category: '항공', amount: 12 },
-    { category: '기타', amount: 10 },
-  ];
+  // expenses 데이터 정규화 함수
+  const normalizeExpenses = (
+    rawExpenses: ExpenseData[] = [],
+  ): ExpenseData[] => {
+    if (rawExpenses.length >= 4) return rawExpenses;
 
-  const currentExpenses = expenses || defaultExpenses;
+    const filteredCategories = allCategories.filter((c) => c !== '전체');
+
+    // 현재 expenses에 없는 카테고리들 추출
+    const usedCategories = new Set(rawExpenses.map((e) => e.category));
+    const availableCategories = filteredCategories.filter(
+      (c) => !usedCategories.has(c),
+    );
+
+    // 필요한 만큼의 카테고리를 순서대로 가져와서 amount를 0으로 설정
+    const additionalExpenses: ExpenseData[] = availableCategories
+      .slice(0, 4 - rawExpenses.length)
+      .map((category) => ({
+        category,
+        amount: 0.5,
+      }));
+
+    return [...rawExpenses, ...additionalExpenses];
+  };
+
+  const currentExpenses = normalizeExpenses(expenses!);
 
   const data = {
     labels: currentExpenses.map((expense) => expense.category),
