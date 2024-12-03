@@ -27,7 +27,7 @@ export default function Page({ params }: { params: Params }) {
             className={styles.image}
             src={'/imgs/settlement/cancelWibee.png'}
             alt="pending"
-            width={170}
+            width={200}
             height={222}
           />
         </motion.div>
