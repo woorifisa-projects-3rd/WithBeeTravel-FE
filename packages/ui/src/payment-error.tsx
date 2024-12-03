@@ -21,6 +21,7 @@ export const PaymentError = ({ message1, message2 }: PaymentErrorProps) => {
         width={140}
         height={140}
         className={styles.errorImage}
+        priority
       />
       <div>
         <p className={styles.errorText}>{message1}</p>
