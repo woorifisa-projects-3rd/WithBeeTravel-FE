@@ -19,6 +19,8 @@ export default function RealTimeMsg() {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
 
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+
   useEffect(() => {
     if (
       status === 'authenticated' &&
@@ -35,7 +37,7 @@ export default function RealTimeMsg() {
     if (accessToken) {
       (async () => {
         eventSource = await connectSSE(
-          'http://localhost:8080/api/notifications/stream',
+          `${BASE_URL}/api/notifications/stream`,
           (rawData) => {
             try {
               const parsedNotification: Notification = JSON.parse(rawData);
