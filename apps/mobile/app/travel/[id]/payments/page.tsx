@@ -10,6 +10,7 @@ interface TravelPageProps {
     id: string;
   };
 }
+
 export default async function Page({ params }: TravelPageProps) {
   const { id } = params;
   const [travelHomeResponse, sharedPaymentsResponse] = await Promise.all([
@@ -31,7 +32,7 @@ export default async function Page({ params }: TravelPageProps) {
     );
   }
 
-  console.log(travelHomeResponse.data);
+  // console.log(travelHomeResponse.data);
 
   return (
     <Suspense fallback={<PaymentSkeleton />}>
