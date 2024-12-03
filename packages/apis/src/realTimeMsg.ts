@@ -27,7 +27,7 @@ export const connectSSE = (
     const EventSource = EventSourcePolyfill || NativeEventSource;
     const eventSource = new EventSource(url, eventSourceOptions);
     // 연결 성공 이벤트
-    eventSource.addEventListener('connection', () => {
+    eventSource.addEventListener('connect', () => {
       console.log('SSE Connection Opened');
       onConnect?.();
       resolve(eventSource);
