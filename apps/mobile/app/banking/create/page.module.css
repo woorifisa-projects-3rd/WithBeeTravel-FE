@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  /* 추가 */
+  justify-content: space-between; /* 추가 */
   min-height: calc(100vh - 58px);
   text-align: center;
   margin: 0 -25px -80px;
@@ -12,14 +12,14 @@
 }
 
 .mainContent {
-  flex: 1;  /* 추가 */
+  flex: 1; /* 추가 */
   display: flex;
   flex-direction: column;
 }
 
 .accountContainer {
   display: flex;
-  justify-content: flex-start;  
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
 }
@@ -58,11 +58,11 @@
 }
 
 .error {
-  color: var(--color-red)
+  color: var(--color-red);
   margin-top: 10px;
 }
 
-.productDetail {  
+.productDetail {
   margin-top: 10px;
   padding: 20px 20px;
   background-color: var(--color-gray-100);
