@@ -1,6 +1,6 @@
 'use client';
 
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 } from 'chart.js';
 import { useState, useEffect } from 'react';
 import '@withbee/styles';
@@ -21,6 +22,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 );
 
 interface ExpenseData {
@@ -30,9 +32,10 @@ interface ExpenseData {
 
 interface ExpenseChartProps {
   expenses?: ExpenseData[];
+  ratio?: number;
 }
 
-export const BarChart = ({ expenses }: ExpenseChartProps) => {
+export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
   const [blueColor3, setBlueColor3] = useState('');
   const [blueColor9, setBlueColor9] = useState('');
   const [grayColor900, setGrayColor900] = useState('');
@@ -44,7 +47,7 @@ export const BarChart = ({ expenses }: ExpenseChartProps) => {
   );
 
   const options = {
-    aspectRatio: 1.5,
+    aspectRatio: ratio || 1.5,
     layout: {
       padding: {
         top: 28,
@@ -131,4 +134,58 @@ export const BarChart = ({ expenses }: ExpenseChartProps) => {
   }, []);
 
   return <Bar data={data} options={options} />;
+};
+
+export const PieChart = ({ expenses, ratio }: ExpenseChartProps) => {
+  const [blueColors, setBlueColors] = useState<string[]>([]);
+  const [grayColor900, setGrayColor900] = useState('');
+
+  const normalizeExpenses = (
+    rawExpenses: ExpenseData[] = [],
+  ): ExpenseData[] => {
+    return rawExpenses.filter((expense) => expense.amount > 0);
+  };
+
+  const currentExpenses = normalizeExpenses(expenses!);
+
+  const options = {
+    aspectRatio: ratio || 1.5,
+    plugins: {
+      legend: {
+        position: 'right' as const,
+        labels: {
+          color: grayColor900,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
+      },
+      tooltip: {
+        enabled: false,
+      },
+    },
+  };
+
+  const data = {
+    labels: currentExpenses.map((expense) => expense.category),
+    datasets: [
+      {
+        data: currentExpenses.map((expense) => expense.amount),
+        backgroundColor: blueColors,
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  useEffect(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
+
+    // Get multiple blue colors for the pie chart
+    const colors = Array.from({ length: 9 }, (_, i) =>
+      rootStyles.getPropertyValue(`--color-blue-${i + 1}`).trim(),
+    );
+    setBlueColors(colors);
+  }, []);
+
+  return <Pie data={data} options={options} />;
 };
