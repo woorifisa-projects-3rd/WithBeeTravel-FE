@@ -1,11 +1,10 @@
 .subtitleContainer {
-  padding-top: 22vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   background-color: var(--color-gray-50);
-  width: 100%;
   margin: 0 -25px -80px; /* 양쪽 margin만으로 처리 */
   height: calc(100vh - 62.4px);
   width: auto;
@@ -28,7 +27,7 @@
 }
 
 .errorSubTitle {
-  font-size: 18px;
+  font-size: 14px;
   color: var(--color-gray-700);
 }
 
@@ -36,10 +35,10 @@
   width: 64px;
   height: 1px;
   background-color: var(--color-gray-200);
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .errorDescription {
-  font-size: 16px;
+  font-size: 14px;
   color: var(--color-gray-600);
 }

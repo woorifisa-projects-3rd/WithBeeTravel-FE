@@ -7,8 +7,8 @@ export default function error() {
   return (
     <div>
       <div className={styles.subtitleContainer}>
-        <motion.div
-          animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
+        {/* <motion.div
+          // animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
           transition={{
             duration: 2,
             repeat: Infinity,
@@ -17,12 +17,12 @@ export default function error() {
         >
           <Image
             className={styles.image}
-            src="/imgs/friends/agreeWibee.png"
+            src="/imgs/friends/notfound.png"
             alt="pending"
-            width={160}
+            width={130}
             height={170}
           />
-        </motion.div>
+        </motion.div> */}
         <div>
           <p className={styles.errorTitle}>404</p>
           <p className={styles.errorSubTitle}>PAGE NOT FOUND</p>
