@@ -11,15 +11,9 @@ export interface Notification {
   link: string | null;
 }
 
-export interface Notifications {
-  Notifications: Notification[];
-}
-
 export const getNotifications = async (): Promise<
-  SuccessResponse<Notifications> | ErrorResponse
+  SuccessResponse<Notification[]> | ErrorResponse
 > => {
-  const response = instance.get<Notifications>(`/api/notifications`, {
-    cache: 'no-store',
-  });
+  const response = instance.get<Notification[]>('/api/notifications');
   return response;
 };

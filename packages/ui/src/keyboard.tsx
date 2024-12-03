@@ -12,6 +12,8 @@ interface KeyboardProps {
   className?: string;
   // 버튼 스타일 커스터마이징을 위한 className
   buttonClassName?: string;
+  // 애니메이션 비활성화
+  disableAnimation?: boolean;
 }
 
 export default function Keyboard({
@@ -20,6 +22,7 @@ export default function Keyboard({
   activeKeys = [],
   className,
   buttonClassName,
+  disableAnimation = false,
 }: KeyboardProps) {
   // 키패드 타입에 따른 키 배열 설정
   const keys =
@@ -35,9 +38,13 @@ export default function Keyboard({
   return (
     <motion.div
       className={`${styles.keyboard} ${className || ''}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.4 }}
+      {...(disableAnimation
+        ? {}
+        : {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            transition: { duration: 0.3, delay: 0.4 },
+          })}
     >
       {keys.map((key) => (
         <button
