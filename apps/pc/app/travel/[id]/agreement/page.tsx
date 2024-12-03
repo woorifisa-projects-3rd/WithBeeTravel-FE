@@ -169,6 +169,7 @@ export default function ConsentPage({ params }: { params: Params }) {
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
             shadow={true}
+            size="xlarge"
             onClick={() => setIsModalOpen(true)}
           />
         </div>
