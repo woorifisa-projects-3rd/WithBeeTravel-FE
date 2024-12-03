@@ -108,7 +108,7 @@ export const Payment = ({
     <article className={styles.payment}>
       <FriendImage
         src={paymentInfo.adderProfileIcon}
-        size={50}
+        size={47}
         className={styles.friendImage}
       />
       <div
