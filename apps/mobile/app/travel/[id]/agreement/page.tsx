@@ -38,7 +38,7 @@ export default function ConsentPage({ params }: { params: Params }) {
           message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         });
         router.push(
-          `/travel/${travelId}/agreement/pending?error=${response.code}`,
+          `/travel/${travelId}/settlement/pending?error=${response.code}`,
         );
         return;
       } else if (response.code === 'SETTLEMENT-003') {

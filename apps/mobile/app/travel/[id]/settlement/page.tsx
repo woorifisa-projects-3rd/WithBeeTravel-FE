@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: Params }) {
 
   if ('code' in response) {
     if (response.code === 'SETTLEMENT-002' || 'TRAVEL-001') {
-      redirect(`/travel/${travelId}/agreement/pending?error=${response.code}`);
+      redirect(`/travel/${travelId}/settlement/pending?error=${response.code}`);
     } else {
       showToast.error({
         message: ERROR_MESSAGES['COMMON'],
