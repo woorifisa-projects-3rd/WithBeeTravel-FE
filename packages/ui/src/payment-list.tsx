@@ -17,7 +17,6 @@ import { Payment } from './payment';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useToast } from '@withbee/hooks/useToast';
 import { PaymentSkeleton } from './payment-skeleton';
-import Image from 'next/image';
 import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
 import { PaymentError } from './payment-error';
 
@@ -36,7 +35,7 @@ export default function PaymentList({
   const { sortBy, startDate, endDate, memberId, category } = params;
   const { showToast } = useToast();
 
-  const { travelStartDate, travelEndDate, travelMembers } = travelInfo;
+  const { travelStartDate, travelEndDate } = travelInfo;
 
   // Intersection Observer로 특정 요소가 화면에 보이는지 감지
   const { ref, inView } = useInView({
@@ -44,7 +43,7 @@ export default function PaymentList({
   });
 
   const getKey = (pageIndex: number) => {
-    return {
+    const params = {
       travelId,
       page: pageIndex,
       sortBy: sortBy as SortBy,
@@ -53,14 +52,24 @@ export default function PaymentList({
       ...(memberId !== 0 && { memberId }),
       ...(category !== '전체' && { category }),
     };
+
+    // 모든 파라미터를 포함한 상세한 캐시 키
+    const cacheKey = `sharedPayments-${travelId}-${sortBy}-${startDate || travelStartDate}-${
+      endDate || travelEndDate
+    }-${memberId}-${category}-${pageIndex}`;
+
+    return {
+      params,
+      cacheKey,
+    };
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
   const { data, error, size, setSize, isLoading, isValidating } =
     useSWRInfinite(
-      getKey,
-      async (params) => {
-        const response = await getSharedPayments(params);
+      (pageIndex) => getKey(pageIndex).cacheKey,
+      async (key: string, pageIndex: number) => {
+        const response = await getSharedPayments(getKey(pageIndex).params);
 
         if ('code' in response) {
           throw response;
@@ -71,7 +80,6 @@ export default function PaymentList({
       {
         fallbackData: initialPayments ? [initialPayments] : undefined,
         suspense: true,
-        errorRetryInterval: 60000, // 1분
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
@@ -144,6 +152,14 @@ export default function PaymentList({
     setSize(1);
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
+  // travelInfo에서 받아온 startDate와 endDate를 searchParams에 반영
+  useEffect(() => {
+    if (!startDate && !endDate) {
+      updateParam('startDate', travelStartDate);
+      updateParam('endDate', travelEndDate);
+    }
+  }, []);
+
   if (error) {
     return (
       <div className={styles.errorContainer}>
@@ -175,9 +191,9 @@ export default function PaymentList({
                     key={`payments-${index}`}
                   >
                     <span className={styles.date}>{date}</span>
-                    {payments.map((payment, idx) => (
+                    {payments.map((payment) => (
                       <Payment
-                        key={`payment-${payment.id}-${idx}`}
+                        key={payment.id}
                         travelId={travelId}
                         paymentInfo={payment}
                         travelInfo={travelInfo}

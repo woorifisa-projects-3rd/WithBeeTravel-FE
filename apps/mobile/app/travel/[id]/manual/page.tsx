@@ -14,6 +14,7 @@ import {
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
+import { mutate } from 'swr';
 
 interface ManualRegisterSharedPaymentProps {
   params: {
@@ -150,10 +151,11 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
           'Unknown Error',
       });
 
+      mutate((key: string) => key.startsWith(`sharedPayments-${id}`));
       throw new Error(response.code);
     }
 
-    router.push(`/travel/${id}/payments`);
+    router.back();
   };
 
   const validateInputForm = (type: string): boolean => {

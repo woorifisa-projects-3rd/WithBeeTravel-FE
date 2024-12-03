@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
 import { instance } from './instance';
 import {
   SuccessResponse,
@@ -18,6 +19,8 @@ export const createManualSharedPayment = async (
       isMultipart: true, // multipart/form-data로 전송
     },
   );
+
+  revalidateTag(`sharedPayments-${travelId}`);
   return response;
 };
 
