@@ -87,9 +87,7 @@ export default function ConsentPage({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <Title label="약관 동의" />
-      </div>
+      <h2 className="title">약관 동의</h2>
       <div className={`${styles.content} content full`}>
         <div className={styles.consentList}>
           <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>

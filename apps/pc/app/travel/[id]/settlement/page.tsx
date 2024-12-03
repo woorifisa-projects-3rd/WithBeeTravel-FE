@@ -5,9 +5,7 @@ import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
-import Image from 'next/image';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { Key } from 'react';
 import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
 import { SuccessResponse } from '@withbee/types';
 import { redirect } from 'next/navigation';
@@ -45,9 +43,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <header>
-        <Title label="지출 상세내역" />
-      </header>
+      <h2 className="title">지출 상세 내역</h2>
       <div className={styles.mainContent}>
         <div className={styles.summary}>
           <div className={styles.mainCard}>
