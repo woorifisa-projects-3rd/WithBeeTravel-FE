@@ -88,7 +88,6 @@ export default function page() {
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택" />
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
@@ -112,9 +111,9 @@ export default function page() {
               src="/imgs/travelselect/travel_select_plane.png"
               alt="비행기 아이콘"
               className={styles.icon}
-              width={50}
-              height={50}
-              layout="intrinsic"
+              width={80}
+              height={80}
+              quality={100}
             />
           </div>
         </button>
@@ -155,7 +154,7 @@ export default function page() {
           <div className={styles.cardWrap}>
             {/* 다가오는 여행 렌더링 */}
             {upcomingTravels.length > 0 && (
-              <>
+              <div className={styles.gridWrap}>
                 {upcomingTravels.map((card, index) => (
                   <div key={index}>
                     <div className={styles.cardDay}>
@@ -191,12 +190,12 @@ export default function page() {
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             )}
 
             {/* 지난 여행 렌더링 */}
             {pastTravels.length > 0 && (
-              <>
+              <div className={styles.gridWrap}>
                 <div className={styles.cardDay}>
                   <span>지난 여행</span>
                 </div>
@@ -230,7 +229,7 @@ export default function page() {
                     </div>
                   </div>
                 ))}
-              </>
+              </div>
             )}
           </div>
         )}

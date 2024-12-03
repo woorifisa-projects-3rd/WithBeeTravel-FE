@@ -34,7 +34,7 @@
   height: 3rem;
   position: relative;
   flex-shrink: 0;
-
+  margin-right: 1rem;
 }
 
 .benefitCard {
