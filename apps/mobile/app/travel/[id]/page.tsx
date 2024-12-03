@@ -49,7 +49,17 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
             </Link>
           </div>
         </div>
-        <div className={styles.imgWrapper}>{/* Placeholder for image */}</div>
+        <div className={styles.imgWrapper}>
+          {data?.mainImage ? (
+            <Image
+              src={data!.mainImage}
+              alt="main image"
+              layout="fill"
+              objectFit="cover"
+              className={styles.mainImage}
+            />
+          ) : null}
+        </div>
 
         {data?.isDomesticTravel ? (
           <Item label="국내여행" />
@@ -76,7 +86,13 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
           <Button label="그룹 결제 내역" />
         </Link>
 
-        <InviteCodeButton travelId={travelId} />
+        {data?.settlementStatus === 'PENDING' ? (
+          <InviteCodeButton travelId={travelId} />
+        ) : (
+          <Link href={`/travel/${travelId}/honey-capsule`}>
+            <Button label="허니캡슐 열어보기" primary={false} />
+          </Link>
+        )}
       </div>
       {statistics.length !== 0 && (
         <BarChart

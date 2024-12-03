@@ -1,0 +1,172 @@
+.container {
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputGroup label {
+  font-size: 18px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1.5px solid var(--color-gray-200);
+  outline: none;
+  padding: 8px 0;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.locationButtons {
+  display: flex;
+}
+
+.domesticBtn {
+  border-radius: 10px 0px 0px 10px !important;
+}
+
+.overseasBtn {
+  border-radius: 0px 10px 10px 0px !important;
+}
+
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dateInput {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 10px;
+  position: relative;
+}
+
+.dateInput span {
+  color: var(--color-gray-500);
+}
+
+.dateInput input {
+  border: none;
+  font-size: 16px;
+  color: var(--color-gray-500);
+}
+
+
+.customDateInput {
+  padding-right: 25px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+}
+
+.customDateInput::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.customIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.date {
+  color: var(--color-gray-500);
+}
+
+.searchSection {
+  position: relative;
+  margin-top: 16px;
+}
+
+.searchInputWrapper {
+  position: relative;
+  margin: -5px 0px;
+}
+
+.searchInput {
+  padding: 12px;
+  padding-left: 40px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-400);
+}
+
+.selectedCountries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.countryTag {
+  margin-top: 15px;
+}
+
+.searchResults {
+  position: absolute;
+  width: 100%;
+  max-width: 430px;
+  background-color: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.searchResultItem {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: var(--color-gray-100);
+}
+
+.btnWrap {
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 100px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.btn {
+  font-weight: 500;
+}
