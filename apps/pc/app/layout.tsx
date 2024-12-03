@@ -30,10 +30,10 @@ export default function RootLayout({
       <body className={pretendard.variable}>
         <div className="pc">
           <SessionProvider>
-           <Header />
-           <CustomToastContainer />
-           {children}
-         </SessionProvider>
+            <Header />
+            <CustomToastContainer />
+            {children}
+          </SessionProvider>
         </div>
       </body>
     </html>
