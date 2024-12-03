@@ -32,7 +32,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.h2}>여행 홈</h2>
+      <h2 className="title">여행 홈</h2>
       <div className={styles.subContainer}>
         <div className={styles.contentWrapper}>
           <div className={styles.imgWrapper}>{/* Placeholder for image */}</div>
