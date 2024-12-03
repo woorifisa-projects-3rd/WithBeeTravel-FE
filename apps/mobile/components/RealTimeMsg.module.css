@@ -1,7 +1,7 @@
 .background {
     position: fixed;
     top: 0px;
-    right: 1px;
+    right: 0px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -32,33 +32,37 @@
 
 
 .logMessage {
+    padding: 5px 0px;
     color: var(--color-gray-500);
 }
 
 .notificationLink {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
     color: var(--color-gray-500);
 }
 
 @keyframes slideInRight {
     from {
-        transform: translateX(100%);
+        transform: translateY(-100%);
         opacity: 0;
     }
 
     to {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 }
 
 @keyframes slideOutRight {
     from {
-        transform: translateX(0);
+        transform: translateY(0);
         opacity: 1;
     }
 
     to {
-        transform: translateX(100%);
+        transform: translateY(-100%);
         opacity: 1;
     }
 }

@@ -50,12 +50,12 @@ export default function RealTimeMsg() {
                 const removeTimer = setTimeout(() => {
                   setIsVisible(false);
                   setNotifications((prev) => prev.slice(1));
-                }, 500);
+                }, 1000);
 
                 return () => {
                   clearTimeout(removeTimer);
                 };
-              }, 2000);
+              }, 3000);
 
               return () => {
                 clearTimeout(timer);
@@ -81,7 +81,7 @@ export default function RealTimeMsg() {
     setTimeout(() => {
       setIsVisible(false);
       setNotifications((prev) => prev.slice(1));
-    }, 500); // 애니메이션 시간과 맞춤
+    }, 1000); // 애니메이션 시간과 맞춤
   };
 
   if (!isVisible || notifications.length === 0) {
@@ -104,7 +104,7 @@ export default function RealTimeMsg() {
         <button className={styles.closeButton} onClick={handleClose}>
           ×
         </button>
-        <h3 className={styles.logTitle}>{notification.title}</h3>
+        <h3 className={styles.logTitle}>📢 {notification.title}</h3>
         <p
           className={styles.logMessage}
           dangerouslySetInnerHTML={{ __html: notification.message }}
