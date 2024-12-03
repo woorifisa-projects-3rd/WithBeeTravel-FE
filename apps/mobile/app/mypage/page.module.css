@@ -62,3 +62,56 @@
 .account {
   margin-top: 10px;
 }
+
+/* 계좌연결 */
+
+.accountList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0px 20px 0px;
+}
+
+.accountItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.accountNumber {
+  font-size: 18px;
+  color: var(--color-gray-900);
+  font-weight: bold;
+}
+
+.subtitleContainer {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
+  text-align: center;
+}
+
+.image {
+  margin-left: 10px;
+}
+
+.content {
+  font-size: 16px;
+  color: var(--color-gray-500);
+}
+
+.errorTitle {
+  font-size: 25px;
+  font-weight: 750;
+  margin-top: 25px;
+}
