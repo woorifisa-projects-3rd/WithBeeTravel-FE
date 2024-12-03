@@ -41,6 +41,7 @@ export default function Page({ params }: { params: Params }) {
       <div className={styles.btnWrapper}>
         <Button
           label="돌아가기"
+          size="xlarge"
           onClick={() => router.push(`/travel/${params.id}/payments`)}
         />
       </div>
