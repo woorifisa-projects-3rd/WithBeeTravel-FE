@@ -32,32 +32,32 @@ export default function page() {
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0, 0] }}
+          animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 0.5,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut', // 부드러운 자연스러움
+            ease: 'easeIn', // 부드러운 자연스러움
           }}
         ></motion.div>
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0, 0] }}
+          animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 0.5,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeIn',
             delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
           }}
         ></motion.div>
         <motion.div
           className={`${styles.loadingDot}`}
           initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0, 0] }}
+          animate={{ y: [0, -10, 0] }}
           transition={{
-            duration: 0.5,
+            duration: 1,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'easeIn',
             delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
           }}
         ></motion.div>
@@ -234,7 +234,7 @@ export default function page() {
                         <Image
                           src={
                             card.travelMainImage
-                              ? `/${card.travelMainImage}`
+                              ? card.travelMainImage
                               : '/imgs/travelselect/travel_exam.png'
                           }
                           alt={card.travelName}

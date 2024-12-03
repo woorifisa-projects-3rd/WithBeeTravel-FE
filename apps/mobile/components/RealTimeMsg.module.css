@@ -7,7 +7,7 @@
     align-items: flex-start;
     z-index: 9999;
     max-width: 430px;
-    width: 99%;
+    width: 100%;
 }
 
 .card {
@@ -17,7 +17,6 @@
     padding: 15px 20px;
     width: 100%;
     position: relative;
-    /* border: 1px solid var(--color-gray-400); */
 }
 
 .closeButton {

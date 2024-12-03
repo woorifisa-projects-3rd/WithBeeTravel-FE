@@ -1,0 +1,104 @@
+.container {
+  /* width: 100%; */
+  height: 100%;
+  font-size: 18px;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 58px);
+  padding: 25px 0;
+  width: 100%;
+  padding-bottom: 35px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.allCheckAgree {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-gray-100);
+  padding-bottom: 10px;
+  gap: 12px;
+}
+
+.consentList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.consentItem:first-of-type {
+  margin-top: 15px;
+}
+
+.consentItem:last-of-type {
+  margin-bottom: 15px;
+}
+
+.consentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.arrow {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-right: 10px;
+}
+
+.arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.termsContent {
+  padding-right: 15px;
+  padding-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-left: 35px;
+}
+
+.termSection {
+  margin-bottom: 10px;
+}
+
+.termSection h3 {
+  font-weight: normal;
+  list-style-type: circle;
+}
+
+.termSection ul {
+  padding-left: 15px;
+}
+
+.termSection li {
+  list-style-type: circle;
+}
+
+.btnWrapper {
+  max-width: 430px;
+  width: 100%;
+  bottom: 100px;
+  padding: 0 25px;
+  left: 50%;
+  transform: translate(-50%);
+  position: fixed;
+}
+
+.btnWrapper button:disabled {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-500);
+  cursor: not-allowed;
+}

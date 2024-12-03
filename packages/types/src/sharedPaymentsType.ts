@@ -18,4 +18,15 @@ export interface ParticipatingMember {
   profileImage: number;
 }
 
+export interface SharedPaymentRecordRequest {
+  paymentImage: File | null;
+  paymentComment: string;
+  isMainImage: boolean;
+}
+
+export interface SharedPaymentRecordResponse {
+  sharedPaymentId: number;
+  paymentImage: string | undefined;
+  paymentComment: string | undefined;
+}
 export type SortBy = 'latest' | 'amount';

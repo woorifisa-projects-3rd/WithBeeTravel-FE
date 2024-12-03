@@ -10,20 +10,42 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.37.4",
+    "@withbee/apis": "workspace:*",
+    "@withbee/auth-config": "workspace:*",
+    "@withbee/exception": "workspace:*",
+    "@withbee/hooks": "workspace:*",
+    "@withbee/styles": "workspace:*",
     "@withbee/ui": "workspace:*",
+    "@withbee/utils": "workspace:*",
+    "chart.js": "^4.4.6",
+    "dayjs": "^1.11.13",
     "next": "14.2.6",
     "next-auth": "5.0.0-beta.25",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-chartjs-2": "^5.2.0",
+    "react-countup": "^6.5.3",
+    "react-dom": "18.3.1",
+    "react-intersection-observer": "^9.13.1",
+    "react-toastify": "^10.0.6",
+    "swr": "^2.2.5",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@withbee/eslint-config": "workspace:*",
+<<<<<<< HEAD
+=======
+    "@withbee/stores": "workspace:*",
+    "@withbee/types": "workspace:*",
+>>>>>>> c250c4d2f4e9a8ea40d83dc5aa3f72b7e60809b8
     "@withbee/typescript-config": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
+    "framer-motion": "^11.11.17",
     "typescript": "5.5.4"
   }
 }

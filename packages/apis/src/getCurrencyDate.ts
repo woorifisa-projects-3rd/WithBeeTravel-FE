@@ -12,7 +12,7 @@ export const getCurrencyData = async (
 
     // 404 에러 발생 시, date를 'latest'로 변경하여 재시도
     if (response.status === 404) {
-      console.log(
+      console.error(
         `Fetch Error: ${date}에 대한 환율 정보 불러오기 실패. 최근 환율 정보를 반환합니다.`,
       );
       response = await fetch(
