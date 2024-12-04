@@ -1,7 +1,12 @@
 'use server';
 
 import { instance } from './instance';
-import { JoinRequest } from '@withbee/types';
+import {
+  ErrorResponse,
+  JoinRequest,
+  MyPageInfoResponse,
+  SuccessResponse,
+} from '@withbee/types';
 
 // 회원가입
 export const join = async ({
@@ -19,6 +24,15 @@ export const join = async ({
     }),
     requireAuth: false,
   });
+
+  return response;
+};
+
+// 마이 페이지
+export const getMyPageInfo = async (): Promise<
+  SuccessResponse<MyPageInfoResponse> | ErrorResponse
+> => {
+  const response = await instance.get<MyPageInfoResponse>('/api/auth/mypage');
 
   return response;
 };

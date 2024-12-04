@@ -1,9 +1,5 @@
-.container {
-  height: 100%;
-}
-
 .mainContent {
-  padding: 25px 0;
+  padding-top: 25px;
   font-size: 18px;
 }
 
@@ -11,7 +7,7 @@
   border-radius: 10px;
   padding: 25px 23px;
   border: 1px solid var(--color-gray-200);
-  margin-bottom: 17px;
+  margin-bottom: 15px;
 }
 
 .summaryHeader {
@@ -56,7 +52,8 @@
 .label {
   margin-right: 4px;
   font-size: 16px;
-  flex-grow: 1; /* label도 늘어나도록 설정 */
+  flex-grow: 1;
+  /* label도 늘어나도록 설정 */
   text-align: left;
 }
 
@@ -115,7 +112,8 @@
 
 .amountColumn {
   display: flex;
-  justify-content: space-between; /* 텍스트와 금액 간 양쪽 정렬 */
+  justify-content: space-between;
+  /* 텍스트와 금액 간 양쪽 정렬 */
   width: 100%;
 }
 
@@ -150,7 +148,7 @@
 .card {
   border-radius: 10px;
   padding: 25px 23px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   border: 1px solid var(--color-gray-200);
 }
 
@@ -187,14 +185,17 @@
 .completedCard::before {
   content: '';
   position: absolute;
-  top: -2px; /* 테두리가 흐릿해 보이도록 경계선 바깥으로 확장 */
+  top: -2px;
+  /* 테두리가 흐릿해 보이도록 경계선 바깥으로 확장 */
   left: -2px;
   right: -2px;
   bottom: -2px;
   background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(229, 231, 235, 0.3);
-  backdrop-filter: blur(2px); /* 배경에 블러 효과 추가 */
-  filter: blur(1px); /* 테두리도 흐릿하게 보이도록 추가 */
+  backdrop-filter: blur(2px);
+  /* 배경에 블러 효과 추가 */
+  filter: blur(1px);
+  /* 테두리도 흐릿하게 보이도록 추가 */
   z-index: 0;
 }
 
@@ -205,7 +206,8 @@
   transform: translate(-50%, -50%);
   font-weight: bold;
   color: black;
-  z-index: 1; /* 텍스트가 블러 배경 위에 나타나도록 설정 */
+  z-index: 1;
+  /* 텍스트가 블러 배경 위에 나타나도록 설정 */
 }
 
 .remainingUsers {
@@ -231,7 +233,8 @@
 
 .disabledButton {
   pointer-events: none;
-  cursor: not-allowed; /* 비활성화 커서 */
+  cursor: not-allowed;
+  /* 비활성화 커서 */
   max-width: 340px;
   width: 100%;
   bottom: 10px;
@@ -242,8 +245,12 @@
 }
 
 .storeName {
-  white-space: nowrap; /* 텍스트를 한 줄로 제한 */
-  overflow: hidden; /* 넘치는 부분은 잘라냄 */
-  text-overflow: ellipsis; /* 잘린 텍스트 뒤에 '...'을 추가 */
-  max-width: 13ch; /* 13자까지만 표시 */
+  white-space: nowrap;
+  /* 텍스트를 한 줄로 제한 */
+  overflow: hidden;
+  /* 넘치는 부분은 잘라냄 */
+  text-overflow: ellipsis;
+  /* 잘린 텍스트 뒤에 '...'을 추가 */
+  max-width: 13ch;
+  /* 13자까지만 표시 */
 }

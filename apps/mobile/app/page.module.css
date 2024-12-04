@@ -1,5 +1,6 @@
 .container {
   padding-bottom: 70px;
+  margin: 0px -10px;
 }
 
 .title {
@@ -16,7 +17,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 20px 0px;
+  margin: 15px 0px 25px;
 }
 
 .withbeeCardWrap::before {
@@ -40,9 +41,10 @@
 }
 
 .benefitCard {
+  width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   border: 1.5px solid var(--color-gray-200);
   display: flex;
   align-items: flex-start;
@@ -65,7 +67,7 @@
   max-width: 430px;
   width: 100%;
   bottom: 50px;
-  padding: 0 25px 20px;
+  padding: 0 15px 20px;
   left: 50%;
   transform: translate(-50%);
   position: fixed;

@@ -1,6 +1,7 @@
 .container {
   padding-top: 30px;
   padding-bottom: 100px;
+  margin: 0 -10px;
 }
 
 .form {
@@ -160,8 +161,8 @@
 .btnWrap {
   width: 100%;
   max-width: 430px;
-  padding: 0px 25px;
-  bottom: 100px;
+  padding: 0px 15px;
+  bottom: 90px;
   position: fixed;
   left: 50%;
   transform: translate(-50%);
