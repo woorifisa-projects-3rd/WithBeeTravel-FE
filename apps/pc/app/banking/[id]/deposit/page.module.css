@@ -3,12 +3,11 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  position: relative;
+  padding-top: 35px;
 }
 
 .main {
   flex: 1;
-  padding-top: 20px;
 }
 
 /* 금액 입력 영역 */
