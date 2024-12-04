@@ -96,9 +96,6 @@ importers:
       event-source-polyfill:
         specifier: ^1.0.31
         version: 1.0.31
-      lucide-react:
-        specifier: ^0.462.0
-        version: 0.462.0(react@18.3.1)
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
@@ -208,12 +205,9 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-<<<<<<< HEAD
-=======
       event-source-polyfill:
         specifier: ^1.0.31
         version: 1.0.31
->>>>>>> 1d84b54d67f7a1fd1cbb258b2ce7d0b8afc36afa
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
