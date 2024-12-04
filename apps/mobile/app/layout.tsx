@@ -4,6 +4,8 @@ import '@withbee/styles/global.css';
 import './global.css';
 import MobileFooter from '../components/MobileFooter';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
+import RealtIimeMsg from '../components/RealTimeMsg';
+import { SessionProvider } from 'next-auth/react';
 
 const pretendard = localFont({
   src: 'fonts/PretendardVariable.woff2',
@@ -29,9 +31,12 @@ export default function RootLayout({
     <html lang="ko" className="layout">
       <body className={pretendard.variable}>
         <div className="mobile">
-          <CustomToastContainer />
-          {children}
-          <MobileFooter />
+          <SessionProvider>
+            <RealtIimeMsg />
+            <CustomToastContainer />
+            {children}
+            <MobileFooter />
+          </SessionProvider>
         </div>
       </body>
     </html>

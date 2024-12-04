@@ -22,6 +22,8 @@ function TravelFormContent() {
       formData.travelEndDate,
     );
 
+    console.log(response);
+
     if ('data' in response && response.data?.travelId) {
       showToast.success({ message: '여행이 성공적으로 생성되었습니다.' });
       router.push(`/travel/${response.data.travelId}`);
