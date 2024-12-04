@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             <div className={styles.dashboardCard}>
               <h3>여행 관리</h3>
               <p>총 생성 여행: {tripCount}건</p>
-              <Link href="/trip-management" className={styles.cardLink}>관리하기</Link>
+              <Link href="/travel-management" className={styles.cardLink}>관리하기</Link>
             </div>
           </div>
         </main>
