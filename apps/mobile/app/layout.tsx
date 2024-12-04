@@ -6,9 +6,10 @@ import MobileFooter from '../components/MobileFooter';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
 
 const pretendard = localFont({
-  src: 'fonts/PretendardVariable.ttf',
+  src: 'fonts/PretendardVariable.woff2',
+  display: 'swap',
   variable: '--font-pretendard',
-  weight: '100 300 400 500 700 900',
+  weight: '45 920',
 });
 
 export const metadata: Metadata = {
