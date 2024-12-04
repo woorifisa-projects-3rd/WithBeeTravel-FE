@@ -1,9 +1,11 @@
 .mobile {
   max-width: 430px;
   margin: 0 auto;
-  padding: 0 25px;
+  padding: 0 15px;
   padding-bottom: 80px;
   position: relative;
+  overflow: hidden;
+  padding-top: 50px;
 }
 
 .layout {

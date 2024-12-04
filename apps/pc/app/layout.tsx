@@ -4,6 +4,7 @@ import '@withbee/styles/global.css';
 import './globals.css';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
 import { SessionProvider } from 'next-auth/react';
+import RealtIimeMsg from '../components/RealTimeMsg';
 import Header from '../components/Header';
 
 const pretendard = localFont({
@@ -31,6 +32,7 @@ export default function RootLayout({
         <div className="pc">
           <SessionProvider>
             <Header />
+            <RealtIimeMsg />
             <CustomToastContainer />
             {children}
           </SessionProvider>
