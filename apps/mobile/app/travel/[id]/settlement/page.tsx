@@ -1,7 +1,6 @@
 import styles from './page.module.css';
 import '@withbee/styles';
 import { Title } from '@withbee/ui/title';
-import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
@@ -12,8 +11,15 @@ import { redirect } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import OtherExpenseDetails from '../../../../components/OtherExpenseDetails';
+import ModalWrapper from '../../../../components/ModalWrapper';
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: { [key: string]: string };
+}) {
   const travelId = Number(params.id);
   const { showToast } = useToast();
 
@@ -40,6 +46,8 @@ export default async function Page({ params }: { params: Params }) {
     myDetailPayments,
     others,
   } = response.data as SettlementDetails;
+
+  const isModalOpen = searchParams['cancel'] === 'true'; // URL 파라미터로 모달 열기 여부를 결정
 
   return (
     <div className={styles.container}>
@@ -102,8 +110,19 @@ export default async function Page({ params }: { params: Params }) {
               <Button label="동의하기" />
             </Link>
           )}
-          {!myTotalPayment.agreed && <ModalWrapper travelId={params.id} />}
+
+          {!myTotalPayment.agreed && (
+            <Link
+              href={{
+                pathname: `/travel/${params.id}/settlement`,
+                query: { cancel: 'true' }, // 모달을 여는 URL 파라미터
+              }}
+            >
+              <Button label="정산 취소하기" primary={false} />
+            </Link>
+          )}
         </div>
+        {isModalOpen && <ModalWrapper travelId={travelId} />}
       </div>
     </div>
   );
