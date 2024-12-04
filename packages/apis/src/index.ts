@@ -8,3 +8,4 @@ export * from './notificationService';
 export * from './inviteCode';
 export * from './authService';
 export * from './bankingService';
+export * from './adminService';
