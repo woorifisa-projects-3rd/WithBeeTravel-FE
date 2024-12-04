@@ -40,6 +40,10 @@
   transition: transform 0.3s ease;
 }
 
+.image[alt='우리닷컴통장'] {
+  padding-top: 15px;
+}
+
 .textContainer {
   text-align: center;
   width: 100%;

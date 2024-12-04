@@ -1,73 +1,153 @@
+/* AccountSelection.module.css */
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto 40px;
+  padding: 0 8px;
+  position: relative;
 }
 
 .swipeContainer {
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  gap: 30px;
+  overflow: visible;
+  margin-bottom: 10px;
+  cursor: grab;
+  transform-style: preserve-3d;
+}
+
+.swipeContainer:active {
+  cursor: grabbing;
+}
+
+.swipeContainer:focus {
+  outline: none;
 }
 
 .cardSelected {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease-in-out;
-  z-index: 2; /* 가운데 항목이 항상 위에 오도록 */
-  transform: scale(0.9); /* 선택된 항목은 정상 크기 */
-  padding: 12px;
-  border-radius: 30;
+  transform: scale(1.1);
+  z-index: 2;
+  transition: all 0.3s ease;
+  will-change: transform;
 }
 
 .cardPreview {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  opacity: 0.5; /* 미리보기 항목은 흐리게 표시 */
-  border-radius: 30;
+  opacity: 0.5;
+  transform: scale(0.7);
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
 
+.left {
+  margin-right: -40px;
+}
+
+.right {
+  margin-left: -40px;
 }
 
 .imageContainer {
-  width: 120px;
-  height: 180px;
+  width: 140px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.image[alt='우리닷컴통장'] {
+  padding-top: 15px;
 }
 
 .textContainer {
   text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  padding-top: 14px;
 }
 
 .title {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--color-gray-900);
 }
 
 .des {
+  font-size: 16px;
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+.swipeGuideWrapper {
+  position: absolute;
+  bottom: -62px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  min-width: 160px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  will-change: transform;
+}
+
+.swipeGuide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  color: var(--color-gray-600);
+}
+
+.swipeGuide span {
   font-size: 14px;
-  color: gray;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
 }
 
-
-.button {
-  margin-top: 15px;
+.swipeIcon {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-gray-500);
 }
 
-.cardSelected,
-.cardPreview {
-  transition: transform 0.3s ease;
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-.cardPreview.left {
-  transform: scale(0.5)  rotate(-10deg); /* 왼쪽 미리보기 카드 기울기 */
+.arrowButton:hover {
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-9);
 }
 
-.cardPreview.right {
-  transform: scale(0.5)rotate(10deg); /* 오른쪽 미리보기 카드 기울기 */
+.arrowButton:active {
+  transform: scale(0.95);
 }
-
