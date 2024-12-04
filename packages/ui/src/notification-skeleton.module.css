@@ -19,12 +19,24 @@
 }
 
 .skeletonLogTime {
-  width: 120px;
+  /* width: 120px; */
   height: 14px;
   border-radius: 4px;
   background-color: var(--color-gray-100); /* 살짝 어두운 그레이 */
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 960px) {
+  .skeletonLogTime {
+    width: 280px; /* PC에서는 일정 너비로 설정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .skeletonLogTime {
+    width: 280px; /* PC에서는 일정 너비로 설정 */
+  }
 }
 
 .skeletonContent {
