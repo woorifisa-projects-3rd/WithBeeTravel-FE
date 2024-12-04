@@ -88,18 +88,7 @@ export default async function Page({ params }: { params: Params }) {
             <ExpenseDetails myDetailPayments={myDetailPayments} />
           </div>
         </div>
-        <OtherExpenseDetails others={others} />
-        <div
-          className={
-            myTotalPayment.agreed
-              ? styles.remainingUsersCompleted
-              : styles.remainingUsers
-          }
-        >
-          <span>정산 완료까지 남은 인원 : </span>
-          <strong>{disagreeCount}</strong>
-          <span>명</span>
-        </div>
+        <OtherExpenseDetails others={others} disagreeCount={disagreeCount} />
         <div className={styles.btnWrapper}>
           {myTotalPayment.agreed ? (
             <Button

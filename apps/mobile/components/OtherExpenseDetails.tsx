@@ -4,7 +4,29 @@ import { AnimatePresence, motion } from 'framer-motion';
 import styles from './../app/travel/[id]/settlement/page.module.css';
 import Image from 'next/image';
 
-export default function OtherExpenseDetails({ others }: { others: any }) {
+export default function OtherExpenseDetails({
+  others,
+  disagreeCount,
+}: {
+  others: any;
+  disagreeCount: number;
+}) {
+  const parentVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // 자식 요소를 순차적으로 애니메이션
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  };
+
   return (
     <AnimatePresence>
       <div className={styles.userList}>
@@ -13,15 +35,7 @@ export default function OtherExpenseDetails({ others }: { others: any }) {
           initial="hidden"
           animate="visible"
           exit="hidden"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1, // 자식 요소가 순차적으로 나타나게 하는 설정
-              },
-            },
-          }}
+          variants={parentVariants}
         >
           {others
             .sort((a: { agreed: boolean }, b: { agreed: boolean }) => {
@@ -39,16 +53,10 @@ export default function OtherExpenseDetails({ others }: { others: any }) {
                   className={`${styles.card} ${
                     user.agreed ? styles.completedCard : styles.userCard
                   }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  variants={childVariants}
                   transition={{
                     duration: 0.7,
                     ease: 'easeInOut',
-                  }}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
                   }}
                 >
                   <div className={styles.userRow}>
@@ -68,7 +76,9 @@ export default function OtherExpenseDetails({ others }: { others: any }) {
                           ? `+${user.totalPaymentCost?.toLocaleString()}원`
                           : `${user.totalPaymentCost?.toLocaleString()}원`}
                       </span>
-                      <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
+                      <span className="suffixText">{`을 ${
+                        user.totalPaymentCost >= 0 ? '받아요' : '보내요'
+                      }`}</span>
                     </span>
                   </div>
                   {user.agreed && (
@@ -84,6 +94,18 @@ export default function OtherExpenseDetails({ others }: { others: any }) {
                 </motion.li>
               ),
             )}
+          <motion.div
+            className={styles.remainingUsers}
+            variants={childVariants}
+            transition={{
+              duration: 0.5,
+              ease: 'easeInOut',
+            }}
+          >
+            <span>정산 완료까지 남은 인원 : </span>
+            <strong>{disagreeCount}</strong>
+            <span>명</span>
+          </motion.div>
         </motion.ul>
       </div>
     </AnimatePresence>
