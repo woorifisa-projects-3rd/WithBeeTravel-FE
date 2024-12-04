@@ -1,5 +1,6 @@
 .container {
   padding-bottom: 70px;
+  margin: 0px -10px;
 }
 
 .title {
@@ -40,6 +41,7 @@
 }
 
 .benefitCard {
+  width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
   margin-bottom: 14px;
