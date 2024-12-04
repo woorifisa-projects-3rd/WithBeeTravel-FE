@@ -162,7 +162,9 @@ export const ManualSharedPaymentForm = ({
             onClick={() => setIsDateModalOpen(true)}
           >
             <p className={formData.date === '' ? styles.emptyInput : ''}>
-              {formData.date === '' ? '년-월-일' : formData.date}
+              {formData.date === ''
+                ? '결제 일자를 입력해주세요.'
+                : formData.date}
             </p>
             <span className={styles.customIcon}>
               <Image
@@ -190,7 +192,9 @@ export const ManualSharedPaymentForm = ({
             onClick={() => setIsTimeModalOpen(true)}
           >
             <p className={formData.time === '' ? styles.emptyInput : ''}>
-              {formData.time === '' ? '오전 00:00' : formData.time}
+              {formData.time === ''
+                ? '결제 시간을 입력해주세요.'
+                : formData.time}
             </p>
             <span className={styles.customIcon}>
               <Image

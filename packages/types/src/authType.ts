@@ -23,3 +23,10 @@ export interface TokenResponse {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface MyPageInfoResponse {
+  profileImage: number;
+  username: string;
+  accountProduct: string;
+  accountNumber: string;
+}
