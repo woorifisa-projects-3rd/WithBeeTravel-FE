@@ -1,0 +1,33 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 960px;
+  width: 100vw;
+  box-shadow: rgba(99, 99, 99, 0.08) 0px 2px 8px 0px;
+  height: 60px;
+  padding: 0 calc((100vw - 960px) / 2);
+}
+
+.header h1 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.nav {
+  height: 100%;
+}
+
+.menuList {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-gray-900);
+}

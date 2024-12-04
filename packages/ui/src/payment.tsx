@@ -19,6 +19,8 @@ import { chooseParticipants } from '@withbee/apis';
 
 dayjs.locale('ko'); // 한글 로케일 설정
 
+const formatPrice = new Intl.NumberFormat('ko-KR');
+
 interface PaymentProps {
   travelId: number;
   paymentInfo: SharedPayment;
@@ -108,7 +110,7 @@ export const Payment = ({
     <article className={styles.payment}>
       <FriendImage
         src={paymentInfo.adderProfileIcon}
-        size={50}
+        size={47}
         className={styles.friendImage}
       />
       <div
@@ -120,7 +122,7 @@ export const Payment = ({
               {dayjs(paymentInfo.paymentDate).format('HH:mm')}
             </span>
             <b className={styles.price}>
-              {paymentInfo.paymentAmount}원{' '}
+              {formatPrice.format(paymentInfo.paymentAmount)}원{' '}
               {!isDomesticTravel && (
                 <>
                   ({paymentInfo.foreignPaymentAmount}

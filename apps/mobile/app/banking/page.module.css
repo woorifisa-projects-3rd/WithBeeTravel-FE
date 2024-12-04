@@ -62,6 +62,7 @@
   border-radius: 10px; /* 둥근 모서리 */
   margin-bottom: 15px; /* 각 항목 간 간격 */
   border: 1px solid var(--color-gray-200); /* 테두리 */
+  cursor: pointer; /* 마우스 커서를 포인터로 변경 */
 }
 
 .transactionInfo {

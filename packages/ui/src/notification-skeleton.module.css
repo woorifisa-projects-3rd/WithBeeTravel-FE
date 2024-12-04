@@ -1,0 +1,49 @@
+.skeletonWrapper {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skeletonLogTime {
+  height: 16px;
+  width: 100%; /* 더 넓게 설정 */
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.skeletonCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonLogTitle,
+.skeletonLogMessage {
+  height: 20px;
+  background-color: var(--color-gray-300);
+  border-radius: 4px;
+  width: 80%;
+}
+
+.skeletonLogTitle {
+  height: 24px;
+}
+
+.skeletonLogMessage {
+  height: 16px;
+  width: 100%;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+}

@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import styles from './PinNumberModal.module.css';
 import { getUserState, verifyPin } from '@withbee/apis';
@@ -12,15 +11,6 @@ interface PinNumberModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (pin: string) => void;
-}
-
-interface PinNumberRequest {
-  pinNumber: string;
-}
-
-interface PinNumberResponse {
-  failedPinCount: number;
-  pinLocked: boolean;
 }
 
 const PinNumberModal: React.FC<PinNumberModalProps> = ({
