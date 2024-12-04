@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   min-width: 960px;
-  width: 100vw;
+  width: 100%;
   box-shadow: rgba(99, 99, 99, 0.08) 0px 2px 8px 0px;
   height: 60px;
   padding: 0 calc((100vw - 960px) / 2);

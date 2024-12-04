@@ -22,6 +22,7 @@ body {
   -webkit-font-size-adjust: none;
   -o-font-size-adjust: none;
   -moz-font-size-adjust: none;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 body,
@@ -36,6 +37,7 @@ button {
   word-break: keep-all;
   word-wrap: break-word;
   letter-spacing: 0.24px;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 caption {
