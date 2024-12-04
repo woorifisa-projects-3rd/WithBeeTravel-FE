@@ -5,7 +5,6 @@ import type {
   PageResponse,
   SharedPayment,
   SortBy,
-  SharedPaymentRecordRequest,
   SharedPaymentRecordResponse,
   SuccessResponse,
   ErrorResponse,
@@ -45,10 +44,12 @@ export const getSharedPayments = async ({
   const response = await instance.get<PageResponse<SharedPayment>>(
     `/api/travels/${travelId}/payments?${searchParams.toString()}`,
     {
-      cache: 'no-cache',
+      next: {
+        tags: [`sharedPayments-${travelId}`],
+        revalidate: 0,
+      },
     },
   );
-
   return response;
 };
 

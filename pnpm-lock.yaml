@@ -63,6 +63,9 @@ importers:
       '@auth/core':
         specifier: ^0.37.4
         version: 0.37.4
+      '@types/event-source-polyfill':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@withbee/apis':
         specifier: workspace:*
         version: link:../../packages/apis
@@ -90,6 +93,12 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      event-source-polyfill:
+        specifier: ^1.0.31
+        version: 1.0.31
+      lucide-react:
+        specifier: ^0.462.0
+        version: 0.462.0(react@18.3.1)
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
@@ -169,6 +178,9 @@ importers:
       '@auth/core':
         specifier: ^0.37.4
         version: 0.37.4
+      '@types/event-source-polyfill':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@withbee/apis':
         specifier: workspace:*
         version: link:../../packages/apis
@@ -196,6 +208,12 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+<<<<<<< HEAD
+=======
+      event-source-polyfill:
+        specifier: ^1.0.31
+        version: 1.0.31
+>>>>>>> 1d84b54d67f7a1fd1cbb258b2ce7d0b8afc36afa
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
@@ -351,6 +369,9 @@ importers:
 
   packages/apis:
     dependencies:
+      event-source-polyfill:
+        specifier: ^1.0.31
+        version: 1.0.31
       next:
         specifier: 14.2.6
         version: 14.2.6(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -361,6 +382,9 @@ importers:
       '@types/eslint':
         specifier: ^8.56.5
         version: 8.56.12
+      '@types/event-source-polyfill':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@types/node':
         specifier: ^20.11.24
         version: 20.17.6
@@ -2076,6 +2100,9 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
+  '@types/event-source-polyfill@1.0.5':
+    resolution: {integrity: sha512-iaiDuDI2aIFft7XkcwMzDWLqo7LVDixd2sR6B4wxJut9xcp/Ev9bO4EFg4rm6S9QxATLBj5OPxdeocgmhjwKaw==}
+
   '@types/glob@7.2.0':
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
 
@@ -3457,6 +3484,9 @@ packages:
   esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
+
+  event-source-polyfill@1.0.31:
+    resolution: {integrity: sha512-4IJSItgS/41IxN5UVAVuAyczwZF7ZIEsM1XAoUzIHA6A+xzusEZUutdXz2Nr+MQPLxfTiCvqE79/C8HT8fKFvA==}
 
   event-target-shim@5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
@@ -7315,6 +7345,8 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
+  '@types/event-source-polyfill@1.0.5': {}
+
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
@@ -9150,6 +9182,8 @@ snapshots:
       '@types/estree': 1.0.6
 
   esutils@2.0.3: {}
+
+  event-source-polyfill@1.0.31: {}
 
   event-target-shim@5.0.1: {}
 
