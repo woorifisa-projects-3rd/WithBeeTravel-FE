@@ -25,3 +25,25 @@ export interface DashboardResponse {
   totalUser: number;
   totalTravel: number;
 }
+
+export interface User {
+  userId: number;
+  userEmail: string;
+  userName: string;
+  userPinLocked: boolean;
+  userRoleType: string;
+  createAt: string;
+  recentLogin: string;
+}
+
+export interface UserResponse {
+  userId: number;
+  userEmail: string;
+  userName: string;
+  userPinLocked: boolean;
+  userRoleType: string;
+  createAt: string | number | Date;
+  recentLogin: string | number | Date;
+  content: User[];
+  pageable: Pageable;
+}
