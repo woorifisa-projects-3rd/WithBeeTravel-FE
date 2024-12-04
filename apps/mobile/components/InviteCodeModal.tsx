@@ -88,7 +88,7 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     try {
       window.Kakao.Share.sendDefault({
         objectType: 'text',
-        text: `초대 코드: ${inputValue}`,
+        text: `초대 코드: ${inputValue}\n\n📋 아래 버튼을 눌러 초대 코드를 복사하세요.`,
         link: {
           // 웹페이지 링크 (선택사항)
           webUrl: window.location.href,
@@ -96,11 +96,15 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
         },
         buttons: [
           {
-            title: '초대 코드 보기',
+            title: '초대 코드 입력하러 가기',
             link: {
               webUrl: window.location.href,
               mobileWebUrl: window.location.href,
-            },
+              ...((window.Kakao?.Share as any)?.androidExecutionParams && {
+                androidExecutionParams: `copyCode=${inputValue}`,
+                iosExecutionParams: `copyCode=${inputValue}`,
+              }),
+            } as any, // 타입 단언 사용
           },
         ],
       });
