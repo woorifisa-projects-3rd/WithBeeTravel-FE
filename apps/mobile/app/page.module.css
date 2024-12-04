@@ -1,5 +1,6 @@
 .container {
   padding-bottom: 70px;
+  margin: 0px -10px;
 }
 
 .title {
@@ -66,7 +67,7 @@
   max-width: 430px;
   width: 100%;
   bottom: 50px;
-  padding: 0 20px 20px;
+  padding: 0 15px 20px;
   left: 50%;
   transform: translate(-50%);
   position: fixed;
