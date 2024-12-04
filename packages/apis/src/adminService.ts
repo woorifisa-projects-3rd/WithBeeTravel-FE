@@ -5,6 +5,7 @@ import {
   ErrorResponse,
   LoginLogResponse,
   SuccessResponse,
+  UserResponse,
 } from '@withbee/types';
 import { instance } from './instance';
 
@@ -12,9 +13,8 @@ export const getLoginLogs = async (
   page: number,
   size: number,
   loginLogType: string,
-  userId: number, // userId는 필수
+  userId: number,
 ): Promise<SuccessResponse<LoginLogResponse> | ErrorResponse> => {
-  // 로그인 로그 타입이 "ALL"일 경우 loginLogType 파라미터를 제외하고 쿼리 생성
   const url =
     loginLogType === 'ALL'
       ? `/api/admin/logs/all?userId=${userId}&page=${page}&size=${size}` // loginLogType이 "ALL"인 경우
@@ -35,7 +35,27 @@ export const getLoginLogs = async (
 export const getAdminDashbord = async (): Promise<
   SuccessResponse<DashboardResponse> | ErrorResponse
 > => {
-  const response = instance.get<DashboardResponse>(`/api/admin`, {
+  const response = instance.get<DashboardResponse>(`/api/admin/`, {
+    requireAuth: false,
+  });
+  return response;
+};
+
+export const getUserList = async (
+  page: number,
+  size: number,
+  name?: string,
+): Promise<SuccessResponse<UserResponse> | ErrorResponse> => {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+  });
+
+  if (name) {
+    params.append('name', name);
+  }
+  const url = `/api/admin/users?${params.toString()}`;
+  const response = instance.get<UserResponse>(url, {
     requireAuth: false,
   });
   return response;
