@@ -75,9 +75,15 @@ const AdminPage = () => {
             <input
               type="text"
               id="userId"
-              value={userId}
-              onChange={(e) => setUserId(Number(e.target.value))}
-              placeholder="사용자 ID 입력"
+              value={userId||''}
+              onChange={(e) => {
+                const value = e.target.value;
+                // 숫자만 입력되도록 제한
+                if (/^\d*$/.test(value)) {  //@ts-ignore
+                  setUserId(value ? Number(value) : ''); // 입력값이 있으면 숫자로 변환
+                }
+              }}
+              placeholder="사용자 코드 입력"
             />
           </div>
 
