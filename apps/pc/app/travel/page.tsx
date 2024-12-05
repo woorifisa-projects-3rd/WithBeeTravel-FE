@@ -1,6 +1,5 @@
 'use client';
 import styles from './page.module.css';
-import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import { useState } from 'react';
@@ -83,12 +82,13 @@ export default function page() {
           })
       : [];
 
+  const formatDday = (dDay: number) => (dDay === 0 ? 'D-DAY' : `D-${dDay}`);
   const upcomingTravels = sortedTravelData.filter((card) => card.dDay >= 0);
   const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택" />
+      <p className={styles.title}>여행 선택</p>
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
@@ -112,9 +112,9 @@ export default function page() {
               src="/imgs/travelselect/travel_select_plane.png"
               alt="비행기 아이콘"
               className={styles.icon}
-              width={50}
-              height={50}
-              layout="intrinsic"
+              width={80}
+              height={80}
+              quality={100}
             />
           </div>
         </button>
@@ -156,41 +156,44 @@ export default function page() {
             {/* 다가오는 여행 렌더링 */}
             {upcomingTravels.length > 0 && (
               <>
-                {upcomingTravels.map((card, index) => (
-                  <div key={index}>
-                    <div className={styles.cardDay}>
-                      <span>
-                        다가오는 여행 <span>D-{card.dDay}</span>
-                      </span>
-                    </div>
-                    <div className={styles.card}>
-                      <Link href={`/travel/${card.travelId}`}>
-                        <Image
-                          src={
-                            card.travelMainImage
-                              ? `/${card.travelMainImage}`
-                              : '/imgs/travelselect/travel_exam.png'
-                          }
-                          alt={card.travelName}
-                          className={styles.cardImage}
-                          width={300}
-                          height={100}
-                        />
-                        <div className={styles.cardContent}>
-                          <div className={styles.cardText}>
-                            <FriendImage src={card.profileImage} />
-                            <div className={styles.travelNameWrap}>
-                              <span>{card.travelName}</span>
-                              <span className={styles.date}>
-                                {card.travelStartDate} ~ {card.travelEndDate}
-                              </span>
+                <div className={styles.cardDay}>
+                  <span className={styles.cardTitle}>다가오는 여행</span>
+                </div>
+                <div className={styles.gridWrap}>
+                  {upcomingTravels.map((card, index) => (
+                    <div key={index}>
+                      <div className={styles.card}>
+                        <Link href={`/travel/${card.travelId}`}>
+                          <Image
+                            src={
+                              card.travelMainImage
+                                ? `/${card.travelMainImage}`
+                                : '/imgs/travelselect/travel_exam.png'
+                            }
+                            alt={card.travelName}
+                            className={styles.cardImage}
+                            width={300}
+                            height={100}
+                          />
+                          <div className={styles.cardContent}>
+                            <div className={styles.cardText}>
+                              <FriendImage src={card.profileImage} />
+                              <div className={styles.travelNameWrap}>
+                                <div className={styles.cardTextTopWrap}>
+                                  <span>{card.travelName}</span>
+                                  <span>{formatDday(card.dDay)}</span>
+                                </div>
+                                <span className={styles.date}>
+                                  {card.travelStartDate} ~ {card.travelEndDate}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </>
             )}
 
@@ -198,38 +201,40 @@ export default function page() {
             {pastTravels.length > 0 && (
               <>
                 <div className={styles.cardDay}>
-                  <span>지난 여행</span>
+                  <span className={styles.cardTitle}>지난 여행</span>
                 </div>
-                {pastTravels.map((card, index) => (
-                  <div key={index}>
-                    <div className={styles.card}>
-                      <Link href={`/travel/${card.travelId}`}>
-                        <Image
-                          src={
-                            card.travelMainImage
-                              ? `/${card.travelMainImage}`
-                              : '/imgs/travelselect/travel_exam.png'
-                          }
-                          alt={card.travelName}
-                          className={styles.cardImage}
-                          width={300}
-                          height={100}
-                        />
-                        <div className={styles.cardContent}>
-                          <div className={styles.cardText}>
-                            <FriendImage src={card.profileImage} />
-                            <div className={styles.travelNameWrap}>
-                              <span>{card.travelName}</span>
-                              <span className={styles.date}>
-                                {card.travelStartDate} ~ {card.travelEndDate}
-                              </span>
+                <div className={styles.gridWrap}>
+                  {pastTravels.map((card, index) => (
+                    <div key={index}>
+                      <div className={styles.card}>
+                        <Link href={`/travel/${card.travelId}`}>
+                          <Image
+                            src={
+                              card.travelMainImage
+                                ? `/${card.travelMainImage}`
+                                : '/imgs/travelselect/travel_exam.png'
+                            }
+                            alt={card.travelName}
+                            className={styles.cardImage}
+                            width={300}
+                            height={100}
+                          />
+                          <div className={styles.cardContent}>
+                            <div className={styles.cardText}>
+                              <FriendImage src={card.profileImage} />
+                              <div className={styles.travelNameWrap}>
+                                <span>{card.travelName}</span>
+                                <span className={styles.date}>
+                                  {card.travelStartDate} ~ {card.travelEndDate}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </>
             )}
           </div>
