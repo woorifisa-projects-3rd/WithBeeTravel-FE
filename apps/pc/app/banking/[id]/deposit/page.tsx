@@ -7,12 +7,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { deposit, getAccountInfo } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-// import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
-
+import Keyboard from '@withbee/ui/keyboard';
 import { AccountInfo } from '@withbee/types';
 import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
-const MAX_DEPOSIT_AMOUNT = 500000000; // 5억원
+const MAX_DEPOSIT_AMOUNT = 500000000; // 최대 입금 가능 금액
 
 export default function DepositPage() {
   const router = useRouter();
@@ -47,7 +46,7 @@ export default function DepositPage() {
       if (parseInt(newAmount) <= MAX_DEPOSIT_AMOUNT) {
         setAmount(newAmount); // 5억원 이하일 경우 입력
       } else {
-        showToast.error({ message: '최대 5억원까지 입금 가능합니다.' });
+        showToast.error({ message: '최대 입금 가능 금액을 초과했어요.' });
       }
     }
   };
@@ -59,10 +58,6 @@ export default function DepositPage() {
       return;
     }
 
-    const DepositRequest = {
-      amount: amount,
-      rqspeNm: '입금',
-    };
     try {
       const response = await deposit(
         Number(myAccountId),
@@ -79,101 +74,82 @@ export default function DepositPage() {
     }
   };
 
-  const renderKeyboard = () => (
-    <motion.div
-      className={styles.keyboard}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.4 }} // Slight delay for smooth entry
-    >
-      {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', '←'].map(
-        (key) => (
-          <button
-            key={key}
-            className={styles.keyboardKey}
-            onClick={() => handleNumberPress(key === '←' ? 'backspace' : key)}
-          >
-            {key}
-          </button>
-        ),
-      )}
-    </motion.div>
-  );
-
-  const renderAmountInput = () => (
-    <motion.div
-      className={styles.amountContainer}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }} // Smooth animation for amount input
-    >
-      <div className={styles.accountInfo}>
-        <h2>내 계좌</h2>
-        {accountInfo ? (
-          <motion.p
-            className={styles.balance}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {accountInfo.product}{' '}
-            <motion.span
-              className={styles.balanceAmount}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-            >
-              ₩ {accountInfo.balance.toLocaleString()}
-            </motion.span>
-          </motion.p>
-        ) : (
-          <p style={{ height: '32px' }}> </p>
-        )}
-      </div>
-      <div className={styles.amountDisplay}>
-        {amount ? (
-          <>
-            <span className={styles.currency}>₩</span>
-            <span className={styles.amount}>
-              {parseInt(amount).toLocaleString()}
-            </span>
-          </>
-        ) : (
-          <motion.span
-            className={styles.placeholder}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            얼마나 입금할까요?
-          </motion.span>
-        )}
-        <p className={styles.won} style={{ height: '36px' }}>
-          {numberToKorean(Number(amount))} 
-        </p>
-      </div>{' '}
-      {/* 한글 변환 결과 */}
-    </motion.div>
-  );
-
   return (
     <div className={styles.container}>
-      <Title label="입금하기" />
+      {/* <h2 className="title">입금하기</h2> */}
 
-      <main className={styles.main}>{renderAmountInput()}</main>
+      <main className={styles.main}>
+        <motion.div
+          className={styles.amountContainer}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }} // Smooth animation for amount input
+        >
+          <div className={styles.accountInfo}>
+            <h2>
+              내 {accountInfo?.product} 계좌<span>에</span>
+            </h2>
+            {accountInfo ? (
+              <motion.p
+                className={styles.balance}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.span
+                  className={styles.balanceAmount}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
+                  잔액: {accountInfo.balance.toLocaleString()}원
+                </motion.span>
+              </motion.p>
+            ) : (
+              <p style={{ height: '32px' }}> </p>
+            )}
+          </div>
+          <div className={styles.amountDisplay}>
+            {amount ? (
+              <>
+                <span className={styles.currency}>₩ </span>
+                <span className={styles.amount}>
+                  {parseInt(amount).toLocaleString()}
+                </span>
+              </>
+            ) : (
+              <motion.span
+                className={styles.placeholder}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              >
+                얼마나 입금할까요?
+              </motion.span>
+            )}
+            <p className={styles.won} style={{ height: '36px' }}>
+              {numberToKorean(Number(amount))}
+            </p>
+          </div>{' '}
+          {/* 한글 변환 결과 */}
+        </motion.div>
+      </main>
 
-      <div className={styles.actions}>{renderKeyboard()}</div>
-
-      <div className={styles.handleSendMoney}>
-        {amount && (
+      <div className={styles.keyboardContainer}>
+        <Keyboard onKeyPress={handleNumberPress} />
+        <div className={styles.handleSendMoney}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.5 }}
           >
-            <Button label="입금하기" onClick={handleSendMoney} />
+            <Button
+              label="입금하기"
+              onClick={handleSendMoney}
+              disabled={!amount}
+            />
           </motion.div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <header>
-        <Title label="회원가입" />
+        <h2 className="title">회원가입</h2>
       </header>
       <div className={styles.content}>
         <JoinForm />

@@ -33,10 +33,16 @@ export default function Page() {
     },
   );
 
-  if (notificationError) {
-    router.push('/not-found');
-    return null;
-  }
+  if (notificationError)
+    return (
+      <div className={styles.loadingContainer}>
+        <motion.div
+          className={styles.loadingSpinner}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+    );
 
   const isLoading = !notifications && !notificationError; // 로딩 상태 확인
 

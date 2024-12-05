@@ -15,3 +15,4 @@ type AuthResultType = {
 export const { handlers, signIn, signOut, auth }: AuthResultType = authConfig;
 
 export type * from '../types/next-auth';
+export * from './instance';
