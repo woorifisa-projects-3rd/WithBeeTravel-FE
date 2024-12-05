@@ -284,8 +284,8 @@ const CardIssuancePage = () => {
                 src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="발급된 카드"
                 className={styles.completeCardImg}
-                width={140}
-                height={210}
+                width={130}
+                height={200}
                 quality={100}
               />
             </motion.div>

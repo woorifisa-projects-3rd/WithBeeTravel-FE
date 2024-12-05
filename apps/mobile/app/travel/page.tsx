@@ -215,6 +215,7 @@ export default function page() {
                           className={styles.cardImage}
                           width={300}
                           height={100}
+                          quality={100}
                         />
                         <div className={styles.cardContent}>
                           <div className={styles.cardText}>
