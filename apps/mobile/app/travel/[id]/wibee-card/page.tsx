@@ -152,9 +152,9 @@ export default function Page({ params }: WibeeCardProps) {
 
   return (
     <div className={styles.container}>
+      <Title label="위비 카드 결제 내역 불러오기" />
       <div className={styles.headerBackground}>
         <div className={styles.header}>
-          <Title label="위비 카드 결제 내역 불러오기" />
           <div className={styles.optionWrapper}>
             <Button
               label="전체 선택"
