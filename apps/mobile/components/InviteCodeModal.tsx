@@ -86,13 +86,16 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     }
 
     try {
-      window.Kakao.Share.sendDefault({
-        objectType: 'text',
-        text: `초대 코드: ${inputValue}`,
-        link: {
-          // 웹페이지 링크 (선택사항)
-          webUrl: window.location.href,
-          mobileWebUrl: window.location.href,
+      (window.Kakao.Share as any).sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '초대 코드 공유',
+          description: `초대 코드: ${inputValue}\n친구를 초대하고 함께하세요!`,
+          imageUrl: 'https://i.ibb.co/7Js9Lr6/Group-47839.png',
+          link: {
+            webUrl: window.location.href,
+            mobileWebUrl: window.location.href,
+          },
         },
         buttons: [
           {
