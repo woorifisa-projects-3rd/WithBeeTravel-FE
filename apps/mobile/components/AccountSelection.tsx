@@ -98,7 +98,7 @@ const AccountSelection: React.FC<{
             alt={currentProduct.label}
             width={currentProduct.width || 110}
             height={160}
-            className={[styles.image, currentProduct.className].join(' ')}
+            className={styles.image}
           />
           <div className={styles.textContainer}>
             <h2 className={styles.title}>{currentProduct.label}</h2>
