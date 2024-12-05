@@ -6,6 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { createTravel } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { mutate } from 'swr';
 
 function TravelFormContent() {
   const searchParams = useSearchParams();
@@ -22,9 +23,8 @@ function TravelFormContent() {
       formData.travelEndDate,
     );
 
-    console.log(response);
-
     if ('data' in response && response.data?.travelId) {
+      mutate((key: string) => key.startsWith('travelList'));
       showToast.success({ message: '여행이 성공적으로 생성되었습니다.' });
       router.push(`/travel/${response.data.travelId}`);
     } else {
