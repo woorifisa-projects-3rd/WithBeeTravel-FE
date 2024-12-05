@@ -203,14 +203,12 @@ export default function PaymentList({
                 ))
               : // 금액순일 때는 그룹화 없이 바로 렌더링
                 payments.map((payment) => (
-                  <>
-                    <Payment
-                      key={payment.id}
-                      travelId={travelId}
-                      paymentInfo={payment}
-                      travelInfo={travelInfo}
-                    />
-                  </>
+                  <Payment
+                    key={payment.id}
+                    travelId={travelId}
+                    paymentInfo={payment}
+                    travelInfo={travelInfo}
+                  />
                 ))}
             <div ref={ref} />
           </motion.div>

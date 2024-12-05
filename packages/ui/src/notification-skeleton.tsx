@@ -8,90 +8,78 @@ interface NotificationSkeletonProps {
 export const NotificationSkeleton = ({
   count = 3,
 }: NotificationSkeletonProps) => {
-  // 애니메이션을 위한 variants 정의
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // 각 항목이 0.1초 간격으로 나타남
+        staggerChildren: 0.15,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+  const cardVariants = {
+    hidden: { opacity: 0, y: -20 }, // 위에서 아래로
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const shimmerVariants = {
-    initial: { x: '-100%' },
-    animate: {
-      x: '100%',
-      transition: {
-        repeat: Infinity,
-        duration: 1.5,
-        ease: 'linear',
-      },
+      transition: { duration: 0.5 }, // 부드럽게 나타남
     },
   };
 
   return (
-    <>
+    <motion.div
+      className={styles.skeletonContainer}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {Array.from({ length: count }).map((_, index) => (
         <motion.div
           key={index}
-          className={styles.skeletonWrapper}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          className={styles.skeletonCard}
+          variants={cardVariants}
         >
-          <motion.div className={styles.skeletonItem} variants={itemVariants}>
+          <div className={styles.skeletonLogTime}>
             <motion.div
-              className={styles.skeletonLogTime}
-              variants={itemVariants}
-            >
+              className={styles.shimmer}
+              initial={{ x: '-100%' }}
+              animate={{ x: '100%' }}
+              transition={{
+                repeat: Infinity,
+                duration: 2.5, // 느린 애니메이션
+                ease: 'linear',
+              }}
+            />
+          </div>
+          <div className={styles.skeletonContent}>
+            <div className={styles.skeletonTitle}>
               <motion.div
                 className={styles.shimmer}
-                variants={shimmerVariants}
-                initial="initial"
-                animate="animate"
+                initial={{ x: '-100%' }}
+                animate={{ x: '100%' }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.5,
+                  ease: 'linear',
+                }}
               />
-            </motion.div>
-
-            <div className={styles.skeletonCardContent}>
-              <motion.div
-                className={styles.skeletonLogTitle}
-                variants={itemVariants}
-              >
-                <motion.div
-                  className={styles.shimmer}
-                  variants={shimmerVariants}
-                  initial="initial"
-                  animate="animate"
-                />
-              </motion.div>
-              <motion.div
-                className={styles.skeletonLogMessage}
-                variants={itemVariants}
-              >
-                <motion.div
-                  className={styles.shimmer}
-                  variants={shimmerVariants}
-                  initial="initial"
-                  animate="animate"
-                />
-              </motion.div>
             </div>
-          </motion.div>
+            <div className={styles.skeletonMessage}>
+              <motion.div
+                className={styles.shimmer}
+                initial={{ x: '-100%' }}
+                animate={{ x: '100%' }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.5,
+                  ease: 'linear',
+                }}
+              />
+            </div>
+          </div>
         </motion.div>
       ))}
-    </>
+    </motion.div>
   );
 };

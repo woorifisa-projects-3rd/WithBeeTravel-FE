@@ -38,7 +38,7 @@ export default function ConsentPage({ params }: { params: Params }) {
           message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         });
         router.push(
-          `/travel/${travelId}/agreement/pending?error=${response.code}`,
+          `/travel/${travelId}/settlement/pending?error=${response.code}`,
         );
         return;
       } else if (response.code === 'SETTLEMENT-003') {
@@ -87,9 +87,7 @@ export default function ConsentPage({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <Title label="약관 동의" />
-      </div>
+      <h2 className="title">약관 동의</h2>
       <div className={`${styles.content} content full`}>
         <div className={styles.consentList}>
           <div className={styles.allCheckAgree} onClick={toggleAllAgreements}>
@@ -169,6 +167,7 @@ export default function ConsentPage({ params }: { params: Params }) {
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
             shadow={true}
+            size="xlarge"
             onClick={() => setIsModalOpen(true)}
           />
         </div>

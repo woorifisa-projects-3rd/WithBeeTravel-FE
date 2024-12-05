@@ -74,6 +74,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
                   key={member.id}
                   src={member.profileImage}
                   size={50}
+                  isGroup={data!.travelMembers!.length > 1}
                 />
               ))}
             </div>

@@ -35,6 +35,7 @@ export default function ModalWrapper({ travelId }: { travelId: number }) {
       <Button
         label="정산 취소하기"
         primary={false}
+        size="xlarge"
         onClick={() => setIsModalOpen(true)}
       />
       <Modal

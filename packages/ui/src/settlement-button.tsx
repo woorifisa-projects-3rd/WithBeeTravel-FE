@@ -4,12 +4,17 @@ import { TravelHome } from '@withbee/types';
 import { AnimatedButton } from './animated-button';
 import { useRouter } from 'next/navigation';
 import { requestSettlement } from '@withbee/apis';
+import styles from './settlement-button.module.css';
 
 interface SettlementButtonProps {
   travelInfo: TravelHome;
+  isPC?: boolean;
 }
 
-export function SettlementButton({ travelInfo }: SettlementButtonProps) {
+export function SettlementButton({
+  travelInfo,
+  isPC = false,
+}: SettlementButtonProps) {
   const router = useRouter();
 
   const getButtonProps = () => {
@@ -42,5 +47,9 @@ export function SettlementButton({ travelInfo }: SettlementButtonProps) {
     };
   };
 
-  return <AnimatedButton {...getButtonProps()} />;
+  return (
+    <div className={[styles.btnWrapper, isPC ? styles.pc : ''].join(' ')}>
+      <AnimatedButton {...getButtonProps()} />
+    </div>
+  );
 }

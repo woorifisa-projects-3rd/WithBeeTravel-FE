@@ -1,0 +1,74 @@
+.background {
+    position: fixed;
+    top: 10px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 9999;
+    max-width: 430px;
+    width: 100%;
+}
+
+.card {
+    background-color: var(--color-blue-1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    width: 100%;
+    position: relative;
+    margin: 0 10px;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--color-gray-500);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+
+.logMessage {
+    padding: 5px 0px;
+    color: var(--color-gray-500);
+}
+
+.notificationLink {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    color: var(--color-gray-500);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-120%);
+    }
+}
+
+
+.slideIn {
+    animation: slideInRight 0.3s ease-out forwards;
+}
+
+.slide-out {
+    animation: slideOutRight 0.3s ease-in forwards;
+}

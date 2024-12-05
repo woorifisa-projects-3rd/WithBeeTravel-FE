@@ -41,7 +41,7 @@ export default async function Page({ params }: TravelPageProps) {
         travelInfo={travelHomeResponse.data!}
       />
       {new Date(travelHomeResponse.data?.travelEndDate!) < new Date() && (
-        <SettlementButton travelInfo={travelHomeResponse.data!} />
+        <SettlementButton travelInfo={travelHomeResponse.data!} isPC={true} />
       )}
     </Suspense>
   );

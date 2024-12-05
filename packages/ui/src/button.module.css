@@ -48,7 +48,7 @@
 
 .xlarge {
   width: 100%;
-  max-width: 486px;
+  /* max-width: 486px; */
   padding: 18.5px 18px;
   /* 패딩 */
   font-size: 22px;

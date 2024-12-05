@@ -1,5 +1,7 @@
 .container {
   height: 100%;
+  margin: auto;
+  max-width: 800px;
 }
 
 .mainContent {
@@ -49,7 +51,7 @@
 .summaryInfo {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 23%;
   color: var(--color-gray-500);
 }
 
@@ -137,7 +139,7 @@
 }
 
 .negativeRequestedAmount {
-  color: #dd2a2a;
+  color: var(--color-red);
   margin-left: 4px;
   text-align: right;
 }
@@ -164,7 +166,7 @@
 }
 
 .negativeAmount {
-  color: #dd2a2a;
+  color: var(--color-red);
   font-weight: bold;
 }
 
@@ -217,30 +219,31 @@
 }
 
 .remainingUsersCompleted {
-  margin-top: 100px;
-  margin-bottom: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 14px;
   color: var(--color-gray-500);
 }
 
 .btnWrapper {
-  width: 100%;
   display: flex;
-  flex-direction: column;
   gap: 8px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btnWrapper a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
 }
 
 .disabledButton {
   pointer-events: none;
   cursor: not-allowed; /* 비활성화 커서 */
-  max-width: 340px;
-  width: 100%;
-  bottom: 100px;
   padding: 0 25px;
-  left: 50%;
-  transform: translate(-50%);
-  position: fixed;
 }
 
 .storeName {

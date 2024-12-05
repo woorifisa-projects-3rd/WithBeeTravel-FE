@@ -6,9 +6,11 @@ import styles from './AuthForm.module.css';
 import Link from 'next/link';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { useTransition } from 'react';
 
 export default function LoginForm() {
   const { showToast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,17 +18,19 @@ export default function LoginForm() {
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
 
-    const result = await handleCredentialsSignin({ email, password });
+    startTransition(async () => {
+      const result = await handleCredentialsSignin({ email, password });
 
-    if (result?.error) {
-      showToast.error({ message: ERROR_MESSAGES['AUTH-001'] });
-      return;
-    }
+      if (result?.error) {
+        showToast.error({ message: ERROR_MESSAGES['AUTH-001'] });
+        return;
+      }
 
-    // 로그인 성공 시 메인 페이지로 이동
-    if (!result?.error) {
-      window.location.href = '/';
-    }
+      // 로그인 성공 시 메인 페이지로 이동
+      if (!result?.error) {
+        window.location.href = '/';
+      }
+    });
   };
 
   return (
@@ -52,7 +56,11 @@ export default function LoginForm() {
         />
       </div>
       <div className={styles.buttonContainer}>
-        <Button type="submit" label="로그인" />
+        <Button
+          type="submit"
+          label={isPending ? '로그인 중...' : '로그인'}
+          disabled={isPending}
+        />
         <p className={styles.join}>
           아직 회원이 아니신가요?{' '}
           <Link href="/join" className={styles.joinLink}>

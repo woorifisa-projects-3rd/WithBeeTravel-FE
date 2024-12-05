@@ -13,7 +13,6 @@ export default function Page({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <Title label="" />
       <div className={styles.subtitleContainer}>
         <motion.div
           animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
@@ -27,7 +26,7 @@ export default function Page({ params }: { params: Params }) {
             className={styles.image}
             src={'/imgs/settlement/cancelWibee.png'}
             alt="pending"
-            width={170}
+            width={200}
             height={222}
           />
         </motion.div>
@@ -41,6 +40,7 @@ export default function Page({ params }: { params: Params }) {
       <div className={styles.btnWrapper}>
         <Button
           label="돌아가기"
+          size="xlarge"
           onClick={() => router.push(`/travel/${params.id}/payments`)}
         />
       </div>
