@@ -75,6 +75,7 @@ export const Payment = ({
       showToast.success({
         message: '정산 인원이 변경되었습니다.',
       });
+      setIsOpen(false);
     } else {
       showToast.error({
         message: '정산 인원 변경에 실패했습니다.',
