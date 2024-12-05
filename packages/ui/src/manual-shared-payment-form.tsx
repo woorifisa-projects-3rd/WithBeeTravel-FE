@@ -34,6 +34,7 @@ interface ManualSharedPaymentFormProps {
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
   currencyUnitOptions: string[];
   handleSubmitForm: () => Promise<void>;
+  isPcVer?: boolean;
 }
 
 export const ManualSharedPaymentForm = ({
@@ -41,6 +42,7 @@ export const ManualSharedPaymentForm = ({
   setFormData,
   currencyUnitOptions,
   handleSubmitForm,
+  isPcVer,
 }: ManualSharedPaymentFormProps) => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isTimeModalOpen, setIsTimeModalOpen] = useState(false);
@@ -155,65 +157,71 @@ export const ManualSharedPaymentForm = ({
   return (
     <div className={styles.manualPayment}>
       <div className={styles.content}>
-        <div className={styles.formWrapper}>
-          <span className={styles.formTitle}>결제 일자</span>
-          <div
-            className={`${styles.input} ${styles.rowInput}`}
-            onClick={() => setIsDateModalOpen(true)}
-          >
-            <p className={formData.date === '' ? styles.emptyInput : ''}>
-              {formData.date === ''
-                ? '결제 일자를 입력해주세요.'
-                : formData.date}
-            </p>
-            <span className={styles.customIcon}>
-              <Image
-                src="/imgs/travelform/cal.png"
-                alt="달력 아이콘"
-                width={21}
-                height={21}
+        <div
+          className={
+            isPcVer ? styles.pcDateTimeWrapper : styles.dateTimeWrapper
+          }
+        >
+          <div className={styles.formWrapper}>
+            <span className={styles.formTitle}>결제 일자</span>
+            <div
+              className={`${styles.input} ${styles.rowInput}`}
+              onClick={() => setIsDateModalOpen(true)}
+            >
+              <p className={formData.date === '' ? styles.emptyInput : ''}>
+                {formData.date === ''
+                  ? '결제 일자를 입력해주세요.'
+                  : formData.date}
+              </p>
+              <span className={styles.customIcon}>
+                <Image
+                  src="/imgs/travelform/cal.png"
+                  alt="달력 아이콘"
+                  width={21}
+                  height={21}
+                />
+              </span>
+            </div>
+            {isDateModalOpen && (
+              <DatePickerModal
+                title="결제 일자 입력"
+                isOpen={isDateModalOpen}
+                initialDate={getDateObject(formData.date)}
+                onSelectDate={handleDateSelect}
+                onClose={() => setIsDateModalOpen(false)}
               />
-            </span>
+            )}
           </div>
-          {isDateModalOpen && (
-            <DatePickerModal
-              title="결제 일자 입력"
-              isOpen={isDateModalOpen}
-              initialDate={getDateObject(formData.date)}
-              onSelectDate={handleDateSelect}
-              onClose={() => setIsDateModalOpen(false)}
-            />
-          )}
-        </div>
-        <div className={styles.formWrapper}>
-          <span className={styles.formTitle}>결제 시간</span>
-          <div
-            className={`${styles.input} ${styles.rowInput}`}
-            onClick={() => setIsTimeModalOpen(true)}
-          >
-            <p className={formData.time === '' ? styles.emptyInput : ''}>
-              {formData.time === ''
-                ? '결제 시간을 입력해주세요.'
-                : formData.time}
-            </p>
-            <span className={styles.customIcon}>
-              <Image
-                src={clockIcon}
-                alt="결제 시간 입력"
-                width={21}
-                height={21}
+          <div className={styles.formWrapper}>
+            <span className={styles.formTitle}>결제 시간</span>
+            <div
+              className={`${styles.input} ${styles.rowInput}`}
+              onClick={() => setIsTimeModalOpen(true)}
+            >
+              <p className={formData.time === '' ? styles.emptyInput : ''}>
+                {formData.time === ''
+                  ? '결제 시간을 입력해주세요.'
+                  : formData.time}
+              </p>
+              <span className={styles.customIcon}>
+                <Image
+                  src={clockIcon}
+                  alt="결제 시간 입력"
+                  width={21}
+                  height={21}
+                />
+              </span>
+            </div>
+            {isTimeModalOpen && (
+              <TimePickerModal
+                title="결제 시간 입력"
+                isOpen={isTimeModalOpen}
+                initialTime={getTimeObject(formData.time)}
+                onSelectTime={handleTimeSelect}
+                onClose={() => setIsTimeModalOpen(false)}
               />
-            </span>
+            )}
           </div>
-          {isTimeModalOpen && (
-            <TimePickerModal
-              title="결제 시간 입력"
-              isOpen={isTimeModalOpen}
-              initialTime={getTimeObject(formData.time)}
-              onSelectTime={handleTimeSelect}
-              onClose={() => setIsTimeModalOpen(false)}
-            />
-          )}
         </div>
         <div className={styles.formWrapper}>
           <span className={styles.formTitle}>상호명</span>
@@ -238,6 +246,7 @@ export const ManualSharedPaymentForm = ({
                   formData.paymentAmount === 0 ? '' : formData.paymentAmount
                 }
                 onChange={handlePaymentChange}
+                onWheel={(e) => e.currentTarget.blur()}
                 className={styles.input}
               />
             ) : (
@@ -250,11 +259,14 @@ export const ManualSharedPaymentForm = ({
                     : formData.foreignPaymentAmount
                 }
                 onChange={handleForeignPaymentChange}
+                onWheel={(e) => e.currentTarget.blur()}
                 className={styles.input}
               />
             )}
             <div
-              className={styles.selectUnitWrapper}
+              className={
+                isPcVer ? styles.pcSelectUnitWrapper : styles.selectUnitWrapper
+              }
               onClick={() => setIsUnitModalOpen(true)}
             >
               <span>{formData.currencyUnit}</span>
@@ -284,60 +296,72 @@ export const ManualSharedPaymentForm = ({
             />
           )}
         </div>
-        <div className={styles.formWrapper}>
-          <span className={`${styles.formTitle} ${styles.recordTitle}`}>
-            사진 추가
-          </span>
-          <input
-            id="paymentImageFileInput"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className={styles.paymentImage}
-          />
-          <label
-            htmlFor="paymentImageFileInput"
-            className={styles.paymentImageBox}
-          >
-            {imageSrc === null ? (
-              <Image
-                src={plusIcon}
-                alt="이미지를 선택하세요"
-                className={styles.imagePreview}
-                width={18}
-                height={18}
-              />
-            ) : (
-              <Image
-                src={imageSrc}
-                alt="업로드된 이미지 미리보기"
-                className={styles.imagePreview}
-                layout="fill"
-                objectFit="cover"
-              />
-            )}
-          </label>
-        </div>
-        <div className={styles.formWrapper}>
-          <span className={`${styles.formTitle} ${styles.recordTitle}`}>
-            문구
-          </span>
-          <textarea
-            value={formData.paymentComment}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                paymentComment: e.target.value,
-              })
-            }
-            placeholder="문구를 작성해주세요."
-            className={styles.recordComment}
-            maxLength={100}
-          />
+        <div
+          className={
+            isPcVer ? styles.pcImageCommentWrapper : styles.imageCommentWrapper
+          }
+        >
+          <div className={styles.formWrapper}>
+            <span className={`${styles.formTitle} ${styles.recordTitle}`}>
+              사진 추가
+            </span>
+            <input
+              id="paymentImageFileInput"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className={styles.paymentImage}
+            />
+            <label
+              htmlFor="paymentImageFileInput"
+              className={styles.paymentImageBox}
+            >
+              {imageSrc === null ? (
+                <Image
+                  src={plusIcon}
+                  alt="이미지를 선택하세요"
+                  className={styles.imagePreview}
+                  width={18}
+                  height={18}
+                />
+              ) : (
+                <Image
+                  src={imageSrc}
+                  alt="업로드된 이미지 미리보기"
+                  className={styles.imagePreview}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
+            </label>
+          </div>
+          <div className={styles.formWrapper}>
+            <span className={`${styles.formTitle} ${styles.recordTitle}`}>
+              문구
+            </span>
+            <textarea
+              value={formData.paymentComment}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  paymentComment: e.target.value,
+                })
+              }
+              placeholder="문구를 작성해주세요."
+              className={
+                isPcVer ? styles.pcRecordComment : styles.recordComment
+              }
+              maxLength={100}
+            />
+          </div>
         </div>
       </div>
-      <div className={styles.btnWrapper}>
-        <Button onClick={handleSubmitForm} label="결제 내역 추가" />
+      <div className={isPcVer ? styles.pcBtnWrapper : styles.btnWrapper}>
+        <Button
+          onClick={handleSubmitForm}
+          label="결제 내역 추가"
+          size={isPcVer ? 'xlarge' : 'medium'}
+        />
       </div>
     </div>
   );
