@@ -162,7 +162,7 @@ export default function TravelForm({
           <div className={styles.locationButtons}>
             <Button
               primary={formData.isDomesticTravel}
-              size="medium"
+              size="large"
               label="국내"
               onClick={() => handleLocationChange(true)}
               className={styles.domesticBtn}
@@ -170,7 +170,7 @@ export default function TravelForm({
 
             <Button
               primary={!formData.isDomesticTravel}
-              size="medium"
+              size="large"
               label="해외"
               onClick={() => handleLocationChange(false)}
               className={styles.overseasBtn}
@@ -291,6 +291,7 @@ export default function TravelForm({
             type="submit"
             label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'}
             primary={true}
+            size="large"
             className={styles.btn}
           />
         </div>

@@ -1,0 +1,139 @@
+/* 로그인 로그 페이지의 컨테이너 */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f8f8f8; /* 전체 배경색 */
+}
+
+/* 콘텐츠 영역 */
+.content {
+  display: flex;
+  flex: 1;
+}
+
+/* 메인 콘텐츠 영역 */
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  background-color: white;
+}
+
+/* 페이지 제목 */
+.pageTitle {
+  font-size: 20;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+/* 필터 영역 */
+.filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filter label {
+  min-width: 100px;
+  font-weight: bold;
+  color: #555;
+}
+
+.filter select,
+.filter input[type="text"],
+.filter input[type="date"] {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filter button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter button:hover {
+  background-color: #555;
+}
+
+/* 테이블 스타일 */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 0.4rem;
+  text-align: left;
+  font-size: 12px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  color: #333;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #555;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column; /* 모바일에서는 세로로 배치 */
+  }
+
+  .mainContent {
+    margin-left: 0; /* 모바일에서는 사이드바를 숨기므로 여백 제거 */
+  }
+}

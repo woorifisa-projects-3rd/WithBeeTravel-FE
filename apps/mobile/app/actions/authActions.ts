@@ -17,6 +17,7 @@ export const handleCredentialsSignin = async ({
       redirect: false,
     });
   } catch (error) {
+    console.error('Error occurred during credentials signin:', error);
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':

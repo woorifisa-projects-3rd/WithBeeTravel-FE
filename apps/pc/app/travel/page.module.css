@@ -1,10 +1,17 @@
+.title {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  margin: 20px 0px;
+  font-weight: 500;
+}
+
 .imageWrap {
   position: relative;
   left: 50%;
   transform: translate(-50%);
-  width: 90%;
   height: 25vh;
-  margin-top: 10px;
+  margin: 20px 0px;
 }
 
 .imageWrap::before {
@@ -14,7 +21,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('/imgs/travelselect/withbee_friends_background.png') center/contain no-repeat;
+  background: url('/imgs/travelselect/withbee_friends_background.png') center/cover no-repeat;
+  background-size: 32%;
   z-index: -1;
 }
 
@@ -37,7 +45,7 @@
 }
 
 .button {
-  padding: 10px 12px;
+  padding: 15px 17px;
   border: 1.5px solid var(--color-gray-200);
   border-radius: 0.75rem;
   display: flex;
@@ -53,7 +61,7 @@
 }
 
 .buttonTitle {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -80,10 +88,20 @@
   margin-bottom: 10px;
 }
 
+.gridWrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
 .card {
   border-radius: 0.75rem;
   overflow: hidden;
   border: 1px solid var(--color-gray-200);
+}
+
+.cardTitle {
+  font-size: 18px;
 }
 
 .cardImage {
@@ -93,6 +111,7 @@
 }
 
 .cardContent {
+
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -103,6 +122,11 @@
   display: flex;
   align-items: center;
   gap: 1.3rem;
+}
+
+.cardTextTopWrap {
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -127,7 +151,6 @@
 /* 여행 데이터 없을 경우 */
 
 .emptyState {
-  margin-top: 30px;
   display: flex;
   justify-content: space-around;
   align-items: center;

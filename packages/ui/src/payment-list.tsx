@@ -28,7 +28,6 @@ interface PaymentListProps {
 
 export default function PaymentList({
   travelId,
-  initialPayments,
   travelInfo,
 }: PaymentListProps) {
   const { params, updateParam } = usePaymentParams();
@@ -78,13 +77,13 @@ export default function PaymentList({
         return response.data;
       },
       {
-        fallbackData: initialPayments ? [initialPayments] : undefined,
-        suspense: true,
+        // fallbackData: initialPayments ? [initialPayments] : undefined,
+        // suspense: true,
         onError: (err) => {
           if ('code' in err) {
             if (err.code === 'VALIDATION-003') {
               if (startDate && endDate) {
-                if (new Date(startDate) > new Date(endDate)) {
+                if (dayjs(startDate).isAfter(dayjs(endDate))) {
                   // URL 파라미터 업데이트
                   updateParam('endDate', startDate);
                 } else {
@@ -203,14 +202,12 @@ export default function PaymentList({
                 ))
               : // 금액순일 때는 그룹화 없이 바로 렌더링
                 payments.map((payment) => (
-                  <>
-                    <Payment
-                      key={payment.id}
-                      travelId={travelId}
-                      paymentInfo={payment}
-                      travelInfo={travelInfo}
-                    />
-                  </>
+                  <Payment
+                    key={payment.id}
+                    travelId={travelId}
+                    paymentInfo={payment}
+                    travelInfo={travelInfo}
+                  />
                 ))}
             <div ref={ref} />
           </motion.div>

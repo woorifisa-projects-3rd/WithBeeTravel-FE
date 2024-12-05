@@ -16,7 +16,6 @@ interface TravelHomeProps {
     id: string;
   };
 }
-
 export default async function TravelDetailPage({ params }: TravelHomeProps) {
   const travelId = Number(params.id);
   const response = await getTravelHome(travelId);
@@ -27,8 +26,12 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
 
   const { data } = response;
 
-  const statistics = Object.entries(data!.statistics);
-  const travelCountriesCount = data?.countries.length;
+  if (!data) {
+    throw new Error('Travel data not found');
+  }
+
+  const statistics = Object.entries(data.statistics);
+  const travelCountriesCount = data.countries?.length;
 
   return (
     <div className={styles.container}>
@@ -36,11 +39,11 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
       <div className={styles.subContainer}>
         <div className={styles.subtitleContainer}>
           <p className={styles.date}>
-            {formatDateWithSlash(data!.travelStartDate)} ~{' '}
-            {formatDateWithSlash(data!.travelEndDate)}
+            {formatDateWithSlash(data.travelStartDate)} ~{' '}
+            {formatDateWithSlash(data.travelEndDate)}
           </p>
           <div className={styles.subtitleWrapper}>
-            <h2 className={styles.subtitle}>{data!.travelName}</h2>
+            <h2 className={styles.subtitle}>{data.travelName}</h2>
             <Link
               href={`/travel/${travelId}/form?mode=edit`}
               className={styles.button}
@@ -50,38 +53,38 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
           </div>
         </div>
         <div className={styles.imgWrapper}>
-          {data?.mainImage ? (
+          {data.mainImage && (
             <Image
-              src={data!.mainImage}
+              src={data.mainImage}
               alt="main image"
               layout="fill"
               objectFit="cover"
               className={styles.mainImage}
             />
-          ) : null}
+          )}
         </div>
 
-        {data?.isDomesticTravel ? (
+        {data.isDomesticTravel ? (
           <Item label="국내여행" />
         ) : (
           <div className={styles.tagWrapper}>
-            {data!.countries.map((country) => (
-              /* 여행지가 2개 미만이면 label 뒤에 '여행'을 붙임 */
+            {data.countries.map((country) => (
               <Item
                 key={country}
-                label={travelCountriesCount! < 2 ? `${country} 여행` : country}
+                label={travelCountriesCount < 2 ? `${country} 여행` : country}
               />
             ))}
           </div>
         )}
         <div className={styles.friendsWrapper}>
-          {data!.travelMembers!.map((member) => (
-            <FriendImage
-              key={member.id}
-              src={member.profileImage}
-              isGroup={data!.travelMembers.length > 1}
-            />
-          ))}
+          {data.travelMembers &&
+            data.travelMembers.map((member) => (
+              <FriendImage
+                key={member.id}
+                src={member.profileImage}
+                isGroup={data.travelMembers.length > 1}
+              />
+            ))}
         </div>
       </div>
 
@@ -90,7 +93,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
           <Button label="그룹 결제 내역" />
         </Link>
 
-        {data?.settlementStatus === 'PENDING' ? (
+        {data.settlementStatus === 'PENDING' ? (
           <InviteCodeButton travelId={travelId} />
         ) : (
           <Link href={`/travel/${travelId}/honey-capsule`}>

@@ -77,11 +77,11 @@ export default function BankingPage() {
 
   return (
     <div className={styles.container}>
-      <Title label="뱅킹 홈" />
+      <h2 className="title">뱅킹 홈</h2>
       <div className={styles.space}></div>
       <Button
         size="medium"
-        label="계좌 만들러 가기"
+        label="통장 만들기"
         onClick={() => createAccountHandle()}
       />
       <div className={styles.space}></div>
@@ -102,7 +102,7 @@ export default function BankingPage() {
             end={totalBalance}
             duration={0.8}
             separator=","
-            suffix=" 원"
+            suffix="원"
             decimals={0}
           />
         </div>
@@ -128,15 +128,15 @@ export default function BankingPage() {
               onClick={() => router.push(`/banking/${transaction.accountId}`)}
             >
               <div className={styles.transactionInfo}>
-                <div className={styles.accountType}>{transaction.product}</div>
-                <div className={styles.accountNumber}>
-                  {transaction.accountNumber}
+                <div>
+                  <div className={styles.accountType}>
+                    {transaction.product}
+                  </div>
+                  <div className={styles.accountNumber}>
+                    {transaction.accountNumber}
+                  </div>
                 </div>
-              </div>
-
-              {/* 송금 버튼을 금액 위에 배치하고 오른쪽 정렬 */}
-              <div className={styles.transactionDetails}>
-                <div className={styles.sendButtonContainer}>
+                <div className={styles.buttonWrapper}>
                   <Button
                     size="xsmall"
                     label="송금"
@@ -145,8 +145,9 @@ export default function BankingPage() {
                     }
                   />
                 </div>
+              </div>
 
-                {/* 금액을 오른쪽 정렬 */}
+              <div className={styles.transactionDetails}>
                 <div className={styles.amount}>
                   {formatNumber(transaction.balance)}원
                 </div>
