@@ -115,8 +115,8 @@ const CardIssuancePage = () => {
               <Image
                 src="https://m.wooricard.com/webcontent/cdPrdImgFileList/2024/6/7/6be0c887-7ff7-49bb-80a9-711e66879de6.gif"
                 alt="위비트래블 카드"
-                width={130}
-                height={190}
+                width={120}
+                height={180}
                 quality={100}
                 className={styles.withbeeCard}
               />
