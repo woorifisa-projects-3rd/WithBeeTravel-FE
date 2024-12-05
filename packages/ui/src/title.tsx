@@ -13,9 +13,10 @@ import { notificationStore } from '@withbee/stores';
 
 interface TitleProps {
   label: string;
+  disableBack?: boolean;
 }
 
-export const Title = ({ label }: TitleProps) => {
+export const Title = ({ label, disableBack }: TitleProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const { hasNotification, isUpdate, markNotification } = notificationStore();
@@ -60,14 +61,16 @@ export const Title = ({ label }: TitleProps) => {
 
   return (
     <nav className={styles.nav}>
-      <Image
-        src={backIcon}
-        alt="뒤로 가기"
-        width={7}
-        height={13}
-        onClick={handleClick}
-        className={styles.back}
-      />
+      {!disableBack && (
+        <Image
+          src={backIcon}
+          alt="뒤로 가기"
+          width={7}
+          height={13}
+          onClick={handleClick}
+          className={styles.back}
+        />
+      )}
       <h1 className={styles.label}>{label}</h1>
       <Link href="/notification">
         <Image

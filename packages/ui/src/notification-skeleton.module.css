@@ -1,49 +1,88 @@
-.skeletonWrapper {
-  background: white;
-  border-radius: 8px;
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 카드 간격 */
+  margin: 40px 0;
+}
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 요소 간격 */
+  padding: 16px 20px;
+  border-radius: 20px;
+  height: 120px;
+  border: 1px solid var(--color-gray-200); /* 부드러운 테두리 */
+  position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 살짝 둥근 그림자 */
 }
 
 .skeletonLogTime {
-  height: 16px;
-  width: 100%; /* 더 넓게 설정 */
-  margin-bottom: 10px;
+  /* width: 120px; */
+  height: 14px;
   border-radius: 4px;
+  background-color: var(--color-gray-100); /* 살짝 어두운 그레이 */
+  position: relative;
+  overflow: hidden;
 }
 
-.skeletonCardContent {
+@media (max-width: 960px) {
+  .skeletonLogTime {
+    width: 280px; /* PC에서는 일정 너비로 설정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .skeletonLogTime {
+    width: 280px; /* PC에서는 일정 너비로 설정 */
+  }
+}
+
+.skeletonContent {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.skeletonLogTitle,
-.skeletonLogMessage {
-  height: 20px;
-  background-color: var(--color-gray-300);
-  border-radius: 4px;
+.skeletonTitle {
   width: 80%;
+  height: 18px;
+  border-radius: 6px;
+  background-color: var(--color-gray-100); /* 동일한 그레이 */
+  position: relative;
+  overflow: hidden;
 }
 
-.skeletonLogTitle {
-  height: 24px;
-}
-
-.skeletonLogMessage {
+.skeletonMessage {
+  width: 95%;
   height: 16px;
-  width: 100%;
+  border-radius: 6px;
+  background-color: var(--color-gray-100); /* 동일한 그레이 */
+  position: relative;
+  overflow: hidden;
 }
 
 .shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  animation: shimmer-animation 2.5s infinite linear; /* 느려진 애니메이션 */
+}
+
+@keyframes shimmer-animation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }

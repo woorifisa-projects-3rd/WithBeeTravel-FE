@@ -49,7 +49,6 @@ export default function Page({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <Title label="" />
       <div className={styles.subtitleContainer}>
         <motion.div
           animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
@@ -61,9 +60,9 @@ export default function Page({ params }: { params: Params }) {
         >
           <Image
             className={styles.image}
-            src="/imgs/agreement/angryWibee.png"
+            src="/imgs/settlement/sadWibee.png"
             alt="pending"
-            width={150}
+            width={180}
             height={200}
           />
         </motion.div>
@@ -76,6 +75,7 @@ export default function Page({ params }: { params: Params }) {
       <div className={styles.btnWrapper}>
         <Button
           label="돌아가기"
+          size="xlarge"
           onClick={() =>
             errorCode && ['SETTLEMENT-002', 'TRAVEL-001'].includes(errorCode)
               ? router.push(`/travel`)
