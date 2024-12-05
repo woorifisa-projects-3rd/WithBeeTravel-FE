@@ -113,6 +113,7 @@ export default function Page() {
   const handleLogout = async () => {
     const { accessToken, refreshToken } = session?.user!;
     if (accessToken && refreshToken) handleSignOut(accessToken, refreshToken);
+    router.push('/login');
   };
 
   useEffect(() => {
