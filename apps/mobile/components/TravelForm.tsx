@@ -251,13 +251,15 @@ export default function TravelForm({
                     height={21}
                   />
                 </span>
-                <DatePickerModal
-                  title="시작일"
-                  isOpen={isStartDateModalOpen}
-                  initialDate={getDateObject(formData.travelStartDate)}
-                  onSelectDate={handleDateSelect('start')}
-                  onClose={() => setIsStartDateModalOpen(false)}
-                />
+                {isStartDateModalOpen && (
+                  <DatePickerModal
+                    title="시작일"
+                    isOpen={isStartDateModalOpen}
+                    initialDate={getDateObject(formData.travelStartDate)}
+                    onSelectDate={handleDateSelect('start')}
+                    onClose={() => setIsStartDateModalOpen(false)}
+                  />
+                )}
               </div>
             </div>
             <div className={styles.dateInput}>
@@ -277,13 +279,15 @@ export default function TravelForm({
                   />
                 </span>
               </div>
-              <DatePickerModal
-                title="종료일"
-                isOpen={isEndDateModalOpen}
-                initialDate={getDateObject(formData.travelEndDate)}
-                onSelectDate={handleDateSelect('end')}
-                onClose={() => setIsEndDateModalOpen(false)}
-              />
+              {isEndDateModalOpen && (
+                <DatePickerModal
+                  title="종료일"
+                  isOpen={isEndDateModalOpen}
+                  initialDate={getDateObject(formData.travelEndDate)}
+                  onSelectDate={handleDateSelect('end')}
+                  onClose={() => setIsEndDateModalOpen(false)}
+                />
+              )}
             </div>
           </div>
         </div>
