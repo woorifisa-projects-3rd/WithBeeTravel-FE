@@ -14,6 +14,8 @@ import { FriendImage } from '@withbee/ui/friend-image';
 import { Modal } from '@withbee/ui/modal';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { handleSignOut } from '../actions/authActions';
+import { useSession } from 'next-auth/react';
 
 interface Account {
   accountId: number;
@@ -27,6 +29,7 @@ export default function Page() {
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [accounts, setAccounts] = useState<accountType>();
+  const { data: session, status } = useSession();
 
   const router = useRouter();
 
@@ -107,6 +110,12 @@ export default function Page() {
     setIsAccountModalOpen(false);
   };
 
+  const handleLogout = async () => {
+    const { accessToken, refreshToken } = session?.user!;
+    if (accessToken && refreshToken) handleSignOut(accessToken, refreshToken);
+    router.push('/login');
+  };
+
   useEffect(() => {
     handleGetMyPageInfo();
   }, []);
@@ -124,7 +133,9 @@ export default function Page() {
           size={100}
         />
         <span className={styles.username}>{data?.username}님</span>
-        <button className={styles.logout}>로그아웃</button>
+        <button className={styles.logout} onClick={handleLogout}>
+          로그아웃
+        </button>
         <div
           className={styles.changeAccountWrapper}
           onClick={() => setIsAccountModalOpen(true)}

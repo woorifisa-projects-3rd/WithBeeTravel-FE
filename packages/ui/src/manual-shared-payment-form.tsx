@@ -34,6 +34,7 @@ interface ManualSharedPaymentFormProps {
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
   currencyUnitOptions: string[];
   handleSubmitForm: () => Promise<void>;
+  isPending: boolean;
   isPcVer?: boolean;
 }
 
@@ -42,6 +43,7 @@ export const ManualSharedPaymentForm = ({
   setFormData,
   currencyUnitOptions,
   handleSubmitForm,
+  isPending,
   isPcVer,
 }: ManualSharedPaymentFormProps) => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
@@ -359,7 +361,8 @@ export const ManualSharedPaymentForm = ({
       <div className={isPcVer ? styles.pcBtnWrapper : styles.btnWrapper}>
         <Button
           onClick={handleSubmitForm}
-          label="결제 내역 추가"
+          label={isPending ? '추가 중...' : '결제 내역 추가'}
+          disabled={isPending}
           size={isPcVer ? 'xlarge' : 'medium'}
         />
       </div>
