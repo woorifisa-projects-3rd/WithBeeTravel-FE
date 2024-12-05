@@ -1,7 +1,10 @@
 'use server';
 
-import { signIn } from '../../auth';
+import { instance } from '@withbee/apis';
+import { signIn, signOut } from '../../auth';
 import { AuthError } from 'next-auth';
+import { auth, logout } from '@withbee/auth-config';
+import { LogoutRequest } from '@withbee/types';
 
 export const handleCredentialsSignin = async ({
   email,
@@ -27,4 +30,12 @@ export const handleCredentialsSignin = async ({
     }
     return { error: 'Unexpected error occurred' };
   }
+};
+
+export const handleSignOut = async (
+  accessToken: string,
+  refreshToken: string,
+) => {
+  await signOut();
+  await logout({ accessToken, refreshToken });
 };
