@@ -49,6 +49,8 @@ export const RecordModal: React.FC<RecordModalProps> = ({
   };
 
   const handleGetSharedPaymentRecord = async () => {
+    console.log('handleGetSharedPaymentRecord');
+
     const response = await getSharedPaymentRecord(travelId, sharedPaymentId);
 
     if ('code' in response) {
@@ -65,6 +67,8 @@ export const RecordModal: React.FC<RecordModalProps> = ({
       if (response.data?.paymentImage) setImageSrc(response.data.paymentImage);
       if (response.data?.paymentComment)
         setRecord({ ...record, paymentComment: response.data?.paymentComment });
+      if (response.data?.mainImage)
+        setRecord({ ...record, isMainImage: response.data?.mainImage });
     }
   };
 
