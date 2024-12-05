@@ -15,6 +15,7 @@ import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
 import { motion } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
+import numberToKorean from '../../../../../../../packages/utils/src/numberToKorean';
 
 export default function TransferDetailPage() {
   const router = useRouter();
@@ -216,6 +217,9 @@ export default function TransferDetailPage() {
                 얼마나 보낼까요?
               </motion.span>
             )}
+             <p className={styles.won} style={{ height: '36px' }}>
+              {numberToKorean(Number(amount))}
+            </p>
           </div>
         </motion.div>
       </main>
