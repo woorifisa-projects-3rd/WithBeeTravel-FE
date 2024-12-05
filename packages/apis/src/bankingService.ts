@@ -13,13 +13,13 @@ import {
   AccountNumberRequest,
   TargetName,
   WibeeCardResponse,
+  accountType,
+  connectedAccountType,
 } from '@withbee/types';
 
 // 보유 계좌 목록 불러오기
-export const getAccounts = async (): Promise<
-  SuccessResponse<AccountInfo[]> | ErrorResponse
-> => {
-  const response = instance.get<AccountInfo[]>(`/api/accounts`);
+export const getAccounts = async () => {
+  const response = await instance.get<AccountInfo[]>(`/api/accounts`);
   return response;
 };
 
@@ -53,9 +53,12 @@ export const getUserState = async (): Promise<
 export const verifyPin = async (
   Pin: String,
 ): Promise<SuccessResponse<PinNumberRequest> | ErrorResponse> => {
-  const response = instance.post<PinNumberRequest>(`/api/verify/pin-number`, {
-    body: JSON.stringify({ pinNumber: Pin }),
-  });
+  const response = await instance.post<PinNumberRequest>(
+    `/api/verify/pin-number`,
+    {
+      body: JSON.stringify({ pinNumber: Pin }),
+    },
+  );
   console.log('핀번호 검증 ', response);
 
   return response;
@@ -99,6 +102,39 @@ export const deposit = async (
     `/api/accounts/${myAccountId}/deposit`,
     {
       body: JSON.stringify({ amount, rqspeNm }),
+    },
+  );
+  return response;
+};
+
+// 위비카드여부확인
+export const getIsCard = async (): Promise<
+  SuccessResponse<connectedAccountType> | ErrorResponse
+> => {
+  const response = await instance.get<connectedAccountType>(
+    '/api/travels/accounts',
+  );
+  return response;
+};
+
+export const getAccountList = async (): Promise<
+  SuccessResponse<accountType> | ErrorResponse
+> => {
+  const response = await instance.get<accountType>('/api/accounts');
+  return response;
+};
+
+export const postConnectedAccount = async (
+  accountId: number,
+  isWibeeCard: boolean,
+): Promise<SuccessResponse<connectedAccountType> | ErrorResponse> => {
+  const response = await instance.post<connectedAccountType>(
+    '/api/travels/accounts',
+    {
+      body: JSON.stringify({
+        accountId,
+        isWibeeCard,
+      }),
     },
   );
   return response;

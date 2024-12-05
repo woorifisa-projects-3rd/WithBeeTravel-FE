@@ -11,12 +11,15 @@ import { useRouter } from 'next/navigation';
 import { agreeSettlement } from '@withbee/apis';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import PinNumberModal from '../../../../components/PinNumberModal';
 
 export default function ConsentPage({ params }: { params: Params }) {
   const travelId = Number(params.id);
 
   const { showToast } = useToast();
   const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // 현재 열려있는 약관 인덱스 관리
   const [agreements, setAgreements] = useState<boolean[]>(
@@ -35,7 +38,7 @@ export default function ConsentPage({ params }: { params: Params }) {
           message: ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES],
         });
         router.push(
-          `/travel/${travelId}/agreement/pending?error=${response.code}`,
+          `/travel/${travelId}/settlement/pending?error=${response.code}`,
         );
         return;
       } else if (response.code === 'SETTLEMENT-003') {
@@ -166,10 +169,15 @@ export default function ConsentPage({ params }: { params: Params }) {
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
             shadow={true}
-            onClick={handelAgreeSettlement}
+            onClick={() => setIsModalOpen(true)}
           />
         </div>
       </div>
+      <PinNumberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handelAgreeSettlement}
+      />
     </div>
   );
 }

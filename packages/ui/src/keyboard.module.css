@@ -1,0 +1,25 @@
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  background-color: white;
+}
+
+.keyboardKey {
+  background-color: white;
+  border: none;
+  max-height: 80px;
+  padding: 12%;
+  font-size: 27px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-700);
+}
+
+.keyboardKey:active,
+.keyboardKey.active {
+  background-color: var(--color-gray-100);
+}

@@ -4,11 +4,14 @@ import '@withbee/styles/global.css';
 import './global.css';
 import MobileFooter from '../components/MobileFooter';
 import { CustomToastContainer } from '@withbee/ui/toast-container';
+import RealtIimeMsg from '../components/RealTimeMsg';
+import { SessionProvider } from 'next-auth/react';
 
 const pretendard = localFont({
-  src: 'fonts/PretendardVariable.ttf',
+  src: 'fonts/PretendardVariable.woff2',
+  display: 'swap',
   variable: '--font-pretendard',
-  weight: '100 300 400 500 700 900',
+  weight: '400 920',
 });
 
 export const metadata: Metadata = {
@@ -28,9 +31,12 @@ export default function RootLayout({
     <html lang="ko" className="layout">
       <body className={pretendard.variable}>
         <div className="mobile">
-          <CustomToastContainer />
-          {children}
-          <MobileFooter />
+          <SessionProvider>
+            <RealtIimeMsg />
+            <CustomToastContainer />
+            {children}
+            <MobileFooter />
+          </SessionProvider>
         </div>
       </body>
     </html>

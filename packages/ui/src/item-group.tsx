@@ -3,26 +3,14 @@
 import { useRef } from 'react';
 import { motion, useDragControls } from 'framer-motion';
 import styles from './item-group.module.css';
-import { usePaymentStore } from '@withbee/stores';
+import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
+import { allCategories } from '@withbee/utils';
 
 const TabGroup = () => {
-  const { category, setCategory } = usePaymentStore();
+  const { params, updateParam } = usePaymentParams();
+  const { category } = params;
   const constraintsRef = useRef(null);
   const dragControls = useDragControls();
-
-  const tabs = [
-    '전체',
-    '항공',
-    '교통',
-    '숙박',
-    '식비',
-    '관광',
-    '액티비티',
-    '쇼핑',
-    '기타',
-  ];
-
-  console.log('category', category);
 
   return (
     <div className={styles.container} ref={constraintsRef}>
@@ -35,10 +23,10 @@ const TabGroup = () => {
         dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
         whileTap={{ cursor: 'grabbing' }}
       >
-        {tabs.map((tab) => (
+        {allCategories.map((tab) => (
           <button
             key={tab}
-            onClick={() => setCategory(tab)}
+            onClick={() => updateParam('category', tab)}
             className={[
               styles.tab,
               category === tab ? styles.activeTab : styles.inactiveTab,

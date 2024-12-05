@@ -13,12 +13,17 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  /* gap: 12px; */
 }
 
 .contentWrapper {
   display: flex;
   justify-content: space-between;
+}
+
+.rightWrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .info {
@@ -42,7 +47,7 @@
   font-size: 16px;
 }
 
-.optionsWrapper {
+.optionWrapper {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -65,7 +70,9 @@
 }
 
 .friends {
+  position: relative;
   display: flex;
+  padding-top: 1px;
 }
 
 .friendsModal {
@@ -107,4 +114,12 @@
 .moreFriends {
   font-size: 14px;
   color: var(--color-gray-500);
+}
+
+.gap {
+  gap: 12px;
+}
+
+.mt {
+  margin-top: -3px;
 }

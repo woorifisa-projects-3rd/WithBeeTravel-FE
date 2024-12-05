@@ -1,6 +1,7 @@
 import { auth } from '@withbee/auth-config';
 import { ErrorResponse, SuccessResponse } from '@withbee/types';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { redirect } from 'next/dist/server/api-utils';
 
 interface RequestOptions extends RequestInit {
   isMultipart?: boolean;
@@ -34,6 +35,9 @@ const fetchInstance = async <T = undefined>(
     delete headers['Content-Type'];
   } else {
     headers['Content-Type'] = 'application/json';
+    if (typeof options.body === 'object') {
+      options.body = JSON.stringify(options.body);
+    }
   }
 
   try {

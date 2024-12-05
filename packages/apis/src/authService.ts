@@ -2,24 +2,11 @@
 
 import { instance } from './instance';
 import {
+  ErrorResponse,
   JoinRequest,
-  LoginRequest,
-  RefreshTokenRequest,
-  TokenResponse,
+  MyPageInfoResponse,
+  SuccessResponse,
 } from '@withbee/types';
-
-// 로그인
-export const login = async ({ email, password }: LoginRequest) => {
-  const response = await instance.post<TokenResponse>('/api/auth/login', {
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-    requireAuth: false,
-  });
-
-  return response;
-};
 
 // 회원가입
 export const join = async ({
@@ -41,14 +28,11 @@ export const join = async ({
   return response;
 };
 
-// 리프레시
-export const refresh = async ({ refreshToken }: RefreshTokenRequest) => {
-  const response = await instance.post<TokenResponse>('/api/auth/refresh', {
-    body: JSON.stringify({
-      refreshToken,
-    }),
-    requireAuth: false,
-  });
+// 마이 페이지
+export const getMyPageInfo = async (): Promise<
+  SuccessResponse<MyPageInfoResponse> | ErrorResponse
+> => {
+  const response = await instance.get<MyPageInfoResponse>('/api/auth/mypage');
 
   return response;
 };

@@ -13,6 +13,10 @@ export interface PinNumberResponse {
 export interface ProductOption {
   label: string;
   value: string;
+  imageUrl: string; // 이미지 URL도 포함
+  width?: number; // 이미지 너비
+  className?: string;
+  detail: string;
 }
 
 export interface AccountHistory {
@@ -57,4 +61,17 @@ export interface DepositRequest {
 
 export interface AccountNumberRequest {
   accountNumber: string;
+}
+
+export interface connectedAccountType {
+  accountId: number;
+  connectedAccountId: String;
+  wibeeCardAccountId: string;
+  isWibeeCard: boolean;
+  connectedWibeeCard: boolean;
+}
+
+export interface accountType {
+  accountNumber: String;
+  product: string;
 }

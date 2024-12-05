@@ -1,20 +1,25 @@
 import styles from './page.module.css';
 import '@withbee/styles';
 import { Title } from '@withbee/ui/title';
-import ModalWrapper from '../../../../components/ModalWrapper';
 import Link from 'next/link';
 import { Button } from '@withbee/ui/button';
 import ExpenseDetails from '../../../../components/ExpenseDetails';
-import Image from 'next/image';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
-import { Key } from 'react';
 import { SettlementDetails, getSettlementDetails } from '@withbee/apis';
 import { SuccessResponse } from '@withbee/types';
 import { redirect } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import OtherExpenseDetails from '../../../../components/OtherExpenseDetails';
+import ModalWrapper from '../../../../components/ModalWrapper';
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: { [key: string]: string };
+}) {
   const travelId = Number(params.id);
   const { showToast } = useToast();
 
@@ -24,7 +29,7 @@ export default async function Page({ params }: { params: Params }) {
 
   if ('code' in response) {
     if (response.code === 'SETTLEMENT-002' || 'TRAVEL-001') {
-      redirect(`/travel/${travelId}/agreement/pending?error=${response.code}`);
+      redirect(`/travel/${travelId}/settlement/pending?error=${response.code}`);
     } else {
       showToast.error({
         message: ERROR_MESSAGES['COMMON'],
@@ -41,6 +46,8 @@ export default async function Page({ params }: { params: Params }) {
     myDetailPayments,
     others,
   } = response.data as SettlementDetails;
+
+  const isModalOpen = searchParams['cancel'] === 'true'; // URL 파라미터로 모달 열기 여부를 결정
 
   return (
     <div className={styles.container}>
@@ -64,8 +71,8 @@ export default async function Page({ params }: { params: Params }) {
               >
                 <span className={styles.suffixText}>총 </span>
                 {myTotalPayment.totalPaymentCost >= 0
-                  ? `+${myTotalPayment.totalPaymentCost.toLocaleString()}원`
-                  : `${myTotalPayment.totalPaymentCost.toLocaleString()}원`}
+                  ? `+${myTotalPayment.totalPaymentCost?.toLocaleString()}원`
+                  : `${myTotalPayment.totalPaymentCost?.toLocaleString()}원`}
                 <span className={styles.suffixText}>
                   을{' '}
                   {myTotalPayment.totalPaymentCost >= 0 ? '받아요' : '보내요'}
@@ -86,75 +93,10 @@ export default async function Page({ params }: { params: Params }) {
                 >{`${totalRequestedAmounts.toLocaleString()}원`}</span>
               </div>
             </div>
-
             <ExpenseDetails myDetailPayments={myDetailPayments} />
           </div>
         </div>
-        <div className={styles.userList}>
-          <ul>
-            {others
-              .sort((a: { agreed: boolean }, b: { agreed: boolean }) => {
-                return a.agreed === b.agreed ? 0 : a.agreed ? 1 : -1;
-              })
-              .map(
-                (user: {
-                  id: Key;
-                  agreed: boolean;
-                  name: string;
-                  totalPaymentCost: number;
-                }) => (
-                  <li
-                    key={user.id}
-                    className={`${styles.card} ${
-                      user.agreed ? styles.completedCard : styles.userCard
-                    }`}
-                  >
-                    <div className={styles.userRow}>
-                      <span>
-                        <span className={styles.name}>{user.name}</span>
-                        <span className={styles.suffix}>님이</span>
-                      </span>
-                      <span>
-                        <span
-                          className={
-                            user.totalPaymentCost >= 0
-                              ? styles.positiveAmount
-                              : styles.negativeAmount
-                          }
-                        >
-                          {user.totalPaymentCost >= 0
-                            ? `+${user.totalPaymentCost.toLocaleString()}원`
-                            : `${user.totalPaymentCost.toLocaleString()}원`}
-                        </span>
-                        <span className="suffixText">{`을 ${user.totalPaymentCost >= 0 ? '받아요' : '보내요'}`}</span>
-                      </span>
-                    </div>
-                    {user.agreed && (
-                      <div className={styles.completedOverlay}>
-                        <Image
-                          src="/imgs/settlement/stamp.png"
-                          alt="stamp"
-                          width={50}
-                          height={50}
-                        />
-                      </div>
-                    )}
-                  </li>
-                ),
-              )}
-          </ul>
-        </div>
-        <div
-          className={
-            myTotalPayment.agreed
-              ? styles.remainingUsersCompleted
-              : styles.remainingUsers
-          }
-        >
-          <span>정산 완료까지 남은 인원 : </span>
-          <strong>{disagreeCount}</strong>
-          <span>명</span>
-        </div>
+        <OtherExpenseDetails others={others} disagreeCount={disagreeCount} />
         <div className={styles.btnWrapper}>
           {myTotalPayment.agreed ? (
             <Button
@@ -168,8 +110,19 @@ export default async function Page({ params }: { params: Params }) {
               <Button label="동의하기" />
             </Link>
           )}
-          {!myTotalPayment.agreed && <ModalWrapper travelId={params.id} />}
+
+          {!myTotalPayment.agreed && (
+            <Link
+              href={{
+                pathname: `/travel/${params.id}/settlement`,
+                query: { cancel: 'true' }, // 모달을 여는 URL 파라미터
+              }}
+            >
+              <Button label="정산 취소하기" primary={false} />
+            </Link>
+          )}
         </div>
+        {isModalOpen && <ModalWrapper travelId={travelId} />}
       </div>
     </div>
   );

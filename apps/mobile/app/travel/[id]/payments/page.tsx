@@ -1,47 +1,50 @@
 import PaymentList from '@withbee/ui/payment-list';
 import { Suspense } from 'react';
 import { PaymentSkeleton } from '@withbee/ui/payment-skeleton';
-import { getSharedPayments, getTravelMembers } from '@withbee/apis';
-import { TravelStoreInitializer } from '@withbee/stores';
+import { getSharedPayments, getTravelHome } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
-import { Button } from '@withbee/ui/button';
-import styles from './page.module.css';
+import { SettlementButton } from '@withbee/ui/settlement-button';
 
 interface TravelPageProps {
   params: {
     id: string;
   };
 }
+
 export default async function Page({ params }: TravelPageProps) {
   const { id } = params;
-  const isLeader = false;
-  const [travelMembersResponse, sharedPaymentsResponse] = await Promise.all([
-    getTravelMembers(Number(id)),
+  const [travelHomeResponse, sharedPaymentsResponse] = await Promise.all([
+    getTravelHome(Number(id)),
     getSharedPayments({ travelId: Number(id) }),
   ]);
 
-  if ('code' in travelMembersResponse || 'code' in sharedPaymentsResponse) {
-    throw new Error(ERROR_MESSAGES['FETCH-FAILED']);
+  if ('code' in travelHomeResponse) {
+    throw new Error(
+      ERROR_MESSAGES[travelHomeResponse.code as keyof typeof ERROR_MESSAGES],
+    );
   }
 
+  if ('code' in sharedPaymentsResponse) {
+    throw new Error(
+      ERROR_MESSAGES[
+        sharedPaymentsResponse.code as keyof typeof ERROR_MESSAGES
+      ],
+    );
+  }
+
+  // console.log(travelHomeResponse.data);
+
   return (
-    <>
-      <TravelStoreInitializer travelMembers={travelMembersResponse.data} />
-      <Suspense fallback={<PaymentSkeleton />}>
-        <PaymentList
-          travelId={Number(id)}
-          initialPayments={sharedPaymentsResponse.data}
-        />
-        {/* <div className={styles.btnWrapper}>
-          <Button
-            label="정산 시작하기" // 동의하러 가기 | 정산 현황 확인 | 정산 시작하기
-            primary={false}
-            // size="large"
-            className={styles.info}
-            shadow={true}
-          />
-        </div> */}
-      </Suspense>
-    </>
+    <Suspense fallback={<PaymentSkeleton />}>
+      <PaymentList
+        travelId={Number(id)}
+        initialPayments={sharedPaymentsResponse.data}
+        travelInfo={travelHomeResponse.data!}
+      />
+      {travelHomeResponse.data?.travelEndDate &&
+        new Date(travelHomeResponse.data.travelEndDate) < new Date() && (
+          <SettlementButton travelInfo={travelHomeResponse.data} />
+        )}
+    </Suspense>
   );
 }

@@ -32,12 +32,12 @@ input,
 select,
 textarea,
 button {
-  font-family: 'Pretendard', var(--font-pretendard) !important;
   line-height: 1.5;
   color: #333;
   word-break: keep-all;
   word-wrap: break-word;
   letter-spacing: 0.24px;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 caption {
@@ -279,10 +279,11 @@ label {
   --color-yellow-10: #9d7f00;
   --color-yellow-11: #786000;
   --color-yellow-12: #2a1f00;
-}
 
+  /* Red Palette */
+  --color-red: #ef4444;
+}
 
 .swiper-slide {
   height: 40px !important;
 }
-

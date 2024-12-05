@@ -1,0 +1,153 @@
+/* AccountSelection.module.css */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto 40px;
+  padding: 0 8px;
+  position: relative;
+}
+
+.swipeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  overflow: visible;
+  /* margin-bottom: 10px; */
+  cursor: grab;
+  transform-style: preserve-3d;
+}
+
+.swipeContainer:active {
+  cursor: grabbing;
+}
+
+.swipeContainer:focus {
+  outline: none;
+}
+
+.cardSelected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(1.1);
+  z-index: 2;
+  transition: all 0.3s ease;
+  will-change: transform;
+}
+
+.cardPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.5;
+  transform: scale(0.7);
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.left {
+  margin-right: -40px;
+}
+
+.right {
+  margin-left: -40px;
+}
+
+.imageContainer {
+  width: 140px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.image[alt='우리닷컴통장'] {
+  padding-top: 15px;
+}
+
+.textContainer {
+  text-align: center;
+  width: 100%;
+  padding-top: 14px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.des {
+  font-size: 16px;
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+.swipeGuideWrapper {
+  position: absolute;
+  bottom: -62px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  min-width: 160px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  will-change: transform;
+}
+
+.swipeGuide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  color: var(--color-gray-600);
+}
+
+.swipeGuide span {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+}
+
+.swipeIcon {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--color-gray-500);
+}
+
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.arrowButton:hover {
+  background-color: var(--color-blue-3);
+  color: var(--color-blue-9);
+}
+
+.arrowButton:active {
+  transform: scale(0.95);
+}

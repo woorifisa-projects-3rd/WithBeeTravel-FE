@@ -1,0 +1,14 @@
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+.menu {
+  margin-top: 16px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0px;
+}

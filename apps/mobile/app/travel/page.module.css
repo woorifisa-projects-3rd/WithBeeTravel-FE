@@ -1,9 +1,14 @@
+.travelSelectWrap {
+  margin: 0 -10px;
+}
+
+
 .imageWrap {
   position: relative;
   left: 50%;
   transform: translate(-50%);
   width: 90%;
-  height: 25vh;
+  height: 23vh;
   margin-top: 10px;
 }
 
@@ -16,7 +21,6 @@
   bottom: 0;
   background: url('/imgs/travelselect/withbee_friends_background.png') center/contain no-repeat;
   z-index: -1;
-  /* 다른 이미지들 위에 배경이 위치하도록 */
 }
 
 .withbeeFriendsImg {
@@ -34,7 +38,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.9rem;
 }
 
 .button {
@@ -77,7 +81,7 @@
 .cardWrap {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
@@ -123,4 +127,41 @@
   line-height: 40px;
   font-weight: 500;
   color: var(--color-gray-600);
+}
+
+/* 여행 데이터 없을 경우 */
+
+.emptyState {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.emptyStateMessage {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+/* 로딩표시 */
+.loadingContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 20px;
+}
+
+.loadingDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background-color: var(--color-blue-9);
 }
