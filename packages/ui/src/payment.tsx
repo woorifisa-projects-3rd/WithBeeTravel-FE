@@ -144,6 +144,7 @@ export const Payment = ({
                 key={member.id}
                 src={member.profileImage}
                 size={30}
+                isGroup={selectedMembers.length > 1}
               />
             ))}
             <motion.button className={styles.plusButton}>
