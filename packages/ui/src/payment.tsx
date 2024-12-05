@@ -6,8 +6,6 @@ import styles from './payment.module.css';
 import { Item } from './item';
 import { motion } from 'framer-motion';
 import { Modal } from './modal';
-import notSelectIcon from './assets/not_select.png';
-import selectIcon from './assets/select.png';
 import Image from 'next/image';
 import { ParticipatingMember, SharedPayment, TravelHome } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
@@ -148,9 +146,9 @@ export const Payment = ({
               />
             ))}
             <motion.button className={styles.plusButton}>
-              <button className={styles.moreFriends}>
+              <div className={styles.moreFriends}>
                 {selectedMembers.length}명
-              </button>
+              </div>
             </motion.button>
             {/* <div className={styles.optionWrapper}>
               <button className={styles.option}>기록 추가</button>
@@ -205,7 +203,7 @@ export const Payment = ({
                   (selectedMember) => selectedMember.id === member.id,
                 ) ? (
                   <Image
-                    src={selectIcon}
+                    src={'/select.png'}
                     alt="select"
                     width="30"
                     height="30"
@@ -213,7 +211,7 @@ export const Payment = ({
                   />
                 ) : (
                   <Image
-                    src={notSelectIcon}
+                    src={'/not_select.png'}
                     alt="not select"
                     width="30"
                     height="30"
