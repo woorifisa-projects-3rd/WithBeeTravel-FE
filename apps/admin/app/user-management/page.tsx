@@ -1,12 +1,14 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from "react";
-import styles from "./page.module.css";
-import { Pageable, UserResponse } from "../../../../packages/types/src/adminType";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getUserList } from "../../../../packages/apis/src/adminService";
-
+import { useState, useEffect } from 'react';
+import styles from './page.module.css';
+import {
+  Pageable,
+  UserResponse,
+} from '../../../../packages/types/src/adminType';
+import Header from '../../components/Header';
+import Sidebar from '../../components/Sidebar';
+import { getUserList } from '../../../../packages/apis/src/adminService';
 
 const UserManagement = () => {
   const [users, setUsers] = useState<UserResponse[]>([]);
@@ -14,22 +16,24 @@ const UserManagement = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [searchName, setSearchName] = useState<string>("");
+  const [searchName, setSearchName] = useState<string>('');
 
-  const fetchUsers = async (page: number, name: string = "") => {
+  const fetchUsers = async (page: number, name: string = '') => {
     setLoading(true);
     try {
       const response = await getUserList(page, 10, name);
-      
-      if ('data' in response && response.data) {// @ts-ignore
+
+      if ('data' in response && response.data) {
+        // @ts-ignore
         setUsers(response.data.content);
-        setPageable(response.data.pageable);// @ts-ignore
+        setPageable(response.data.pageable); // @ts-ignore
         setTotalPages(response.data.totalPages);
-      } else {// @ts-ignore
+      } else {
+        // @ts-ignore
         console.error('Error:', response.error);
       }
     } catch (error) {
-      console.error("Failed to fetch users", error);
+      console.error('Failed to fetch users', error);
     } finally {
       setLoading(false);
     }

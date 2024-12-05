@@ -1,10 +1,10 @@
 'use client';
-import { useEffect, useState } from "react";
-import styles from "./page.module.css";  // 로그인 로그 페이지 전용 CSS
-import { LoginLog, Pageable } from "../../../../packages/types/src/adminType";
-import { getLoginLogs } from "../../../../packages/apis/src/adminService";
-import Header from "../../components/Header";  // 헤더 컴포넌트
-import Sidebar from "../../components/Sidebar";  // 사이드바 컴포넌트
+import { useEffect, useState } from 'react';
+import styles from './page.module.css'; // 로그인 로그 페이지 전용 CSS
+import { LoginLog, Pageable } from '../../../../packages/types/src/adminType';
+import { getLoginLogs } from '../../../../packages/apis/src/adminService';
+import Header from '../../components/Header'; // 헤더 컴포넌트
+import Sidebar from '../../components/Sidebar'; // 사이드바 컴포넌트
 
 const AdminPage = () => {
   const [loginLogs, setLoginLogs] = useState<LoginLog[]>([]);
@@ -12,10 +12,14 @@ const AdminPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [loginLogType, setLoginLogType] = useState<string>("ALL");
+  const [loginLogType, setLoginLogType] = useState<string>('ALL');
   const [userId, setUserId] = useState<number>();
 
-  const fetchLoginLogs = async (page: number, logType: string, userId: number) => {
+  const fetchLoginLogs = async (
+    page: number,
+    logType: string,
+    userId: number,
+  ) => {
     setLoading(true);
     try {
       const response = await getLoginLogs(page, 5, logType, userId);
@@ -27,7 +31,7 @@ const AdminPage = () => {
       } else {
       }
     } catch (error) {
-      console.error("Failed to fetch login logs", error);
+      console.error('Failed to fetch login logs', error);
     } finally {
       setLoading(false);
     }
@@ -75,11 +79,12 @@ const AdminPage = () => {
             <input
               type="text"
               id="userId"
-              value={userId||''}
+              value={userId || ''}
               onChange={(e) => {
                 const value = e.target.value;
                 // 숫자만 입력되도록 제한
-                if (/^\d*$/.test(value)) {  //@ts-ignore
+                if (/^\d*$/.test(value)) {
+                  //@ts-ignore
                   setUserId(value ? Number(value) : ''); // 입력값이 있으면 숫자로 변환
                 }
               }}
