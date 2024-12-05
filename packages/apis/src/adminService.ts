@@ -35,7 +35,7 @@ export const getLoginLogs = async (
 export const getAdminDashbord = async (): Promise<
   SuccessResponse<DashboardResponse> | ErrorResponse
 > => {
-  const response = instance.get<DashboardResponse>(`/api/admin/`, {
+  const response = instance.get<DashboardResponse>(`/api/admin`, {
     requireAuth: false,
   });
   return response;
