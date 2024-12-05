@@ -35,7 +35,6 @@ function TravelFormContent() {
 
   return (
     <div>
-      <Title label="여행 생성" />
       <TravelForm mode="create" onSubmit={handleCreateTravel} />
     </div>
   );

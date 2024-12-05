@@ -106,11 +106,10 @@ const CardIssuancePage = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Initial state content remains the same */}
             <h1 className={styles.title}>위비 트래블 체크 카드</h1>
             <motion.div className={styles.withbeeCardWrap}>
               <Image
-                src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
+                src="https://m.wooricard.com/webcontent/cdPrdImgFileList/2024/6/7/6be0c887-7ff7-49bb-80a9-711e66879de6.gif"
                 alt="위비트래블 카드"
                 width={130}
                 height={190}
@@ -124,18 +123,18 @@ const CardIssuancePage = () => {
                 {
                   icon: '/imgs/cardBenefits/2.png',
                   title: '여행 공동 지출 관리 서비스',
-                  desc: '여행 종료 후 결제 내역을 바탕으로 멤버별 지출 금액을 자동 계산',
+                  desc: '여행 종료 후 입력된 결제 내역을 바탕으로 멤버별 지출 금액을 계산, 계좌를 통해 자동 정산 처리',
                 },
                 {
                   icon: '/imgs/cardBenefits/1.png',
                   title: '해외 가맹점 이용수수료 면제',
-                  desc: '국제브랜드 수수료(Mastercard 1%) 및 해외서비스 수수료(거래 건당 US$0.5)면제',
+                  desc: '전월 실적 조건/서비스 제공 한도 없음\n  국제브랜드 수수료(Mastercard 1%) 및 해외서비스 수수료(거래 건당 US$0.5) 면제',
                 },
 
                 {
                   icon: '/imgs/cardBenefits/3.png',
                   title: '쿠팡, 배민, 스타벅스 5% 캐시백',
-                  desc: '공식 앱 및 홈페이지를 통한 온라인 결제 건에 한함',
+                  desc: '공식 앱 및 홈페이지를 통한 온라인 결제 건에 한함\n  우리페이, 네이버페이로 승인된 매출은 캐시백 제외',
                 },
               ].map((benefit, index) => (
                 <motion.div

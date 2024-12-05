@@ -13,7 +13,6 @@ export default function Page({ params }: { params: Params }) {
 
   return (
     <div className={styles.container}>
-      <Title label="" disableBack={true} />
       <div className={styles.subtitleContainer}>
         <motion.div
           animate={{ y: [0, -10, 0] }} // 위아래로 움직이기
@@ -28,7 +27,7 @@ export default function Page({ params }: { params: Params }) {
             src={'/imgs/settlement/cancelWibee.png'}
             alt="pending"
             width={200}
-            height={222}
+            height={200}
           />
         </motion.div>
         <p className={styles.title}>정산 취소 완료</p>

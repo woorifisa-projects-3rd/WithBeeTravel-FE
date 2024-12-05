@@ -9,6 +9,7 @@
   flex-direction: column;
   gap: 3px;
   padding: 0 3px;
+  margin: 0 auto;
 }
 
 .inputContainer label {
@@ -16,7 +17,7 @@
 }
 
 .input {
-  width: 100%;
+  width: 400px;
   padding: 12px;
   font-size: 16px;
   border: none;
@@ -34,6 +35,7 @@
 }
 
 .buttonContainer button {
+  width: 400px;
   margin-bottom: 10px;
 }
 

@@ -18,6 +18,7 @@ import {
 } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 interface WibeeCardProps {
   params: {
@@ -32,6 +33,7 @@ export default function Page({ params }: WibeeCardProps) {
 
   const [selectedHistoryIds, setSelectedHistoryIds] = useState<number[]>([]);
   const { showToast, formValidation } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   // 결제 내역 선택 핸들러
   const handleSelectHistories = (id: number): void => {
@@ -129,25 +131,30 @@ export default function Page({ params }: WibeeCardProps) {
 
   // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
   const handleSubmit = async () => {
-    const response = await postWibeeCardToSharedPayment(id, selectedHistoryIds);
+    startTransition(async () => {
+      const response = await postWibeeCardToSharedPayment(
+        id,
+        selectedHistoryIds,
+      );
 
-    if ('code' in response) {
-      showToast.warning({
-        message:
-          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-          'Unknown Error',
-      });
-      throw new Error(response.code);
-    }
+      if ('code' in response) {
+        showToast.warning({
+          message:
+            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+            'Unknown Error',
+        });
+        throw new Error(response.code);
+      }
 
-    router.push(`/travel/${id}/payments`);
+      router.push(`/travel/${id}/payments`);
+    });
   };
 
   return (
     <div className={styles.container}>
+      <Title label="위비 카드 결제 내역 불러오기" />
       <div className={styles.headerBackground}>
         <div className={styles.header}>
-          <Title label="위비 카드 결제 내역 불러오기" />
           <div className={styles.optionWrapper}>
             <Button
               label="전체 선택"
@@ -221,7 +228,11 @@ export default function Page({ params }: WibeeCardProps) {
       </div>
       <div className={styles.submitButtonBackground}>
         <div className={styles.submitButtonWrapper}>
-          <Button label="선택 완료" onClick={handleSubmit} />
+          <Button
+            onClick={handleSubmit}
+            label={isPending ? '추가 중...' : '선택 완료'}
+            disabled={isPending}
+          />
         </div>
       </div>
     </div>
