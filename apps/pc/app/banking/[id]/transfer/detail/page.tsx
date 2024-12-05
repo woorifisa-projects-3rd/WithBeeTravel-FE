@@ -13,6 +13,7 @@ import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
+import numberToKorean from '../../../../../../../packages/utils/src/numberToKorean';
 
 export default function TransferDetailPage() {
   const MAX_AMOUNT = 500000000;
@@ -192,6 +193,9 @@ export default function TransferDetailPage() {
         ) : (
           <span className={styles.placeholder}>얼마나 옮길까요?</span>
         )}
+        <p className={styles.won} style={{ height: '36px' }}>
+          {numberToKorean(Number(amount))} 
+        </p>
       </div>
     </div>
   );

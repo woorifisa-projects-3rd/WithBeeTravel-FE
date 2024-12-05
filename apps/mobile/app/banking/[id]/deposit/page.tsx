@@ -22,7 +22,7 @@ export default function DepositPage() {
 
   const { showToast } = useToast();
 
-  const MAX_DEPOSIT_AMOUNT = accountInfo?.balance || 500000000; // 최대 입금 가능 금액
+  const MAX_DEPOSIT_AMOUNT = 500000000; // 최대 입금 가능 금액
 
   // 내 계좌 정보 가져오기
   useEffect(() => {

@@ -10,6 +10,7 @@ import { useToast } from '@withbee/hooks/useToast';
 // import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
 import { AccountInfo } from '@withbee/types';
+import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
 
 const MAX_DEPOSIT_AMOUNT = 500000000; // 5억원
 
@@ -148,7 +149,7 @@ export default function DepositPage() {
           </motion.span>
         )}
         <p className={styles.won} style={{ height: '36px' }}>
-          {/* {numberToKorean(Number(amount))} */}
+          {numberToKorean(Number(amount))} 
         </p>
       </div>{' '}
       {/* 한글 변환 결과 */}
