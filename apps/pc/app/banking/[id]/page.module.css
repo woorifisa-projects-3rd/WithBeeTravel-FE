@@ -1,3 +1,9 @@
+.container {
+  width: 430px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
 /* 계좌 정보 */
 .accountDetails {
   background: #ffffff;
@@ -6,52 +12,34 @@
   color: rgb(0, 0, 0);
   margin-top: 20px;
   transition: transform 0.3s ease;
-  border: 1px solid var(--color-gray-300);
-  /* 테두리 추가 */
-
+  border: 1px solid var(--color-gray-200); /* 테두리 추가 */
 }
 
 .productAndButton {
-  display: flex;
-  /* 수평 배치 */
-  justify-content: space-between;
-  /* 양쪽 끝으로 정렬 */
-  align-items: center;
-  /* 세로 중앙 정렬 */
-  width: 100%;
-  /* 가능한 공간을 모두 사용 */
+  display: flex; /* 수평 배치 */
+  justify-content: space-between; /* 양쪽 끝으로 정렬 */
+  width: 100%; /* 가능한 공간을 모두 사용 */
 }
-
 .addHistory {
-  display: flex;
-  /* Flexbox 사용 */
-  align-items: center;
-  /* 세로 중앙 정렬 */
-
-}
-
-.addHistory Button {
-  margin-left: auto;
-  /* 버튼을 오른쪽으로 정렬 */
 }
 
 .accountInfo {
   display: flex;
   flex-direction: column;
-
 }
 
 .productName {
   display: flex;
-  font-size: 20px;
-  opacity: 0.8;
+  font-size: 16px;
   letter-spacing: 1px;
-  font-weight: 700;
+  font-weight: 500;
+  color: var(--color-gray-700);
 }
 
 .accountNumber {
   font-size: 16px;
   letter-spacing: 1px;
+  margin-bottom: 15px;
 }
 
 .accountBalance {
@@ -69,38 +57,28 @@
   font-weight: bold;
 }
 
-
 /* 페이지 전체 스타일 */
 .container {
   background-color: #ffffff;
 }
 
 .transactionList {
-  margin-top: 20px;
+  margin-top: 2px;
+  margin-bottom: 20px;
 }
 
 /* 거래 내역 카드 */
 .transactionItem {
-  background-color: #f9f9f900;
-  padding: 20px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid var(--color-gray-300);
-  position: relative;
+  padding: 20px 5px 20px 5px;
+  border-bottom: 1px solid var(--color-gray-200);
 }
 
 .transactionDate {
-  font-size: 12px;
-  color: var(--color-gray-700);
-  margin-bottom: 10px;
-  position: absolute;
-  top: 10px;
-  left: 20px;
+  font-size: 13px;
+  color: var(--color-gray-500);
 }
 
 .transactionDetails {
-  display: flex;
-  flex-direction: column;
-
 }
 
 .rcvAmount,
@@ -109,27 +87,25 @@
 }
 
 .inflowLabel {
-  color: #000000;
-  font-weight: bold;
+  color: var(--color-gray-800);
+  font-weight: 600;
 }
 
 .outflowLabel {
-  color: #000000;
-  font-weight: bold;
+  color: var(--color-gray-800);
+  font-weight: 600;
 }
 
 .balance {
   font-size: 14px;
-  text-align: right;
-  /* 오른쪽 정렬 추가 */
+  text-align: right; /* 오른쪽 정렬 추가 */
+  color: var(--color-gray-800);
 }
 
 .detail {
-  padding-top: 15px;
-  padding-left: 5px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #000000;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-gray-700);
 }
 
 .rcvAmount {
@@ -141,10 +117,8 @@
 .payAmount {
   font-weight: bold;
   text-align: right;
-  color: #FF3B30;
+  color: var(--color-red);
 }
-
-
 
 .transactionItem:active {
   transform: scale(0.98);
@@ -152,10 +126,13 @@
 }
 
 .default {
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding-top: 15px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.errorContainer {
+  padding: 10vh 0;
 }

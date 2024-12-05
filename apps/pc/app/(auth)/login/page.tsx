@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <header>
-        <Title label="로그인" />
+        <h2 className="title">로그인</h2>
       </header>
       <div className={styles.content}>
         <LoginForm />

@@ -10,6 +10,7 @@ import { formatDate, getDateObject, countriesList } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
 import { validators } from '@withbee/utils';
 import { TravelFormProps } from '@withbee/types';
+import { useTransition } from 'react';
 
 export default function TravelForm({
   mode,
@@ -17,6 +18,7 @@ export default function TravelForm({
   onSubmit,
 }: TravelFormProps) {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   // 폼 데이터 상태
   const [formData, setFormData] = useState({
@@ -289,8 +291,12 @@ export default function TravelForm({
         <div className={styles.btnWrap}>
           <Button
             type="submit"
-            label={mode === 'create' ? '여행 생성 완료' : '여행 편집 완료'}
-            primary={true}
+            label={
+              isPending
+                ? '...'
+                : `${mode === 'create' ? '여행 생성' : '여행 편집'} 완료`
+            }
+            primary
             className={styles.btn}
           />
         </div>

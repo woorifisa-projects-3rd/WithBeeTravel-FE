@@ -1,79 +1,97 @@
-/* page.module.css */
-
 .container {
-    margin: 0 auto;
-  }
-  
-.formSection {
-  position: fixed;   /* 고정 위치 */
-  bottom: 30;         /* 화면 하단에 배치 */
-  left: 0;           /* 화면 왼쪽에 배치 (전체 너비) */
-  width: 100%;       /* 화면의 전체 너비 */
-  padding: 16px;     /* 필요에 따라 패딩 추가 */
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px 0 50px;
+  background-color: color-mix(in srgb, var(--color-gray-50) 70%, transparent);
 }
 
-.detail {
-  font-size: 16px;
-  text-align: center;
-  margin-bottom: 30px;
+.mainContent {
+  flex: 1; /* 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .accountContainer {
-  display: flex;             
-  justify-content: center;     
-  align-items: center;         
-  flex-direction: column;       
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
+.detail {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--color-gray-600);
+}
 
-  
-  .label {
-    display: block;
-    font-size: 24px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    font-weight: 700;
-    text-align: center; 
-  }
-  
-  .select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
+.label {
+  display: block;
+  font-size: 24px;
+  margin-top: 30px;
+  font-weight: 700;
+  color: var(--color-gray-800);
+  text-align: center;
+}
 
-  .image {
-    width: 350px; /* 이미지 너비 350px */
-    height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
-    display: block; /* 이미지 자체는 block 요소로 설정 */
-    margin-left: auto; /* 수평 중앙 정렬 */
-    margin-right: auto; /* 수평 중앙 정렬 */
-  }
+.select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
 
-  .error {
-    color: red;
-    margin-top: 10px;
-  }
+.image {
+  width: 350px; /* 이미지 너비 350px */
+  height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
+  display: block; /* 이미지 자체는 block 요소로 설정 */
+  margin-left: auto; /* 수평 중앙 정렬 */
+  margin-right: auto; /* 수평 중앙 정렬 */
+}
 
-  .productDetail {
-    margin-top: 20px;
-    padding: 25px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .productDetail h3 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .productDetail p {
-    font-size: 14px;
-    color: #555;
-  }
-  
+.error {
+  color: var(--color-red);
+  margin-top: 10px;
+}
+
+.productDetail {
+  width: 400px;
+  margin-top: 10px;
+  padding: 20px 20px;
+  background-color: var(--color-gray-100);
+  border-radius: 20px;
+  margin: 5px 10px 25px;
+}
+
+.productDetail h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.productDetail p {
+  font-size: 16px;
+  color: var(--color-gray-500);
+  margin-bottom: 10px;
+}
+
+.buttonWrapper {
+  width: 430px;
+  /* padding-bottom: 50px; */
+}
+
+.button {
+  width: 400px;
+}
+
+.comBanking {
+  padding-top: 15px;
+}
