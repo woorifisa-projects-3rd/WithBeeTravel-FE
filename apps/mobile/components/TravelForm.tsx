@@ -292,17 +292,11 @@ export default function TravelForm({
           <Button
             type="submit"
             label={
-              isPending ? (
-                <>
-                  <span className={styles.spinner}></span>
-                </>
-              ) : mode === 'create' ? (
-                '여행 생성 완료'
-              ) : (
-                '여행 편집 완료'
-              )
+              isPending
+                ? '...'
+                : `${mode === 'create' ? '여행 생성' : '여행 편집'} 완료`
             }
-            primary={true}
+            primary
             className={styles.btn}
           />
         </div>
