@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  position: relative;
 }
 
 .menu {
@@ -8,4 +9,8 @@
 
 .errorContainer {
   padding: 15vh 0;
+}
+
+.childrenWrapper {
+  margin-top: 75px;
 }

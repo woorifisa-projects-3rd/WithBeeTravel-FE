@@ -20,14 +20,11 @@ export default async function Layout({ children, params }: LayoutProps) {
   }
 
   return (
-    <>
-      {/* // StoreInitializer로 서버에서 가져온 데이터를 클라이언트 스토어에 초기화 */}
-      <main className={styles.container}>
-        <Title label="공동 결제 내역" />
-        <Menu className={styles.menu} travelInfo={travelHomeResponse.data!} />
-        <ItemGroup />
-        {children}
-      </main>
-    </>
+    <main className={styles.container}>
+      <Title label="공동 결제 내역" />
+      <Menu className={styles.menu} travelInfo={travelHomeResponse.data!} />
+      <ItemGroup />
+      <div className={styles.childrenWrapper}>{children}</div>
+    </main>
   );
 }
