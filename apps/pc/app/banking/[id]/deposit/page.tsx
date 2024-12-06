@@ -2,14 +2,13 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'; // Import motion from framer-motion
 import styles from './page.module.css';
-import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
 import { deposit, getAccountInfo } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import Keyboard from '@withbee/ui/keyboard';
 import { AccountInfo } from '@withbee/types';
-import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
+import { numberToKorean } from '@withbee/utils';
 
 const MAX_DEPOSIT_AMOUNT = 500000000; // 최대 입금 가능 금액
 
