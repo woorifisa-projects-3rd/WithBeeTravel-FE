@@ -1,6 +1,6 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { useEffect, useState, useTransition } from 'react';
+import { motion } from 'framer-motion';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
@@ -15,16 +15,16 @@ import Keyboard from '@withbee/ui/keyboard';
 export default function DepositPage() {
   const router = useRouter();
   const params = useParams();
-  const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
+  const [isPending, startTransition] = useTransition();
+  const myAccountId = params.id;
 
-  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(); // 내 계좌 정보 상태
-  const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
+  const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
+  const [amount, setAmount] = useState<string>('');
 
   const { showToast } = useToast();
 
-  const MAX_DEPOSIT_AMOUNT = 500000000; // 최대 입금 가능 금액
+  const MAX_DEPOSIT_AMOUNT = 500000000;
 
-  // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
@@ -38,45 +38,41 @@ export default function DepositPage() {
     }
   }, [myAccountId]);
 
-  // 숫자 입력 처리
   const handleNumberPress = (num: string) => {
     if (num === 'backspace') {
-      setAmount((prev) => prev.slice(0, -1)); // 마지막 문자 제거
+      setAmount((prev) => prev.slice(0, -1));
     } else {
       const newAmount = amount + num;
       if (parseInt(newAmount) <= MAX_DEPOSIT_AMOUNT) {
-        setAmount(newAmount); // 5억원 이하일 경우 입력
+        setAmount(newAmount);
       } else {
         showToast.error({ message: '최대 입금 가능 금액을 초과했어요.' });
       }
     }
   };
 
-  // 입금 버튼 클릭 시 처리
-  const handleSendMoney = async () => {
-    if (!amount || amount == '0') {
+  const handleSendMoney = () => {
+    if (!amount || amount === '0') {
       showToast.error({ message: '0원은 입금 할 수 없어요' });
       return;
     }
 
-    const DepositRequest = {
-      amount: amount,
-      rqspeNm: '입금',
-    };
-    try {
-      const response = await deposit(
-        Number(myAccountId),
-        Number(amount),
-        '입금',
-      );
-      showToast.success({
-        message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
-      });
-      router.push(`/banking/`);
-    } catch (error) {
-      console.error('오류: ', error);
-      alert('입금 중 오류 발생');
-    }
+    startTransition(async () => {
+      try {
+        const response = await deposit(
+          Number(myAccountId),
+          Number(amount),
+          '입금',
+        );
+        showToast.success({
+          message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
+        });
+        router.push(`/banking/`);
+      } catch (error) {
+        console.error('오류: ', error);
+        showToast.error({ message: '입금 중 오류 발생' });
+      }
+    });
   };
 
   return (
@@ -88,7 +84,7 @@ export default function DepositPage() {
           className={styles.amountContainer}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }} // Smooth animation for amount input
+          transition={{ duration: 0.5 }}
         >
           <div className={styles.accountInfo}>
             <h2>
@@ -135,8 +131,7 @@ export default function DepositPage() {
             <p className={styles.won} style={{ height: '36px' }}>
               {numberToKorean(Number(amount))}
             </p>
-          </div>{' '}
-          {/* 한글 변환 결과 */}
+          </div>
         </motion.div>
       </main>
 
@@ -149,9 +144,10 @@ export default function DepositPage() {
             transition={{ duration: 0.3, delay: 0.5 }}
           >
             <Button
-              label="입금하기"
+              type="submit"
+              label={isPending ? "입금 중..." : '입금하기'}
               onClick={handleSendMoney}
-              disabled={!amount}
+              disabled={!amount || isPending}
             />
           </motion.div>
         </div>
