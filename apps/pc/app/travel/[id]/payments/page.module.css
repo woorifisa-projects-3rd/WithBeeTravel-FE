@@ -1,7 +1,8 @@
 .container {
+  position: relative;
   width: 800px;
-  margin: 0 auto;
   padding-bottom: 50px;
+  margin-left: -10px;
 }
 
 .menu {
@@ -11,4 +12,8 @@
 .bottom {
   position: fixed;
   bottom: 0px;
+}
+
+.childrenWrapper {
+  margin-top: 75px;
 }
