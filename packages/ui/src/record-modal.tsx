@@ -109,7 +109,7 @@ export const RecordModal: React.FC<RecordModalProps> = ({
       closeLabel="입력 완료"
       onSubmit={handleSubmit}
     >
-      <div className={styles.record}>
+      <div className={styles.record} data-cy="record-modal">
         <div className={styles.image}>
           <input
             id="paymentImageFileInput"
