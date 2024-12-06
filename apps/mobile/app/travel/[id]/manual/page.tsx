@@ -69,22 +69,24 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
   const [currencyUnitOptions, setCurrencyUnitOptions] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
 
-  const handleGetCurrencyUnitOptions = async () => {
-    startTransition(async () => {
-      const response = await getCurrencyUnitOptions(id);
+  const handleGetCurrencyUnitOptions = () => {
+    startTransition(() => {
+      void (async () => {
+        const response = await getCurrencyUnitOptions(id);
 
-      if ('code' in response) {
-        showToast.warning({
-          message:
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-            'Unknown Error',
-        });
+        if ('code' in response) {
+          showToast.warning({
+            message:
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+              'Unknown Error',
+          });
 
-        throw new Error(response.code);
-      }
+          throw new Error(response.code);
+        }
 
-      if (response.data)
-        setCurrencyUnitOptions(response.data.currencyUnitOptions);
+        if (response.data)
+          setCurrencyUnitOptions(response.data.currencyUnitOptions);
+      })();
     });
   };
 
