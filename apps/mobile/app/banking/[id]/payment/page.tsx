@@ -178,15 +178,15 @@ export default function PaymentPage() {
             <label htmlFor="password">카드 선택</label>
             <div className={styles.wibeeCardButtonGroup}>
               <Button
+                primary={isWibeeCardCheckbox}
                 label="위비 카드"
                 size="medium"
-                className={`${styles.wibeeCardButton} ${isWibeeCardCheckbox ? styles.active : ''}`}
                 onClick={() => setIsWibeeCardCheckbox(true)}
               />
               <Button
+                primary={!isWibeeCardCheckbox}
                 label="일반 카드"
                 size="medium"
-                className={`${styles.wibeeCardButton} ${!isWibeeCardCheckbox ? styles.active : ''}`}
                 onClick={() => setIsWibeeCardCheckbox(false)}
               />
             </div>
