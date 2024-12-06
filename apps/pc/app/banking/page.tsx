@@ -29,7 +29,7 @@ export default function BankingPage() {
           console.error('에러 코드 ', accountResponse.status);
         }
       } catch (error) {
-        console.error('로그인 확인 중 오류 발생:', error);       
+        console.error('로그인 확인 중 오류 발생:', error);
       }
     };
 
@@ -54,13 +54,15 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response = await getUserState();
-    if (Number(response.status) != 200) {
-      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
-      return;
+    try {
+      const response = await getUserState();
+      if ('data' in response) {
+        // 송금 페이지로 이동
+        router.push(`/banking/${accountId}/transfer`);
+      }
+    } catch (error) {
+      console.error('핀번호 재설정 후 송금 가능');
     }
-    // 송금 페이지로 이동
-    router.push(`/banking/${accountId}/transfer`);
   };
 
   const createAccountHandle = async () => {
