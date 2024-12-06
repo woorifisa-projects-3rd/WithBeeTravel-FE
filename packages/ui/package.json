@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./record-modal-skeleton": "./src/record-modal-skeleton.tsx",
     "./honey-capsule": "./src/honey-capsule.tsx",
     "./record-modal": "./src/record-modal.tsx",
     "./wibee-card-payment": "./src/wibee-card-payment.tsx",
