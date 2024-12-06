@@ -18,18 +18,19 @@ export default function LoginForm() {
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
 
-    startTransition(async () => {
-      const result = await handleCredentialsSignin({ email, password });
+    startTransition(() => {
+      void (async () => {
+        const result = await handleCredentialsSignin({ email, password });
 
-      if (result?.error) {
-        showToast.error({ message: ERROR_MESSAGES['AUTH-001'] });
-        return;
-      }
+        if (result?.error) {
+          showToast.error({ message: ERROR_MESSAGES['AUTH-001'] });
+          return;
+        }
 
-      // 로그인 성공 시 메인 페이지로 이동
-      if (!result?.error) {
-        window.location.href = '/';
-      }
+        if (!result?.error) {
+          window.location.href = '/';
+        }
+      })();
     });
   };
 
