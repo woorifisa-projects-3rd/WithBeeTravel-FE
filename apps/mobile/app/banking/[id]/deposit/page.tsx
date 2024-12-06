@@ -7,7 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { deposit, getAccountInfo } from '@withbee/apis';
 import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
-import numberToKorean from '../../../../../../packages/utils/src/numberToKorean';
+import { numberToKorean } from '@withbee/utils';
 
 import { AccountInfo } from '@withbee/types';
 import Keyboard from '@withbee/ui/keyboard';
