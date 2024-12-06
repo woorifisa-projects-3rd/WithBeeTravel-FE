@@ -13,7 +13,6 @@ import {
 } from '@withbee/utils';
 import { TimePickerModal } from './time-picker-modal';
 import { CurrencyUnitPickerModal } from './currency-unit-picker-modal';
-import { Button } from './button';
 import { getCurrencyData } from '@withbee/apis';
 
 export interface ManualPaymentFormData {
@@ -34,7 +33,6 @@ interface ManualSharedPaymentFormProps {
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
   currencyUnitOptions: string[];
   handleSubmitForm: () => Promise<void>;
-  isPending: boolean;
   isPcVer?: boolean;
 }
 
@@ -43,7 +41,6 @@ export const ManualSharedPaymentForm = ({
   setFormData,
   currencyUnitOptions,
   handleSubmitForm,
-  isPending,
   isPcVer,
 }: ManualSharedPaymentFormProps) => {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
@@ -158,7 +155,7 @@ export const ManualSharedPaymentForm = ({
 
   return (
     <div className={styles.manualPayment}>
-      <div className={styles.content}>
+      <div className={isPcVer ? styles.pcContent : styles.content}>
         <div
           className={
             isPcVer ? styles.pcDateTimeWrapper : styles.dateTimeWrapper
@@ -357,14 +354,6 @@ export const ManualSharedPaymentForm = ({
             />
           </div>
         </div>
-      </div>
-      <div className={isPcVer ? styles.pcBtnWrapper : styles.btnWrapper}>
-        <Button
-          onClick={handleSubmitForm}
-          label={isPending ? '추가 중...' : '결제 내역 추가'}
-          disabled={isPending}
-          size={isPcVer ? 'xlarge' : 'medium'}
-        />
       </div>
     </div>
   );

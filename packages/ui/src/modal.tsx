@@ -28,8 +28,10 @@ export const Modal = ({
   const [isPending, startTransition] = useTransition();
   const handleButtonClick = () => {
     if (onSubmit) {
-      startTransition(async () => {
-        onSubmit(); // 페이지 이동 등의 로직 실행
+      startTransition(() => {
+        void (async () => {
+          onSubmit(); // 페이지 이동 등의 로직 실행
+        })();
       });
     }
   };
