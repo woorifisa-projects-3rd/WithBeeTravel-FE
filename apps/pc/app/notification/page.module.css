@@ -44,6 +44,21 @@
   border: 1px solid var(--color-gray-200);
 }
 
+.card:hover {
+  transform: translateY(1px);
+  transition: all 0.2s;
+  border-radius: 20px;
+}
+
+.card:active {
+  transform: translateY(1px);
+}
+
+/* 클릭 가능한 카드 스타일 */
+.clickableCard {
+  cursor: pointer;
+}
+
 .cardRow {
   display: flex;
   justify-content: space-between;
