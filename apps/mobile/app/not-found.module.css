@@ -5,7 +5,7 @@
   justify-content: center;
   text-align: center;
   background-color: var(--color-gray-50);
-  margin: -50px -25px -80px; /* 양쪽 margin만으로 처리 */
+  margin: -50px -25px -80px;
   height: calc(100vh - 62.4px);
   width: auto;
   overflow: hidden;
