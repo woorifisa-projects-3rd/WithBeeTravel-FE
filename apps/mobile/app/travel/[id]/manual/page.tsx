@@ -16,6 +16,7 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
 import { mutate } from 'swr';
 import { useTransition } from 'react';
+import { Button } from '@withbee/ui/button';
 
 interface ManualRegisterSharedPaymentProps {
   params: {
@@ -70,83 +71,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleGetCurrencyUnitOptions = async () => {
-    startTransition(async () => {
-      const response = await getCurrencyUnitOptions(id);
-
-      if ('code' in response) {
-        showToast.warning({
-          message:
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-            'Unknown Error',
-        });
-
-        throw new Error(response.code);
-      }
-
-      if (response.data)
-        setCurrencyUnitOptions(response.data.currencyUnitOptions);
-    });
-  };
-
-  useEffect(() => {
-    // 통화 코드 목록 불러오기
-    handleGetCurrencyUnitOptions();
-  }, []);
-
-  const handleSubmit = async () => {
-    // 결제일자 입력 검증
-    if (!validateInputForm('date')) {
-      formValidation.invalidPaymentDate();
-      return;
-    }
-    // 결제 시간 입력 검증
-    if (!validateInputForm('time')) {
-      formValidation.invalidPaymentTime();
-      return;
-    }
-    // 상호명 입력 검증
-    if (!validateInputForm('storeName')) {
-      formValidation.invalidPaymentStoreName();
-      return;
-    }
-    // 결제 금액 입력 검증
-    if (
-      (formData.currencyUnit !== 'KRW' &&
-        !validateInputForm('foreignPaymentAmount')) ||
-      !validateInputForm('paymentAmount')
-    ) {
-      formValidation.invalidPaymentAmount();
-      return;
-    }
-
-    const formDataToSend = new FormData();
-
-    // 필수값
-    formDataToSend.append(
-      'paymentDate',
-      getPaymentDate(formData.date, formData.time),
-    );
-    formDataToSend.append('storeName', formData.storeName);
-    formDataToSend.append('paymentAmount', formData.paymentAmount.toString());
-    formDataToSend.append('currencyUnit', formData.currencyUnit);
-    formDataToSend.append('isMainImage', formData.isMainImage.toString());
-    formDataToSend.append(
-      'paymentImage',
-      formData.paymentImage ? formData.paymentImage : new Blob(),
-    );
-    formDataToSend.append('paymentComment', formData.paymentComment);
-
-    if (formData.foreignPaymentAmount !== 0)
-      formDataToSend.append(
-        'foreignPaymentAmount',
-        formData.foreignPaymentAmount.toString(),
-      );
-
-    if (formData.exchangeRate !== 0)
-      formDataToSend.append('exchangeRate', formData.exchangeRate.toString());
-
-    // 결제 내역 저장 요청
-    const response = await createManualSharedPayment(id, formDataToSend);
+    const response = await getCurrencyUnitOptions(id);
 
     if ('code' in response) {
       showToast.warning({
@@ -155,10 +80,93 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
           'Unknown Error',
       });
 
-      mutate((key: string) => key.startsWith(`sharedPayments-${id}`));
       throw new Error(response.code);
     }
 
+    if (response.data)
+      setCurrencyUnitOptions(response.data.currencyUnitOptions);
+  };
+
+  useEffect(() => {
+    // 통화 코드 목록 불러오기
+    handleGetCurrencyUnitOptions();
+  }, []);
+
+  const handleSubmit = () => {
+    startTransition(() => {
+      void (async () => {
+        // 결제일자 입력 검증
+        if (!validateInputForm('date')) {
+          formValidation.invalidPaymentDate();
+          return;
+        }
+        // 결제 시간 입력 검증
+        if (!validateInputForm('time')) {
+          formValidation.invalidPaymentTime();
+          return;
+        }
+        // 상호명 입력 검증
+        if (!validateInputForm('storeName')) {
+          formValidation.invalidPaymentStoreName();
+          return;
+        }
+        // 결제 금액 입력 검증
+        if (
+          (formData.currencyUnit !== 'KRW' &&
+            !validateInputForm('foreignPaymentAmount')) ||
+          !validateInputForm('paymentAmount')
+        ) {
+          formValidation.invalidPaymentAmount();
+          return;
+        }
+
+        const formDataToSend = new FormData();
+
+        // 필수값
+        formDataToSend.append(
+          'paymentDate',
+          getPaymentDate(formData.date, formData.time),
+        );
+        formDataToSend.append('storeName', formData.storeName);
+        formDataToSend.append(
+          'paymentAmount',
+          formData.paymentAmount.toString(),
+        );
+        formDataToSend.append('currencyUnit', formData.currencyUnit);
+        formDataToSend.append('isMainImage', formData.isMainImage.toString());
+        formDataToSend.append(
+          'paymentImage',
+          formData.paymentImage ? formData.paymentImage : new Blob(),
+        );
+        formDataToSend.append('paymentComment', formData.paymentComment);
+
+        if (formData.foreignPaymentAmount !== 0)
+          formDataToSend.append(
+            'foreignPaymentAmount',
+            formData.foreignPaymentAmount.toString(),
+          );
+
+        if (formData.exchangeRate !== 0)
+          formDataToSend.append(
+            'exchangeRate',
+            formData.exchangeRate.toString(),
+          );
+
+        // 결제 내역 저장 요청
+        const response = await createManualSharedPayment(id, formDataToSend);
+
+        if ('code' in response) {
+          showToast.warning({
+            message:
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+              'Unknown Error',
+          });
+
+          mutate((key: string) => key.startsWith(`sharedPayments-${id}`));
+          throw new Error(response.code);
+        }
+      })();
+    });
     router.back();
   };
 
@@ -185,8 +193,14 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
         setFormData={setFormData}
         currencyUnitOptions={currencyUnitOptions}
         handleSubmitForm={handleSubmit}
-        isPending={isPending}
       />
+      <div className={styles.btnWrapper}>
+        <Button
+          onClick={handleSubmit}
+          label={isPending ? '추가 중...' : '결제 내역 추가'}
+          disabled={isPending}
+        />
+      </div>
     </div>
   );
 }

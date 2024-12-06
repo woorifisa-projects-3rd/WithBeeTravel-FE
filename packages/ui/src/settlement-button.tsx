@@ -24,8 +24,8 @@ export function SettlementButton({
           label: '정산 시작하기',
           variant: 'attentionSeek' as const,
           onClick: async () => {
-            router.push(`/travel/${travelInfo.id}/settlement`);
             await requestSettlement(travelInfo.id);
+            router.push(`/travel/${travelInfo.id}/settlement`);
           },
         };
       }
@@ -44,6 +44,9 @@ export function SettlementButton({
     }
     return {
       label: '정산 내역 확인',
+      onClick: () => {
+        router.push(`/travel/${travelInfo.id}/settlement`);
+      },
     };
   };
 

@@ -11,6 +11,7 @@ import { ParticipatingMember, SharedPayment, TravelHome } from '@withbee/types';
 import { useToast } from '@withbee/hooks/useToast';
 import dayjs from 'dayjs';
 import { RecordModal } from './record-modal';
+import { useIsPC } from '@withbee/hooks/useIsPC';
 
 import 'dayjs/locale/ko'; // 한글 로케일 import
 import { chooseParticipants } from '@withbee/apis';
@@ -30,6 +31,7 @@ export const Payment = ({
   paymentInfo,
   travelInfo,
 }: PaymentProps) => {
+  const isPC = useIsPC();
   const { showToast } = useToast();
   const { travelMembers, isDomesticTravel } = travelInfo;
 
@@ -86,7 +88,7 @@ export const Payment = ({
 
   // width > 390px일 때는 5명까지, 그 이하는 4명까지 보여줌
   const visibleMembersLength =
-    paymentInfo.participatingMembers.length > 4
+    paymentInfo.participatingMembers.length > 4 && !isPC
       ? windowWidth > 390
         ? 5
         : 4
@@ -109,7 +111,7 @@ export const Payment = ({
     <article className={styles.payment}>
       <FriendImage
         src={paymentInfo.adderProfileIcon}
-        size={47}
+        size={45}
         className={styles.friendImage}
       />
       <div

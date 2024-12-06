@@ -5,7 +5,8 @@
   "exports": {
     "./useToast": "./src/useToast.ts",
     "./useSwipe": "./src/useSwipe.ts",
-    "./usePaymentParams": "./src/usePaymentParams.ts"
+    "./usePaymentParams": "./src/usePaymentParams.ts",
+    "./useIsPC": "./src/useIsPC.ts"
   },
   "scripts": {
     "type-check": "tsc --noEmit",

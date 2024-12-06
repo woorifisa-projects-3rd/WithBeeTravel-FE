@@ -52,12 +52,12 @@ export default function RealTimeMsg() {
                 const removeTimer = setTimeout(() => {
                   setIsVisible(false);
                   setNotifications((prev) => prev.slice(1));
-                }, 1000);
+                }, 1500);
 
                 return () => {
                   clearTimeout(removeTimer);
                 };
-              }, 3000);
+              }, 4000);
 
               return () => {
                 clearTimeout(timer);

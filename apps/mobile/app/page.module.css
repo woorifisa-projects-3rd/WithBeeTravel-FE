@@ -158,10 +158,10 @@
 }
 
 .completeCard {
-  width: 9.5rem;
   height: 14rem;
   position: relative;
   margin-bottom: 1.5rem;
+
 }
 
 .completeTitle {
@@ -176,12 +176,14 @@
   margin-bottom: 2rem;
 }
 
-.moveTrip {
+.moveTrip,
+.loadingButton {
   margin-bottom: 20px;
 }
 
 .completeCardImg {
   margin-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* 계좌연결 */
