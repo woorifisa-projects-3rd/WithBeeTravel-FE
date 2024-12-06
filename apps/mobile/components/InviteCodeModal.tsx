@@ -137,8 +137,8 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
               <Image
                 src="/imgs/travelform/share.png"
                 alt="공유하기"
-                width={25}
-                height={25}
+                width={22}
+                height={22}
               />
             </button>
             <button
