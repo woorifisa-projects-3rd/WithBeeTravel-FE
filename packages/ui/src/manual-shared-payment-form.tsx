@@ -32,7 +32,7 @@ interface ManualSharedPaymentFormProps {
   formData: ManualPaymentFormData;
   setFormData: React.Dispatch<React.SetStateAction<ManualPaymentFormData>>;
   currencyUnitOptions: string[];
-  handleSubmitForm: () => Promise<void>;
+  handleSubmitForm: () => void;
   isPcVer?: boolean;
 }
 
