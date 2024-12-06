@@ -92,7 +92,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     handleGetCurrencyUnitOptions();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     startTransition(() => {
       void (async () => {
         // 결제일자 입력 검증

@@ -1,4 +1,4 @@
-export default function numberToKorean(number: any) {
+export function numberToKorean(number: any) {
   var inputNumber = number < 0 ? false : number;
   var unitWords = ['', '만', '억', '조', '경'];
   var splitUnit = 10000;

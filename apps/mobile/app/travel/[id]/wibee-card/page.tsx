@@ -130,7 +130,7 @@ export default function Page({ params }: WibeeCardProps) {
   };
 
   // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     startTransition(() => {
       void (async () => {
         const response = await postWibeeCardToSharedPayment(

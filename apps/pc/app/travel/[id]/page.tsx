@@ -104,7 +104,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
         </Link>
 
         {data?.settlementStatus !== 'DONE' ? (
-          <InviteCodeButton travelId={travelId} />
+          <InviteCodeButton travelId={travelId} size="large" />
         ) : (
           <Link href={`/travel/${travelId}/honey-capsule`}>
             <Button label="허니캡슐 열어보기" primary={false} />

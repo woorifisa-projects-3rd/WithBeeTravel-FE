@@ -78,3 +78,10 @@
   max-width: 430px;
   padding: 10px 25px 25px 25px;
 }
+
+
+.won {
+  margin-top: 8px;
+  font-size: 12pt; /* 글자 크기를 12포인트로 설정 */
+  font-weight: normal; /* 글자 굵기를 보통으로 설정 */
+}

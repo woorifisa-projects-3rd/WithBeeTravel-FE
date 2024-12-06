@@ -1,6 +1,7 @@
 .container {
   width: 400px;
   padding: 0 25px;
+  padding-top: 5px;
   margin: 0 auto;
 }
 

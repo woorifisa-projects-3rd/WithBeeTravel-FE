@@ -30,9 +30,6 @@ export default function BankingPage() {
         }
       } catch (error) {
         console.error('로그인 확인 중 오류 발생:', error);
-        // TODO: 토스트 두 번 뜨는거 고쳐야 함
-        router.push('/login');
-        showToast.warning({ message: '로그인 후 이용가능해요!' });
       }
     };
 
@@ -57,13 +54,15 @@ export default function BankingPage() {
     // 이벤트 버블링 방지
     event.stopPropagation();
 
-    const response = await getUserState();
-    if (Number(response.status) != 200) {
-      showToast.error({ message: '핀번호 재설정 후 송금 가능' });
-      return;
+    try {
+      const response = await getUserState();
+      if ('data' in response) {
+        // 송금 페이지로 이동
+        router.push(`/banking/${accountId}/transfer`);
+      }
+    } catch (error) {
+      console.error('핀번호 재설정 후 송금 가능');
     }
-    // 송금 페이지로 이동
-    router.push(`/banking/${accountId}/transfer`);
   };
 
   const createAccountHandle = async () => {
