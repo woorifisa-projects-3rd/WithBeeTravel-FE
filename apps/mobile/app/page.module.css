@@ -176,7 +176,8 @@
   margin-bottom: 2rem;
 }
 
-.moveTrip {
+.moveTrip,
+.loadingButton {
   margin-bottom: 20px;
 }
 

@@ -29,15 +29,14 @@ const CardIssuancePage = () => {
   const router = useRouter();
 
   // 계좌 리스트 조회
-  const { data: AccountListData, error } = useSWR('accounts', getAccountList);
+  const { data: AccountListData } = useSWR('accounts', getAccountList);
   const accountList =
     AccountListData && 'data' in AccountListData ? AccountListData.data : [];
 
   // 위비카드연결여부
-  const { data: isCardData, isLoading: isCardLoading } = useSWR(
-    'isCard',
-    getIsCard,
-  );
+  const { data: isCardData, error } = useSWR('isCard', getIsCard);
+
+  const isLoading = !isCardData && !error;
   const hasCard =
     isCardData && 'data' in isCardData && isCardData.data
       ? isCardData.data.connectedWibeeCard
@@ -165,29 +164,32 @@ const CardIssuancePage = () => {
             </div>
 
             <div className={styles.btnWrap}>
-              {/* {isCardLoading ? (
-                <div className={styles.btnLoading}>
-                  <div className={styles.btnLoadingSpinner}></div>
-                </div>
-              ) :  */}
-              {hasCard ? (
-                <Link href="/travel">
-                  <Button
-                    label="윗비트래블 시작하기"
-                    className={styles.moveTrip}
-                  />
-                </Link>
-              ) : (
-                <>
-                  <Button label="발급받기" onClick={handleIssuance} />
-                  <div
-                    className={styles.skipText}
-                    onClick={() => setIsAccountModalOpen(true)}
-                  >
-                    카드 발급 없이 참가하기
-                  </div>
-                </>
+              {isLoading && (
+                <Button
+                  label="로딩 중..."
+                  className={styles.loadingButton}
+                  disabled
+                />
               )}
+              {!isLoading &&
+                (hasCard ? (
+                  <Link href="/travel">
+                    <Button
+                      label="윗비트래블 시작하기"
+                      className={styles.moveTrip}
+                    />
+                  </Link>
+                ) : (
+                  <>
+                    <Button label="발급받기" onClick={handleIssuance} />
+                    <div
+                      className={styles.skipText}
+                      onClick={() => setIsAccountModalOpen(true)}
+                    >
+                      카드 발급 없이 참가하기
+                    </div>
+                  </>
+                ))}
             </div>
           </motion.div>
         )}
@@ -273,11 +275,11 @@ const CardIssuancePage = () => {
               animate={{ y: 0, rotateY: [0, 180, 270, 360] }}
               transition={{
                 type: 'spring',
-                stiffness: 200, // 높은 강성으로 더 빠르게 시작
-                damping: 30, // 느려지는 속도를 조정
-                times: [0, 0.4, 0.6, 1], // 애니메이션의 각 시점에 대한 시간 비율
-                duration: 4, // 전체 지속 시간
-                ease: 'easeInOut', // 끝부분에서 서서히 느려지는 효과
+                stiffness: 250,
+                damping: 28,
+                times: [0, 0.4, 0.6, 1],
+                duration: 3,
+                ease: 'easeInOut',
               }}
               style={{ perspective: 1000 }}
             >
