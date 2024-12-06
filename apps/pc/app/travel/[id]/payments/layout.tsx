@@ -1,4 +1,3 @@
-import { Title } from '@withbee/ui/title';
 import styles from './page.module.css';
 import ItemGroup from '@withbee/ui/item-group';
 import { Menu } from '@withbee/ui/menu';
@@ -24,7 +23,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       <h2 className="title">공동 결제 내역</h2>
       <Menu className={styles.menu} travelInfo={travelHomeResponse.data!} />
       <ItemGroup />
-      {children}
+      <div className={styles.childrenWrapper}>{children}</div>
     </main>
   );
 }
