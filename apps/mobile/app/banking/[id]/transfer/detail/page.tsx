@@ -217,7 +217,7 @@ export default function TransferDetailPage() {
                 얼마나 보낼까요?
               </motion.span>
             )}
-             <p className={styles.won} style={{ height: '36px' }}>
+            <p className={styles.won} style={{ height: '36px' }}>
               {numberToKorean(Number(amount))}
             </p>
           </div>
