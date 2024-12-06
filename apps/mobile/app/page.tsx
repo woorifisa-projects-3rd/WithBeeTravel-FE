@@ -273,10 +273,11 @@ const CardIssuancePage = () => {
               animate={{ y: 0, rotateY: [0, 180, 270, 360] }}
               transition={{
                 type: 'spring',
-                stiffness: 100,
-                damping: 12,
-                times: [0, 0.4, 0.6, 1],
-                duration: 2.5,
+                stiffness: 200, // 높은 강성으로 더 빠르게 시작
+                damping: 30, // 느려지는 속도를 조정
+                times: [0, 0.4, 0.6, 1], // 애니메이션의 각 시점에 대한 시간 비율
+                duration: 4, // 전체 지속 시간
+                ease: 'easeInOut', // 끝부분에서 서서히 느려지는 효과
               }}
               style={{ perspective: 1000 }}
             >
@@ -284,8 +285,8 @@ const CardIssuancePage = () => {
                 src="https://d1c5n4ri2guedi.cloudfront.net/card/2700/card_img/34201/2700card.png"
                 alt="발급된 카드"
                 className={styles.completeCardImg}
-                width={130}
-                height={200}
+                width={120}
+                height={190}
                 quality={100}
               />
             </motion.div>
