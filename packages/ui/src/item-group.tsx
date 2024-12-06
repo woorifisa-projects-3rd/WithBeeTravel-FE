@@ -14,40 +14,42 @@ const TabGroup = () => {
 
   return (
     <div className={styles.container} ref={constraintsRef}>
-      <motion.div
-        className={styles.tabList}
-        drag="x"
-        dragControls={dragControls}
-        dragConstraints={constraintsRef}
-        dragElastic={0.1}
-        dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
-        whileTap={{ cursor: 'grabbing' }}
-      >
-        {allCategories.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => updateParam('category', tab)}
-            className={[
-              styles.tab,
-              category === tab ? styles.activeTab : styles.inactiveTab,
-            ].join(' ')}
-          >
-            {tab}
-            {category === tab && (
-              <motion.div
-                className={styles.underline}
-                layoutId="underline"
-                initial={false}
-                transition={{
-                  type: 'spring',
-                  stiffness: 500,
-                  damping: 30,
-                }}
-              />
-            )}
-          </button>
-        ))}
-      </motion.div>
+      <div className={styles.tabListWrapper}>
+        <motion.div
+          className={styles.tabList}
+          drag="x"
+          dragControls={dragControls}
+          dragConstraints={constraintsRef}
+          dragElastic={0.1}
+          dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
+          whileTap={{ cursor: 'grabbing' }}
+        >
+          {allCategories.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => updateParam('category', tab)}
+              className={[
+                styles.tab,
+                category === tab ? styles.activeTab : styles.inactiveTab,
+              ].join(' ')}
+            >
+              {tab}
+              {category === tab && (
+                <motion.div
+                  className={styles.underline}
+                  layoutId="underline"
+                  initial={false}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 30,
+                  }}
+                />
+              )}
+            </button>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };
