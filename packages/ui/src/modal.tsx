@@ -4,6 +4,7 @@ import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from './button';
 import styles from './modal.module.css';
+import { useTransition } from 'react';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -24,9 +25,12 @@ export const Modal = ({
 }: ModalProps) => {
   if (!isOpen) return null;
 
+  const [isPending, startTransition] = useTransition();
   const handleButtonClick = () => {
     if (onSubmit) {
-      onSubmit(); // 페이지 이동 등의 로직 실행
+      startTransition(async () => {
+        onSubmit(); // 페이지 이동 등의 로직 실행
+      });
     }
   };
 
@@ -50,7 +54,11 @@ export const Modal = ({
           <div className={styles.content}>{children}</div>
           <footer className={styles.footer}>
             {closeLabel && (
-              <Button onClick={handleButtonClick} label={closeLabel} />
+              <Button
+                onClick={handleButtonClick}
+                label={isPending ? '저장 중...' : closeLabel}
+                disabled={isPending}
+              />
             )}
           </footer>
         </motion.div>

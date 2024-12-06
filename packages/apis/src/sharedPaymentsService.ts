@@ -82,7 +82,6 @@ export const getSharedPaymentRecord = async (
   const response = instance.get<SharedPaymentRecordResponse>(
     `/api/travels/${travelId}/payments/${sharedPaymentId}/records`,
   );
-  console.log(response);
 
   return response;
 };

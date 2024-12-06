@@ -17,6 +17,7 @@ import {
 } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
+import { RecordModalSkeleton } from './record-modal-skeleton';
 
 interface RecordModalProps {
   isOpen: boolean;
@@ -37,6 +38,7 @@ export const RecordModal: React.FC<RecordModalProps> = ({
     isMainImage: false,
   });
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { showToast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +51,6 @@ export const RecordModal: React.FC<RecordModalProps> = ({
   };
 
   const handleGetSharedPaymentRecord = async () => {
-    console.log('handleGetSharedPaymentRecord');
-
     const response = await getSharedPaymentRecord(travelId, sharedPaymentId);
 
     if ('code' in response) {
@@ -65,10 +65,13 @@ export const RecordModal: React.FC<RecordModalProps> = ({
 
     if ('data' in response) {
       if (response.data?.paymentImage) setImageSrc(response.data.paymentImage);
-      if (response.data?.paymentComment)
-        setRecord({ ...record, paymentComment: response.data?.paymentComment });
-      if (response.data?.mainImage)
-        setRecord({ ...record, isMainImage: response.data?.mainImage });
+      setRecord((prevRecord) => ({
+        ...prevRecord,
+        paymentComment:
+          response.data?.paymentComment || prevRecord.paymentComment,
+        isMainImage: response.data?.mainImage || prevRecord.isMainImage,
+      }));
+      setIsLoading(false);
     }
   };
 
@@ -85,7 +88,6 @@ export const RecordModal: React.FC<RecordModalProps> = ({
     );
     formDataToSend.append('paymentComment', record.paymentComment);
     formDataToSend.append('isMainImage', record.isMainImage.toString());
-
     const response = await updateSharedPaymentRecord(
       travelId,
       sharedPaymentId,
@@ -101,7 +103,6 @@ export const RecordModal: React.FC<RecordModalProps> = ({
 
       throw new Error(response.code);
     }
-
     onClose();
   };
 
@@ -113,79 +114,83 @@ export const RecordModal: React.FC<RecordModalProps> = ({
       closeLabel="입력 완료"
       onSubmit={handleSubmit}
     >
-      <div className={styles.record}>
-        <div className={styles.image}>
-          <input
-            id="paymentImageFileInput"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className={styles.paymentImage}
-          />
-          <label
-            htmlFor="paymentImageFileInput"
-            className={styles.paymentImageBox}
+      {isLoading ? (
+        <RecordModalSkeleton />
+      ) : (
+        <div className={styles.record}>
+          <div className={styles.image}>
+            <input
+              id="paymentImageFileInput"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className={styles.paymentImage}
+            />
+            <label
+              htmlFor="paymentImageFileInput"
+              className={styles.paymentImageBox}
+            >
+              {imageSrc === null ? (
+                <Image
+                  src={plusIcon}
+                  alt="이미지를 선택하세요"
+                  className={styles.imagePreview}
+                  width={18}
+                  height={18}
+                />
+              ) : (
+                <Image
+                  src={imageSrc}
+                  alt="업로드된 이미지 미리보기"
+                  className={styles.imagePreview}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
+            </label>
+          </div>
+          <div
+            className={styles.isMainImage}
+            onClick={() =>
+              setRecord({
+                ...record,
+                isMainImage: !record.isMainImage,
+              })
+            }
           >
-            {imageSrc === null ? (
+            {record.isMainImage ? (
               <Image
-                src={plusIcon}
-                alt="이미지를 선택하세요"
-                className={styles.imagePreview}
-                width={18}
-                height={18}
+                src={selectIcon}
+                alt="select"
+                width="18"
+                height="18"
+                className={styles.selectIcon}
               />
             ) : (
               <Image
-                src={imageSrc}
-                alt="업로드된 이미지 미리보기"
-                className={styles.imagePreview}
-                layout="fill"
-                objectFit="cover"
+                src={notSelectIcon}
+                alt="not select"
+                width="18"
+                height="18"
+                className={styles.notSelectIcon}
               />
             )}
-          </label>
+            <span>그룹 대표 이미지로 설정</span>
+          </div>
+          <textarea
+            value={record.paymentComment}
+            onChange={(e) =>
+              setRecord({
+                ...record,
+                paymentComment: e.target.value,
+              })
+            }
+            placeholder="문구를 작성해주세요."
+            className={styles.recordComment}
+            maxLength={100}
+          />
         </div>
-        <div
-          className={styles.isMainImage}
-          onClick={() =>
-            setRecord({
-              ...record,
-              isMainImage: !record.isMainImage,
-            })
-          }
-        >
-          {record.isMainImage ? (
-            <Image
-              src={selectIcon}
-              alt="select"
-              width="18"
-              height="18"
-              className={styles.selectIcon}
-            />
-          ) : (
-            <Image
-              src={notSelectIcon}
-              alt="not select"
-              width="18"
-              height="18"
-              className={styles.notSelectIcon}
-            />
-          )}
-          <span>그룹 대표 이미지로 설정</span>
-        </div>
-        <textarea
-          value={record.paymentComment}
-          onChange={(e) =>
-            setRecord({
-              ...record,
-              paymentComment: e.target.value,
-            })
-          }
-          placeholder="문구를 작성해주세요."
-          className={styles.recordComment}
-          maxLength={100}
-        />
-      </div>
+      )}
     </Modal>
   );
 };
