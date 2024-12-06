@@ -130,23 +130,25 @@ export default function Page({ params }: WibeeCardProps) {
   };
 
   // 선택한 위비 카드 결제 내역 공동 결제 내역에 추가
-  const handleSubmit = async () => {
-    startTransition(async () => {
-      const response = await postWibeeCardToSharedPayment(
-        id,
-        selectedHistoryIds,
-      );
+  const handleSubmit = () => {
+    startTransition(() => {
+      void (async () => {
+        const response = await postWibeeCardToSharedPayment(
+          id,
+          selectedHistoryIds,
+        );
 
-      if ('code' in response) {
-        showToast.warning({
-          message:
-            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-            'Unknown Error',
-        });
-        throw new Error(response.code);
-      }
+        if ('code' in response) {
+          showToast.warning({
+            message:
+              ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+              'Unknown Error',
+          });
+          throw new Error(response.code);
+        }
 
-      router.push(`/travel/${id}/payments`);
+        router.push(`/travel/${id}/payments`);
+      })();
     });
   };
 

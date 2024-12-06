@@ -15,7 +15,7 @@ import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
 import { motion } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
-import numberToKorean from '../../../../../../../packages/utils/src/numberToKorean';
+import { numberToKorean } from '@withbee/utils';
 
 export default function TransferDetailPage() {
   const router = useRouter();
