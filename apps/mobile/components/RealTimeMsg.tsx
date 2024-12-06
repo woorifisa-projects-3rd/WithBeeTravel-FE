@@ -111,12 +111,14 @@ export default function RealTimeMsg() {
           className={styles.logMessage}
           dangerouslySetInnerHTML={{ __html: notification.message }}
         />
-        <Link
-          href={`/${notification.link}`}
-          className={styles.notificationLink}
-        >
-          자세히 보기
-        </Link>
+        {notification.link && (
+          <Link
+            href={`/${notification.link}`}
+            className={styles.notificationLink}
+          >
+            자세히 보기
+          </Link>
+        )}
       </div>
     </div>
   );

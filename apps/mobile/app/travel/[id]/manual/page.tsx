@@ -15,6 +15,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
 import { mutate } from 'swr';
+import { useTransition } from 'react';
 
 interface ManualRegisterSharedPaymentProps {
   params: {
@@ -66,22 +67,25 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
     isMainImage: false,
   });
   const [currencyUnitOptions, setCurrencyUnitOptions] = useState<string[]>([]);
+  const [isPending, startTransition] = useTransition();
 
   const handleGetCurrencyUnitOptions = async () => {
-    const response = await getCurrencyUnitOptions(id);
+    startTransition(async () => {
+      const response = await getCurrencyUnitOptions(id);
 
-    if ('code' in response) {
-      showToast.warning({
-        message:
-          ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
-          'Unknown Error',
-      });
+      if ('code' in response) {
+        showToast.warning({
+          message:
+            ERROR_MESSAGES[response.code as keyof typeof ERROR_MESSAGES] ||
+            'Unknown Error',
+        });
 
-      throw new Error(response.code);
-    }
+        throw new Error(response.code);
+      }
 
-    if (response.data)
-      setCurrencyUnitOptions(response.data.currencyUnitOptions);
+      if (response.data)
+        setCurrencyUnitOptions(response.data.currencyUnitOptions);
+    });
   };
 
   useEffect(() => {
@@ -181,6 +185,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
         setFormData={setFormData}
         currencyUnitOptions={currencyUnitOptions}
         handleSubmitForm={handleSubmit}
+        isPending={isPending}
       />
     </div>
   );

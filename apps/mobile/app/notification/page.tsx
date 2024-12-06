@@ -37,37 +37,10 @@ export default function Page() {
     return (
       <div className={styles.loadingContainer}>
         <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeIn', // 부드러운 자연스러움
-          }}
-        ></motion.div>
-        <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeIn',
-            delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
-          }}
-        ></motion.div>
-        <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeIn',
-            delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
-          }}
-        ></motion.div>
+          className={styles.loadingSpinner}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
       </div>
     );
 

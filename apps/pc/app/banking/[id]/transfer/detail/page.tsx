@@ -1,18 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
-import {
-  getAccountInfo,
-  getAccountOwnerName,
-  instance,
-  transfer,
-} from '@withbee/apis';
+import { getAccountInfo, getAccountOwnerName, transfer } from '@withbee/apis';
 import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
+import { numberToKorean } from '@withbee/utils';
 import { motion } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
 
@@ -217,6 +212,9 @@ export default function TransferDetailPage() {
                 얼마나 보낼까요?
               </motion.span>
             )}
+            <p className={styles.won} style={{ height: '36px' }}>
+              {numberToKorean(Number(amount))}
+            </p>
           </div>
         </motion.div>
       </main>

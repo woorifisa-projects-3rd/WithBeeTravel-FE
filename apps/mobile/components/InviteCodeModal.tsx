@@ -12,24 +12,6 @@ declare global {
   }
 }
 
-interface KakaoShareContent {
-  title: string;
-  description: string;
-  imageUrl: string;
-  link: {
-    webUrl: string;
-    mobileWebUrl: string;
-  };
-}
-
-interface KakaoShareButton {
-  title: string;
-  link: {
-    webUrl: string;
-    mobileWebUrl: string;
-  };
-}
-
 export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   isOpen,
   onClose,
@@ -104,17 +86,13 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
     }
 
     try {
-      // TypeScript 타입 검사 비활성화
-      (window.Kakao as any).Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: '초대 코드 공유',
-          description: `초대 코드: ${inputValue}`,
-          imageUrl: 'https://i.ibb.co/7Js9Lr6/Group-47839.png', // 앱의 대표 이미지 URL
-          link: {
-            webUrl: window.location.href,
-            mobileWebUrl: window.location.href,
-          },
+      window.Kakao.Share.sendDefault({
+        objectType: 'text',
+        text: `${inputValue}`,
+        link: {
+          // 웹페이지 링크 (선택사항)
+          webUrl: window.location.href,
+          mobileWebUrl: window.location.href,
         },
         buttons: [
           {
@@ -159,8 +137,8 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
               <Image
                 src="/imgs/travelform/share.png"
                 alt="공유하기"
-                width={25}
-                height={25}
+                width={22}
+                height={22}
               />
             </button>
             <button
