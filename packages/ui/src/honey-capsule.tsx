@@ -26,16 +26,18 @@ export const HoneyCapsuleBox = ({ data }: HoneyCapsuleBoxProps) => {
         <span className={styles.date}>{data.paymentDate.slice(11, 16)}</span>
         <span className={styles.comment}>{data.paymentComment}</span>
         <div className={styles.tags}>
-          <Item label={data.storeName} />
+          <Item label={data.storeName} className={styles.honeyCapsuleItem} />
           {data.paymentAmount !== null ? (
             <Item
               size="small"
               label={`${data.paymentAmount.toLocaleString()} KRW`}
+              className={styles.honeyCapsuleItem}
             />
           ) : data.foreignPaymentAmount !== null && data.unit ? (
             <Item
               size="small"
               label={`${data.foreignPaymentAmount.toString()} ${data.unit}`}
+              className={styles.honeyCapsuleItem}
             />
           ) : (
             ''
