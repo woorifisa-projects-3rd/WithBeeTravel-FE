@@ -134,6 +134,10 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
   }, []);
 
+  useEffect(() => {
+    ChartJS.register(...registerables);
+  }, []);
+
   return <Bar data={data} options={options} />;
 };
 
@@ -186,6 +190,10 @@ export const PieChart = ({ expenses, ratio }: ExpenseChartProps) => {
       rootStyles.getPropertyValue(`--color-blue-${i + 1}`).trim(),
     );
     setBlueColors(colors);
+  }, []);
+
+  useEffect(() => {
+    ChartJS.register(...registerables);
   }, []);
 
   return <Pie data={data} options={options} />;

@@ -165,7 +165,9 @@ export const Payment = ({
         >
           {!isDomesticTravel && (
             <Item
-              label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
+              label={
+                paymentInfo.exchangeRate.toFixed(2) + 'KRW/' + paymentInfo.unit
+              }
               size="small"
             />
           )}
