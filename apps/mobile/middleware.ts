@@ -17,7 +17,7 @@ export default async function middleware(
     !session.user.accessToken ||
     session.error === 'RefreshAccessTokenError'
   ) {
-    signOut();
+    // signOut();
     const response = NextResponse.redirect(new URL('/login', request.url));
 
     // response.cookies.delete('next-auth.session-token');
