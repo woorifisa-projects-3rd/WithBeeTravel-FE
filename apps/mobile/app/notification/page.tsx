@@ -7,7 +7,6 @@ import { getNotifications, Notification } from '@withbee/apis';
 import '@withbee/styles';
 import Image from 'next/image';
 import { formatDateToKorean } from '@withbee/utils';
-import Link from 'next/link';
 import useSWR from 'swr';
 import { NotificationSkeleton } from '@withbee/ui/notification-skeleton';
 import { useRouter } from 'next/navigation';
@@ -104,28 +103,32 @@ export default function Page() {
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 },
                   }}
+                  onClick={() => {
+                    if (notification.link) {
+                      router.push(notification.link);
+                    }
+                  }}
                 >
                   <div className={styles.logTime}>
                     {formatDateToKorean(new Date(notification.logTime))}
                   </div>
-                  <div className={styles.card}>
+                  <div
+                    className={`${styles.card}  ${
+                      notification.link ? styles.clickableCard : ''
+                    }`}
+                  >
                     <div className={styles.cardRow}>
                       <span className={styles.logTitle}>
                         {notification.logTitle}
                       </span>
                       {notification.link && (
                         <span className={styles.linkIcon}>
-                          <Link
-                            href={notification.link}
-                            rel="noopener noreferrer"
-                          >
-                            <Image
-                              src="/notifications/arrow.png"
-                              alt="link icon"
-                              width={12}
-                              height={6}
-                            />
-                          </Link>
+                          <Image
+                            src="/notifications/arrow.png"
+                            alt="link icon"
+                            width={12}
+                            height={6}
+                          />
                         </span>
                       )}
                     </div>

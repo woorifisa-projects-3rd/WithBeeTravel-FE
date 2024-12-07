@@ -1,0 +1,46 @@
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0px;
+}
+
+.skeletonImage,
+.skeletonToggle,
+.skeletonTextarea {
+  position: relative;
+  background: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skeletonImage {
+  width: 100%;
+  height: 207px;
+}
+
+.skeletonToggle {
+  width: 60%;
+  height: 20px;
+  margin: 0 auto;
+}
+
+.skeletonTextarea {
+  width: 100%;
+  height: 120px;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: shimmer 1.5s infinite linear;
+}
