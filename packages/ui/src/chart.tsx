@@ -1,30 +1,13 @@
 'use client';
 
 import { Bar, Pie } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from 'chart.js';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import '@withbee/styles';
 import { allCategories } from '@withbee/utils';
 
 // Register chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-);
+ChartJS.register(...registerables);
 
 interface ExpenseData {
   category: string;
