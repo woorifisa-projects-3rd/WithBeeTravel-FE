@@ -14,7 +14,6 @@ export const notificationStore = create<NotificationState>()(
   persist(
     (set) => ({
       hasNotification: false,
-      lastNotificationCheck: Date.now(),
       newNotifications: [], // 초기값 설정
 
       markNotification: () =>
