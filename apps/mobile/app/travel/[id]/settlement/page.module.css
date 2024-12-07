@@ -8,6 +8,7 @@
   padding: 25px 23px;
   border: 1px solid var(--color-gray-200);
   margin-bottom: 15px;
+  position: relative;
 }
 
 .summaryHeader {
@@ -36,24 +37,38 @@
 
 .summaryBody {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center; /* 도장과 금액 정보를 같은 높이로 정렬 */
   font-size: 16px;
-  margin-bottom: 15px;
+  justify-content: flex-end; /* 레이블과 금액을 양쪽 정렬 */
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.completedStamp {
+  position: absolute; /* summaryBody 위에 고정 */
+  top: -10px; /* summaryBody 위쪽에 겹치도록 위치 조정 */
+  left: 50%; /* 가로로 중앙 정렬 */
+  transform: translateX(-50%) rotate(-10deg); /* 위치와 회전 */
+  z-index: 2;
+}
+
+.summaryInfoWrapper {
+  display: flex;
+  flex-direction: column; /* 금액 정보를 세로로 배치 */
 }
 
 .summaryInfo {
   display: flex;
-  justify-content: space-between;
-  width: 50%;
+  justify-content: space-between; /* 레이블과 금액을 양쪽 정렬 */
+  width: 100%;
   color: var(--color-gray-500);
+  margin-bottom: 5px; /* 금액 정보 간격 */
 }
 
 .label {
   margin-right: 4px;
   font-size: 16px;
   flex-grow: 1;
-  /* label도 늘어나도록 설정 */
   text-align: left;
 }
 
@@ -203,11 +218,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(-10deg);
   font-weight: bold;
   color: black;
   z-index: 1;
-  /* 텍스트가 블러 배경 위에 나타나도록 설정 */
 }
 
 .remainingUsers {

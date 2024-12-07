@@ -12,6 +12,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import OtherExpenseDetails from '../../../../components/OtherExpenseDetails';
 import ModalWrapper from '../../../../components/ModalWrapper';
+import Image from 'next/image';
 
 export default async function Page({
   params,
@@ -80,17 +81,31 @@ export default async function Page({
               </span>
             </div>
             <div className={styles.summaryBody}>
-              <div className={styles.summaryInfo}>
-                <span className={styles.label}>받을 금액 </span>
-                <span
-                  className={styles.amount}
-                >{`${totalPaymentAmounts.toLocaleString()}원`}</span>
+              <div className={styles.completedStamp}>
+                {myTotalPayment.agreed && (
+                  <div>
+                    <Image
+                      src="/imgs/settlement/stamp.png"
+                      alt="stamp"
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                )}
               </div>
-              <div className={styles.summaryInfo}>
-                <span className={styles.label}>보낼 금액 </span>
-                <span
-                  className={styles.amount}
-                >{`${totalRequestedAmounts.toLocaleString()}원`}</span>
+              <div className={styles.summaryInfoWrapper}>
+                <div className={styles.summaryInfo}>
+                  <span className={styles.label}>받을 금액 </span>
+                  <span
+                    className={styles.amount}
+                  >{`${totalPaymentAmounts.toLocaleString()}원`}</span>
+                </div>
+                <div className={styles.summaryInfo}>
+                  <span className={styles.label}>보낼 금액 </span>
+                  <span
+                    className={styles.amount}
+                  >{`${totalRequestedAmounts.toLocaleString()}원`}</span>
+                </div>
               </div>
             </div>
             <ExpenseDetails myDetailPayments={myDetailPayments} />
@@ -98,14 +113,7 @@ export default async function Page({
         </div>
         <OtherExpenseDetails others={others} disagreeCount={disagreeCount} />
         <div className={styles.btnWrapper}>
-          {myTotalPayment.agreed ? (
-            <Button
-              label="동의 완료"
-              className={styles.disabledButton}
-              disabled={true}
-              primary={false} // 동의 완료 상태일 경우 비활성화
-            />
-          ) : (
+          {!myTotalPayment.agreed && (
             <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
               <Button label="동의하기" />
             </Link>
