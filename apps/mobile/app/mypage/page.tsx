@@ -151,7 +151,9 @@ export default function Page() {
               정산 시에 사용되는 계좌입니다.
             </span>
             <span className={styles.account}>
-              {data?.accountProduct} {data?.accountNumber}
+              {data?.accountNumber !== null
+                ? `${data?.accountProduct} ${data?.accountNumber}`
+                : '연결된 계좌가 없습니다.'}
             </span>
           </div>
         </div>
