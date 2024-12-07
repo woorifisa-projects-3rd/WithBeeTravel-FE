@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, useTransition } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import { useParams, useRouter } from 'next/navigation';
@@ -111,27 +111,56 @@ export default function DepositPage() {
             )}
           </div>
           <div className={styles.amountDisplay}>
-            {amount ? (
-              <>
-                <span className={styles.currency}>₩ </span>
-                <span className={styles.amount}>
-                  {parseInt(amount).toLocaleString()}
-                </span>
-              </>
+  {amount ? (
+    <>
+      <span className={styles.currency}>₩ </span>
+      <div className={styles.numberContainer}>
+        {Number(amount)
+          .toLocaleString() // 콤마를 포함한 숫자 문자열로 변환
+          .split('') // 문자별로 나누기
+          .map((char, index) => (
+            // 콤마가 아닌 숫자에 대해서만 애니메이션 적용
+            char === ',' ? (
+              <span key={`comma-${index}`} className={styles.comma}>
+                ,
+              </span>
             ) : (
-              <motion.span
-                className={styles.placeholder}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-              >
-                얼마나 입금할까요?
-              </motion.span>
-            )}
-            <p className={styles.won} style={{ height: '36px' }}>
-              {numberToKorean(Number(amount))}
-            </p>
-          </div>
+              <AnimatePresence mode="popLayout" key={`number-${index}`}>
+                <motion.span
+                  key={`${index}-${char}`}
+                  className={styles.number}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 30,
+                    mass: 1,
+                  }}
+                >
+                  {char}
+                </motion.span>
+              </AnimatePresence>
+            )
+          ))}
+      </div>
+    </>
+  ) : (
+    <motion.span
+      className={styles.placeholder}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+    >
+      얼마나 입금할까요?
+    </motion.span>
+  )}
+  <p className={styles.won} style={{ height: '36px' }}>
+    {numberToKorean(Number(amount))}
+  </p>
+</div>
+
         </motion.div>
       </main>
 
@@ -155,3 +184,4 @@ export default function DepositPage() {
     </div>
   );
 }
+
