@@ -10,6 +10,7 @@ import PinNumberModal from '../../../components/PinNumberModal';
 import AccountSelection from '../../../components/AccountSelection';
 import { motion } from 'framer-motion';
 import { productOptions } from '@withbee/utils';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function CreateAccountPage() {
   const router = useRouter();
@@ -119,7 +120,7 @@ export default function CreateAccountPage() {
 
         {selectedProduct && (
           <motion.div className={styles.buttonWrapper}>
-            <Button
+            <ButtonBanking
               label={`${selectedProduct} 만들기`}
               onClick={() => setIsModalOpen(true)}
               className={styles.button}

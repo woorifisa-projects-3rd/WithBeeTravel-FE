@@ -15,6 +15,7 @@ import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, HistoryRequest, WibeeCardResponse } from '@withbee/types';
 import { motion } from 'framer-motion';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -177,13 +178,13 @@ export default function PaymentPage() {
           >
             <label htmlFor="password">카드 선택</label>
             <div className={styles.wibeeCardButtonGroup}>
-              <Button
+              <ButtonBanking
                 primary={isWibeeCardCheckbox}
                 label="위비 카드"
                 size="medium"
                 onClick={() => setIsWibeeCardCheckbox(true)}
               />
-              <Button
+              <ButtonBanking
                 primary={!isWibeeCardCheckbox}
                 label="일반 카드"
                 size="medium"
@@ -219,7 +220,7 @@ export default function PaymentPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.7 }}
         >
-          <Button
+          <ButtonBanking
             label="등록하기"
             className={styles.submitButton}
             onClick={handleSubmit}

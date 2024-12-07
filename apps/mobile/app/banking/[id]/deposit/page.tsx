@@ -11,6 +11,7 @@ import { numberToKorean } from '@withbee/utils';
 
 import { AccountInfo } from '@withbee/types';
 import Keyboard from '@withbee/ui/keyboard';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function DepositPage() {
   const router = useRouter();
@@ -172,7 +173,7 @@ export default function DepositPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.5 }}
           >
-            <Button
+            <ButtonBanking
               type="submit"
               label={isPending ? "입금 중..." : '입금하기'}
               onClick={handleSendMoney}

@@ -8,7 +8,7 @@ import { getAccounts, getUserState, instance } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
 import CountUp from 'react-countup';
-import { motion, AnimatePresence } from 'framer-motion'; // Import motion and AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BankingPage() {
   const router = useRouter();
@@ -68,11 +68,20 @@ export default function BankingPage() {
     router.push(`/banking/create`);
   };
 
+  const formatAccountNumber = (accountNumber:string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
   return (
     <div className={styles.container}>
       <Title label="뱅킹 홈" />
       <div className={styles.space}></div>
       <Button
+      className={styles.createButton}
         size="medium"
         label="통장 만들기"
         onClick={() => createAccountHandle()}
@@ -126,11 +135,12 @@ export default function BankingPage() {
                     {transaction.product}
                   </div>
                   <div className={styles.accountNumber}>
-                    {transaction.accountNumber}
+                    {formatAccountNumber(transaction.accountNumber)}
                   </div>
                 </div>
                 <div className={styles.buttonWrapper}>
                   <Button
+                  className={styles.accountButton}
                     size="xsmall"
                     label="송금"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) =>

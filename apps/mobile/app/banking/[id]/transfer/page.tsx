@@ -9,6 +9,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo } from '@withbee/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function TransferPage() {
   const router = useRouter();
@@ -169,7 +170,7 @@ export default function TransferPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          <Button
+          <ButtonBanking
             label="다음"
             size="medium"
             onClick={handleNextClick}

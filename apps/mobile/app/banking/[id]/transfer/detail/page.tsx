@@ -16,6 +16,7 @@ import { AccountInfo, TargetName } from '@withbee/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
 import { numberToKorean } from '@withbee/utils';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function TransferDetailPage() {
   const router = useRouter();
@@ -249,7 +250,7 @@ export default function TransferDetailPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          <Button
+          <ButtonBanking
             label="송금하기"
             size="medium"
             onClick={handleSendMoney}
