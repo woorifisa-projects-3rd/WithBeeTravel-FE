@@ -38,7 +38,7 @@ export default function CreateAccountPage() {
 
       if (Number(response.status) === 201) {
         showToast.success({ message: '계좌 생성 완료!' });
-        router.push('/banking');
+        router.replace('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
       }

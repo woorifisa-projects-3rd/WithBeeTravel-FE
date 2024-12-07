@@ -68,7 +68,7 @@ export default function BankingPage() {
     router.push(`/banking/create`);
   };
 
-  const formatAccountNumber = (accountNumber:string) => {
+  const formatAccountNumber = (accountNumber: string) => {
     // 계좌번호가 13자리인 경우에만 적용
     if (accountNumber.length === 13) {
       return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
@@ -78,10 +78,11 @@ export default function BankingPage() {
 
   return (
     <div className={styles.container}>
-      <Title label="뱅킹 홈" />
+      <Title label="뱅킹 홈"
+        disableBack={true} />
       <div className={styles.space}></div>
       <Button
-      className={styles.createButton}
+        className={styles.createButton}
         size="medium"
         label="통장 만들기"
         onClick={() => createAccountHandle()}
@@ -140,7 +141,7 @@ export default function BankingPage() {
                 </div>
                 <div className={styles.buttonWrapper}>
                   <Button
-                  className={styles.accountButton}
+                    className={styles.accountButton}
                     size="xsmall"
                     label="송금"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) =>

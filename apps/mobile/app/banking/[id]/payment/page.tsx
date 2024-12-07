@@ -110,7 +110,7 @@ export default function PaymentPage() {
       );
       showToast.success({ message: '거래내역 등록 완료!' });
 
-      router.push(`/banking/`);
+      router.replace(`/banking/`);
     } catch (error) {
       console.error('결제 내역 추가 중 오류 발생:', error);
     } finally {

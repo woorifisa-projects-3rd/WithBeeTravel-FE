@@ -61,7 +61,7 @@ export default function TransferPage() {
     try {
       const response = await verifyAccount(targetAccount);
       if (Number(response.status) === 200) {
-        router.push(`/banking/${accountId}/transfer/detail`);
+        router.replace(`/banking/${accountId}/transfer/detail`);
       } else {
         showToast.error({ message: '존재 하지 않는 계좌번호예요!' });
       }
@@ -138,7 +138,7 @@ export default function TransferPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ 
+                    transition={{
                       type: "spring",
                       stiffness: 500,
                       damping: 30,

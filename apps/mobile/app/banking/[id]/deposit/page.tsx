@@ -68,7 +68,7 @@ export default function DepositPage() {
         showToast.success({
           message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
         });
-        router.push(`/banking/`);
+        router.replace(`/banking/`);
       } catch (error) {
         console.error('오류: ', error);
         showToast.error({ message: '입금 중 오류 발생' });
@@ -112,55 +112,55 @@ export default function DepositPage() {
             )}
           </div>
           <div className={styles.amountDisplay}>
-  {amount ? (
-    <>
-      <span className={styles.currency}>₩ </span>
-      <div className={styles.numberContainer}>
-        {Number(amount)
-          .toLocaleString() // 콤마를 포함한 숫자 문자열로 변환
-          .split('') // 문자별로 나누기
-          .map((char, index) => (
-            // 콤마가 아닌 숫자에 대해서만 애니메이션 적용
-            char === ',' ? (
-              <span key={`comma-${index}`} className={styles.comma}>
-                ,
-              </span>
+            {amount ? (
+              <>
+                <span className={styles.currency}>₩ </span>
+                <div className={styles.numberContainer}>
+                  {Number(amount)
+                    .toLocaleString() // 콤마를 포함한 숫자 문자열로 변환
+                    .split('') // 문자별로 나누기
+                    .map((char, index) => (
+                      // 콤마가 아닌 숫자에 대해서만 애니메이션 적용
+                      char === ',' ? (
+                        <span key={`comma-${index}`} className={styles.comma}>
+                          ,
+                        </span>
+                      ) : (
+                        <AnimatePresence mode="popLayout" key={`number-${index}`}>
+                          <motion.span
+                            key={`${index}-${char}`}
+                            className={styles.number}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{
+                              type: 'spring',
+                              stiffness: 500,
+                              damping: 30,
+                              mass: 1,
+                            }}
+                          >
+                            {char}
+                          </motion.span>
+                        </AnimatePresence>
+                      )
+                    ))}
+                </div>
+              </>
             ) : (
-              <AnimatePresence mode="popLayout" key={`number-${index}`}>
-                <motion.span
-                  key={`${index}-${char}`}
-                  className={styles.number}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 30,
-                    mass: 1,
-                  }}
-                >
-                  {char}
-                </motion.span>
-              </AnimatePresence>
-            )
-          ))}
-      </div>
-    </>
-  ) : (
-    <motion.span
-      className={styles.placeholder}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3, delay: 0.2 }}
-    >
-      얼마나 입금할까요?
-    </motion.span>
-  )}
-  <p className={styles.won} style={{ height: '36px' }}>
-    {numberToKorean(Number(amount))}
-  </p>
-</div>
+              <motion.span
+                className={styles.placeholder}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              >
+                얼마나 입금할까요?
+              </motion.span>
+            )}
+            <p className={styles.won} style={{ height: '36px' }}>
+              {numberToKorean(Number(amount))}
+            </p>
+          </div>
 
         </motion.div>
       </main>
