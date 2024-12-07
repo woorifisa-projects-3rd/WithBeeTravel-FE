@@ -102,7 +102,7 @@ export default function CreateAccountPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
             >
-              <p>{selectedProductDetails.detail}</p>
+              <p className={styles.productDetailText}>{selectedProductDetails.detail}</p>
             </motion.div>
           )}
         </div>
