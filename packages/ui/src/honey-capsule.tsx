@@ -28,7 +28,10 @@ export const HoneyCapsuleBox = ({ data }: HoneyCapsuleBoxProps) => {
         <div className={styles.tags}>
           <Item label={data.storeName} />
           {data.paymentAmount !== null ? (
-            <Item size="small" label={`${data.paymentAmount.toString()} KRW`} />
+            <Item
+              size="small"
+              label={`${data.paymentAmount.toLocaleString()} KRW`}
+            />
           ) : data.foreignPaymentAmount !== null && data.unit ? (
             <Item
               size="small"
