@@ -66,16 +66,18 @@
 .btnWrap {
   max-width: 430px;
   width: 100%;
-  bottom: 50px;
+  bottom: 40px;
   padding: 0 15px 20px;
   left: 50%;
   transform: translate(-50%);
   position: fixed;
   text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #fff;
+  border-radius: 50px 50px 0 0;
 }
 
 .skipText {
-  background-color: #fff;
   margin-top: 5px;
   font-size: 14px;
   color: var(--color-gray-500);
