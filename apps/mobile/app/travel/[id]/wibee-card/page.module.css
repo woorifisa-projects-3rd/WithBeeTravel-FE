@@ -98,3 +98,17 @@
 .submitButtonWrapper {
   width: calc(100% - 50px);
 }
+
+.emptyState {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.emptyStateMessage {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--color-gray-500);
+}
