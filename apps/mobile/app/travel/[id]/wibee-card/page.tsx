@@ -19,6 +19,7 @@ import {
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
+import Image from 'next/image';
 
 interface WibeeCardProps {
   params: {
@@ -215,18 +216,35 @@ export default function Page({ params }: WibeeCardProps) {
       )}
 
       <div className={styles.historyWrapper}>
-        {data?.histories?.map((history) => (
-          <WibeeCardPayment
-            key={history.id}
-            payment={history}
-            isSelected={selectedHistoryIds.includes(history.id)}
-            handleSelectHistory={
-              history.addedSharedPayment
-                ? alreadyAddedError
-                : handleSelectHistories
-            }
-          />
-        ))}
+        {data?.histories.length === 0 ? (
+          <div className={styles.emptyState}>
+            <Image
+              src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
+              alt="여행 데이터 없음"
+              className={styles.emptyStateImage}
+              width={230}
+              height={200}
+              quality={100}
+            />
+            <p className={styles.emptyStateMessage}>
+              해당 기간 내에 <br />
+              카드 결제 내역이 없습니다.
+            </p>
+          </div>
+        ) : (
+          data?.histories?.map((history) => (
+            <WibeeCardPayment
+              key={history.id}
+              payment={history}
+              isSelected={selectedHistoryIds.includes(history.id)}
+              handleSelectHistory={
+                history.addedSharedPayment
+                  ? alreadyAddedError
+                  : handleSelectHistories
+              }
+            />
+          ))
+        )}
       </div>
       <div className={styles.submitButtonBackground}>
         <div className={styles.submitButtonWrapper}>

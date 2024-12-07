@@ -163,7 +163,7 @@ export const Payment = ({
             isDomesticTravel ? styles.rightWrapper : styles.contentWrapper
           }
         >
-          {!isDomesticTravel && (
+          {!isDomesticTravel && paymentInfo.unit !== 'KRW' && (
             <Item
               label={
                 paymentInfo.exchangeRate.toFixed(2) + 'KRW/' + paymentInfo.unit

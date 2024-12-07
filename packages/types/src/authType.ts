@@ -27,6 +27,6 @@ export interface TokenResponse {
 export interface MyPageInfoResponse {
   profileImage: number;
   username: string;
-  accountProduct: string;
-  accountNumber: string;
+  accountProduct: string | null;
+  accountNumber: string | null;
 }
