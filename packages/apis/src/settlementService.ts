@@ -40,7 +40,6 @@ export const requestSettlement = async (
   const response = await instance.post<SettlementDetails>(
     `/api/travels/${travelId}/settlements`,
   );
-  console.log(response, '정산 요청하기');
   return response;
 };
 

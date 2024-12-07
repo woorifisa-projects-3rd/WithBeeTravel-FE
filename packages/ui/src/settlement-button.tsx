@@ -44,6 +44,9 @@ export function SettlementButton({
     }
     return {
       label: '정산 내역 확인',
+      onClick: () => {
+        router.push(`/travel/${travelInfo.id}/settlement`);
+      },
     };
   };
 

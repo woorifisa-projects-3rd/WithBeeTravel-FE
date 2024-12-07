@@ -24,6 +24,7 @@ export const Title = ({ label, disableBack }: TitleProps) => {
   const { data: isMsgData } = useSWR('Notification', getNotifications, {
     refreshInterval: 10000,
   });
+  console.log(isMsg);
 
   useEffect(() => {
     if (

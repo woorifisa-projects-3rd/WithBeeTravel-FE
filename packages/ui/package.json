@@ -4,6 +4,8 @@
   "private": true,
   "exports": {
     "./my-page-skeleton": "./src/my-page-skeleton.tsx",
+    "./travel-list-skeleton": "./src/travel-list-skeleton.tsx",
+    "./travellistskeleton": "./src/travellistskeleton.tsx",
     "./record-modal-skeleton": "./src/record-modal-skeleton.tsx",
     "./honey-capsule": "./src/honey-capsule.tsx",
     "./record-modal": "./src/record-modal.tsx",
