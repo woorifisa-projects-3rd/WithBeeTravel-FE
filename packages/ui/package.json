@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./my-page-skeleton": "./src/my-page-skeleton.tsx",
     "./record-modal-skeleton": "./src/record-modal-skeleton.tsx",
     "./honey-capsule": "./src/honey-capsule.tsx",
     "./record-modal": "./src/record-modal.tsx",
