@@ -3,6 +3,11 @@
   font-size: 18px;
 }
 
+/* 허니캡슐 버튼이 있을 때 적용되는 스타일 */
+.withHoneyCapsule {
+  margin-bottom: 110px;
+}
+
 .mainCard {
   border-radius: 10px;
   padding: 25px 23px;

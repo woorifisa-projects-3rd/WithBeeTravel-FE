@@ -94,18 +94,20 @@ export default function OtherExpenseDetails({
                 </motion.li>
               ),
             )}
-          <motion.div
-            className={styles.remainingUsers}
-            variants={childVariants}
-            transition={{
-              duration: 0.5,
-              ease: 'easeInOut',
-            }}
-          >
-            <span>정산 완료까지 남은 인원 : </span>
-            <strong>{disagreeCount}</strong>
-            <span>명</span>
-          </motion.div>
+          {disagreeCount > 0 && (
+            <motion.div
+              className={styles.remainingUsers}
+              variants={childVariants}
+              transition={{
+                duration: 0.5,
+                ease: 'easeInOut',
+              }}
+            >
+              <span>정산 완료까지 남은 인원 : </span>
+              <strong>{disagreeCount}</strong>
+              <span>명</span>
+            </motion.div>
+          )}
         </motion.ul>
       </div>
     </AnimatePresence>

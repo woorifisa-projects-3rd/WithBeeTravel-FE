@@ -49,13 +49,19 @@ export default async function Page({
   } = response.data as SettlementDetails;
 
   const isModalOpen = searchParams['cancel'] === 'true'; // URL 파라미터로 모달 열기 여부를 결정
+  const showHoneyCapsuleButton = disagreeCount < 1; // 허니캡슐 버튼 표시 여부
+
+  // 'withHoneyCapsule' 클래스 추가 여부를 조건에 따라 설정
+  const mainContentClass = showHoneyCapsuleButton
+    ? `${styles.mainContent} ${styles.withHoneyCapsule}`
+    : styles.mainContent;
 
   return (
     <div className={styles.container}>
       <header>
         <Title label="지출 상세내역" />
       </header>
-      <div className={styles.mainContent}>
+      <div className={mainContentClass}>
         <div className={styles.summary}>
           <div className={styles.mainCard}>
             <div className={styles.summaryHeader}>
@@ -114,19 +120,23 @@ export default async function Page({
         <OtherExpenseDetails others={others} disagreeCount={disagreeCount} />
         <div className={styles.btnWrapper}>
           {!myTotalPayment.agreed && (
-            <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
-              <Button label="동의하기" />
-            </Link>
+            <>
+              <Link href={{ pathname: `/travel/${params.id}/agreement` }}>
+                <Button label="동의하기" />
+              </Link>
+              <Link
+                href={{
+                  pathname: `/travel/${params.id}/settlement`,
+                  query: { cancel: 'true' }, // 모달을 여는 URL 파라미터
+                }}
+              >
+                <Button label="정산 취소하기" primary={false} />
+              </Link>
+            </>
           )}
-
-          {!myTotalPayment.agreed && (
-            <Link
-              href={{
-                pathname: `/travel/${params.id}/settlement`,
-                query: { cancel: 'true' }, // 모달을 여는 URL 파라미터
-              }}
-            >
-              <Button label="정산 취소하기" primary={false} />
+          {showHoneyCapsuleButton && (
+            <Link href={{ pathname: `/travel/${params.id}/honey-capsule` }}>
+              <Button label="허니캡슐 열어보기" />
             </Link>
           )}
         </div>
