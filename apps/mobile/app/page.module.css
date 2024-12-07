@@ -75,6 +75,7 @@
 }
 
 .skipText {
+  background-color: #fff;
   margin-top: 5px;
   font-size: 14px;
   color: var(--color-gray-500);
