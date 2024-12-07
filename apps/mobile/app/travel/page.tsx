@@ -133,7 +133,7 @@ export default function page() {
           </div>
           <div className={styles.imgWrap}>
             <Image
-              src="/imgs/travelselect/travel_select_plane.png"
+              src="/imgs/cardBenefits/1.png"
               alt="비행기 아이콘"
               className={styles.icon}
               width={50}
