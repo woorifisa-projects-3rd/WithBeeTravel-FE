@@ -25,7 +25,6 @@ export default function TransferPage() {
     if (accountId) {
       (async () => {
         const response = await getAccountInfo(Number(accountId));
-        console.log(response);
 
         if ('data' in response) {
           setLoading(false);
