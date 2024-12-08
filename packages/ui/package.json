@@ -38,7 +38,10 @@
     "./code": "./src/code.tsx",
     "./modal": "./src/modal.tsx",
     "./toast-container": "./src/toast-container.tsx",
-    "./toast-container.module.css": "./src/toast-container.module.css"
+    "./toast-container.module.css": "./src/toast-container.module.css",
+    "./banking-button": "./src/banking-button.tsx",
+    "./banking-button.module.css": "./src/banking-button.module.css"
+
   },
   "scripts": {
     "type-check": "tsc --noEmit",

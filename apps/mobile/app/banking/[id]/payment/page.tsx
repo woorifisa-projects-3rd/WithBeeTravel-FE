@@ -15,11 +15,12 @@ import { Button } from '@withbee/ui/button';
 import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, HistoryRequest, WibeeCardResponse } from '@withbee/types';
 import { motion } from 'framer-motion';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function PaymentPage() {
   const router = useRouter();
   const params = useParams();
-  const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
+  const myAccountId = params.id;
 
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
@@ -27,8 +28,7 @@ export default function PaymentPage() {
   const [isWibeeCard, setIsWibeeCard] = useState<
     WibeeCardResponse | undefined
   >(); // 위비 카드 연결 여부
-  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
-    useState<boolean>(false); // 위비 카드 결제 상태
+  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // PinNumberModal 열기/닫기 상태
 
   const { showToast } = useToast();
@@ -109,7 +109,7 @@ export default function PaymentPage() {
       );
       showToast.success({ message: '거래내역 등록 완료!' });
 
-      router.push(`/banking/`);
+      router.replace(`/banking/`);
     } catch (error) {
       console.error('결제 내역 추가 중 오류 발생:', error);
     } finally {
@@ -159,11 +159,15 @@ export default function PaymentPage() {
         >
           <label htmlFor="password">거래 금액</label>
           <input
-            type="text"
+            type="tel"
             value={payAm}
-            onChange={(e) => setPayAm(e.target.value.replace(/\D/g, ''))}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, ''); // 숫자만 추출
+              setPayAm(value ? parseInt(value, 10).toLocaleString() : '');
+            }}
             placeholder="금액 입력"
             className={styles.input}
+            maxLength={13}
           />
         </motion.div>
 
@@ -177,13 +181,13 @@ export default function PaymentPage() {
           >
             <label htmlFor="password">카드 선택</label>
             <div className={styles.wibeeCardButtonGroup}>
-              <Button
+              <ButtonBanking
                 primary={isWibeeCardCheckbox}
                 label="위비 카드"
                 size="medium"
                 onClick={() => setIsWibeeCardCheckbox(true)}
               />
-              <Button
+              <ButtonBanking
                 primary={!isWibeeCardCheckbox}
                 label="일반 카드"
                 size="medium"
@@ -219,7 +223,7 @@ export default function PaymentPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.7 }}
         >
-          <Button
+          <ButtonBanking
             label="등록하기"
             className={styles.submitButton}
             onClick={handleSubmit}

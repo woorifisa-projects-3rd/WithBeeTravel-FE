@@ -17,6 +17,7 @@ import { AccountHistory, AccountInfo } from '@withbee/types';
 import dayjs from 'dayjs';
 import { PaymentError } from '@withbee/ui/payment-error';
 import useSWR from 'swr';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 interface PinNumberResponse {
   failedPinCount: number;
@@ -106,7 +107,7 @@ export default function AccountPage() {
                     </div>
                   </div>
                   <div className={styles.addHistory}>
-                    <Button
+                    <ButtonBanking
                       primary={false}
                       label="+ 내역"
                       size="xsmall"
@@ -117,13 +118,13 @@ export default function AccountPage() {
 
                 <AnimatedBalance balance={accountInfo?.balance} />
                 <div className={styles.default}>
-                  <Button
+                  <ButtonBanking
                     primary={false}
                     label="입금"
                     size={'medium'}
                     onClick={() => router.push(`/banking/${id}/deposit`)}
                   />
-                  <Button
+                  <ButtonBanking
                     label="송금"
                     size={'medium'}
                     onClick={handleTransferClick}

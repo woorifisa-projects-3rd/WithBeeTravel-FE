@@ -3,7 +3,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 추가 */
+  justify-content: space-between;
+  /* 추가 */
   min-height: calc(100vh - 58px);
   text-align: center;
   margin: 0 -25px -80px;
@@ -12,7 +13,8 @@
 }
 
 .mainContent {
-  flex: 1; /* 추가 */
+  flex: 1;
+  /* 추가 */
   display: flex;
   flex-direction: column;
 }
@@ -50,11 +52,16 @@
 }
 
 .image {
-  width: 350px; /* 이미지 너비 350px */
-  height: auto; /* 높이는 자동으로 비율에 맞게 조정 */
-  display: block; /* 이미지 자체는 block 요소로 설정 */
-  margin-left: auto; /* 수평 중앙 정렬 */
-  margin-right: auto; /* 수평 중앙 정렬 */
+  width: 350px;
+  /* 이미지 너비 350px */
+  height: auto;
+  /* 높이는 자동으로 비율에 맞게 조정 */
+  display: block;
+  /* 이미지 자체는 block 요소로 설정 */
+  margin-left: auto;
+  /* 수평 중앙 정렬 */
+  margin-right: auto;
+  /* 수평 중앙 정렬 */
 }
 
 .error {
@@ -68,6 +75,10 @@
   background-color: var(--color-gray-100);
   border-radius: 20px;
   margin: 5px 10px 20px;
+}
+
+.productDetailText {
+  text-align: left;
 }
 
 .productDetail h3 {
