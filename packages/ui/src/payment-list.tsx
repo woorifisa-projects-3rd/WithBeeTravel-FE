@@ -154,8 +154,11 @@ export default function PaymentList({
   // travelInfo에서 받아온 startDate와 endDate를 searchParams에 반영
   useEffect(() => {
     if (!startDate && !endDate) {
-      updateParam('startDate', travelStartDate);
-      updateParam('endDate', travelEndDate);
+      updateParam(
+        'startDate',
+        dayjs(travelStartDate).subtract(1, 'month').format('YYYY-MM-DD'),
+      );
+      updateParam('endDate', dayjs().format('YYYY-MM-DD'));
     }
   }, []);
 
