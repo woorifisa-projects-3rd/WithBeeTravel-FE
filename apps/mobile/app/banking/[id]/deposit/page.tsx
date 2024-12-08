@@ -60,18 +60,17 @@ export default function DepositPage() {
 
     startTransition(() => {
       void (async () => {
-        await deposit(Number(myAccountId), Number(amount), '입금')
-          .then((response) => {
-            showToast.success({
-              message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
-            });
-            router.replace(`/banking/`);
-          })
-          .catch((error) => {
-            console.error('오류: ', error);
-            showToast.error({ message: '입금 중 오류 발생' });
+        try {
+          await deposit(Number(myAccountId), Number(amount), '입금');
+          showToast.success({
+            message: `${parseInt(amount).toLocaleString()}원 입금 완료!`,
           });
-      });
+          router.replace(`/banking/`);
+        } catch (error) {
+          console.error('오류: ', error);
+          showToast.error({ message: '입금 중 오류 발생' });
+        }
+      })();
     });
   };
 
