@@ -16,7 +16,6 @@ import { TravelListSkeleton } from '@withbee/ui/travel-list-skeleton';
 import { useToast } from '@withbee/hooks/useToast';
 import { motion } from 'framer-motion';
 import { getIsCard } from '@withbee/apis';
-import { imgFormats } from '@withbee/utils';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
