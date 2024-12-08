@@ -29,6 +29,7 @@ export default function page() {
   const searchParams = useSearchParams();
   const [inviteCode, setInviteCode] = useState(''); // 초대 코드 상태 추가
 
+
   useEffect(() => {
     const inviteCode = searchParams.get('inviteCode');
     if (inviteCode) {
@@ -132,8 +133,7 @@ export default function page() {
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택"
-        disableBack={true} />
+      <Title label="여행 선택" disableBack={true} />
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"

@@ -103,8 +103,7 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
           // webUrl: window.location.href,
           // mobileWebUrl: window.location.href,
           webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
-          mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`
-
+          mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
         },
         buttons: [
           {
@@ -113,7 +112,7 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
               //webUrl: window.location.href,
               //mobileWebUrl: window.location.href,
               webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
-              mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`
+              mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
             },
           },
         ],
