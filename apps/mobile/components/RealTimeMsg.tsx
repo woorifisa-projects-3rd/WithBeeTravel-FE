@@ -116,7 +116,7 @@ export default function RealTimeMsg() {
             href={`/${notification.link}`}
             className={styles.notificationLink}
           >
-            자세히 보기
+            자세히 보기 &gt;
           </Link>
         )}
       </div>
