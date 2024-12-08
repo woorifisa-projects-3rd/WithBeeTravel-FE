@@ -28,7 +28,12 @@ export default function ExpenseDetails({
   return (
     <>
       {isOpen && (
-        <div className={styles.expenseList}>
+        <div
+          className={`${styles.expenseList} ${
+            isOpen ? styles.open : styles.closed
+          }`}
+        >
+          {' '}
           <ul>
             {myDetailPayments.map((expense) => (
               <li key={expense.id} className={styles.expenseItem}>
