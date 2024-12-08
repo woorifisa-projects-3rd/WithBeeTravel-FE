@@ -5,6 +5,7 @@ import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';
 import { useToast } from '@withbee/hooks/useToast';
 import { Kakao, InviteCodeModalProps } from '@withbee/types';
+import { useSearchParams } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -23,7 +24,15 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
 
   const isReadOnly = modalState.closeLabel === '닫기' || isCopyMode;
 
+  const searchParams = useSearchParams();
+
+
+
   useEffect(() => {
+    const inviteCode = searchParams.get('inviteCode');
+    setInputValue(String(inviteCode));
+
+
     // Kakao SDK 로드
     const script = document.createElement('script');
     script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js';

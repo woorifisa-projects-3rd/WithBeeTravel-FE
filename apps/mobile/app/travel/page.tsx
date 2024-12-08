@@ -27,20 +27,24 @@ export default function page() {
   });
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  const [inviteCode, setInviteCode] = useState(''); // 초대 코드 상태 추가
 
   useEffect(() => {
     const inviteCode = searchParams.get('inviteCode');
     if (inviteCode) {
+      setInviteCode(inviteCode); // 쿼리 파라미터에서 초대 코드 설정
+
       setModalState((prevState) => ({
         ...prevState,
         title: '초대 코드 입력 완료',
         closeLabel: '초대 코드 제출',
         subtitle: '입력된 초대 코드를 사용하여 여행에 참여합니다.',
+        inviteCode: inviteCode
       }));
       setIsOpen(true);
     }
   }, [searchParams]);
+
 
   // 위비카드 소유하지 않으면 카드 발급 불가
   const { data: isCardData } = useSWR('isCard', getIsCard);
