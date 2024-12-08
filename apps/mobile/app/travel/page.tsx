@@ -28,7 +28,6 @@ export default function page() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-
   useEffect(() => {
     const inviteCode = searchParams.get('inviteCode');
     if (inviteCode) {
@@ -104,22 +103,22 @@ export default function page() {
   const sortedTravelData =
     travelData && 'data' in travelData && Array.isArray(travelData.data)
       ? travelData.data
-        .map((card) => {
-          const today = dayjs().startOf('day');
+          .map((card) => {
+            const today = dayjs().startOf('day');
 
-          const startDate = dayjs(card.travelStartDate).startOf('day');
-          const dDay = startDate.diff(today, 'day');
-          return { ...card, dDay };
-        })
-        .sort((a, b) => {
-          if (a.dDay >= 0 && b.dDay >= 0) {
-            return a.dDay - b.dDay;
-          }
-          if (a.dDay < 0 && b.dDay < 0) {
-            return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
-          }
-          return b.dDay - a.dDay;
-        })
+            const startDate = dayjs(card.travelStartDate).startOf('day');
+            const dDay = startDate.diff(today, 'day');
+            return { ...card, dDay };
+          })
+          .sort((a, b) => {
+            if (a.dDay >= 0 && b.dDay >= 0) {
+              return a.dDay - b.dDay;
+            }
+            if (a.dDay < 0 && b.dDay < 0) {
+              return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
+            }
+            return b.dDay - a.dDay;
+          })
       : [];
 
   const formatDday = (dDay: number) => (dDay === 0 ? 'D-DAY' : `D-${dDay}`);
@@ -128,8 +127,7 @@ export default function page() {
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택"
-        disableBack={true} />
+      <Title label="여행 선택" disableBack={true} />
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
