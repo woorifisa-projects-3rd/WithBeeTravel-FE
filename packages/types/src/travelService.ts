@@ -24,6 +24,8 @@ export interface TravelList {
   travelEndDate: string;
   travelMainImage: string;
   profileImage: number;
+  isDomesticTravel: boolean;
+  country: string[];
 }
 
 export interface TravelFormData {

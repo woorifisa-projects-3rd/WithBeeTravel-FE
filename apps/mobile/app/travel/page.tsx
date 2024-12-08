@@ -16,6 +16,7 @@ import { TravelListSkeleton } from '@withbee/ui/travel-list-skeleton';
 import { useToast } from '@withbee/hooks/useToast';
 import { motion } from 'framer-motion';
 import { getIsCard } from '@withbee/apis';
+import { imgFormats } from '@withbee/utils';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,9 @@ export default function page() {
     'travelList',
     getTravelList,
   );
+  if (travelData) {
+    console.log('리스트 조회', travelData);
+  }
 
   if (travelError && !travelData)
     return (
@@ -183,7 +187,8 @@ export default function page() {
                     <div key={index}>
                       <div className={styles.cardDay}>
                         <span>
-                          다가오는 여행 <span>{formatDday(card.dDay)}</span>
+                          다가오는 여행
+                          <span> {formatDday(card.dDay)}</span>
                         </span>
                       </div>
                       <div className={styles.card}>
@@ -192,7 +197,9 @@ export default function page() {
                             src={
                               card.travelMainImage
                                 ? `/${card.travelMainImage}`
-                                : '/imgs/travelselect/travel_exam.png'
+                                : card.isDomesticTravel
+                                  ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
+                                  : `/imgs/countries/${card.country[0]}.png`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
@@ -231,8 +238,10 @@ export default function page() {
                           <Image
                             src={
                               card.travelMainImage
-                                ? card.travelMainImage
-                                : '/imgs/travelselect/travel_exam.png'
+                                ? `/${card.travelMainImage}`
+                                : card.isDomesticTravel
+                                  ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
+                                  : `/imgs/countries/${card.country[0]}.png`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
