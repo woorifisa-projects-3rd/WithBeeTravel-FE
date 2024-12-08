@@ -117,5 +117,3 @@ export const countriesList: Record<string, string> = {
   CL: '칠레',
   AR: '아르헨티나',
 };
-
-export const imgFormats = ['png', 'jpg', 'JPG', 'webp'];
