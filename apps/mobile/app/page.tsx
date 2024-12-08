@@ -99,7 +99,8 @@ const CardIssuancePage = () => {
 
   return (
     <div className={styles.container}>
-      <Title label="카드 혜택" />
+      <Title label="카드 혜택"
+        disableBack={true} />
       <AnimatePresence mode="wait">
         {issuanceState === 'initial' && (
           <motion.div
@@ -334,9 +335,9 @@ const CardIssuancePage = () => {
           Array.isArray(accountList) && accountList.length > 0
             ? handleModalSubmit
             : () => {
-                // 계좌 목록이 비어있을 때 링크로 이동
-                router.push('/banking/create');
-              }
+              // 계좌 목록이 비어있을 때 링크로 이동
+              router.push('/banking/create');
+            }
         }
       >
         <div className={styles.accountList}>
