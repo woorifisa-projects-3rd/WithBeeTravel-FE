@@ -151,11 +151,14 @@ export default function PaymentList({
     setSize(1);
   }, [sortBy, startDate, endDate, setSize, memberId, category]);
 
-  // travelInfo에서 받아온 startDate와 endDate를 searchParams에 반영
+  // endDate를 오늘로 설정하고 startDate를 1달 전으로 설정
   useEffect(() => {
     if (!startDate && !endDate) {
-      updateParam('startDate', travelStartDate);
-      updateParam('endDate', travelEndDate);
+      updateParam(
+        'startDate',
+        dayjs(travelStartDate).subtract(1, 'month').format('YYYY-MM-DD'),
+      );
+      updateParam('endDate', dayjs().format('YYYY-MM-DD'));
     }
   }, []);
 
