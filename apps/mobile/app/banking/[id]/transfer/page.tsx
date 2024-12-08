@@ -26,6 +26,7 @@ export default function TransferPage() {
     if (accountId) {
       (async () => {
         const response = await getAccountInfo(Number(accountId));
+
         if ('data' in response) {
           setLoading(false);
           setAccountInfo(response.data);
@@ -73,11 +74,11 @@ export default function TransferPage() {
 
   const handleNumberPress = (key: string) => {
     if (key === 'backspace') {
-      setTargetAccount(prev => prev.slice(0, -1));
+      setTargetAccount((prev) => prev.slice(0, -1));
     } else if (key === 'clear') {
       setTargetAccount('');
     } else if (targetAccount.length < 13) {
-      setTargetAccount(prev => prev + key);
+      setTargetAccount((prev) => prev + key);
     }
   };
 
@@ -139,10 +140,10 @@ export default function TransferPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{
-                      type: "spring",
+                      type: 'spring',
                       stiffness: 500,
                       damping: 30,
-                      mass: 1
+                      mass: 1,
                     }}
                   >
                     {digit}
@@ -158,10 +159,7 @@ export default function TransferPage() {
 
       <div className={styles.keyboardContainer}>
         <div className={styles.actions}>
-          <Keyboard
-            onKeyPress={handleNumberPress}
-            keypadType="pin"
-          />
+          <Keyboard onKeyPress={handleNumberPress} keypadType="pin" />
         </div>
 
         <motion.div
@@ -181,4 +179,3 @@ export default function TransferPage() {
     </div>
   );
 }
-

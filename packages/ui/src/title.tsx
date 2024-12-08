@@ -24,6 +24,7 @@ export const Title = ({ label, disableBack }: TitleProps) => {
   const { data: isMsgData } = useSWR('Notification', getNotifications, {
     refreshInterval: 10000,
   });
+  console.log(isMsgData);
 
   useEffect(() => {
     if (
@@ -33,7 +34,10 @@ export const Title = ({ label, disableBack }: TitleProps) => {
       isMsgData.data.length > 0
     ) {
       const curIds = isMsgData.data.map((notification) => notification.id);
+      console.log('curIds', curIds);
+
       const storedIds = notificationStore.getState().newNotifications;
+      console.log('storedIds', storedIds);
 
       // 새로운 알림 ID 필터링
       const newIds = curIds.filter((id) => !storedIds.includes(id));

@@ -7,7 +7,7 @@
   text-align: center;
   font-size: 20px;
   font-weight: 500;
-  margin-top: 1.3rem;
+  margin-top: 10px;
 }
 
 .withbeeCardWrap {
@@ -17,7 +17,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 15px 0px 25px;
+  margin: 10px 0px 20px;
 }
 
 .withbeeCardWrap::before {
@@ -66,14 +66,15 @@
 .btnWrap {
   max-width: 430px;
   width: 100%;
-  bottom: 50px;
+  bottom: 40px;
   padding: 0 15px 20px;
   left: 50%;
   transform: translate(-50%);
   position: fixed;
   text-align: center;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #fff;
+  border-radius: 50px 50px 0 0;
 }
 
 .skipText {

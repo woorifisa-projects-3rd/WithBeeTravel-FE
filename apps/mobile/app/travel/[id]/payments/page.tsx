@@ -37,8 +37,6 @@ export default async function Page({ params }: TravelPageProps) {
     );
   }
 
-  // console.log(travelHomeResponse.data);
-
   return (
     <Suspense fallback={<PaymentSkeleton />}>
       <PaymentList

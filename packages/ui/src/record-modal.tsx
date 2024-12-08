@@ -117,7 +117,7 @@ export const RecordModal: React.FC<RecordModalProps> = ({
       {isLoading ? (
         <RecordModalSkeleton />
       ) : (
-        <div className={styles.record}>
+        <div className={styles.record} data-cy="record-modal">
           <div className={styles.image}>
             <input
               id="paymentImageFileInput"

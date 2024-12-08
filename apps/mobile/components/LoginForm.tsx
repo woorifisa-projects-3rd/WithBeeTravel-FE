@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useTransition } from 'react';
+import { getIsCard } from '@withbee/apis';
 
 export default function LoginForm() {
   const { showToast } = useToast();
@@ -20,14 +21,23 @@ export default function LoginForm() {
 
     startTransition(() => {
       void (async () => {
-        const result = await handleCredentialsSignin({ email, password });
+        const loginResult = await handleCredentialsSignin({ email, password });
 
-        if (result?.error) {
+        if (loginResult?.error) {
           showToast.error({ message: ERROR_MESSAGES['AUTH-001'] });
           return;
         }
 
-        if (!result?.error) {
+        if (!loginResult?.error) {
+          const isConnectedResult = await getIsCard();
+          if ('data' in isConnectedResult) {
+            const isConnectedWibeeCard =
+              isConnectedResult.data?.connectedWibeeCard;
+            if (isConnectedWibeeCard) {
+              window.location.href = '/travel';
+              return;
+            }
+          }
           window.location.href = '/';
         }
       })();
