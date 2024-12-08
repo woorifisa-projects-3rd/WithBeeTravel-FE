@@ -29,7 +29,6 @@ export default function page() {
   const searchParams = useSearchParams();
   const [inviteCode, setInviteCode] = useState(''); // 초대 코드 상태 추가
 
-
   useEffect(() => {
     const inviteCode = searchParams.get('inviteCode');
     if (inviteCode) {
@@ -40,12 +39,11 @@ export default function page() {
         title: '초대 코드 입력 완료',
         closeLabel: '초대 코드 제출',
         subtitle: '입력된 초대 코드를 사용하여 여행에 참여합니다.',
-        inviteCode: inviteCode
+        inviteCode: inviteCode,
       }));
       setIsOpen(true);
     }
   }, [searchParams]);
-
 
   // 위비카드 소유하지 않으면 카드 발급 불가
   const { data: isCardData } = useSWR('isCard', getIsCard);
@@ -109,22 +107,22 @@ export default function page() {
   const sortedTravelData =
     travelData && 'data' in travelData && Array.isArray(travelData.data)
       ? travelData.data
-        .map((card) => {
-          const today = dayjs().startOf('day');
+          .map((card) => {
+            const today = dayjs().startOf('day');
 
-          const startDate = dayjs(card.travelStartDate).startOf('day');
-          const dDay = startDate.diff(today, 'day');
-          return { ...card, dDay };
-        })
-        .sort((a, b) => {
-          if (a.dDay >= 0 && b.dDay >= 0) {
-            return a.dDay - b.dDay;
-          }
-          if (a.dDay < 0 && b.dDay < 0) {
-            return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
-          }
-          return b.dDay - a.dDay;
-        })
+            const startDate = dayjs(card.travelStartDate).startOf('day');
+            const dDay = startDate.diff(today, 'day');
+            return { ...card, dDay };
+          })
+          .sort((a, b) => {
+            if (a.dDay >= 0 && b.dDay >= 0) {
+              return a.dDay - b.dDay;
+            }
+            if (a.dDay < 0 && b.dDay < 0) {
+              return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
+            }
+            return b.dDay - a.dDay;
+          })
       : [];
 
   const formatDday = (dDay: number) => (dDay === 0 ? 'D-DAY' : `D-${dDay}`);

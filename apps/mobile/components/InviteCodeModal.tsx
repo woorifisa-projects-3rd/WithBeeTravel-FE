@@ -26,12 +26,9 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
 
   const searchParams = useSearchParams();
 
-
-
   useEffect(() => {
     const inviteCode = searchParams.get('inviteCode');
     setInputValue(String(inviteCode));
-
 
     // Kakao SDK 로드
     const script = document.createElement('script');
