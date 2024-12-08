@@ -217,7 +217,7 @@ export default function page() {
                   ))}
                 </>
               )}
-
+              <BannerAds />
               {/* 지난 여행 렌더링 */}
               {pastTravels.length > 0 && (
                 <>
@@ -261,7 +261,7 @@ export default function page() {
           )}
         </div>
       )}
-      <BannerAds />
+
       <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
