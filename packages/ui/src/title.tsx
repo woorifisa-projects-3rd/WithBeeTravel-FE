@@ -22,7 +22,7 @@ export const Title = ({ label, disableBack }: TitleProps) => {
   const { hasNotification, isUpdate, markNotification } = notificationStore();
 
   const { data: isMsgData } = useSWR('Notification', getNotifications, {
-    refreshInterval: 10000,
+    refreshInterval: 1000,
   });
   console.log(isMsgData);
 

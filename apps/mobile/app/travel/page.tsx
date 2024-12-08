@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
+import BannerAds from '../../components/BannerAds';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
@@ -96,15 +97,12 @@ export default function page() {
             return { ...card, dDay };
           })
           .sort((a, b) => {
-            // 둘 다 다가오는 여행인 경우 D-day 오름차순
             if (a.dDay >= 0 && b.dDay >= 0) {
               return a.dDay - b.dDay;
             }
-            // 둘 다 지난 여행인 경우 시작일 기준 내림차순 (최신순)
             if (a.dDay < 0 && b.dDay < 0) {
               return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
             }
-            // 다가오는 여행을 먼저 보여주기
             return b.dDay - a.dDay;
           })
       : [];
@@ -219,7 +217,7 @@ export default function page() {
                   ))}
                 </>
               )}
-
+              <BannerAds />
               {/* 지난 여행 렌더링 */}
               {pastTravels.length > 0 && (
                 <>
@@ -263,6 +261,7 @@ export default function page() {
           )}
         </div>
       )}
+
       <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
