@@ -268,3 +268,7 @@
   text-overflow: ellipsis; /* 잘린 텍스트 뒤에 '...'을 추가 */
   max-width: 13ch; /* 13자까지만 표시 */
 }
+
+.honeyCapsuleBtn {
+  margin: 30px 0;
+}

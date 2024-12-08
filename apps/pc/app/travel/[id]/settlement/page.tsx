@@ -141,7 +141,11 @@ export default async function Page({
           )}
           {showHoneyCapsuleButton && (
             <Link href={{ pathname: `/travel/${params.id}/honey-capsule` }}>
-              <Button label="허니캡슐 열어보기" />
+              <Button
+                label="허니캡슐 열어보기"
+                size="xlarge"
+                className={styles.honeyCapsuleBtn}
+              />
             </Link>
           )}
           {!myTotalPayment.agreed && <ModalWrapper travelId={params.id} />}
