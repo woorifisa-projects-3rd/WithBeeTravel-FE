@@ -91,15 +91,20 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
         text: `${inputValue}`,
         link: {
           // 웹페이지 링크 (선택사항)
-          webUrl: window.location.href,
-          mobileWebUrl: window.location.href,
+          // webUrl: window.location.href,
+          // mobileWebUrl: window.location.href,
+          webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
+          mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`
+
         },
         buttons: [
           {
             title: '초대 코드 입력하러 가기',
             link: {
-              webUrl: window.location.href,
-              mobileWebUrl: window.location.href,
+              //webUrl: window.location.href,
+              //mobileWebUrl: window.location.href,
+              webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
+              mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`
             },
           },
         ],
