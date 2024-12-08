@@ -134,7 +134,6 @@ export default function TransferDetailPage() {
         \n${transferRequest.amount}원 송금 완료`,
       });
       router.replace('/banking/');
-
     } catch (error) {
       console.error('송금 오류:', error);
       showToast.error({ message: `${error}` });
@@ -142,8 +141,6 @@ export default function TransferDetailPage() {
       setIsModalOpen(false);
     }
   };
-
-
 
   if (loading) {
     return null;
@@ -205,7 +202,9 @@ export default function TransferDetailPage() {
                   <AnimatePresence mode="popLayout">
                     {Number(amount)
                       .toLocaleString()
-                      .split('').reverse().map((digit, index, array) => (
+                      .split('')
+                      .reverse()
+                      .map((digit, index, array) => (
                         <motion.span
                           key={array.length - 1 - index}
                           className={styles.number}
@@ -213,16 +212,16 @@ export default function TransferDetailPage() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -20 }}
                           transition={{
-                            type: "spring",
+                            type: 'spring',
                             stiffness: 500,
                             damping: 30,
-                            mass: 1
+                            mass: 1,
                           }}
                         >
                           {digit}
-
                         </motion.span>
-                      )).reverse()}
+                      ))
+                      .reverse()}
                   </AnimatePresence>
                 </div>
               </>
@@ -269,4 +268,3 @@ export default function TransferDetailPage() {
     </div>
   );
 }
-
