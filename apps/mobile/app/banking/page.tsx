@@ -9,6 +9,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { AccountInfo, PinNumberResponse } from '@withbee/types';
 import CountUp from 'react-countup';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function BankingPage() {
   const router = useRouter();
@@ -78,11 +79,9 @@ export default function BankingPage() {
 
   return (
     <div className={styles.container}>
-      <Title label="뱅킹 홈"
-        disableBack={true} />
+      <Title label="뱅킹 홈" disableBack={true} />
       <div className={styles.space}></div>
-      <Button
-        className={styles.createButton}
+      <ButtonBanking
         size="medium"
         label="통장 만들기"
         onClick={() => createAccountHandle()}
@@ -140,12 +139,20 @@ export default function BankingPage() {
                   </div>
                 </div>
                 <div className={styles.buttonWrapper}>
-                  <Button
-                    className={styles.accountButton}
+                  <ButtonBanking
+                    primary={false}
                     size="xsmall"
                     label="송금"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                       handleTransferClick(e, transaction.accountId)
+                    }
+                  />
+                  <Button
+                    primary={false}
+                    size="xsmall"
+                    label="내역"
+                    onClick={() =>
+                      router.push(`/banking/${transaction.accountId}`)
                     }
                   />
                 </div>
