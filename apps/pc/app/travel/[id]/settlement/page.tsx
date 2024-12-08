@@ -91,8 +91,8 @@ export default async function Page({
                     <Image
                       src="/imgs/settlement/stamp.png"
                       alt="stamp"
-                      width={80}
-                      height={80}
+                      width={70}
+                      height={70}
                     />
                   </div>
                 )}
