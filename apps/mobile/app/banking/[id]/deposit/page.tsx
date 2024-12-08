@@ -119,14 +119,17 @@ export default function DepositPage() {
                   {Number(amount)
                     .toLocaleString() // 콤마를 포함한 숫자 문자열로 변환
                     .split('') // 문자별로 나누기
-                    .map((char, index) => (
+                    .map((char, index) =>
                       // 콤마가 아닌 숫자에 대해서만 애니메이션 적용
                       char === ',' ? (
                         <span key={`comma-${index}`} className={styles.comma}>
                           ,
                         </span>
                       ) : (
-                        <AnimatePresence mode="popLayout" key={`number-${index}`}>
+                        <AnimatePresence
+                          mode="popLayout"
+                          key={`number-${index}`}
+                        >
                           <motion.span
                             key={`${index}-${char}`}
                             className={styles.number}
@@ -143,8 +146,8 @@ export default function DepositPage() {
                             {char}
                           </motion.span>
                         </AnimatePresence>
-                      )
-                    ))}
+                      ),
+                    )}
                 </div>
               </>
             ) : (
@@ -161,7 +164,6 @@ export default function DepositPage() {
               {numberToKorean(Number(amount))}
             </p>
           </div>
-
         </motion.div>
       </main>
 
@@ -175,7 +177,7 @@ export default function DepositPage() {
           >
             <ButtonBanking
               type="submit"
-              label={isPending ? "입금 중..." : '입금하기'}
+              label={isPending ? '입금 중...' : '입금하기'}
               onClick={handleSendMoney}
               disabled={!amount || isPending}
             />
@@ -185,4 +187,3 @@ export default function DepositPage() {
     </div>
   );
 }
-

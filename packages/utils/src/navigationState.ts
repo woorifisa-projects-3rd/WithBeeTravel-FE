@@ -5,4 +5,3 @@ export const setFromTransfer = (value: boolean) => {
 };
 
 export const getFromTransfer = () => isFromTransfer;
-
