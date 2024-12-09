@@ -240,6 +240,7 @@ export const ManualSharedPaymentForm = ({
             {formData.currencyUnit === 'KRW' ? (
               <input
                 type="number"
+                inputMode="numeric"
                 placeholder="화폐 단위를 설정해주세요."
                 value={
                   formData.paymentAmount === 0 ? '' : formData.paymentAmount
@@ -251,6 +252,7 @@ export const ManualSharedPaymentForm = ({
             ) : (
               <input
                 type="number"
+                inputMode="numeric"
                 placeholder="화폐 단위를 설정해주세요."
                 value={
                   formData.foreignPaymentAmount === 0
