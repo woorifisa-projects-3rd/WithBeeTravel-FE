@@ -38,7 +38,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .button {
@@ -82,7 +82,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
 .card {

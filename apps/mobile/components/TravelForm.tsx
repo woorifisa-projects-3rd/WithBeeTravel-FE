@@ -78,9 +78,13 @@ export default function TravelForm({
     setSearchQuery(query);
 
     if (query.trim()) {
-      const filtered = countriesList.filter((country) =>
-        country.toLowerCase().includes(query.toLowerCase()),
-      );
+      // 객체를 배열로 변환하고, 값이 검색어를 포함하는지 확인
+      const filtered = Object.entries(countriesList)
+        .filter(([code, name]) =>
+          name.toLowerCase().includes(query.toLowerCase()),
+        )
+        .map(([code, name]) => name); // 코드가 필요 없다면 값만 추출
+
       setSearchResults(filtered);
     } else {
       setSearchResults([]);
