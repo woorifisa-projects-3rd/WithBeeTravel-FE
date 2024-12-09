@@ -145,6 +145,14 @@ export default function TransferDetailPage() {
   if (loading) {
     return null;
   }
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
 
   return (
     <div className={styles.container}>
@@ -190,7 +198,7 @@ export default function TransferDetailPage() {
                 {targetAccount?.name}
                 <span>님에게</span>
               </h3>
-              <p className={styles.accountNumber}>{targetAccountNumber}</p>
+              <p className={styles.accountNumber}>{formatAccountNumber(String(targetAccountNumber))}</p>
             </motion.div>
           </div>
 
