@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';

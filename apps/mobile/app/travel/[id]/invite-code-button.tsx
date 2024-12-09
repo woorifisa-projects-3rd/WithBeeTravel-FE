@@ -35,19 +35,13 @@ export function InviteCodeButton({ travelId }: { travelId: number }) {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <>
-        <Button
-          label="친구 초대"
-          primary={false}
-          onClick={handleGetInviteCode}
-        />
-        <InviteCodeModal
-          isOpen={modalState.isOpen}
-          onClose={() => setModalState({ ...modalState, isOpen: false })}
-          modalState={modalState}
-        />
-      </>
-    </Suspense>
+    <>
+      <Button label="친구 초대" primary={false} onClick={handleGetInviteCode} />
+      <InviteCodeModal
+        isOpen={modalState.isOpen}
+        onClose={() => setModalState({ ...modalState, isOpen: false })}
+        modalState={modalState}
+      />
+    </>
   );
 }
