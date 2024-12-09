@@ -26,7 +26,7 @@ export default function PaymentPage() {
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
   const [rqspeNm, setRqspeNm] = useState<string>(''); // 거래 내역(상호명) 상태
   const [isWibeeCard, setIsWibeeCard] = useState<
-    WibeeCardResponse | undefined
+    boolean | undefined
   >(); // 위비 카드 연결 여부
   const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
     useState<boolean>(false);
@@ -54,7 +54,7 @@ export default function PaymentPage() {
       (async () => {
         const response = await checkWibee(Number(myAccountId));
         if ('data' in response) {
-          setIsWibeeCard(response.data);
+          setIsWibeeCard(response.data?.connectedWibeeCard);
         } else {
           console.error(response.message);
         }
@@ -164,6 +164,7 @@ export default function PaymentPage() {
             value={payAm}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, ''); // 숫자만 추출
+              value.toLocaleString();
               setPayAm(value ? parseInt(value, 10).toLocaleString() : '');
             }}
             placeholder="금액 입력"
@@ -173,7 +174,7 @@ export default function PaymentPage() {
         </motion.div>
 
         {/* 위비 카드 결제 버튼 */}
-        {isWibeeCard?.connectedWibeeCard && (
+        {isWibeeCard && (
           <motion.div
             className={styles.wibeeCardInfo}
             initial={{ opacity: 0, y: 20 }}
