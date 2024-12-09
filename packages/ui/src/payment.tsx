@@ -160,7 +160,9 @@ export const Payment = ({
         </div>
         <div
           className={
-            isDomesticTravel ? styles.rightWrapper : styles.contentWrapper
+            paymentInfo.unit === 'KRW'
+              ? styles.rightWrapper
+              : styles.contentWrapper
           }
         >
           {!isDomesticTravel && paymentInfo.unit !== 'KRW' && (
