@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';
@@ -123,6 +123,8 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <Modal
       isOpen={isOpen}
       onClose={onClose}
@@ -168,5 +170,6 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
         )}
       </div>
     </Modal>
+    </Suspense>
   );
 };
