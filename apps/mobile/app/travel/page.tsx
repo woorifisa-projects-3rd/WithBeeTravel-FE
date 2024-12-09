@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 
 import BannerAds from '../../components/BannerAds';
-import {  Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
@@ -132,165 +132,165 @@ export default function page() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.travelSelectWrap}>
+        <Title label="여행 선택" disableBack={true} />
+        <div className={styles.imageWrap}>
+          <Image
+            src="/imgs/travelselect/withbee_friends.png"
+            alt="위비프렌즈친구들"
+            className={styles.withbeeFriendsImg}
+            width={500}
+            height={500}
+          />
+        </div>
 
-    <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택" disableBack={true} />
-      <div className={styles.imageWrap}>
-        <Image
-          src="/imgs/travelselect/withbee_friends.png"
-          alt="위비프렌즈친구들"
-          className={styles.withbeeFriendsImg}
-          width={500}
-          height={500}
+        <div className={styles.buttonWrap}>
+          <button className={styles.button} onClick={onCreateTravel}>
+            <div className={styles.buttonTitleWrap}>
+              <p className={styles.buttonTitle}>여행 생성하기</p>
+            </div>
+            <div className={styles.imgWrap}>
+              <Image
+                src="/imgs/cardBenefits/1.png"
+                alt="비행기 아이콘"
+                className={styles.icon}
+                width={50}
+                height={50}
+                layout="intrinsic"
+              />
+            </div>
+          </button>
+          <button className={styles.button} onClick={() => setIsOpen(true)}>
+            <div className={styles.buttonTitleWrap}>
+              <p className={styles.buttonTitle}>초대 코드 입력하기</p>
+            </div>
+            <div className={styles.imgWrap}>
+              <Image
+                src="/imgs/travelselect/travel_select_invitecode.png"
+                alt="초대코드 아이콘"
+                className={styles.icon}
+                width={50}
+                height={50}
+                layout="intrinsic"
+              />
+            </div>
+          </button>
+        </div>
+        {isLoading && <TravelListSkeleton count={3} />}
+        {!isLoading && (
+          <div className={styles.cardWrap}>
+            {sortedTravelData.length === 0 ? (
+              <div className={styles.emptyState}>
+                <Image
+                  src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
+                  alt="여행 데이터 없음"
+                  className={styles.emptyStateImage}
+                  width={170}
+                  height={150}
+                  quality={100}
+                />
+                <p className={styles.emptyStateMessage}>
+                  현재 참여한 여행이 없습니다. <br />
+                  여행을 생성하고 친구를 초대해보세요.
+                </p>
+              </div>
+            ) : (
+              <div className={styles.cardWrap}>
+                {/* 다가오는 여행 렌더링 */}
+                {upcomingTravels.length > 0 && (
+                  <>
+                    {upcomingTravels.map((card, index) => (
+                      <div key={index}>
+                        <div className={styles.cardDay}>
+                          <span>
+                            다가오는 여행 <span>{formatDday(card.dDay)}</span>
+                          </span>
+                        </div>
+                        <div className={styles.card}>
+                          <Link href={`/travel/${card.travelId}`}>
+                            <Image
+                              src={
+                                card.travelMainImage
+                                  ? `/${card.travelMainImage}`
+                                  : '/imgs/travelselect/travel_exam.png'
+                              }
+                              alt={card.travelName}
+                              className={styles.cardImage}
+                              width={300}
+                              height={100}
+                              quality={100}
+                            />
+                            <div className={styles.cardContent}>
+                              <div className={styles.cardText}>
+                                <FriendImage src={card.profileImage} />
+                                <div className={styles.travelNameWrap}>
+                                  <span>{card.travelName}</span>
+                                  <span className={styles.date}>
+                                    {card.travelStartDate} ~{' '}
+                                    {card.travelEndDate}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+                <BannerAds />
+                {/* 지난 여행 렌더링 */}
+                {pastTravels.length > 0 && (
+                  <>
+                    <div className={styles.cardDay}>
+                      <p className={styles.pastTravelTitle}>지난 여행</p>
+                    </div>
+                    {pastTravels.map((card, index) => (
+                      <div key={index}>
+                        <div className={styles.card}>
+                          <Link href={`/travel/${card.travelId}`}>
+                            <Image
+                              src={
+                                card.travelMainImage
+                                  ? card.travelMainImage
+                                  : '/imgs/travelselect/travel_exam.png'
+                              }
+                              alt={card.travelName}
+                              className={styles.cardImage}
+                              width={300}
+                              height={100}
+                              quality={100}
+                            />
+                            <div className={styles.cardContent}>
+                              <div className={styles.cardText}>
+                                <FriendImage src={card.profileImage} />
+                                <div className={styles.travelNameWrap}>
+                                  <span>{card.travelName}</span>
+                                  <span className={styles.date}>
+                                    {card.travelStartDate} ~{' '}
+                                    {card.travelEndDate}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        <InviteCodeModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onSubmit={handleInviteCodeSubmit}
+          modalState={modalState}
         />
       </div>
-
-      <div className={styles.buttonWrap}>
-        <button className={styles.button} onClick={onCreateTravel}>
-          <div className={styles.buttonTitleWrap}>
-            <p className={styles.buttonTitle}>여행 생성하기</p>
-          </div>
-          <div className={styles.imgWrap}>
-            <Image
-              src="/imgs/cardBenefits/1.png"
-              alt="비행기 아이콘"
-              className={styles.icon}
-              width={50}
-              height={50}
-              layout="intrinsic"
-            />
-          </div>
-        </button>
-        <button className={styles.button} onClick={() => setIsOpen(true)}>
-          <div className={styles.buttonTitleWrap}>
-            <p className={styles.buttonTitle}>초대 코드 입력하기</p>
-          </div>
-          <div className={styles.imgWrap}>
-            <Image
-              src="/imgs/travelselect/travel_select_invitecode.png"
-              alt="초대코드 아이콘"
-              className={styles.icon}
-              width={50}
-              height={50}
-              layout="intrinsic"
-            />
-          </div>
-        </button>
-      </div>
-      {isLoading && <TravelListSkeleton count={3} />}
-      {!isLoading && (
-        <div className={styles.cardWrap}>
-          {sortedTravelData.length === 0 ? (
-            <div className={styles.emptyState}>
-              <Image
-                src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
-                alt="여행 데이터 없음"
-                className={styles.emptyStateImage}
-                width={170}
-                height={150}
-                quality={100}
-              />
-              <p className={styles.emptyStateMessage}>
-                현재 참여한 여행이 없습니다. <br />
-                여행을 생성하고 친구를 초대해보세요.
-              </p>
-            </div>
-          ) : (
-            <div className={styles.cardWrap}>
-              {/* 다가오는 여행 렌더링 */}
-              {upcomingTravels.length > 0 && (
-                <>
-                  {upcomingTravels.map((card, index) => (
-                    <div key={index}>
-                      <div className={styles.cardDay}>
-                        <span>
-                          다가오는 여행 <span>{formatDday(card.dDay)}</span>
-                        </span>
-                      </div>
-                      <div className={styles.card}>
-                        <Link href={`/travel/${card.travelId}`}>
-                          <Image
-                            src={
-                              card.travelMainImage
-                                ? `/${card.travelMainImage}`
-                                : '/imgs/travelselect/travel_exam.png'
-                            }
-                            alt={card.travelName}
-                            className={styles.cardImage}
-                            width={300}
-                            height={100}
-                            quality={100}
-                          />
-                          <div className={styles.cardContent}>
-                            <div className={styles.cardText}>
-                              <FriendImage src={card.profileImage} />
-                              <div className={styles.travelNameWrap}>
-                                <span>{card.travelName}</span>
-                                <span className={styles.date}>
-                                  {card.travelStartDate} ~ {card.travelEndDate}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
-              <BannerAds />
-              {/* 지난 여행 렌더링 */}
-              {pastTravels.length > 0 && (
-                <>
-                  <div className={styles.cardDay}>
-                    <p className={styles.pastTravelTitle}>지난 여행</p>
-                  </div>
-                  {pastTravels.map((card, index) => (
-                    <div key={index}>
-                      <div className={styles.card}>
-                        <Link href={`/travel/${card.travelId}`}>
-                          <Image
-                            src={
-                              card.travelMainImage
-                                ? card.travelMainImage
-                                : '/imgs/travelselect/travel_exam.png'
-                            }
-                            alt={card.travelName}
-                            className={styles.cardImage}
-                            width={300}
-                            height={100}
-                            quality={100}
-                          />
-                          <div className={styles.cardContent}>
-                            <div className={styles.cardText}>
-                              <FriendImage src={card.profileImage} />
-                              <div className={styles.travelNameWrap}>
-                                <span>{card.travelName}</span>
-                                <span className={styles.date}>
-                                  {card.travelStartDate} ~ {card.travelEndDate}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      <InviteCodeModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSubmit={handleInviteCodeSubmit}
-        modalState={modalState}
-      />
-    </div>
     </Suspense>
-
   );
 }
