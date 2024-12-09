@@ -28,7 +28,8 @@ export default function PaymentPage() {
   const [isWibeeCard, setIsWibeeCard] = useState<
     WibeeCardResponse | undefined
   >(); // 위비 카드 연결 여부
-  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] = useState<boolean>(false);
+  const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
+    useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // PinNumberModal 열기/닫기 상태
 
   const { showToast } = useToast();
