@@ -178,7 +178,7 @@ export const Payment = ({
               isDomesticTravel && styles.mt,
             ].join(' ')}
           >
-            <button className={styles.option}>기록 추가</button>
+            <button className={styles.option}>캡슐 열기</button>
           </div>
         </div>
       </div>
