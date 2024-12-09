@@ -104,7 +104,7 @@ function TravelFormContent() {
 export default function Page() {
   return (
     // 빌드 에러로 인해 수정 - useSearchParams를 사용하는 컴포넌트는 Suspense로 감싸야 함
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <TravelFormContent />
     </Suspense>
   );

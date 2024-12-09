@@ -281,17 +281,7 @@ function TravelpageContent() {
 
 export default function TravelPage() {
   return (
-    <Suspense
-      fallback={
-        <div className={styles.loadingContainer}>
-          <motion.div
-            className={styles.loadingSpinner}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          />
-        </div>
-      }
-    >
+    <Suspense fallback={<div></div>}>
       <TravelpageContent />
     </Suspense>
   );

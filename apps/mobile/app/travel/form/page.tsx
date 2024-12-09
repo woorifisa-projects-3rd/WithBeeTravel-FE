@@ -7,8 +7,6 @@ import { createTravel } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { mutate } from 'swr';
-import styles from 'page.module.css';
-import { motion } from 'framer-motion';
 
 function TravelFormContent() {
   const searchParams = useSearchParams();
@@ -47,17 +45,7 @@ function TravelFormContent() {
 
 export default function Page() {
   return (
-    <Suspense
-      fallback={
-        <div className={styles.loadingContainer}>
-          <motion.div
-            className={styles.loadingSpinner}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          />
-        </div>
-      }
-    >
+    <Suspense fallback={<div></div>}>
       <TravelFormContent />
     </Suspense>
   );

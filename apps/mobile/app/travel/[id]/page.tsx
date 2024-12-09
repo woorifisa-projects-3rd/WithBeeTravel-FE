@@ -41,7 +41,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
   const travelCountriesCount = data.countries?.length;
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <div className={styles.container}>
         <Title label="여행 홈" />
         <div className={styles.subContainer}>
