@@ -1,7 +1,7 @@
 // app/travel/[id]/invite-code-button.tsx
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { InviteCodeModal } from '../../../components/InviteCodeModal';
 import { getInviteCode } from '@withbee/apis';

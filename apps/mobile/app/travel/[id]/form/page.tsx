@@ -68,37 +68,10 @@ function TravelFormContent() {
     return (
       <div className={styles.loadingContainer}>
         <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeOut', // 부드러운 자연스러움
-          }}
-        ></motion.div>
-        <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeOut',
-            delay: 0.3, // 딜레이를 주어 각 점의 동기화를 다르게 함
-          }}
-        ></motion.div>
-        <motion.div
-          className={`${styles.loadingDot}`}
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-            ease: 'easeOut',
-            delay: 0.6, // 딜레이를 주어 각 점의 동기화를 다르게 함
-          }}
-        ></motion.div>
+          className={styles.loadingSpinner}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        />
       </div>
     );
   }
@@ -131,7 +104,7 @@ function TravelFormContent() {
 export default function Page() {
   return (
     // 빌드 에러로 인해 수정 - useSearchParams를 사용하는 컴포넌트는 Suspense로 감싸야 함
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <TravelFormContent />
     </Suspense>
   );

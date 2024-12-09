@@ -46,9 +46,7 @@ export default function PaymentList({
       travelId,
       page: pageIndex,
       sortBy: sortBy as SortBy,
-      startDate:
-        startDate ||
-        dayjs(travelStartDate).subtract(1, 'month').format('YYYY-MM-DD'),
+      startDate: startDate || travelStartDate,
       endDate: endDate || travelEndDate,
       ...(memberId !== 0 && { memberId }),
       ...(category !== '전체' && { category }),
