@@ -22,21 +22,6 @@
   margin-bottom: 28px;
 }
 
-.imgWrapper {
-  width: calc(100% - 20%);
-  /* min-width: 280px; */
-  height: 200px;
-  border-radius: 20px;
-  background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
-    no-repeat center / 162px 156.67px;
-  position: relative;
-  overflow: hidden;
-}
-
-.mainImage {
-  object-fit: contain;
-}
-
 .btnWrapper {
   width: 100%;
   display: flex;

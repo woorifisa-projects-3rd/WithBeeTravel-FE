@@ -1,0 +1,17 @@
+.mainImageInput {
+  display: none;
+}
+
+.imgWrapper {
+  position: relative;
+  width: calc(100% - 20%);
+  height: 200px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
+    no-repeat center / 162px 156.67px;
+}
+
+.mainImage {
+  object-fit: contain;
+}

@@ -10,7 +10,9 @@ import { formatDateWithSlash } from '@withbee/utils';
 import { InviteCodeButton } from './invite-code-button';
 import styles from './page.module.css';
 import Image from 'next/image';
+import TravelMainImage from '../../../components/TravelMainImage';
 import { Suspense } from 'react';
+
 const BarChart = dynamic(
   () => import('@withbee/ui/chart').then((mod) => mod.BarChart), // named export 처리
   { ssr: false }, // SSR 비활성화
@@ -58,17 +60,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
               </Link>
             </div>
           </div>
-          <div className={styles.imgWrapper}>
-            {data.mainImage && (
-              <Image
-                src={data.mainImage}
-                alt="main image"
-                layout="fill"
-                objectFit="cover"
-                className={styles.mainImage}
-              />
-            )}
-          </div>
+          <TravelMainImage travelId={travelId} image={data.mainImage} />
 
           {data.isDomesticTravel ? (
             <Item label="국내여행" />

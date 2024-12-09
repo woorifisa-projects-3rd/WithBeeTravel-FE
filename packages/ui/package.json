@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./honey-capsule-skeleton": "./src/honey-capsule-skeleton.tsx",
     "./my-page-skeleton": "./src/my-page-skeleton.tsx",
     "./travel-list-skeleton": "./src/travel-list-skeleton.tsx",
     "./travellistskeleton": "./src/travellistskeleton.tsx",

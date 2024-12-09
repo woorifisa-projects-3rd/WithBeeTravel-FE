@@ -7,4 +7,5 @@ export interface HoneyCapsule {
   paymentAmount: number | null;
   foreignPaymentAmount: number | null;
   unit: string | null;
+  addMemberProfileImage: number;
 }
