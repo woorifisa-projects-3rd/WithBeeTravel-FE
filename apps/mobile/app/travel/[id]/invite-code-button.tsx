@@ -1,7 +1,7 @@
 // app/travel/[id]/invite-code-button.tsx
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Button } from '@withbee/ui/button';
 import { InviteCodeModal } from '../../../components/InviteCodeModal';
 import { getInviteCode } from '@withbee/apis';
@@ -35,13 +35,19 @@ export function InviteCodeButton({ travelId }: { travelId: number }) {
   };
 
   return (
-    <>
-      <Button label="친구 초대" primary={false} onClick={handleGetInviteCode} />
-      <InviteCodeModal
-        isOpen={modalState.isOpen}
-        onClose={() => setModalState({ ...modalState, isOpen: false })}
-        modalState={modalState}
-      />
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <>
+        <Button
+          label="친구 초대"
+          primary={false}
+          onClick={handleGetInviteCode}
+        />
+        <InviteCodeModal
+          isOpen={modalState.isOpen}
+          onClose={() => setModalState({ ...modalState, isOpen: false })}
+          modalState={modalState}
+        />
+      </>
+    </Suspense>
   );
 }
