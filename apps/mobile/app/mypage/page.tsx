@@ -127,6 +127,14 @@ export default function Page() {
     handleGetAccountList();
   }, [isAccountModalOpen === true]);
 
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
   return (
     <>
       <Title label="마이 페이지" />
@@ -152,7 +160,7 @@ export default function Page() {
             </span>
             <span className={styles.account}>
               {data?.accountNumber !== null
-                ? `${data?.accountProduct} ${data?.accountNumber}`
+                ? `${data?.accountProduct} ${formatAccountNumber(data?.accountNumber ? data?.accountNumber : '')}`
                 : '연결된 계좌가 없습니다.'}
             </span>
           </div>
@@ -187,7 +195,7 @@ export default function Page() {
               >
                 <div className={styles.accountInfo}>
                   <p className={styles.accountNumber}>
-                    {account.accountNumber}
+                    {formatAccountNumber(account.accountNumber)}
                   </p>
                   <p className={styles.product}>{account.product}</p>
                 </div>
