@@ -12,6 +12,7 @@ import { formatDate, getDateObject } from '@withbee/utils';
 import { DateObject, TravelHome, TravelMember } from '@withbee/types';
 import { usePaymentParams } from '@withbee/hooks/usePaymentParams';
 import { useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 
 interface MenuProps {
   travelInfo: TravelHome;
@@ -45,7 +46,9 @@ export const Menu = ({ travelInfo, className, ...props }: MenuProps) => {
   const [isFilter, setIsFilter] = useState(false); // 필터 메뉴인지 여부
 
   const dateRange = {
-    start: startDate || travelStartDate,
+    start:
+      startDate ||
+      dayjs(travelStartDate).subtract(2, 'month').format('YYYY-MM-DD'),
     end: endDate || travelEndDate,
   };
 
