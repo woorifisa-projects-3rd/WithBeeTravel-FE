@@ -170,7 +170,7 @@ export const checkWibee = async (
 // 거래내역 추가
 export const registerPayment = async (
   myAccountId: number,
-  payAm: Number,
+  payAm: number,
   rqspeNm: String,
   isWibeeCard: boolean,
 ) => {
