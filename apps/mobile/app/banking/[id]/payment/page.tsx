@@ -25,9 +25,7 @@ export default function PaymentPage() {
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>();
   const [payAm, setPayAm] = useState<string>(''); // 거래 금액 상태
   const [rqspeNm, setRqspeNm] = useState<string>(''); // 거래 내역(상호명) 상태
-  const [isWibeeCard, setIsWibeeCard] = useState<
-    boolean | undefined
-  >(); // 위비 카드 연결 여부
+  const [isWibeeCard, setIsWibeeCard] = useState<boolean | undefined>(); // 위비 카드 연결 여부
   const [isWibeeCardCheckbox, setIsWibeeCardCheckbox] =
     useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // PinNumberModal 열기/닫기 상태
