@@ -198,7 +198,7 @@ export default function page() {
                                 ? `/${card.travelMainImage}`
                                 : card.isDomesticTravel
                                   ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
-                                  : `/imgs/countries/${card.country[0]}.png`
+                                  : `/imgs/countries/${card.country[0]}.jpg`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
@@ -240,7 +240,7 @@ export default function page() {
                                 ? `/${card.travelMainImage}`
                                 : card.isDomesticTravel
                                   ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
-                                  : `/imgs/countries/${card.country[0]}.png`
+                                  : `/imgs/countries/${card.country[0]}.jpg`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
