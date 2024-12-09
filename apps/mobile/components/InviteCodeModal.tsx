@@ -124,52 +124,51 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={modalState.title}
-      closeLabel={modalState.closeLabel}
-      onSubmit={handleSubmit}
-    >
-      <p className={styles.subtitle}>{modalState.subtitle}</p>
-      <div className={`${isCopyMode ? styles.copyButtonWrap : ''}`}>
-        <input
-          id="inviteCode"
-          type="text"
-          className={`${styles.input} ${isCopyMode ? styles.inputCopyMode : ''}`}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder={modalState.placeholder || '초대코드'}
-          readOnly={isReadOnly}
-        />
-        {isCopyMode && (
-          <div className={styles.btnWrap}>
-            <button aria-label="공유하기" onClick={handleKakaoShare}>
-              <Image
-                src="/imgs/travelform/share.png"
-                alt="공유하기"
-                width={22}
-                height={22}
-              />
-            </button>
-            <button
-              className={`${styles.copyButton} ${isCopyMode ? styles.copyButtonActive : ''}`}
-              onClick={handleCopy}
-              aria-label="복사하기"
-            >
-              <Image
-                src="/copy.png"
-                alt="복사하기"
-                width={22}
-                height={24}
-                quality={100}
-              />
-            </button>
-          </div>
-        )}
-      </div>
-    </Modal>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        title={modalState.title}
+        closeLabel={modalState.closeLabel}
+        onSubmit={handleSubmit}
+      >
+        <p className={styles.subtitle}>{modalState.subtitle}</p>
+        <div className={`${isCopyMode ? styles.copyButtonWrap : ''}`}>
+          <input
+            id="inviteCode"
+            type="text"
+            className={`${styles.input} ${isCopyMode ? styles.inputCopyMode : ''}`}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder={modalState.placeholder || '초대코드'}
+            readOnly={isReadOnly}
+          />
+          {isCopyMode && (
+            <div className={styles.btnWrap}>
+              <button aria-label="공유하기" onClick={handleKakaoShare}>
+                <Image
+                  src="/imgs/travelform/share.png"
+                  alt="공유하기"
+                  width={22}
+                  height={22}
+                />
+              </button>
+              <button
+                className={`${styles.copyButton} ${isCopyMode ? styles.copyButtonActive : ''}`}
+                onClick={handleCopy}
+                aria-label="복사하기"
+              >
+                <Image
+                  src="/copy.png"
+                  alt="복사하기"
+                  width={22}
+                  height={24}
+                  quality={100}
+                />
+              </button>
+            </div>
+          )}
+        </div>
+      </Modal>
     </Suspense>
   );
 };
