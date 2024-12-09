@@ -24,7 +24,7 @@
     "chart.js": "^4.4.6",
     "dayjs": "^1.11.13",
     "event-source-polyfill": "^1.0.31",
-    "html2canvas": "^1.4.1",
+    "html-to-image": "^1.11.11",
     "lucide-react": "^0.462.0",
     "next": "14.2.6",
     "next-auth": "5.0.0-beta.25",
