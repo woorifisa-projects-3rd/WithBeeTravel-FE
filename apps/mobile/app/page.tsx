@@ -12,6 +12,7 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
+import { mutate } from 'swr';
 
 // Account
 interface Account {
@@ -43,6 +44,7 @@ const CardIssuancePage = () => {
       : undefined;
 
   const handleIssuance = () => {
+    mutate((key: string) => key.startsWith('isCard'));
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);
   };
