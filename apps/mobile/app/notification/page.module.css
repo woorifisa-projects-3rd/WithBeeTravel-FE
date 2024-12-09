@@ -78,6 +78,8 @@
 .logMessage {
   margin-top: 5px;
   font-size: 16px;
+  word-break: break-all;
+  padding-right: 10px;
 }
 
 /* 로딩표시 */
