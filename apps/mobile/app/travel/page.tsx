@@ -281,7 +281,7 @@ function TravelpageContent() {
 
 export default function TravelPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <TravelpageContent />
     </Suspense>
   );
