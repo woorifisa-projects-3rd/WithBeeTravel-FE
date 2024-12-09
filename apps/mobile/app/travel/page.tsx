@@ -18,7 +18,9 @@ import { useToast } from '@withbee/hooks/useToast';
 import { motion } from 'framer-motion';
 import { getIsCard } from '@withbee/apis';
 
-export default function page() {
+
+
+function TravelpageContent() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -131,7 +133,6 @@ export default function page() {
   const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
       <div className={styles.travelSelectWrap}>
         <Title label="여행 선택" disableBack={true} />
         <div className={styles.imageWrap}>
@@ -291,6 +292,13 @@ export default function page() {
           modalState={modalState}
         />
       </div>
+  );
+}
+
+export default function TravelPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TravelpageContent />
     </Suspense>
   );
 }

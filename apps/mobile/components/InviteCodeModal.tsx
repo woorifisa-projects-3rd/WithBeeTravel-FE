@@ -123,7 +123,6 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -169,6 +168,6 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
           )}
         </div>
       </Modal>
-    </Suspense>
+   
   );
 };
