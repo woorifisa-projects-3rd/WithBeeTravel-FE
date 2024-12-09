@@ -14,9 +14,14 @@ import { notificationStore } from '@withbee/stores';
 interface TitleProps {
   label: string;
   disableBack?: boolean;
+  isNotificationPage?: boolean;
 }
 
-export const Title = ({ label, disableBack }: TitleProps) => {
+export const Title = ({
+  label,
+  disableBack,
+  isNotificationPage,
+}: TitleProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const { hasNotification, isUpdate, markNotification } = notificationStore();
