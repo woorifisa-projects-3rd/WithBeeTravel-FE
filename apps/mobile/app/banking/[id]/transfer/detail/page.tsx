@@ -153,7 +153,6 @@ export default function TransferDetailPage() {
     return accountNumber; // 13자리가 아닐 경우 그대로 반환
   };
 
-
   return (
     <div className={styles.container}>
       <Title label="송금하기" />
@@ -198,7 +197,9 @@ export default function TransferDetailPage() {
                 {targetAccount?.name}
                 <span>님에게</span>
               </h3>
-              <p className={styles.accountNumber}>{formatAccountNumber(String(targetAccountNumber))}</p>
+              <p className={styles.accountNumber}>
+                {formatAccountNumber(String(targetAccountNumber))}
+              </p>
             </motion.div>
           </div>
 
