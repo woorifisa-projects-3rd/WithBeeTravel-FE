@@ -107,7 +107,7 @@ export default function AccountPage() {
                     </div>
                   </div>
                   <div className={styles.addHistory}>
-                    <ButtonBanking
+                    <Button
                       primary={false}
                       label="+ 내역"
                       size="xsmall"

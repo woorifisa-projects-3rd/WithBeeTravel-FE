@@ -3,8 +3,10 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
-import { Suspense, useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import BannerAds from '../../components/BannerAds';
+import {  Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
@@ -25,6 +27,24 @@ export default function page() {
     subtitle: '초대 코드를 입력하여 그룹에 가입하세요.',
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [inviteCode, setInviteCode] = useState(''); // 초대 코드 상태 추가
+
+  useEffect(() => {
+    const inviteCode = searchParams.get('inviteCode');
+    if (inviteCode) {
+      setInviteCode(inviteCode); // 쿼리 파라미터에서 초대 코드 설정
+
+      setModalState((prevState) => ({
+        ...prevState,
+        title: '초대 코드 입력 완료',
+        closeLabel: '초대 코드 제출',
+        subtitle: '입력된 초대 코드를 사용하여 여행에 참여합니다.',
+        inviteCode: inviteCode,
+      }));
+      setIsOpen(true);
+    }
+  }, [searchParams]);
 
   // 위비카드 소유하지 않으면 카드 발급 불가
   const { data: isCardData } = useSWR('isCard', getIsCard);
@@ -80,7 +100,7 @@ export default function page() {
     }
 
     if ('data' in response && response.data) {
-      router.push(`/travel/${response.data.travelId}`);
+      router.replace(`/travel/${response.data.travelId}`);
     }
   };
 
@@ -96,15 +116,12 @@ export default function page() {
             return { ...card, dDay };
           })
           .sort((a, b) => {
-            // 둘 다 다가오는 여행인 경우 D-day 오름차순
             if (a.dDay >= 0 && b.dDay >= 0) {
               return a.dDay - b.dDay;
             }
-            // 둘 다 지난 여행인 경우 시작일 기준 내림차순 (최신순)
             if (a.dDay < 0 && b.dDay < 0) {
               return dayjs(b.travelStartDate).diff(dayjs(a.travelStartDate));
             }
-            // 다가오는 여행을 먼저 보여주기
             return b.dDay - a.dDay;
           })
       : [];
@@ -117,7 +134,7 @@ export default function page() {
     <Suspense fallback={<div>Loading...</div>}>
 
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택" />
+      <Title label="여행 선택" disableBack={true} />
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
@@ -221,7 +238,7 @@ export default function page() {
                   ))}
                 </>
               )}
-
+              <BannerAds />
               {/* 지난 여행 렌더링 */}
               {pastTravels.length > 0 && (
                 <>
@@ -265,6 +282,7 @@ export default function page() {
           )}
         </div>
       )}
+
       <InviteCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

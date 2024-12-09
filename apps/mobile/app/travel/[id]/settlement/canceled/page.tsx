@@ -24,7 +24,7 @@ export default function Page({ params }: { params: Params }) {
         >
           <Image
             className={styles.image}
-            src={'/imgs/settlement/cancelWibee.png'}
+            src="/imgs/settlement/sadWibee.png"
             alt="pending"
             width={200}
             height={200}
