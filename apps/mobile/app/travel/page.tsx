@@ -3,7 +3,7 @@ import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
@@ -93,6 +93,8 @@ export default function page() {
   const pastTravels = sortedTravelData.filter((card) => card.dDay < 0);
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <div className={styles.travelSelectWrap}>
       <Title label="여행 선택" />
       <div className={styles.imageWrap}>
@@ -252,5 +254,7 @@ export default function page() {
         modalState={modalState}
       />
     </div>
+    </Suspense>
+
   );
 }
