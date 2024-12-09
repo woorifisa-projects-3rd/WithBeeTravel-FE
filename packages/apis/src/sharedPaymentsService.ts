@@ -10,7 +10,7 @@ import type {
   ErrorResponse,
 } from '@withbee/types';
 
-interface GetSharedPaymentsParams {
+export interface GetSharedPaymentsParams {
   travelId: number;
   page?: number;
   sortBy?: SortBy;
