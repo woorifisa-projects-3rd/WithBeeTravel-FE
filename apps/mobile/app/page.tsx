@@ -97,6 +97,14 @@ const CardIssuancePage = () => {
   const rotationDuration = 2.8;
   const circleSegments = Array.from({ length: 22 }, (_, i) => i);
 
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
   return (
     <div className={styles.container}>
       <Title label="카드 혜택" disableBack={true} />
@@ -385,7 +393,7 @@ const CardIssuancePage = () => {
               >
                 <div className={styles.accountInfo}>
                   <p className={styles.accountNumber}>
-                    {account.accountNumber}
+                    {formatAccountNumber(account.accountNumber)}
                   </p>
                   <p className={styles.product}>{account.product}</p>
                 </div>
