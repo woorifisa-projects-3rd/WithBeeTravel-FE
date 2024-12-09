@@ -51,9 +51,6 @@ function TravelpageContent() {
     'travelList',
     getTravelList,
   );
-  if (travelData) {
-    console.log('리스트 조회', travelData);
-  }
 
   if (travelError && !travelData)
     return (
