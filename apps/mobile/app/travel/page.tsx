@@ -191,29 +191,20 @@ function TravelpageContent() {
                       </div>
                       <div className={styles.card}>
                         <Link href={`/travel/${card.travelId}`}>
-                          {card.travelMainImage ? (
-                            <Image
-                              src={card.travelMainImage}
-                              alt={card.travelName}
-                              className={styles.cardImage}
-                              width={300}
-                              height={100}
-                              quality={100}
-                            />
-                          ) : (
-                            <Image
-                              src={
-                                card.isDomesticTravel
+                          <Image
+                            src={
+                              card.travelMainImage
+                                ? `/${card.travelMainImage}`
+                                : card.isDomesticTravel
                                   ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
                                   : `/imgs/countries/${card.country[0]}.jpg`
-                              }
-                              alt={card.travelName}
-                              className={styles.cardImage}
-                              width={300}
-                              height={100}
-                              quality={100}
-                            />
-                          )}
+                            }
+                            alt={card.travelName}
+                            className={styles.cardImage}
+                            width={300}
+                            height={100}
+                            quality={100}
+                          />
                           <div className={styles.cardContent}>
                             <div className={styles.cardText}>
                               <FriendImage src={card.profileImage} />
@@ -242,29 +233,20 @@ function TravelpageContent() {
                     <div key={index}>
                       <div className={styles.card}>
                         <Link href={`/travel/${card.travelId}`}>
-                          {card.travelMainImage ? (
-                            <Image
-                              src={card.travelMainImage}
-                              alt={card.travelName}
-                              className={styles.cardImage}
-                              width={300}
-                              height={100}
-                              quality={100}
-                            />
-                          ) : (
-                            <Image
-                              src={
-                                card.isDomesticTravel
+                          <Image
+                            src={
+                              card.travelMainImage
+                                ? `/${card.travelMainImage}`
+                                : card.isDomesticTravel
                                   ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
                                   : `/imgs/countries/${card.country[0]}.jpg`
-                              }
-                              alt={card.travelName}
-                              className={styles.cardImage}
-                              width={300}
-                              height={100}
-                              quality={100}
-                            />
-                          )}
+                            }
+                            alt={card.travelName}
+                            className={styles.cardImage}
+                            width={300}
+                            height={100}
+                            quality={100}
+                          />
                           <div className={styles.cardContent}>
                             <div className={styles.cardText}>
                               <FriendImage src={card.profileImage} />
