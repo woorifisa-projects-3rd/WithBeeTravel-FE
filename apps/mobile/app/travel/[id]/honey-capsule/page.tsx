@@ -12,6 +12,7 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import { HoneyCapsuleBox } from '@withbee/ui/honey-capsule';
 import dayjs from 'dayjs';
 import { toPng } from 'html-to-image';
+import { HoneyCapsuleSkeleton } from '@withbee/ui/honey-capsule-skeleton';
 
 interface HoneyCapsuleProps {
   params: {
@@ -24,6 +25,7 @@ export default function Page({ params }: HoneyCapsuleProps) {
   const { showToast } = useToast();
   const [honeyCapsuleData, setHoneyCapsuleData] = useState<HoneyCapsule[]>();
   const downloadComponentRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleGetHoneyCapsule = async () => {
     const response = await getHoneyCapsule(id);
@@ -38,7 +40,10 @@ export default function Page({ params }: HoneyCapsuleProps) {
       throw new Error(response.code);
     }
 
-    if (response.data) setHoneyCapsuleData(response.data);
+    if (response.data) {
+      setHoneyCapsuleData(response.data);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -101,22 +106,26 @@ export default function Page({ params }: HoneyCapsuleProps) {
           </span>
           <Button label="허니캡슐 생성하기" onClick={handleDownload} />
         </div>
-        <div ref={downloadComponentRef} className={styles.record}>
-          {honeyCapsuleData &&
-            Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
-              ([date, capsules]) => (
-                <div key={date} className={styles.recordWrapper}>
-                  <span className={styles.date}>{date}</span>
-                  {capsules.map((capsule) => (
-                    <HoneyCapsuleBox
-                      key={capsule.sharedPaymentId}
-                      data={capsule}
-                    />
-                  ))}
-                </div>
-              ),
-            )}
-        </div>
+        {isLoading ? (
+          <HoneyCapsuleSkeleton />
+        ) : (
+          <div ref={downloadComponentRef} className={styles.record}>
+            {honeyCapsuleData &&
+              Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
+                ([date, capsules]) => (
+                  <div key={date} className={styles.recordWrapper}>
+                    <span className={styles.date}>{date}</span>
+                    {capsules.map((capsule) => (
+                      <HoneyCapsuleBox
+                        key={capsule.sharedPaymentId}
+                        data={capsule}
+                      />
+                    ))}
+                  </div>
+                ),
+              )}
+          </div>
+        )}
       </div>
     </div>
   );
