@@ -4,12 +4,14 @@ import { Item } from '@withbee/ui/item';
 import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
 import Link from 'next/link';
-import { getTravelHome } from '@withbee/apis';
+import { changeTravelMainImage, getTravelHome } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { formatDateWithSlash } from '@withbee/utils';
 import { InviteCodeButton } from './invite-code-button';
 import styles from './page.module.css';
 import Image from 'next/image';
+import TravelMainImage from '../../../components/TravelMainImage';
+
 const BarChart = dynamic(
   () => import('@withbee/ui/chart').then((mod) => mod.BarChart), // named export 처리
   { ssr: false }, // SSR 비활성화
@@ -56,7 +58,7 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
             </Link>
           </div>
         </div>
-        <div className={styles.imgWrapper}>
+        {/* <div className={styles.imgWrapper}>
           {data.mainImage && (
             <Image
               src={data.mainImage}
@@ -66,7 +68,8 @@ export default async function TravelDetailPage({ params }: TravelHomeProps) {
               className={styles.mainImage}
             />
           )}
-        </div>
+        </div> */}
+        <TravelMainImage travelId={travelId} image={data.mainImage} />
 
         {data.isDomesticTravel ? (
           <Item label="국내여행" />
