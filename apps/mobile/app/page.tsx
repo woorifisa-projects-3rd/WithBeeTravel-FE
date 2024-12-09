@@ -99,7 +99,7 @@ const CardIssuancePage = () => {
 
   return (
     <div className={styles.container}>
-      <Title label="카드 혜택" />
+      <Title label="카드 혜택" disableBack={true} />
       <AnimatePresence mode="wait">
         {issuanceState === 'initial' && (
           <motion.div

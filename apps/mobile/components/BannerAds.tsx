@@ -65,7 +65,7 @@ export default function BannerAds() {
     },
     exit: {
       opacity: 0,
-      x: -100,
+      x: -150,
       transition: {
         type: 'spring',
         stiffness: 200,

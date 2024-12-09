@@ -4,7 +4,7 @@ import { Title } from '@withbee/ui/title';
 import Image from 'next/image';
 import { InviteCodeModal } from '../../components/InviteCodeModal';
 import BannerAds from '../../components/BannerAds';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { postInviteCode, getTravelList } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
@@ -17,7 +17,7 @@ import { useToast } from '@withbee/hooks/useToast';
 import { motion } from 'framer-motion';
 import { getIsCard } from '@withbee/apis';
 
-export default function page() {
+function TravelpageContent() {
   const [isOpen, setIsOpen] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -51,6 +51,9 @@ export default function page() {
     'travelList',
     getTravelList,
   );
+  if (travelData) {
+    console.log('리스트 조회', travelData);
+  }
 
   if (travelError && !travelData)
     return (
@@ -113,7 +116,7 @@ export default function page() {
 
   return (
     <div className={styles.travelSelectWrap}>
-      <Title label="여행 선택" />
+      <Title label="여행 선택" disableBack={true} />
       <div className={styles.imageWrap}>
         <Image
           src="/imgs/travelselect/withbee_friends.png"
@@ -192,7 +195,9 @@ export default function page() {
                             src={
                               card.travelMainImage
                                 ? `/${card.travelMainImage}`
-                                : '/imgs/travelselect/travel_exam.png'
+                                : card.isDomesticTravel
+                                  ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
+                                  : `/imgs/countries/${card.country[0]}.jpg`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
@@ -231,8 +236,10 @@ export default function page() {
                           <Image
                             src={
                               card.travelMainImage
-                                ? card.travelMainImage
-                                : '/imgs/travelselect/travel_exam.png'
+                                ? `/${card.travelMainImage}`
+                                : card.isDomesticTravel
+                                  ? '/imgs/travelselect/jeju.png' // 제주도 이미지 경로
+                                  : `/imgs/countries/${card.country[0]}.jpg`
                             }
                             alt={card.travelName}
                             className={styles.cardImage}
@@ -269,5 +276,13 @@ export default function page() {
         modalState={modalState}
       />
     </div>
+  );
+}
+
+export default function TravelPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TravelpageContent />
+    </Suspense>
   );
 }

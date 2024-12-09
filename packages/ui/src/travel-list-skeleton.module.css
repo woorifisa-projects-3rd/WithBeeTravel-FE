@@ -43,6 +43,7 @@
 }
 
 .cardDaySkeleton {
+    margin-top: 5px;
     height: 35px;
     width: 150px;
     background-color: #ebebeb;

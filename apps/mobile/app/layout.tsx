@@ -15,10 +15,24 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.withbee.site'),
   title: '윗비트래블',
   description: '편리하게 여행 경비를 관리할 수 있는 서비스',
   icons: {
     icon: '/Airplane.ico',
+  },
+  openGraph: {
+    title: '윗비트래블',
+    description: '편리하게 여행 경비를 관리할 수 있는 서비스',
+    images: [
+      {
+        url: '/opengraph.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
   },
 };
 
