@@ -59,7 +59,6 @@ export const verifyPin = async (
       body: JSON.stringify({ pinNumber: Pin }),
     },
   );
-  console.log('핀번호 검증 ', response);
 
   return response;
 };

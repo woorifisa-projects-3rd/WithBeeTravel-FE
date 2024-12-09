@@ -14,6 +14,7 @@ import { FriendImage } from '@withbee/ui/friend-image';
 import { TravelListSkeleton } from '@withbee/ui/travel-list-skeleton';
 import { useToast } from '@withbee/hooks/useToast';
 import { motion } from 'framer-motion';
+import { getIsCard } from '@withbee/apis';
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,26 @@ export default function page() {
     subtitle: '초대 코드를 입력하여 그룹에 가입하세요.',
   });
   const router = useRouter();
+
+  // 위비카드 소유하지 않으면 카드 발급 불가
+  const { data: isCardData } = useSWR('isCard', getIsCard);
+  const hasCard =
+    isCardData && 'data' in isCardData && isCardData.data
+      ? isCardData.data.connectedWibeeCard
+      : undefined;
+
+  const onCreateTravel = () => {
+    const { showToast } = useToast();
+
+    if (!hasCard) {
+      showToast.error({
+        message: '위비카드를 소유한 사용자만 여행을 생성할 수 있습니다.',
+      });
+      return;
+    }
+
+    router.push('/travel/form?mode=create');
+  };
 
   const { data: travelData, error: travelError } = useSWR(
     'travelList',
@@ -108,16 +129,13 @@ export default function page() {
       </div>
 
       <div className={styles.buttonWrap}>
-        <button
-          className={styles.button}
-          onClick={() => router.push('/travel/form?mode=create')}
-        >
+        <button className={styles.button} onClick={onCreateTravel}>
           <div className={styles.buttonTitleWrap}>
             <p className={styles.buttonTitle}>여행 생성하기</p>
           </div>
           <div className={styles.imgWrap}>
             <Image
-              src="/imgs/travelselect/travel_select_plane.png"
+              src="/imgs/cardBenefits/1.png"
               alt="비행기 아이콘"
               className={styles.icon}
               width={50}
@@ -151,8 +169,8 @@ export default function page() {
                 src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
                 alt="여행 데이터 없음"
                 className={styles.emptyStateImage}
-                width={230}
-                height={200}
+                width={170}
+                height={150}
                 quality={100}
               />
               <p className={styles.emptyStateMessage}>

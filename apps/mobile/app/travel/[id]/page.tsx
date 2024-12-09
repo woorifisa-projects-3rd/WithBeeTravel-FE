@@ -1,8 +1,8 @@
+import dynamic from 'next/dynamic';
 import { Button } from '@withbee/ui/button';
 import { Item } from '@withbee/ui/item';
 import { Title } from '@withbee/ui/title';
 import { FriendImage } from '@withbee/ui/friend-image';
-import { BarChart } from '@withbee/ui/chart';
 import Link from 'next/link';
 import { getTravelHome } from '@withbee/apis';
 import { ERROR_MESSAGES } from '@withbee/exception';
@@ -10,6 +10,10 @@ import { formatDateWithSlash } from '@withbee/utils';
 import { InviteCodeButton } from './invite-code-button';
 import styles from './page.module.css';
 import Image from 'next/image';
+const BarChart = dynamic(
+  () => import('@withbee/ui/chart').then((mod) => mod.BarChart), // named export 처리
+  { ssr: false }, // SSR 비활성화
+);
 
 interface TravelHomeProps {
   params: {

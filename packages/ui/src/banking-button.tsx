@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import styles from "./banking-button.module.css"
+import styles from './banking-button.module.css';
 
 export interface ButtonProps {
   primary?: boolean;

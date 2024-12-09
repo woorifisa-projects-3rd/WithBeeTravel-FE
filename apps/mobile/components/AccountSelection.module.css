@@ -68,7 +68,7 @@
   height: 40px;
   border: none;
   border-radius: 50%;
-  background-color: var(--color-blue-3);
+  /* background-color: var(--color-blue-3); */
   color: var(--color-blue-8);
   cursor: pointer;
   display: flex;
@@ -78,7 +78,7 @@
 }
 
 .arrowButton:hover {
-  background-color: var(--color-blue-3);
+  /* background-color: var(--color-blue-3); */
   color: var(--color-blue-9);
 }
 

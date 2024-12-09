@@ -58,8 +58,8 @@ const AccountSelection: React.FC<{
       const containerWidth = container.offsetWidth;
 
       setContainerStyle({
-        transform: `translateX(${direction === 'right' ? '-' : ''}${containerWidth}px)`,
-        transition: 'transform 0.2s',
+        transform: `translateX(${direction === 'right' ? '-' : '+'}${containerWidth / 7}px)`,
+        transition: 'transform 1.5s',
       });
 
       setTimeout(() => {

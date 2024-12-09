@@ -1,0 +1,3 @@
+// .eslintignore 파일 생성
+cypress/**/*
+cypress.config.js

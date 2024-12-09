@@ -16,7 +16,7 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: 0px 7px;
+    padding: 0px 5px;
 }
 
 
@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 10px;
+    padding: 7px 10px;
 }
 
 .iconWrapper {
@@ -46,10 +46,10 @@
 }
 
 .label.active {
-    color: var(--color-blue-8);
+    color: var(--color-blue-7);
 }
 
 .iconWrapper.active .svg path {
-    fill: #ADE2FF;
-    stroke: var(--color-blue-8);
+    fill: #b1e4ff;
+    stroke: var(--color-blue-7);
 }

@@ -15,7 +15,7 @@
 
 .skeletonImage {
     height: 120px;
-    background-color: #e6e6e6;
+    background-color: #ebebeb;
     position: relative;
 }
 
@@ -29,7 +29,7 @@
 .skeletonTitle,
 .skeletonSubtitle {
     height: 16px;
-    background-color: #e0e0e0;
+    background-color: #ebebeb;
     border-radius: 4px;
     position: relative;
 }
@@ -45,7 +45,7 @@
 .cardDaySkeleton {
     height: 35px;
     width: 150px;
-    background-color: #e9e9e9;
+    background-color: #ebebeb;
     margin-bottom: 3px;
     border-radius: 8px;
     position: relative;
