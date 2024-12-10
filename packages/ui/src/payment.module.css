@@ -1,8 +1,8 @@
 .payment {
-  width: 100%;
   display: flex;
   gap: 14px;
   padding: 9px 2px 12px;
+  margin: 0 -5px;
 }
 
 .friendImage {
@@ -119,7 +119,7 @@
 }
 
 .gap {
-  gap: 12px;
+  gap: 8px;
 }
 
 .mt {
