@@ -18,6 +18,7 @@ export const HoneyCapsuleBox = ({ data }: HoneyCapsuleBoxProps) => {
             alt="여행 기록 이미지"
             className={styles.image}
             layout="fill"
+            crossOrigin="anonymous"
           />
         </div>
       ) : (
