@@ -30,6 +30,13 @@ export const Title = ({
     refreshInterval: 1000,
   });
 
+  const notificationIcon =
+    pathname === '/notification'
+      ? NoMsg // 알림 페이지면 NoMsg로 고정
+      : hasNotification
+        ? isMsg
+        : NoMsg; // 다른 페이지면 기존 로직 유지
+
   useEffect(() => {
     if (
       isMsgData &&
@@ -80,7 +87,7 @@ export const Title = ({
       <h1 className={styles.label}>{label}</h1>
       <Link href="/notification">
         <Image
-          src={hasNotification ? isMsg : NoMsg}
+          src={notificationIcon}
           alt="알림"
           width={20}
           height={20}
