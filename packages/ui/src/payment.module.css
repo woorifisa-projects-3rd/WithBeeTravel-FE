@@ -75,6 +75,7 @@
   display: flex;
   align-items: center;
   padding-top: 1px;
+  flex-wrap: nowrap; /* 추가 */
 }
 
 .friendsModal {
@@ -108,9 +109,11 @@
   border-radius: 50%;
   background: var(--color-gray-100);
   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  min-width: 32px;
   width: 32px;
   height: 32px;
   margin-left: -7px;
+  flex-shrink: 0; /* 추가 */
 }
 
 .moreFriends {
