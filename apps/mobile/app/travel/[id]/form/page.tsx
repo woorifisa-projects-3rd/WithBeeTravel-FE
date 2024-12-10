@@ -13,6 +13,7 @@ import { motion } from 'framer-motion';
 import styles from './page.module.css';
 import useSWR from 'swr';
 import { TravelFormData } from '@withbee/types';
+import { mutate } from 'swr';
 
 function TravelFormContent() {
   const [editedTravel, setEditedTravel] = useState<TravelFormData | null>(null);
@@ -43,6 +44,7 @@ function TravelFormContent() {
     );
 
     if (response) {
+      mutate((key: string) => key.startsWith('travelList'));
       showToast.success({ message: '여행이 편집이 완료되었습니다.' });
       router.push(`/travel/${params.id}`);
     } else {
