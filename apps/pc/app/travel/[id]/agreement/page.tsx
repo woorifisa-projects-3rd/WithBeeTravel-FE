@@ -3,7 +3,6 @@
 import { useState, useRef } from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
-import { Title } from '@withbee/ui/title';
 import { Button } from '@withbee/ui/button';
 import { consentItems } from '@withbee/utils';
 import { useToast } from '@withbee/hooks/useToast';
@@ -166,7 +165,6 @@ export default function ConsentPage({ params }: { params: Params }) {
           <Button
             label="동의하고 PIN 번호 입력하기"
             disabled={!requiredAgreed}
-            shadow={true}
             size="xlarge"
             onClick={() => setIsModalOpen(true)}
           />

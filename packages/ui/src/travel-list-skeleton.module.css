@@ -8,14 +8,14 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #fafafa;
+    background-color: #f7f7f7;
     border-radius: 8px;
     overflow: hidden;
 }
 
 .skeletonImage {
     height: 120px;
-    background-color: #e6e6e6;
+    background-color: #ebebeb;
     position: relative;
 }
 
@@ -29,7 +29,7 @@
 .skeletonTitle,
 .skeletonSubtitle {
     height: 16px;
-    background-color: #e0e0e0;
+    background-color: #ebebeb;
     border-radius: 4px;
     position: relative;
 }
@@ -43,10 +43,10 @@
 }
 
 .cardDaySkeleton {
+    margin-top: 5px;
     height: 35px;
     width: 150px;
-    background-color: #e9e9e9;
-    margin-bottom: 3px;
+    background-color: #ebebeb;
     border-radius: 8px;
     position: relative;
 }

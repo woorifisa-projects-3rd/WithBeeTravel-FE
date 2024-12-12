@@ -46,34 +46,27 @@ export default function PaymentList({
       travelId,
       page: pageIndex,
       sortBy: sortBy as SortBy,
-      startDate: startDate || travelStartDate,
+      startDate:
+        startDate ||
+        dayjs(travelStartDate).subtract(2, 'month').format('YYYY-MM-DD'),
       endDate: endDate || travelEndDate,
       ...(memberId !== 0 && { memberId }),
       ...(category !== '전체' && { category }),
     };
 
-    // 모든 파라미터를 포함한 상세한 캐시 키
-    const cacheKey = `sharedPayments-${travelId}-${sortBy}-${startDate || travelStartDate}-${
-      endDate || travelEndDate
-    }-${memberId}-${category}-${pageIndex}`;
-
     return {
       params,
-      cacheKey,
+      key: `payments-${travelId}`,
     };
   };
 
   // SWR Infinite로 페이지네이션 데이터 관리
   const { data, error, size, setSize, isLoading, isValidating } =
     useSWRInfinite(
-      (pageIndex) => getKey(pageIndex).cacheKey,
-      async (key: string, pageIndex: number) => {
-        const response = await getSharedPayments(getKey(pageIndex).params);
-
-        if ('code' in response) {
-          throw response;
-        }
-
+      getKey,
+      async (keyObj) => {
+        const response = await getSharedPayments(keyObj.params);
+        if ('code' in response) throw response;
         return response.data;
       },
       {
@@ -154,8 +147,11 @@ export default function PaymentList({
   // travelInfo에서 받아온 startDate와 endDate를 searchParams에 반영
   useEffect(() => {
     if (!startDate && !endDate) {
-      updateParam('startDate', travelStartDate);
-      updateParam('endDate', travelEndDate);
+      updateParam(
+        'startDate',
+        dayjs(travelStartDate).subtract(2, 'month').format('YYYY-MM-DD'),
+      );
+      updateParam('endDate', dayjs().format('YYYY-MM-DD'));
     }
   }, []);
 

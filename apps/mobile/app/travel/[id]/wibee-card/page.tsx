@@ -19,6 +19,8 @@ import {
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
+import Image from 'next/image';
+import { WibeeCardSkeleton } from '@withbee/ui/wibee-card-skeletion';
 
 interface WibeeCardProps {
   params: {
@@ -34,6 +36,7 @@ export default function Page({ params }: WibeeCardProps) {
   const [selectedHistoryIds, setSelectedHistoryIds] = useState<number[]>([]);
   const { showToast, formValidation } = useToast();
   const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // 결제 내역 선택 핸들러
   const handleSelectHistories = (id: number): void => {
@@ -98,6 +101,7 @@ export default function Page({ params }: WibeeCardProps) {
       setData(response.data);
       setPeriodStartDate(response.data.startDate);
       setPeriodEndDate(response.data.endDate);
+      setIsLoading(false);
     }
   };
 
@@ -164,10 +168,14 @@ export default function Page({ params }: WibeeCardProps) {
               onClick={handleOverallSelectHistories}
             />
             <div className={styles.dateSelect}>
-              <span>
-                {data?.startDate?.split('-').join('.')} ~{' '}
-                {data?.endDate?.split('-').join('.')}
-              </span>
+              {isLoading ? (
+                <span></span>
+              ) : (
+                <span>
+                  {data?.startDate?.split('-').join('.')} ~{' '}
+                  {data?.endDate?.split('-').join('.')}
+                </span>
+              )}
               <Item
                 label="기간 설정"
                 size="small"
@@ -214,20 +222,43 @@ export default function Page({ params }: WibeeCardProps) {
         </div>
       )}
 
-      <div className={styles.historyWrapper}>
-        {data?.histories?.map((history) => (
-          <WibeeCardPayment
-            key={history.id}
-            payment={history}
-            isSelected={selectedHistoryIds.includes(history.id)}
-            handleSelectHistory={
-              history.addedSharedPayment
-                ? alreadyAddedError
-                : handleSelectHistories
-            }
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className={styles.historyWrapper}>
+          <WibeeCardSkeleton />
+        </div>
+      ) : (
+        <div className={styles.historyWrapper}>
+          {data?.histories.length === 0 ? (
+            <div className={styles.emptyState}>
+              <Image
+                src="/imgs/travelselect/emptyStateTrip.png" // 원하는 이미지 경로
+                alt="여행 데이터 없음"
+                className={styles.emptyStateImage}
+                width={230}
+                height={200}
+                quality={100}
+              />
+              <p className={styles.emptyStateMessage}>
+                해당 기간 내에 <br />
+                카드 결제 내역이 없습니다.
+              </p>
+            </div>
+          ) : (
+            data?.histories?.map((history) => (
+              <WibeeCardPayment
+                key={history.id}
+                payment={history}
+                isSelected={selectedHistoryIds.includes(history.id)}
+                handleSelectHistory={
+                  history.addedSharedPayment
+                    ? alreadyAddedError
+                    : handleSelectHistories
+                }
+              />
+            ))
+          )}
+        </div>
+      )}
       <div className={styles.submitButtonBackground}>
         <div className={styles.submitButtonWrapper}>
           <Button

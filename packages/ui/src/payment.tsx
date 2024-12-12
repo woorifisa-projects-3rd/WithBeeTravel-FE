@@ -160,12 +160,16 @@ export const Payment = ({
         </div>
         <div
           className={
-            isDomesticTravel ? styles.rightWrapper : styles.contentWrapper
+            paymentInfo.unit === 'KRW'
+              ? styles.rightWrapper
+              : styles.contentWrapper
           }
         >
-          {!isDomesticTravel && (
+          {!isDomesticTravel && paymentInfo.unit !== 'KRW' && (
             <Item
-              label={paymentInfo.exchangeRate + 'KRW/' + paymentInfo.unit}
+              label={
+                paymentInfo.exchangeRate.toFixed(2) + 'KRW/' + paymentInfo.unit
+              }
               size="small"
             />
           )}
@@ -176,7 +180,7 @@ export const Payment = ({
               isDomesticTravel && styles.mt,
             ].join(' ')}
           >
-            <button className={styles.option}>기록 추가</button>
+            <button className={styles.option}>캡슐 열기</button>
           </div>
         </div>
       </div>

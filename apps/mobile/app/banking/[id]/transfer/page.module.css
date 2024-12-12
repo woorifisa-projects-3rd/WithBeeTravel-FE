@@ -1,6 +1,6 @@
 .container {
   background-color: white;
-  flex-direction: coumn;
+  flex-direction: column;
 }
 
 .amountContainer {
@@ -29,19 +29,43 @@
   font-weight: 600;
 }
 
-.input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-bottom: 1.5px solid var(--color-gray-200);
-  outline: none;
-  padding: 8px 0;
+.text {
+  padding-bottom: 8px;
 }
 
-.input::placeholder {
-  color: var(--color-gray-400);
+.input {
+  width: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
 }
+
+.numberContainer {
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  font-size: 20px;
+  border-bottom: 1.5px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  display: inline-block;
+  margin-right: 2px;
+  font-weight: 600;
+}
+
+.placeholder {
+  color: var(--color-gray-400);
+  font-weight: 400;
+  font-size: 18px;
+}
+
 
 /* 키보드 관련 스타일 업데이트 */
 .keyboardContainer {
@@ -59,3 +83,14 @@
   max-width: 430px;
   padding: 10px 25px 25px 25px;
 }
+
+.numberContainer {
+  display: flex;
+  overflow: hidden;
+}
+
+.number {
+  display: inline-block;
+  margin-right: 2px;
+}
+

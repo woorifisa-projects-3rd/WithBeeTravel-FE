@@ -162,7 +162,7 @@ export default function Page({ params }: ManualRegisterSharedPaymentProps) {
               'Unknown Error',
           });
 
-          mutate((key: string) => key.startsWith(`sharedPayments-${id}`));
+          mutate((key: { key?: string }) => key?.key === `payments-${id}`);
           throw new Error(response.code);
         }
       })();

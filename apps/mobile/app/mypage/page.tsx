@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { handleSignOut } from '../actions/authActions';
 import { useSession } from 'next-auth/react';
+import { MyPageSkeleton } from '@withbee/ui/my-page-skeleton';
 
 interface Account {
   accountId: number;
@@ -30,6 +31,7 @@ export default function Page() {
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [accounts, setAccounts] = useState<accountType>();
   const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
@@ -48,6 +50,7 @@ export default function Page() {
 
     if ('data' in response) {
       setData(response.data);
+      setIsLoading(false);
     }
   };
 
@@ -124,31 +127,45 @@ export default function Page() {
     handleGetAccountList();
   }, [isAccountModalOpen === true]);
 
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
   return (
     <>
       <Title label="마이 페이지" />
-      <div className={styles.content}>
-        <FriendImage
-          src={data?.profileImage ? data?.profileImage : 1}
-          size={100}
-        />
-        <span className={styles.username}>{data?.username}님</span>
-        <button className={styles.logout} onClick={handleLogout}>
-          로그아웃
-        </button>
-        <div
-          className={styles.changeAccountWrapper}
-          onClick={() => setIsAccountModalOpen(true)}
-        >
-          <span className={styles.changeAccountTitle}>연결 계좌</span>
-          <span className={styles.changeAccountComment}>
-            정산 시에 사용되는 계좌입니다.
-          </span>
-          <span className={styles.account}>
-            {data?.accountProduct} {data?.accountNumber}
-          </span>
+      {isLoading ? (
+        <MyPageSkeleton />
+      ) : (
+        <div className={styles.content}>
+          <FriendImage
+            src={data?.profileImage ? data?.profileImage : 1}
+            size={100}
+          />
+          <span className={styles.username}>{data?.username}님</span>
+          <button className={styles.logout} onClick={handleLogout}>
+            로그아웃
+          </button>
+          <div
+            className={styles.changeAccountWrapper}
+            onClick={() => setIsAccountModalOpen(true)}
+          >
+            <span className={styles.changeAccountTitle}>연결 계좌</span>
+            <span className={styles.changeAccountComment}>
+              정산 시에 사용되는 계좌입니다.
+            </span>
+            <span className={styles.account}>
+              {data?.accountNumber !== null
+                ? `${data?.accountProduct} ${formatAccountNumber(data?.accountNumber ? data?.accountNumber : '')}`
+                : '연결된 계좌가 없습니다.'}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       <Modal
         isOpen={isAccountModalOpen}
@@ -178,7 +195,7 @@ export default function Page() {
               >
                 <div className={styles.accountInfo}>
                   <p className={styles.accountNumber}>
-                    {account.accountNumber}
+                    {formatAccountNumber(account.accountNumber)}
                   </p>
                   <p className={styles.product}>{account.product}</p>
                 </div>

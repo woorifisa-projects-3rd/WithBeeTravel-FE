@@ -13,39 +13,38 @@ import PinNumberModal from '../../../../../components/PinNumberModal';
 import { useToast } from '@withbee/hooks/useToast';
 import { Button } from '@withbee/ui/button';
 import { AccountInfo, TargetName } from '@withbee/types';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Keyboard from '@withbee/ui/keyboard';
 import { numberToKorean } from '@withbee/utils';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function TransferDetailPage() {
   const router = useRouter();
   const params = useParams();
   const [targetAccountNumber, setTargetAccountNumber] = useState<string | null>(
     null,
-  ); // 초기값을 null로 설정
-  const myAccountId = params.id; // 계좌 ID를 파라미터로 받음
+  );
+  const myAccountId = params.id;
 
   const [accountInfo, setAccountInfo] = useState<AccountInfo | undefined>(
     undefined,
   );
-  const [amount, setAmount] = useState<string>(''); // 송금 금액 상태
-  const [targetAccount, setTargetAccount] = useState<TargetName | undefined>(); // 타겟 계좌 정보
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // 모달 열기/닫기 상태
+  const [amount, setAmount] = useState<string>('');
+  const [targetAccount, setTargetAccount] = useState<TargetName | undefined>();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const { showToast } = useToast();
 
-  const MAX_AMOUNT = accountInfo?.balance || 500000000; // 최대 송금 가능 금액
+  const MAX_AMOUNT = accountInfo?.balance || 500000000;
 
-  // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedAccountNumber = localStorage.getItem('targetAccountNumber');
-      setTargetAccountNumber(storedAccountNumber); // localStorage에서 가져온 계좌 번호 설정
+      setTargetAccountNumber(storedAccountNumber);
     }
-  }, []); // 빈 배열로 설정하여 컴포넌트가 처음 렌더링될 때 한 번만 실행되도록 함
+  }, []);
 
-  // 내 계좌 정보 가져오기
   useEffect(() => {
     if (myAccountId) {
       (async () => {
@@ -54,7 +53,6 @@ export default function TransferDetailPage() {
           setLoading(false);
           setAccountInfo(response.data);
         } else {
-          // TODO: 에러페이지로 이동시키기
           router.push(`/mypage`);
           console.error(response.message);
         }
@@ -62,10 +60,8 @@ export default function TransferDetailPage() {
     }
   }, [myAccountId]);
 
-  // 타겟 계좌의 사용자 이름 가져오기
   useEffect(() => {
     if (targetAccountNumber) {
-      const AccountNumberRequest = { accountNumber: targetAccountNumber };
       (async () => {
         const response = await getAccountOwnerName(targetAccountNumber);
         if ('data' in response) {
@@ -77,46 +73,46 @@ export default function TransferDetailPage() {
     }
   }, [targetAccountNumber]);
 
-  // 숫자 입력 처리
   const handleNumberPress = (num: string) => {
     if (num === 'backspace') {
-      setAmount((prev) => prev.slice(0, -1)); // 마지막 문자 제거
+      setAmount((prev) => prev.slice(0, -1));
     } else {
-      // 새로운 금액을 계산하기 전, 현재 금액에 num을 추가해본 후, 5억을 초과하는지 확인
-      const newAmount = amount + num;
-      if (parseInt(newAmount) > MAX_AMOUNT) {
-        showToast.error({ message: '최대 송금 가능 금액을 초과했어요.' });
-        return; // 5억 원 이상은 입력되지 않도록 함
-      }
-      setAmount(newAmount); // 5억 미만일 경우 정상적으로 금액을 추가
+      setAmount((prev) => {
+        if (prev === '0' && num !== '0') {
+          return num;
+        } else if (prev === '0' && num === '0') {
+          return prev;
+        } else {
+          const newAmount = prev + num;
+          if (parseInt(newAmount) > MAX_AMOUNT) {
+            showToast.error({ message: '최대 송금 가능 금액을 초과했어요.' });
+            return prev;
+          }
+          return newAmount;
+        }
+      });
     }
   };
 
-  // 송금 버튼 클릭 시 처리
   const handleSendMoney = async () => {
-    // 금액 유효성 검사
     if (!amount || amount === '0') {
       showToast.error({ message: '0원은 송금할 수 없어요!' });
       return;
     }
 
-    // 잔액 검증
     if (accountInfo && parseInt(amount) > accountInfo.balance) {
       showToast.error({ message: '잔액이 부족해요!' });
       return;
     }
 
-    // 타겟 계좌 정보가 없을 때
     if (!targetAccount) {
       alert('타겟 계좌 정보가 잘못되었습니다.');
       return;
     }
 
-    // 모달 열기
     setIsModalOpen(true);
   };
 
-  // PIN 번호 제출 처리
   const handlePinSubmit = async (pin: string) => {
     const transferRequest = {
       accountId: myAccountId,
@@ -137,19 +133,25 @@ export default function TransferDetailPage() {
         message: `${targetAccount?.name}님에게
         \n${transferRequest.amount}원 송금 완료`,
       });
-
-      router.push('/banking/');
+      router.replace('/banking/');
     } catch (error) {
       console.error('송금 오류:', error);
       showToast.error({ message: `${error}` });
     } finally {
-      setIsModalOpen(false); // 송금 후 모달 닫기
+      setIsModalOpen(false);
     }
   };
 
   if (loading) {
     return null;
   }
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
 
   return (
     <div className={styles.container}>
@@ -195,7 +197,9 @@ export default function TransferDetailPage() {
                 {targetAccount?.name}
                 <span>님에게</span>
               </h3>
-              <p className={styles.accountNumber}>{targetAccountNumber}</p>
+              <p className={styles.accountNumber}>
+                {formatAccountNumber(String(targetAccountNumber))}
+              </p>
             </motion.div>
           </div>
 
@@ -203,9 +207,32 @@ export default function TransferDetailPage() {
             {amount ? (
               <>
                 <span className={styles.currency}>₩</span>
-                <span className={styles.amount}>
-                  {parseInt(amount).toLocaleString()}
-                </span>
+                <div className={styles.numberContainer}>
+                  <AnimatePresence mode="popLayout">
+                    {Number(amount)
+                      .toLocaleString()
+                      .split('')
+                      .reverse()
+                      .map((digit, index, array) => (
+                        <motion.span
+                          key={array.length - 1 - index}
+                          className={styles.number}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 500,
+                            damping: 30,
+                            mass: 1,
+                          }}
+                        >
+                          {digit}
+                        </motion.span>
+                      ))
+                      .reverse()}
+                  </AnimatePresence>
+                </div>
               </>
             ) : (
               <motion.span
@@ -217,10 +244,8 @@ export default function TransferDetailPage() {
                 얼마나 보낼까요?
               </motion.span>
             )}
-            <p className={styles.won} style={{ height: '36px' }}>
-              {numberToKorean(Number(amount))}
-            </p>
           </div>
+          <p className={styles.won}>{numberToKorean(Number(amount))}</p>
         </motion.div>
       </main>
 
@@ -235,7 +260,7 @@ export default function TransferDetailPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          <Button
+          <ButtonBanking
             label="송금하기"
             size="medium"
             onClick={handleSendMoney}
@@ -244,11 +269,10 @@ export default function TransferDetailPage() {
         </motion.div>
       </div>
 
-      {/* PinNumberModal 컴포넌트 호출 */}
       <PinNumberModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} // 모달 닫기
-        onSubmit={handlePinSubmit} // PIN 입력 후 제출 처리
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handlePinSubmit}
       />
     </div>
   );

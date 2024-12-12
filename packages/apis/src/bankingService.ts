@@ -59,7 +59,6 @@ export const verifyPin = async (
       body: JSON.stringify({ pinNumber: Pin }),
     },
   );
-  console.log('핀번호 검증 ', response);
 
   return response;
 };
@@ -171,7 +170,7 @@ export const checkWibee = async (
 // 거래내역 추가
 export const registerPayment = async (
   myAccountId: number,
-  payAm: Number,
+  payAm: number,
   rqspeNm: String,
   isWibeeCard: boolean,
 ) => {

@@ -23,7 +23,7 @@ export default function Page({ params }: { params: Params }) {
           }}
         >
           <Image
-            src={'/imgs/friends/agreeWibee.png'}
+            src={'/imgs/settlement/heartWibee.png'}
             alt="completed"
             width={208}
             height={212}

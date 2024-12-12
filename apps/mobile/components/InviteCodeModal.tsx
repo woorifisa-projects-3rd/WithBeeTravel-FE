@@ -1,10 +1,11 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Modal } from '@withbee/ui/modal';
 import styles from './InviteCodeModal.module.css';
 import Image from 'next/image';
 import { useToast } from '@withbee/hooks/useToast';
 import { Kakao, InviteCodeModalProps } from '@withbee/types';
+import { useSearchParams } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -23,7 +24,14 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
 
   const isReadOnly = modalState.closeLabel === '닫기' || isCopyMode;
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
+    const inviteCode = searchParams.get('inviteCode');
+    if (inviteCode !== null) {
+      setInputValue(String(inviteCode));
+    }
+
     // Kakao SDK 로드
     const script = document.createElement('script');
     script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js';
@@ -91,15 +99,19 @@ export const InviteCodeModal: React.FC<InviteCodeModalProps> = ({
         text: `${inputValue}`,
         link: {
           // 웹페이지 링크 (선택사항)
-          webUrl: window.location.href,
-          mobileWebUrl: window.location.href,
+          // webUrl: window.location.href,
+          // mobileWebUrl: window.location.href,
+          webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
+          mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
         },
         buttons: [
           {
             title: '초대 코드 입력하러 가기',
             link: {
-              webUrl: window.location.href,
-              mobileWebUrl: window.location.href,
+              //webUrl: window.location.href,
+              //mobileWebUrl: window.location.href,
+              webUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
+              mobileWebUrl: `https://www.withbee.site/travel?inviteCode=${inputValue}`,
             },
           },
         ],

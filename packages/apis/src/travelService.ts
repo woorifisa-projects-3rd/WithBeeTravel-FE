@@ -84,7 +84,17 @@ export const getTravelHome = async (travelId: number) => {
     //   revalidate: 1000 * 1 * 60, // 1분
     // },
   });
-  console.log(response);
 
+  return response;
+};
+
+export const changeTravelMainImage = async (
+  travelId: string,
+  formDataToSend: FormData,
+) => {
+  const response = await instance.patch(`/api/travels/${travelId}/main-image`, {
+    body: formDataToSend,
+    isMultipart: true,
+  });
   return response;
 };

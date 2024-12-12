@@ -10,6 +10,7 @@ import PinNumberModal from '../../../components/PinNumberModal';
 import AccountSelection from '../../../components/AccountSelection';
 import { motion } from 'framer-motion';
 import { productOptions } from '@withbee/utils';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 export default function CreateAccountPage() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function CreateAccountPage() {
 
       if (Number(response.status) === 201) {
         showToast.success({ message: '계좌 생성 완료!' });
-        router.push('/banking');
+        router.replace('/banking');
       } else {
         setErrorMessage('계좌 생성에 실패했습니다. 다시 시도해주세요.');
       }
@@ -101,7 +102,9 @@ export default function CreateAccountPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}
             >
-              <p>{selectedProductDetails.detail}</p>
+              <p className={styles.productDetailText}>
+                {selectedProductDetails.detail}
+              </p>
             </motion.div>
           )}
         </div>
@@ -119,7 +122,7 @@ export default function CreateAccountPage() {
 
         {selectedProduct && (
           <motion.div className={styles.buttonWrapper}>
-            <Button
+            <ButtonBanking
               label={`${selectedProduct} 만들기`}
               onClick={() => setIsModalOpen(true)}
               className={styles.button}

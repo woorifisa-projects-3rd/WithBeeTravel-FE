@@ -26,7 +26,8 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
 
   // 가장 amount가 큰 카테고리의 인덱스
   const highlightIndex = expenses?.reduce(
-    (acc, cur, index) => (cur.amount > expenses[acc]!.amount ? index : acc),
+    (acc, cur, index) =>
+      cur.amount > (expenses[acc]?.amount ?? 0) ? index : acc,
     0,
   );
 
@@ -115,7 +116,7 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     return [...rawExpenses, ...additionalExpenses];
   };
 
-  const currentExpenses = normalizeExpenses(expenses!);
+  const currentExpenses = normalizeExpenses(expenses);
 
   const data = {
     labels: currentExpenses.map((expense) => expense.category),
@@ -144,6 +145,10 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     setGrayColor900(rootStyles.getPropertyValue('--color-gray-900').trim());
   }, []);
 
+  useEffect(() => {
+    ChartJS.register(...registerables);
+  }, []);
+
   return <Bar data={data} options={options} />;
 };
 
@@ -157,7 +162,7 @@ export const PieChart = ({ expenses, ratio }: ExpenseChartProps) => {
     return rawExpenses.filter((expense) => expense.amount > 0);
   };
 
-  const currentExpenses = normalizeExpenses(expenses!);
+  const currentExpenses = normalizeExpenses(expenses);
 
   const options = {
     aspectRatio: ratio || 1.5,
@@ -196,6 +201,10 @@ export const PieChart = ({ expenses, ratio }: ExpenseChartProps) => {
       rootStyles.getPropertyValue(`--color-blue-${i + 1}`).trim(),
     );
     setBlueColors(colors);
+  }, []);
+
+  useEffect(() => {
+    ChartJS.register(...registerables);
   }, []);
 
   return <Pie data={data} options={options} />;

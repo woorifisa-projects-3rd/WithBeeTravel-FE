@@ -110,14 +110,14 @@ export const RecordModal: React.FC<RecordModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="기록 추가"
+      title="캡슐 만들기"
       closeLabel="입력 완료"
       onSubmit={handleSubmit}
     >
       {isLoading ? (
         <RecordModalSkeleton />
       ) : (
-        <div className={styles.record}>
+        <div className={styles.record} data-cy="record-modal">
           <div className={styles.image}>
             <input
               id="paymentImageFileInput"

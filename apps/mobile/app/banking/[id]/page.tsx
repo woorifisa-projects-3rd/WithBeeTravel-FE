@@ -17,6 +17,7 @@ import { AccountHistory, AccountInfo } from '@withbee/types';
 import dayjs from 'dayjs';
 import { PaymentError } from '@withbee/ui/payment-error';
 import useSWR from 'swr';
+import { ButtonBanking } from '@withbee/ui/banking-button';
 
 interface PinNumberResponse {
   failedPinCount: number;
@@ -78,6 +79,13 @@ export default function AccountPage() {
     }
     router.push(`/banking/${id}/transfer`);
   };
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
 
   return (
     <div className={styles.container}>
@@ -102,7 +110,7 @@ export default function AccountPage() {
                       {accountInfo.product}
                     </div>
                     <div className={styles.accountNumber}>
-                      {accountInfo.accountNumber}
+                      {formatAccountNumber(accountInfo.accountNumber)}
                     </div>
                   </div>
                   <div className={styles.addHistory}>
@@ -117,13 +125,13 @@ export default function AccountPage() {
 
                 <AnimatedBalance balance={accountInfo?.balance} />
                 <div className={styles.default}>
-                  <Button
+                  <ButtonBanking
                     primary={false}
                     label="입금"
                     size={'medium'}
                     onClick={() => router.push(`/banking/${id}/deposit`)}
                   />
-                  <Button
+                  <ButtonBanking
                     label="송금"
                     size={'medium'}
                     onClick={handleTransferClick}

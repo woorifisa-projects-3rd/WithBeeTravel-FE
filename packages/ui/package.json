@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./wibee-card-skeletion": "./src/wibee-card-skeletion.tsx",
+    "./honey-capsule-skeleton": "./src/honey-capsule-skeleton.tsx",
+    "./my-page-skeleton": "./src/my-page-skeleton.tsx",
     "./travel-list-skeleton": "./src/travel-list-skeleton.tsx",
     "./travellistskeleton": "./src/travellistskeleton.tsx",
     "./record-modal-skeleton": "./src/record-modal-skeleton.tsx",

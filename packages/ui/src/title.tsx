@@ -14,16 +14,28 @@ import { notificationStore } from '@withbee/stores';
 interface TitleProps {
   label: string;
   disableBack?: boolean;
+  isNotificationPage?: boolean;
 }
 
-export const Title = ({ label, disableBack }: TitleProps) => {
+export const Title = ({
+  label,
+  disableBack,
+  isNotificationPage,
+}: TitleProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const { hasNotification, isUpdate, markNotification } = notificationStore();
 
   const { data: isMsgData } = useSWR('Notification', getNotifications, {
-    refreshInterval: 10000,
+    refreshInterval: 1000,
   });
+
+  const notificationIcon =
+    pathname === '/notification'
+      ? NoMsg // 알림 페이지면 NoMsg로 고정
+      : hasNotification
+        ? isMsg
+        : NoMsg; // 다른 페이지면 기존 로직 유지
 
   useEffect(() => {
     if (
@@ -33,6 +45,7 @@ export const Title = ({ label, disableBack }: TitleProps) => {
       isMsgData.data.length > 0
     ) {
       const curIds = isMsgData.data.map((notification) => notification.id);
+
       const storedIds = notificationStore.getState().newNotifications;
 
       // 새로운 알림 ID 필터링
@@ -74,7 +87,7 @@ export const Title = ({ label, disableBack }: TitleProps) => {
       <h1 className={styles.label}>{label}</h1>
       <Link href="/notification">
         <Image
-          src={hasNotification ? isMsg : NoMsg}
+          src={notificationIcon}
           alt="알림"
           width={20}
           height={20}

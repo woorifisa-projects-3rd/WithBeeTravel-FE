@@ -1,7 +1,6 @@
 'use client';
 import React, { Suspense } from 'react';
 import TravelForm from '../../../components/TravelForm';
-import { Title } from '@withbee/ui/title';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createTravel } from '@withbee/apis';
 import { useToast } from '@withbee/hooks/useToast';
@@ -42,7 +41,7 @@ function TravelFormContent() {
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <TravelFormContent />
     </Suspense>
   );

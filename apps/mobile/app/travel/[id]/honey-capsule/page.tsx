@@ -2,7 +2,7 @@
 
 import styles from './page.module.css';
 import { Title } from '@withbee/ui/title';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import { Button } from '@withbee/ui/button';
 import { HoneyCapsule } from '@withbee/types';
 import { useEffect, useState, useRef } from 'react';
@@ -11,7 +11,8 @@ import { useToast } from '@withbee/hooks/useToast';
 import { ERROR_MESSAGES } from '@withbee/exception';
 import { HoneyCapsuleBox } from '@withbee/ui/honey-capsule';
 import dayjs from 'dayjs';
-import html2canvas from 'html2canvas';
+import { toSvg } from 'html-to-image';
+import { HoneyCapsuleSkeleton } from '@withbee/ui/honey-capsule-skeleton';
 
 interface HoneyCapsuleProps {
   params: {
@@ -24,6 +25,7 @@ export default function Page({ params }: HoneyCapsuleProps) {
   const { showToast } = useToast();
   const [honeyCapsuleData, setHoneyCapsuleData] = useState<HoneyCapsule[]>();
   const downloadComponentRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleGetHoneyCapsule = async () => {
     const response = await getHoneyCapsule(id);
@@ -38,7 +40,10 @@ export default function Page({ params }: HoneyCapsuleProps) {
       throw new Error(response.code);
     }
 
-    if (response.data) setHoneyCapsuleData(response.data);
+    if (response.data) {
+      setHoneyCapsuleData(response.data);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -61,19 +66,40 @@ export default function Page({ params }: HoneyCapsuleProps) {
     if (!downloadComponentRef.current) return;
 
     try {
-      // DOM 요소를 캔버스로 렌더링
-      const canvas = await html2canvas(downloadComponentRef.current);
+      const svgDataUrl = await toSvg(downloadComponentRef.current);
+      const image = new Image();
+      image.src = svgDataUrl;
 
-      // 캔버스를 이미지로 변환
-      const dataURL = canvas.toDataURL('image/png');
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        const scale = 2; // 해상도를 2배로 설정
+        const padding = 50; // 좌우 여백 (픽셀 단위)
+        const contentWidth = image.width * scale;
+        const contentHeight = image.height * scale;
 
-      // 이미지 다운로드
-      const link = document.createElement('a');
-      link.href = dataURL;
-      link.download = `honeycapsule-${id}.png`;
-      link.click();
+        // 캔버스 크기를 여백 포함으로 설정
+        canvas.width = contentWidth + padding * 2;
+        canvas.height = contentHeight;
+
+        const context = canvas.getContext('2d');
+        if (context) {
+          // 배경색 추가 (옵션)
+          context.fillStyle = '#FFFFFF'; // 흰색 배경
+          context.fillRect(0, 0, canvas.width, canvas.height);
+
+          // 이미지 그리기 (중앙 정렬)
+          context.scale(scale, scale);
+          context.drawImage(image, padding / scale, 0); // 좌우 여백만큼 이동
+
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = `honeycapsule-${id}.png`;
+          link.click();
+        }
+      };
     } catch (error) {
-      showToast.warning({ message: `Error generating PNG: ${error}` });
+      showToast.warning({ message: `허니캡슐 다운에 실패했습니다.` });
     }
   };
 
@@ -83,7 +109,7 @@ export default function Page({ params }: HoneyCapsuleProps) {
       <div className={styles.container}>
         <div className={styles.downloadWrapper}>
           <div className={styles.imageWrap}>
-            <Image
+            <NextImage
               src="/imgs/travelselect/withbee_friends.png"
               alt="위비프렌즈친구들"
               className={styles.withbeeFriendsImg}
@@ -98,22 +124,26 @@ export default function Page({ params }: HoneyCapsuleProps) {
           </span>
           <Button label="허니캡슐 생성하기" onClick={handleDownload} />
         </div>
-        <div ref={downloadComponentRef} className={styles.record}>
-          {honeyCapsuleData &&
-            Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
-              ([date, capsules]) => (
-                <div key={date} className={styles.recordWrapper}>
-                  <span className={styles.date}>{date}</span>
-                  {capsules.map((capsule) => (
-                    <HoneyCapsuleBox
-                      key={capsule.sharedPaymentId}
-                      data={capsule}
-                    />
-                  ))}
-                </div>
-              ),
-            )}
-        </div>
+        {isLoading ? (
+          <HoneyCapsuleSkeleton />
+        ) : (
+          <div ref={downloadComponentRef} className={styles.record}>
+            {honeyCapsuleData &&
+              Object.entries(groupPaymentsByDate(honeyCapsuleData)).map(
+                ([date, capsules]) => (
+                  <div key={date} className={styles.recordWrapper}>
+                    <span className={styles.date}>{date}</span>
+                    {capsules.map((capsule) => (
+                      <HoneyCapsuleBox
+                        key={capsule.sharedPaymentId}
+                        data={capsule}
+                      />
+                    ))}
+                  </div>
+                ),
+              )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { ERROR_MESSAGES } from '@withbee/exception';
 import useSWR from 'swr';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@withbee/hooks/useToast';
+import { mutate } from 'swr';
 
 // Account
 interface Account {
@@ -43,6 +44,7 @@ const CardIssuancePage = () => {
       : undefined;
 
   const handleIssuance = () => {
+    mutate((key: string) => key.startsWith('isCard'));
     setIsCardIssuance(true);
     setIsAccountModalOpen(true);
   };
@@ -97,9 +99,17 @@ const CardIssuancePage = () => {
   const rotationDuration = 2.8;
   const circleSegments = Array.from({ length: 22 }, (_, i) => i);
 
+  const formatAccountNumber = (accountNumber: string) => {
+    // 계좌번호가 13자리인 경우에만 적용
+    if (accountNumber.length === 13) {
+      return `${accountNumber.slice(0, 4)}-${accountNumber.slice(4, 7)}-${accountNumber.slice(7)}`;
+    }
+    return accountNumber; // 13자리가 아닐 경우 그대로 반환
+  };
+
   return (
     <div className={styles.container}>
-      <Title label="카드 혜택" />
+      <Title label="카드 혜택" disableBack={true} />
       <AnimatePresence mode="wait">
         {issuanceState === 'initial' && (
           <motion.div
@@ -108,7 +118,6 @@ const CardIssuancePage = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Initial state content remains the same */}
             <h1 className={styles.title}>위비 트래블 체크 카드</h1>
             <motion.div className={styles.withbeeCardWrap}>
               <Image
@@ -278,7 +287,7 @@ const CardIssuancePage = () => {
                 stiffness: 250,
                 damping: 28,
                 times: [0, 0.4, 0.6, 1],
-                duration: 3,
+                duration: 4,
                 ease: 'easeInOut',
               }}
               style={{ perspective: 1000 }}
@@ -309,9 +318,46 @@ const CardIssuancePage = () => {
               친구를 초대하고 여행을 만들어 보세요.
             </motion.div>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                y: [0, -10, 0], // 위아래로 움직임
+                scale: [1, 1.02, 1], // 약간 확대 축소
+                rotate: [-2, 2, -2], // 좌우로 회전
+              }}
+              whileTap={{
+                scale: 0.97,
+                transition: {
+                  duration: 0.2,
+                  type: 'spring',
+                  stiffness: 300,
+                },
+              }}
+              transition={{
+                delay: 0.6,
+                type: 'spring',
+                bounce: 0.3,
+                y: {
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  times: [0, 0.2, 0.5],
+                  ease: [0.25, 0.1, 0.25, 1],
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                  times: [0, 0.2, 0.5],
+                  ease: [0.25, 0.1, 0.25, 1],
+                },
+                rotate: {
+                  duration: 0.9,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut',
+                },
+              }}
             >
               <Link href="/travel">
                 <Button label="여행 생성하러 가기" className={styles.goTrip} />
@@ -349,7 +395,7 @@ const CardIssuancePage = () => {
               >
                 <div className={styles.accountInfo}>
                   <p className={styles.accountNumber}>
-                    {account.accountNumber}
+                    {formatAccountNumber(account.accountNumber)}
                   </p>
                   <p className={styles.product}>{account.product}</p>
                 </div>
