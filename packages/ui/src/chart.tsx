@@ -1,30 +1,13 @@
 'use client';
 
 import { Bar, Pie } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from 'chart.js';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import { useState, useEffect } from 'react';
 import '@withbee/styles';
 import { allCategories } from '@withbee/utils';
 
 // Register chart.js components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-);
+ChartJS.register(...registerables);
 
 interface ExpenseData {
   category: string;
@@ -57,7 +40,7 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     },
     scales: {
       x: {
-        position: 'top' as const,
+        position: 'bottom' as const,
         ticks: {
           color: grayColor900,
         },
@@ -87,6 +70,17 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
       },
       tooltip: {
         enabled: false,
+      },
+      datalabels: {
+        display: true,
+        formatter: (value: number) => `${value}%`, // 퍼센트 표시
+        color: grayColor900,
+        font: {
+          size: 12,
+        },
+        align: 'end', // 막대 위에 레이블 위치
+        anchor: 'end', // 레이블을 막대의 끝에 고정
+        offset: 0, // 막대와의 간격 조정
       },
     },
     elements: {

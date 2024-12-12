@@ -5,7 +5,7 @@ import styles from '../app/page.module.css';
 const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
-      <h2 className={styles.sidebarTitle}>Admin</h2>
+      {/* <h2 className={styles.sidebarTitle}>Admin</h2> */}
       <nav>
         <ul className={styles.sidebarNav}>
           <li>

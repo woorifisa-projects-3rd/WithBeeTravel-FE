@@ -20,6 +20,7 @@
     "@withbee/ui": "workspace:*",
     "@withbee/utils": "workspace:*",
     "chart.js": "^4.4.6",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "dayjs": "^1.11.13",
     "event-source-polyfill": "^1.0.31",
     "html2canvas": "^1.4.1",
