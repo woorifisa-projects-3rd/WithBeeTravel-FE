@@ -1,83 +1,94 @@
 # WithBeeTravel-FE
+![image](https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5)
 
-✈💵 편리하게 여행 경비를 관리할 수 있는 서비스
+<br/>
 
-This is an official starter Turborepo.
+## 🧑‍💻 프로젝트 소개
+✈💵 여행 공동 지출 관리 및 자동 정산 서비스
 
-## Using this example
+<br/>
 
-Run the following command:
+## 🧑‍💻 프로젝트 배경
+단체 여행에서 발생하는 결제와 정산은 자주 부담스럽고 복잡하게 느껴집니다.
 
-```sh
-npx create-turbo@latest
-```
+💼 **총무의 부담**: 한 사람이 모든 결제를 맡아 책임이 집중되거나, 여러 사람이 결제 후 뒤섞인 내역을 정리해야 하는 비효율적인 구조 <br/>
+🔄 **혼란스러운 정산 과정**: 특히 해외 여행에서는 환율 기준이 모호해 정산 과정에서 추가적인 어려움 발생 <br/>
+💳 **편리한 관리의 부재**: 결제 내역을 기록하고 정리하는 과정이 불편하며, 실시간으로 정산하기 어려움 <br/>
 
-## What's inside?
+이러한 문제를 해결하기 위해, 누구나 간편하게 결제 내역을 기록하고 실시간으로 자동 정산할 수 있는 시스템을 기획했습니다! <br/>
+사용자는 더 이상 결제와 정산에 신경 쓰지 않고, 여행에만 집중할 수 있는 환경을 제공하는 것이 이 서비스의 핵심 목표입니다. 🌟 <br/>
+<br/>
 
-This Turborepo includes the following packages/apps:
+## 👻 팀원구성
 
-### Apps and Packages
+| <img src="https://github.com/Kong-E.png" width="200" /> | <img src="https://github.com/yaejinkong.png" width="200" /> | <img src="https://github.com/HoChoRoo.png" width="200" /> |
+| :------------------------------------------------------------: | :-----------------------------------------------------: | :-------------------------------------------------------: |
+|           [공소연](https://github.com/Kong-E)           |           [공예진](https://github.com/yaejinkong)           |           [김호철(팀장)](https://github.com/HoChoRoo)           |
+|                           풀스택                           |                       풀스택                        |                        풀스택                         |
+|        공동 지출 내역, 생성형 AI      |        결제 내역 정산, SSE 실시간 알림        |        코어 뱅킹, 인프라        |
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@withbee/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@withbee/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@withbee/typescript-config`: `tsconfig.json`s used throughout the monorepo
+| <img src="https://github.com/SeungAh-Yoo99.png" width="200" /> | <img src="https://github.com/doyi0107.png" width="200" /> | 
+| :-------------------------------------------------------: | :--------------------------------------------------------: | 
+|        [유승아](https://github.com/SeungAh-Yoo99)        |           [이도이](https://github.com/doyi0107)           |      
+|                          풀스택                           |                           풀스택                           |     
+|        결제 내역 추가, 허니 캡슐 관리         |         여행 관리, SSE 실시간 알림          |  
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+<br/>
 
-### Utilities
+## ⭐ 프로젝트 주요 기능
 
-This Turborepo has some additional tools already setup for you:
+## ![주요 기능](https://github.com/user-attachments/assets/2979f638-cd8c-4fbf-bb0d-f41feb34b909)
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+<br/>
 
-### Build
+## 🎥 시연 영상
 
-To build all apps and packages, run the following command:
+[윗비트래블 시연 영상](https://youtu.be/MLBJV3tiibA)
 
-```
-cd my-turborepo
-pnpm build
-```
+<br/>
 
-### Develop
 
-To develop all apps and packages, run the following command:
+## 📚 기술 스택
 
-```
-cd my-turborepo
-pnpm dev
-```
+## ![기술 스택1](https://github.com/user-attachments/assets/35065822-dd35-4abb-8fb8-4eef7c08963d)
+## ![기술 스택2](https://github.com/user-attachments/assets/990bad5a-d693-446e-963e-f00f6ef78c9a)
 
-### Remote Caching
+<br />
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🗃️ 인프라 구조도
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+## ![인프라 구조도](https://github.com/user-attachments/assets/49bd6e51-3569-4d2d-9a0c-7d965a176e03)
 
-```
-cd my-turborepo
-npx turbo login
-```
+<br/>
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 🎈 Commit 방법
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### Commit Title
 
-```
-npx turbo link
-```
+`[{type}/{jira_issue_num}]: Update [README.md](http://README.md)` 
 
-## Useful Links
+- Type: `{type}`
+- Jira Issue Num: `{jira_issue_num}`
+- Subject: `Update README.m`
 
-Learn more about the power of Turborepo:
+### Type
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- [feat] : 새로운 기능 추가
+- [fix] : 버그 수정
+- [docs] : 문서 수정
+- [style] : 코드 포맷 변경, 세미콜론 누락, 코드 변경 없음
+- [refactor] : 프로덕션 코드 리팩터링
+- [test] : 테스트 추가, 테스트 코드 리팩터링, 프로덕션 코드 변경 없음
+- [build] : gradle 세팅, 패키지 추가
+- [chore] : 빌드 테스크 업데이트, 패키지 매니저 환경설정, 프로덕션 코드 변경 없음
+
+### Subject
+
+- Subject만 보고도 해당 작업을 판단할 수 있게 작성해준다.
+- ex) 클라이언트에서 토큰 받아오는 기능 추가
+- 길이는 50자 이하로 작성한다.
+- 끝에는 마침표를 붙이지 않는다.
+
+### Jira Issue Num
+
+- 지라에서 자동적으로 정해주는 issue 번호를 사용한다.
