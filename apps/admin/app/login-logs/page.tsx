@@ -22,7 +22,7 @@ const AdminPage = () => {
   ) => {
     setLoading(true);
     try {
-      const response = await getLoginLogs(page, 5, logType, userId);
+      const response = await getLoginLogs(page, 5, logType, Number(userId));
       console.log('response', response);
       if ('data' in response && response.data) {
         setLoginLogs(response.data.content);
