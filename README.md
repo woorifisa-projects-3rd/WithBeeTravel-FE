@@ -1,10 +1,8 @@
+# WithBeeTravel-FE
 <div align="center">
+  <img width="700" alt="image" src="https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5">
   <img width="700" alt="image" src="https://github.com/user-attachments/assets/ebf0df22-ded0-47bd-937c-f9979b29e32c">
 </div>
-
-# WithBeeTravel-FE
-![image](https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5)
-
 <br/>
 
 ## 🧑‍💻 프로젝트 소개
