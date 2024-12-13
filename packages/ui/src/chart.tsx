@@ -41,7 +41,7 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
     },
     scales: {
       x: {
-        position: 'top' as const,
+        position: 'bottom' as const,
         ticks: {
           color: grayColor900,
         },
@@ -71,6 +71,17 @@ export const BarChart = ({ expenses, ratio }: ExpenseChartProps) => {
       },
       tooltip: {
         enabled: false,
+      },
+      datalabels: {
+        display: true,
+        formatter: (value: number) => `${value}%`, // 퍼센트 표시
+        color: grayColor900,
+        font: {
+          size: 12,
+        },
+        align: 'end', // 막대 위에 레이블 위치
+        anchor: 'end', // 레이블을 막대의 끝에 고정
+        offset: 0, // 막대와의 간격 조정
       },
     },
     elements: {

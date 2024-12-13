@@ -22,7 +22,7 @@ export const getLoginLogs = async (
 
   try {
     const response = await instance.get<LoginLogResponse>(url, {
-      requireAuth: false,
+      // requireAuth: false,
     });
     return response;
   } catch (error) {
@@ -36,7 +36,7 @@ export const getAdminDashbord = async (): Promise<
   SuccessResponse<DashboardResponse> | ErrorResponse
 > => {
   const response = instance.get<DashboardResponse>(`/api/admin`, {
-    requireAuth: false,
+    // requireAuth: false,
   });
   return response;
 };
@@ -56,7 +56,7 @@ export const getUserList = async (
   }
   const url = `/api/admin/users?${params.toString()}`;
   const response = instance.get<UserResponse>(url, {
-    requireAuth: false,
+    // requireAuth: false,
   });
   return response;
 };

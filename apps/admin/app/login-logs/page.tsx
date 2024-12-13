@@ -13,16 +13,17 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [loginLogType, setLoginLogType] = useState<string>('ALL');
-  const [userId, setUserId] = useState<number>();
+  const [userId, setUserId] = useState<string>('');
 
   const fetchLoginLogs = async (
     page: number,
     logType: string,
-    userId: number,
+    userId: string,
   ) => {
     setLoading(true);
     try {
-      const response = await getLoginLogs(page, 5, logType, userId);
+      const response = await getLoginLogs(page, 5, logType, Number(userId));
+      console.log('response', response);
       if ('data' in response && response.data) {
         setLoginLogs(response.data.content);
         setPageable(response.data.pageable);
@@ -96,9 +97,7 @@ const AdminPage = () => {
             <button onClick={handleSearch}>검색</button>
           </div>
 
-          {loading ? (
-            <p>로딩 중...</p>
-          ) : (
+          {loginLogs.length !== 0 && (
             <div>
               <table className={styles.table}>
                 <thead>
