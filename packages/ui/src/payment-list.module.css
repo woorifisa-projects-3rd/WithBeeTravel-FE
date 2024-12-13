@@ -1,0 +1,33 @@
+.paymentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 21px 0 25px;
+}
+
+.paymentWrapper {
+  width: 100%;
+}
+
+.date {
+  color: var(--color-gray-500);
+  font-size: 14px;
+}
+
+.noMore {
+  width: 100%;
+  text-align: center;
+  color: var(--color-gray-500);
+  /* font-size: 14px; */
+  margin-top: 10px;
+}
+
+.loadingWrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.errorContainer {
+  padding: 15vh 0;
+}

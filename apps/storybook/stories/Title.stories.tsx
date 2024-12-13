@@ -19,9 +19,8 @@ const meta: Meta<typeof Title> = {
     layout: 'centered',
   },
   tags: ['title'],
-  argTypes: {
-  },
-  args: { onClick: action('clicked') },
+  argTypes: {},
+  args: {},
   // 데코레이터 추가
   decorators: [
     (Story) => (

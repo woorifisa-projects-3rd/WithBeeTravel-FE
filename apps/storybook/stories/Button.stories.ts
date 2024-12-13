@@ -4,14 +4,13 @@ import { Button } from './Button';
 
 // Meta 설정 부분
 const meta: Meta<typeof Button> = {
-  title: 'Conponents/Button',
+  title: 'Components/Button',
   component: Button,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-  },
+  argTypes: {},
   args: { onClick: action('clicked') }, // onClick 이벤트 추적을 위해 action 사용
 };
 

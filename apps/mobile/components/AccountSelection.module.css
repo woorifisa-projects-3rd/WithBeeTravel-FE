@@ -1,0 +1,87 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.swipeContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 280px;
+  overflow: hidden;
+}
+
+.cardSelected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: white; */
+  transition: all 0.3s ease;
+}
+
+.imageContainer {
+  width: 140px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.image {
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.image[alt='우리닷컴통장'] {
+  padding-top: 15px;
+}
+
+.textContainer {
+  text-align: center;
+  width: 100%;
+  padding-top: 14px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 2px;
+}
+
+.des {
+  font-size: 14px;
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+.arrowButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  /* background-color: var(--color-blue-3); */
+  color: var(--color-blue-8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.arrowButton:hover {
+  /* background-color: var(--color-blue-3); */
+  color: var(--color-blue-9);
+}
+
+.arrowButton:active {
+  transform: scale(0.95);
+}

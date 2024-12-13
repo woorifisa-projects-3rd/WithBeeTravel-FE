@@ -1,0 +1,70 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: #fff;
+    border-top: 1px solid var(--color-gray-300);
+    z-index: 50;
+}
+
+.menuList {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 2px 5px 0px;
+}
+
+.menuLink {
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7px 10px;
+    text-decoration: none;
+    transition: transform 0.2s ease-out;
+}
+
+.menuLink:active {
+    transform: scale(0.95);
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    height: 23px;
+    margin-bottom: 4px;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.iconWrapper.active {
+    transform: scale(1.13);
+}
+
+.label {
+    color: var(--color-gray-400);
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    transition: color 0.2s ease-out;
+}
+
+.label.active {
+    color: var(--color-blue-7);
+    transform: scale(1.1);
+}
+
+.iconWrapper .svg path {
+    transition: fill 0.1s ease-out, stroke 0.1s ease-out;
+}
+
+.iconWrapper.active .svg path {
+    fill: #b1e4ff;
+    stroke: var(--color-blue-7);
+}

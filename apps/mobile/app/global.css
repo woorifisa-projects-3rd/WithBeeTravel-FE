@@ -1,9 +1,10 @@
 .mobile {
   max-width: 430px;
-  height: 100%;
-  /* background: var(--color-gray-200); */
   margin: 0 auto;
   padding: 0 25px;
+  padding-bottom: 80px;
+  position: relative;
+  padding-top: 58px;
 }
 
 .layout {

@@ -1,20 +1,38 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@withbee/styles";
-import "./global.css"
-
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import '@withbee/styles/global.css';
+import './global.css';
+import MobileFooter from '../components/MobileFooter';
+import { CustomToastContainer } from '@withbee/ui/toast-container';
+import RealtIimeMsg from '../components/RealTimeMsg';
+import { SessionProvider } from 'next-auth/react';
 
 const pretendard = localFont({
-  src: 'fonts/PretendardVariable.ttf',
+  src: 'fonts/PretendardVariable.woff2',
+  display: 'swap',
   variable: '--font-pretendard',
-  weight: '100 300 400 500 700 900',
+  weight: '400 920',
 });
 
 export const metadata: Metadata = {
-  title: "윗비트래블",
-  description: "편리하게 여행 경비를 관리할 수 있는 서비스",
+  metadataBase: new URL('https://www.withbee.site'),
+  title: '윗비트래블',
+  description: '편리하게 여행 경비를 관리할 수 있는 서비스',
   icons: {
-    icon: '/Airplane.png',
+    icon: '/Airplane.ico',
+  },
+  openGraph: {
+    title: '윗비트래블',
+    description: '편리하게 여행 경비를 관리할 수 있는 서비스',
+    images: [
+      {
+        url: '/opengraph.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
   },
 };
 
@@ -25,8 +43,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="layout">
-      <body className={[pretendard.variable, "mobile"].join(" ")} >
-        {children}
+      <body className={pretendard.variable}>
+        <div className="mobile">
+          <SessionProvider>
+            <RealtIimeMsg />
+            <CustomToastContainer />
+            {children}
+            <MobileFooter />
+          </SessionProvider>
+        </div>
       </body>
     </html>
   );

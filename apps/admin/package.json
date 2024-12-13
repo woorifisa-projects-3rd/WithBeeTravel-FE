@@ -6,22 +6,28 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
+    "type-check": "tsc --noEmit",
     "lint": "next lint"
   },
   "dependencies": {
     "@withbee/ui": "workspace:*",
+    "@withbee/auth-config": "workspace:*",
+    "lucide-react": "^0.462.0",
     "next": "14.2.6",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "@withbee/apis": "workspace:*",
+    "@withbee/types": "workspace:*"
   },
   "devDependencies": {
-    "@withbee/eslint-config": "workspace:*",
-    "@withbee/typescript-config": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@withbee/eslint-config": "workspace:*",
+    "@withbee/typescript-config": "workspace:*",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "next-auth": "5.0.0-beta.25"
   }
 }

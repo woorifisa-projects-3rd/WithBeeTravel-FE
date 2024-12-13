@@ -1,48 +1,87 @@
-
 .button {
   border: none;
-  border-radius: 10px; /* 모서리를 둥글게 */
+  border-radius: 10px;
+  /* 모서리를 둥글게 */
   cursor: pointer;
-  transition: transform 0.2s ease /* 호버 효과를 위한 트랜지션 */
+  transition: transform 0.2s ease;
+  /* 호버 효과를 위한 트랜지션 */
+}
+
+.button:disabled {
+  background-color: var(--color-gray-100);
+  /* 버튼 배경색 */
+  color: var(--color-gray-400);
+  /* 버튼 텍스트 색상 */
+  cursor: not-allowed;
+}
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 14px;
+}
+
+.xsmall {
+  border-radius: 8px;
+  /* 모서리를 둥글게 */
+  padding: 6px 12px;
+  /* 패딩 */
+  font-size: 16px;
+  /* 텍스트 크기 */
 }
 
 .small {
-  border-radius: 8px; /* 모서리를 둥글게 */
-  padding: 12px 18px; /* 패딩 */
-  font-size: 16px; /* 텍스트 크기 */
+  border-radius: 8px;
+  /* 모서리를 둥글게 */
+  padding: 12px 18px;
+  /* 패딩 */
+  font-size: 16px;
+  /* 텍스트 크기 */
 }
 
 .large {
   width: 100%;
-  padding: 17.5px 18px; /* 패딩 */
-  font-size: 20px; /* 텍스트 크기 */
+  padding: 17.5px 18px;
+  /* 패딩 */
+  font-size: 20px;
+  /* 텍스트 크기 */
+  font-weight: 400;
 }
 
 .xlarge {
   width: 100%;
-  max-width: 486px;
-  padding: 18.5px 18px; /* 패딩 */
-  font-size: 22px; /* 텍스트 크기 */
+  /* max-width: 486px; */
+  padding: 18.5px 18px;
+  /* 패딩 */
+  font-size: 22px;
+  /* 텍스트 크기 */
+  font-weight: 400;
 }
 
 .medium {
   width: 100%;
-  padding: 16.5px 18px; /* 패딩 */
-  font-size: 18px; /* 텍스트 크기 */
+  padding: 14px 18px;
+  /* 패딩 */
+  font-size: 18px;
+  /* 텍스트 크기 */
+  font-weight: 400;
 }
 
 .primary {
-  background-color: var(--color-yellow-6); /* 버튼 배경색 */
-  color: var(--color-yellow-12); /* 버튼 텍스트 색상 */
+  background-color: var(--color-yellow-6);
+  /* 버튼 배경색 */
+  color: var(--color-yellow-12);
+  /* 버튼 텍스트 색상 */
 }
 
 .secondary {
-  background-color: var(--color-gray-100); /* 버튼 배경색 */
-  color: var(--color-gray-600); /* 버튼 텍스트 색상 */
+  background-color: var(--color-gray-100);
+  /* 버튼 배경색 */
+  color: var(--color-gray-600);
+  /* 버튼 텍스트 색상 */
 }
 
 /* 버튼 활성화 시 효과 */
-.button:active {
-  transform: scale(0.98); /* 살짝 축소 */
+.button:active(not(.disabled)) {
+  transform: scale(0.98);
+  /* 살짝 축소 */
   /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
 }

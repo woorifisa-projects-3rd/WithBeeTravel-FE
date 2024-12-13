@@ -1,0 +1,96 @@
+.container {
+  background-color: white;
+  flex-direction: column;
+}
+
+.amountContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+/* 내 계좌 정보 */
+.accountInfo h2 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.balance {
+  color: var(--color-gray-500);
+  font-size: 16px;
+  margin-bottom: 3%;
+}
+
+/* 송금할 계좌 입력 폼 */
+.targetAccount h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.text {
+  padding-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.numberContainer {
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  font-size: 20px;
+  border-bottom: 1.5px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+}
+
+.number {
+  display: inline-block;
+  margin-right: 2px;
+  font-weight: 600;
+}
+
+.placeholder {
+  color: var(--color-gray-400);
+  font-weight: 400;
+  font-size: 18px;
+}
+
+
+/* 키보드 관련 스타일 업데이트 */
+.keyboardContainer {
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  max-width: 430px;
+}
+
+/* 버튼 위치 스타일 수정 */
+.buttonLocation {
+  width: 100%;
+  max-width: 430px;
+  padding: 10px 25px 25px 25px;
+}
+
+.numberContainer {
+  display: flex;
+  overflow: hidden;
+}
+
+.number {
+  display: inline-block;
+  margin-right: 2px;
+}
+

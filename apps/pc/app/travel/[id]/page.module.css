@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+.subContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contentWrapper {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+
+.imgWrapper {
+  flex: 1.1;
+  /* min-width: 280px; */
+  height: 276px;
+  border-radius: 20px;
+  background: var(--color-gray-100) url('/imgs/travelselect/wibee_gray.png')
+    no-repeat center / 162px 156.67px;
+}
+
+.subtitleContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  gap: 3px;
+}
+
+.subtitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.btnWrapper {
+  display: block;
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+
+.btnWrapper > * {
+  flex-basis: 50%;
+}
+
+.travelInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tagWrapper {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--color-gray-600);
+}
+
+.date {
+  font-size: 14px;
+  color: var(--color-gray-600);
+}
+
+.travelName {
+  font-size: 24px;
+  color: var(--color-gray-800);
+  font-weight: 600;
+}
+
+.tag {
+  padding: 7px 10px;
+  background: var(--color-gray-100);
+  border-radius: 7px;
+}
+
+.friendsWrapper {
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+}
+
+.chartWrapper {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,64 @@
+.skeletonWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skeletonCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.skeletonImage {
+    height: 120px;
+    background-color: #ebebeb;
+    position: relative;
+}
+
+.skeletonContent {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeletonTitle,
+.skeletonSubtitle {
+    height: 16px;
+    background-color: #ebebeb;
+    border-radius: 4px;
+    position: relative;
+}
+
+.skeletonTitle {
+    width: 60%;
+}
+
+.skeletonSubtitle {
+    width: 40%;
+}
+
+.cardDaySkeleton {
+    margin-top: 5px;
+    height: 35px;
+    width: 150px;
+    background-color: #ebebeb;
+    border-radius: 8px;
+    position: relative;
+}
+
+.shimmer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0) 100%);
+}

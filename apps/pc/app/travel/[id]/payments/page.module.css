@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  width: 800px;
+  padding-bottom: 50px;
+  margin: 0 auto;
+}
+
+.menu {
+  margin-top: 16px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0px;
+}
+
+.childrenWrapper {
+  margin-top: 75px;
+}

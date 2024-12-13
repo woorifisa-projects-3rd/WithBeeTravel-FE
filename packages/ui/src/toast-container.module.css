@@ -1,0 +1,23 @@
+.toastBody {
+    font-family: inherit;
+    color: #333;
+    font-size: 14px;
+    padding: 12px 16px;
+}
+
+
+:global(.Toastify__toast--success) .toastProgress {
+    background: #22c55e;
+}
+
+:global(.Toastify__toast--error) .toastProgress {
+    background: #ef4444;
+}
+
+:global(.Toastify__toast--success) .toastBody {
+    color: #22c55e;
+}
+
+:global(.Toastify__toast--error) .toastBody {
+    color: #ef4444;
+}

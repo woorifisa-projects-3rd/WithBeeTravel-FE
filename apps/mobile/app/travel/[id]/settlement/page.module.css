@@ -1,0 +1,300 @@
+.mainContent {
+  padding-top: 25px;
+  font-size: 18px;
+}
+
+/* 허니캡슐 버튼이 있을 때 적용되는 스타일 */
+.withHoneyCapsule {
+  margin-bottom: 110px;
+}
+
+.mainCard {
+  border-radius: 10px;
+  padding: 25px 23px;
+  border: 1px solid var(--color-gray-200);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--color-gray-500);
+  margin: 15px 0px 15px 0px;
+  text-align: center;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.suffixText {
+  color: #000000;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.summaryBody {
+  display: flex;
+  align-items: center; /* 도장과 금액 정보를 같은 높이로 정렬 */
+  font-size: 16px;
+  justify-content: flex-end; /* 레이블과 금액을 양쪽 정렬 */
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.completedStamp {
+  position: absolute; /* summaryBody 위에 고정 */
+  top: -10px; /* summaryBody 위쪽에 겹치도록 위치 조정 */
+  left: 20%; /* 가로로 중앙 정렬 */
+  transform: translateX(-50%) rotate(-10deg);
+  z-index: 2;
+}
+
+.summaryInfoWrapper {
+  display: flex;
+  flex-direction: column; /* 금액 정보를 세로로 배치 */
+}
+
+.summaryInfo {
+  display: flex;
+  justify-content: space-between; /* 레이블과 금액을 양쪽 정렬 */
+  width: 100%;
+  color: var(--color-gray-500);
+  margin-bottom: 5px; /* 금액 정보 간격 */
+}
+
+.label {
+  margin-right: 4px;
+  font-size: 16px;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.amount {
+  font-size: 16px;
+  flex-grow: 1;
+  text-align: right;
+}
+
+.detailsButton {
+  color: var(--color-gray-500);
+  font-size: 14px;
+  text-align: right;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.arrows {
+  margin-left: 3px;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.expenseList {
+  margin-top: 16px;
+}
+
+.expenseList.open {
+  max-height: 500px;
+  animation: slideDown 1.5s ease forwards;
+  overflow-y: auto;
+}
+
+.expenseList.closed {
+  animation: slideUp 1.5s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    max-height: 500px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+.expenseItem {
+  padding-bottom: 23px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.expenseDate {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.expensePlace {
+  font-size: 16px;
+  font-weight: medium;
+}
+
+.amountRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.amountColumn {
+  display: flex;
+  justify-content: space-between;
+  /* 텍스트와 금액 간 양쪽 정렬 */
+  width: 100%;
+}
+
+.amountLabel {
+  min-width: 40px;
+  margin-right: 8px;
+  text-align: left;
+}
+
+.paymentAmout {
+  margin-left: 4px;
+  text-align: right;
+}
+
+.positiveRequestedAmount {
+  color: var(--color-blue-10);
+  margin-left: 4px;
+  text-align: right;
+}
+
+.negativeRequestedAmount {
+  color: var(--color-red);
+  margin-left: 4px;
+  text-align: right;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 25px 23px;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-gray-200);
+}
+
+.card:last-of-type {
+  margin-bottom: 0px;
+}
+
+.positiveAmount {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.negativeAmount {
+  color: var(--color-red);
+  font-weight: bold;
+}
+
+.suffix {
+  font-size: 14px;
+}
+
+.userRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* isAgreed가 true일 때 적용할 스타일 */
+.completedCard {
+  position: relative;
+  background-color: rgba(200, 200, 200, 0.7);
+}
+
+.completedCard::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  /* 테두리가 흐릿해 보이도록 경계선 바깥으로 확장 */
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(229, 231, 235, 0.3);
+  backdrop-filter: blur(1.2px);
+  /* 배경에 블러 효과 추가 */
+  filter: blur(1px);
+  /* 테두리도 흐릿하게 보이도록 추가 */
+  z-index: 0;
+}
+
+.completedOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  font-weight: bold;
+  color: black;
+  z-index: 1;
+}
+
+.remainingUsers {
+  margin-top: 20px;
+  margin-bottom: 160px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-gray-500);
+}
+
+.btnWrapper {
+  max-width: 430px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  left: 50%;
+  padding: 0 25px;
+  transform: translate(-50%);
+  position: fixed;
+  bottom: 100px;
+  z-index: 10; /* completedOverlay보다 높은 값 설정 */
+}
+
+.disabledButton {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.storeName {
+  white-space: nowrap;
+  /* 텍스트를 한 줄로 제한 */
+  overflow: hidden;
+  /* 넘치는 부분은 잘라냄 */
+  text-overflow: ellipsis;
+  /* 잘린 텍스트 뒤에 '...'을 추가 */
+  max-width: 13ch;
+  /* 13자까지만 표시 */
+}

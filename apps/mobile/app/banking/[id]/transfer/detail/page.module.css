@@ -1,0 +1,101 @@
+.container {
+  background-color: white;
+  flex-direction: column;
+}
+
+.amountContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.accountInfo h2,
+.targetAccount h3 {
+  margin-bottom: 2px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.accountInfo h2 span,
+.targetAccount h3 span {
+  font-weight: 400;
+}
+
+.balance,
+.accountNumber {
+  color: var(--color-gray-500);
+  font-size: 14px;
+}
+
+.amountDisplay {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 2%;
+  min-height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currency {
+  font-size: 28px;
+  color: var(--color-blue-10);
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.placeholder {
+  color: #000000;
+  font-size: 24px;
+}
+
+.accountName {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.buttonLocation {
+  width: 100%;
+  max-width: 430px;
+  padding: 0px 25px;
+  bottom: 50px;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.keyboardContainer {
+  width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  max-width: 430px;
+}
+
+.handleSendMoney {
+  width: 100%;
+  max-width: 430px;
+  padding: 10px 25px 25px 25px;
+}
+
+.won {
+  margin-top: 8px;
+  font-size: 12pt;
+  font-weight: normal;
+  text-align: center;
+}
+
+.numberContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.number {
+  display: inline-block;
+}

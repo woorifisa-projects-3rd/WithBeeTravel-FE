@@ -1,0 +1,102 @@
+/* page.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* 추가 */
+  min-height: calc(100vh - 58px);
+  text-align: center;
+  margin: 0 -25px -80px;
+  padding: 0 25px;
+  background-color: color-mix(in srgb, var(--color-gray-50) 70%, transparent);
+}
+
+.mainContent {
+  flex: 1;
+  /* 추가 */
+  display: flex;
+  flex-direction: column;
+}
+
+.accountContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detail {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: var(--color-gray-600);
+}
+
+.label {
+  display: block;
+  font-size: 20px;
+  margin-top: 30px;
+  font-weight: 700;
+  color: var(--color-gray-800);
+  text-align: center;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.image {
+  width: 350px;
+  /* 이미지 너비 350px */
+  height: auto;
+  /* 높이는 자동으로 비율에 맞게 조정 */
+  display: block;
+  /* 이미지 자체는 block 요소로 설정 */
+  margin-left: auto;
+  /* 수평 중앙 정렬 */
+  margin-right: auto;
+  /* 수평 중앙 정렬 */
+}
+
+.error {
+  color: var(--color-red);
+  margin-top: 10px;
+}
+
+.productDetail {
+  margin-top: 10px;
+  padding: 20px 20px;
+  background-color: var(--color-gray-100);
+  border-radius: 20px;
+  margin: 5px 10px 20px;
+}
+
+.productDetailText {
+  text-align: left;
+}
+
+.productDetail h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.productDetail p {
+  font-size: 14px;
+  color: var(--color-gray-500);
+}
+
+.buttonWrapper {
+  width: 100%;
+  padding-bottom: 30px;
+}
+
+.button {
+  width: 100%;
+}

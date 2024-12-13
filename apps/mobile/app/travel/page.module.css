@@ -1,0 +1,170 @@
+.travelSelectWrap {
+  margin: 0 -10px;
+}
+
+
+.imageWrap {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 90%;
+  height: 23vh;
+  margin-top: 10px;
+}
+
+.imageWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/imgs/travelselect/withbee_friends_background.png') center/contain no-repeat;
+  z-index: -1;
+}
+
+.withbeeFriendsImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+
+.buttonWrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buttonTitleWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.buttonTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.imgWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+
+/* 카드리스트 */
+.cardWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+}
+
+.cardImage {
+  width: 100%;
+  height: 9rem;
+  object-fit: cover;
+}
+
+.cardContent {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardText {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+}
+
+
+.travelNameWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-size: 14px;
+  color: var(--color-gray-400)
+}
+
+.cardDay {
+  padding-left: 10px;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 500;
+  color: var(--color-gray-600);
+}
+
+.pastTravelTitle {
+  margin-bottom: -10px;
+}
+
+/* 여행 데이터 없을 경우 */
+
+.emptyState {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.emptyStateMessage {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--color-gray-500);
+}
+
+/* 로딩표시 */
+.loadingContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+.loadingSpinner {
+  border: 3px solid transparent;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}

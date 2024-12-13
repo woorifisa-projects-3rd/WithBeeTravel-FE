@@ -1,0 +1,15 @@
+.btnWrapper {
+  max-width: 430px;
+  width: fit-content;
+  position: fixed;
+  bottom: 6.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 0px 0px 0px;
+  height: 105px;
+  text-align: center;
+}
+
+.btnWrapper.pc {
+  bottom: 12px;
+}

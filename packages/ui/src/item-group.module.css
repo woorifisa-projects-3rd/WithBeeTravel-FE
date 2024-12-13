@@ -1,0 +1,58 @@
+.container {
+  position: absolute;
+  left: -25px;
+  width: 100vw;
+  max-width: 1000px;
+  margin-top: 12px;
+  overflow: hidden; /* 중요: motion.div가 넘치지 않도록 */
+}
+
+.tabList {
+  position: relative;
+  display: flex;
+  min-width: min-content; /* 내용물 크기만큼 확장 */
+  touch-action: pan-x; /* 모바일에서 수평 스크롤만 허용 */
+  overflow: hidden;
+}
+
+.tab {
+  padding: 8px 30px 12px 30px;
+  font-size: 16px;
+  font-weight: 500;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+  user-select: none; /* 드래그 중 텍스트 선택 방지 */
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-gray-950) 32%, transparent);
+}
+
+.tab:first-child {
+  margin-left: 25px;
+}
+
+.tab:last-child {
+  margin-right: 25px;
+}
+
+.tab:hover {
+  color: var(--color-gray-950);
+}
+
+.activeTab {
+  color: var(--color-gray-950);
+}
+
+.inactiveTab {
+  color: color-mix(in srgb, var(--color-gray-950) 32%, transparent);
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-gray-950);
+}

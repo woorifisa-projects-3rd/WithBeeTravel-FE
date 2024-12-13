@@ -1,0 +1,15 @@
+.item {
+  display: flex;
+  align-items: center;
+  padding: 7px 10px;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
+  border-radius: 7px;
+}
+
+.small {
+  font-size: 14px;
+  padding: 5px 7px;
+}
+
+.button {}

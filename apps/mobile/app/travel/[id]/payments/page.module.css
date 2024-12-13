@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.menu {
+  margin-top: 16px;
+}
+
+.errorContainer {
+  padding: 15vh 0;
+}
+
+.childrenWrapper {
+  margin-top: 75px;
+}
