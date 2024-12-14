@@ -1,7 +1,7 @@
 # WithBeeTravel-FE
 <div align="center">
-  <img width="700" alt="image" src="https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5">
   <img width="700" alt="image" src="https://github.com/user-attachments/assets/ebf0df22-ded0-47bd-937c-f9979b29e32c">
+  <img width="700" alt="image" src="https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5">
 </div>
 <br/>
 
@@ -23,17 +23,11 @@
 
 ## 👻 팀원구성
 
-| <img src="https://github.com/Kong-E.png" width="200" /> | <img src="https://github.com/yaejinkong.png" width="200" /> | <img src="https://github.com/HoChoRoo.png" width="200" /> |
-| :------------------------------------------------------------: | :-----------------------------------------------------: | :-------------------------------------------------------: |
-|           [공소연](https://github.com/Kong-E)           |           [공예진](https://github.com/yaejinkong)           |           [김호철(팀장)](https://github.com/HoChoRoo)           |
-|                           풀스택                           |                       풀스택                        |                        풀스택                         |
-|        공동 지출 내역, 생성형 AI      |        결제 내역 정산, SSE 실시간 알림        |        코어 뱅킹, 인프라        |
-
-| <img src="https://github.com/SeungAh-Yoo99.png" width="200" /> | <img src="https://github.com/doyi0107.png" width="200" /> | 
-| :-------------------------------------------------------: | :--------------------------------------------------------: | 
-|        [유승아](https://github.com/SeungAh-Yoo99)        |           [이도이](https://github.com/doyi0107)           |      
-|                          풀스택                           |                           풀스택                           |     
-|        결제 내역 추가, 허니 캡슐 관리         |         여행 관리, SSE 실시간 알림          |  
+| <img src="https://github.com/Kong-E.png" width="200" /> | <img src="https://github.com/yaejinkong.png" width="200" /> | <img src="https://github.com/HoChoRoo.png" width="200" /> | <img src="https://github.com/SeungAh-Yoo99.png" width="200" />  |  <img src="https://github.com/doyi0107.png" width="200" /> |
+| :-------------------------------------------------------: | :--------------------------------------------------------: | :-----------------------------------------------------: | :---------------------------------------------------------: | :---------------------------------------------------------: |
+|         [공소연](https://github.com/Kong-E)          |          [공예진](https://github.com/yaejinkong)           |          [김호철(팀장)](https://github.com/HoChoRoo)              |            [유승아](https://github.com/SeungAh-Yoo99)             |  [이도이](https://github.com/doyi0107)           |
+|                           풀스택                             |                            풀스택                             |                          풀스택                            |                          풀스택                               |                  풀스택                                |
+|         공동 지출 내역, 생성형 AI        |  결제 내역 정산, SSE 실시간 알림  |    코어 뱅킹, 인프라     |                 결제 내역 추가, 허니 캡슐 관리                 |   여행 관리, SSE 실시간 알림            |
 
 <br/>
 
