@@ -16,40 +16,84 @@
 
 <br/>
 
-## 👨‍🏫 프로젝트 배경
+## 👨‍🏫 기획 배경
 총무에게 집중되는 부담을 줄이거나 뒤섞인 결제 내역을 편리하게 관리해줌으로써 <br/>
 여행 중 발생하는 지출을 보다 효율적으로 관리해주기 위해 해당 서비스를 기획했습니다.
 
 단체 여행에서 발생하는 결제와 정산은 다음과 같은 이유들로 부담스럽고 복잡하게 느껴집니다.
 
-💼 **총무의 부담**: 한 사람이 모든 결제를 맡아 책임이 집중되거나, 여러 사람이 결제 후 뒤섞인 내역을 정리해야 하는 비효율적인 구조 <br/>
-🔄 **혼란스러운 정산 과정**: 특히 해외 여행에서는 환율 기준이 모호해 정산 과정에서 추가적인 어려움 발생 <br/>
-💳 **편리한 관리의 부재**: 결제 내역을 기록하고 정리하는 과정이 불편하며, 실시간으로 정산하기 어려움 <br/>
-
-- 총무에게 집중되는 부담: 한 사람이 모든 결제를 맡아 책임이 직중되는 경우, 큰 금액을 관리해야 한다는 부담으로 여행을 온전히 즐기기 어렵습니다.
-- 결제 내역 정리의 어려움: 
+**💼 총무의 부담**: 한 사람이 모든 결제를 맡아 책임이 집중되는 경우, 큰 금액을 관리해야 한다는 부담으로 여행을 온전히 즐기기 어렵습니다. <br/><br/>
+**🗃 복잡한 정산 과정**: 결제 내역 별로 사용한 인원이 다를 경우, 정리하고 정산하는 과정이 복잡하여 피로도가 증가합니다. <br/><br/>
+**⚖ 애매한 환율 기준**: 해외 여행의 경우, 결제 시점과 정산 시점의 환율 차이로 인해 정산 금액을 정하는 기준을 잡기 어렵습니다.
 
 이러한 문제를 해결하기 위해, 누구나 간편하게 결제 내역을 기록하고 실시간으로 자동 정산할 수 있는 시스템을 기획했습니다! <br/>
 사용자는 더 이상 결제와 정산에 신경 쓰지 않고, 여행에만 집중할 수 있는 환경을 제공하는 것이 이 서비스의 핵심 목표입니다. 🌟 <br/>
 <br/>
 
-## 👻 팀원구성
-
-| <img src="https://github.com/Kong-E.png" width="200" /> | <img src="https://github.com/yaejinkong.png" width="200" /> | <img src="https://github.com/HoChoRoo.png" width="200" /> |
-| :------------------------------------------------------------: | :-----------------------------------------------------: | :-------------------------------------------------------: |
-|           [공소연](https://github.com/Kong-E)           |           [공예진](https://github.com/yaejinkong)           |           [김호철(팀장)](https://github.com/HoChoRoo)           |
-|                           풀스택                           |                       풀스택                        |                        풀스택                         |
-|        공동 지출 내역, 생성형 AI      |        결제 내역 정산, SSE 실시간 알림        |        코어 뱅킹, 인프라        |
-
-| <img src="https://github.com/SeungAh-Yoo99.png" width="200" /> | <img src="https://github.com/doyi0107.png" width="200" /> | 
-| :-------------------------------------------------------: | :--------------------------------------------------------: | 
-|        [유승아](https://github.com/SeungAh-Yoo99)        |           [이도이](https://github.com/doyi0107)           |      
-|                          풀스택                           |                           풀스택                           |     
-|        결제 내역 추가, 허니 캡슐 관리         |         여행 관리, SSE 실시간 알림          |  
+## ⭐ 프로젝트 주요 기능
+### 1. 코어 뱅킹
+> 서비스 기능에 적합한 금융 코어 기능을 구현하였습니다.
+<table>
+  <tr>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EB%B1%85%ED%82%B9%ED%99%88.gif" alt="뱅킹 홈" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%84%EC%A2%8C%EC%83%9D%EC%84%B1.gif" alt="계좌 생성" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%84%EC%A2%8C%EC%83%81%EC%84%B8.gif" alt="계좌 상세" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">뱅킹 홈</td>
+    <td align="center">계좌 생성</td>
+    <td align="center">계좌 상세</td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%9E%85%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="입금" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%86%A1%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="송금" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B9%B4%EB%93%9C%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%95%8C%EB%A6%BC.gif" alt="카드 결제 내역 알림" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">입금</td>
+    <td align="center">송금</td>
+    <td align="center">카드 결제 내역 알림</td>
+  </tr>
+</table>
 
 <br/>
 
-## ⭐ 프로젝트 주요 기능
+### 2. 여행 생성 및 가입
+> 결제 내역을 공유하고 정산할 수 있는 그룹인 여행을 생성하거나 초대 코드를 통해 가입할 수 있는 기능을 구현했습니다.
+<table>
+  <tr>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%97%AC%ED%96%89%EC%83%9D%EC%84%B1.gif" alt="여행 생성" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.gif" alt="초대 코드 공유" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EB%A1%9C%EA%B0%80%EC%9E%85%ED%95%98%EA%B8%B0.gif" alt="초대 코드로 가입" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">여행 생성</td>
+    <td align="center">초대 코드 공유</td>
+    <td align="center">초대 코드로 가입</td>
+  </tr>
+</table>
+
+<br/>
+
+### 3. 그룹 공동 결제 내역 확인
+> 결제 멤버와 결제 참여 멤버를 한 눈에 볼 수 있도록 구현했습니다. <br/>
+원하는 결제 내역만 확인할 수 있는 필터링 기능을 제공합니다. <br />
+결제 참여 멤버를 손쉽게 변경할 수 있습니다.
+
+<table>
+  <tr>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD.gif" alt="그룹 공동 결제 내역 확인" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%ED%95%84%ED%84%B0%EB%A7%81.gif" alt="결제 내역 필터링" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%B0%B8%EC%97%AC%EC%9D%B8%EC%9B%90%EC%88%98%EB%B3%80%EA%B2%BD.gif" alt="정산 참여 멤버 선택" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">그룹 공동 결제 내역 확인</td>
+    <td align="center">결제 내역 필터링</td>
+    <td align="center">정산 참여 멤버 선택</td>
+  </tr>
+</table>
 
 ## ![주요 기능](https://github.com/user-attachments/assets/2979f638-cd8c-4fbf-bb0d-f41feb34b909)
 
@@ -106,3 +150,19 @@
 ### Jira Issue Num
 
 - 지라에서 자동적으로 정해주는 issue 번호를 사용한다.
+
+## 👻 팀원구성
+
+| <img src="https://github.com/Kong-E.png" width="200" /> | <img src="https://github.com/yaejinkong.png" width="200" /> | <img src="https://github.com/HoChoRoo.png" width="200" /> |
+| :------------------------------------------------------------: | :-----------------------------------------------------: | :-------------------------------------------------------: |
+|           [공소연](https://github.com/Kong-E)           |           [공예진](https://github.com/yaejinkong)           |           [김호철(팀장)](https://github.com/HoChoRoo)           |
+|                           풀스택                           |                       풀스택                        |                        풀스택                         |
+|        공동 지출 내역, 생성형 AI      |        결제 내역 정산, SSE 실시간 알림        |        코어 뱅킹, 인프라        |
+
+| <img src="https://github.com/SeungAh-Yoo99.png" width="200" /> | <img src="https://github.com/doyi0107.png" width="200" /> | 
+| :-------------------------------------------------------: | :--------------------------------------------------------: | 
+|        [유승아](https://github.com/SeungAh-Yoo99)        |           [이도이](https://github.com/doyi0107)           |      
+|                          풀스택                           |                           풀스택                           |     
+|        결제 내역 추가, 허니 캡슐 관리         |         여행 관리, SSE 실시간 알림          |  
+
+<br/>
