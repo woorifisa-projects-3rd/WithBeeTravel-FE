@@ -1,4 +1,8 @@
-![image](https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5)
+<div align="center">
+  <img width="700" alt="우수상 수상" src="https://github.com/user-attachments/assets/ebf0df22-ded0-47bd-937c-f9979b29e32c">
+  <img width="700" alt="윗비트래블 대표 이미지" src="https://github.com/user-attachments/assets/7828a218-57ef-4feb-9d11-d791e3d30df5">
+</div>
+<br/>
 
 <br/>
 
@@ -27,7 +31,7 @@
 **⚖ 애매한 환율 기준**: 해외 여행의 경우, 결제 시점과 정산 시점의 환율 차이로 인해 정산 금액을 정하는 기준을 잡기 어렵습니다.
 
 이러한 문제를 해결하기 위해, 누구나 간편하게 결제 내역을 기록하고 실시간으로 자동 정산할 수 있는 시스템을 기획했습니다! <br/>
-사용자는 더 이상 결제와 정산에 신경 쓰지 않고, 여행에만 집중할 수 있는 환경을 제공하는 것이 이 서비스의 핵심 목표입니다. 🌟 <br/>
+사용자는 더 이상 결제와 정산에 신경 쓰지 않고, 여행에만 집중할 수 있는 환경을 제공하는 것이 이 서비스의 핵심 목표입니다. <br/>
 <br/>
 
 ## ⭐ 프로젝트 주요 기능
@@ -78,7 +82,7 @@
 <br/>
 
 ### 3. 그룹 공동 결제 내역 확인
-> 결제 멤버와 결제 참여 멤버를 한 눈에 볼 수 있도록 구현했습니다. <br/>
+> 결제 멤버와 결제 참여 멤버를 한 눈에 볼 수 있는 기능을 구현했습니다. <br/>
 원하는 결제 내역만 확인할 수 있는 필터링 기능을 제공합니다. <br />
 결제 참여 멤버를 손쉽게 변경할 수 있습니다.
 
@@ -92,6 +96,45 @@
     <td align="center">그룹 공동 결제 내역 확인</td>
     <td align="center">결제 내역 필터링</td>
     <td align="center">정산 참여 멤버 선택</td>
+  </tr>
+</table>
+
+<br />
+
+### 4. 그룹 공동 결제 내역 추가
+> 그룹 공동 결제 내역을 추가할 있는 기능을 구현했습니다. <br/>
+여행 기간 내 발생한 위비 카드 결제 내역은 그룹 공동 결제 내역에 자동으로 추가됩니다. <br />
+여행 기간 외 발생한 위비 카드 결제 내역을 선택하여 추가할 수 있습니다. <br />
+현금 결제와 위비 카드 미발급자는 결제 내역을 직접 추가할 수 있습니다.
+
+<table>
+  <tr>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%9E%90%EB%8F%99%EC%B6%94%EA%B0%80.gif" alt="위비 카드 결제 내역 자동 추가" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%9C%84%EB%B9%84%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0.gif" alt="위비 카드 결제 내역 선택 추가" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%A7%81%EC%A0%91%EC%B6%94%EA%B0%80.gif" alt="결제 내역 직접 추가" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">위비 카드 결제 내역 자동 추가</td>
+    <td align="center">위비 카드 결제 내역 선택 추가</td>
+    <td align="center">결제 내역 직접 추가</td>
+  </tr>
+</table>
+
+<br />
+
+### 5. 허니캡슐
+> 결제 내역에 추억을 기록할 수 있는 기능인 허니캡슐을 구현했습니다. <br />
+여행이 끝나면 캡슐을 열어 여행 기록을 확인 할 수 있습니다. <br/>
+캡슐을 다운받아 간직할 수 있습니다. <br />
+
+<table>
+  <tr>
+    <td><img src="" alt="허니 캡슐 추가" width="200"/></td>
+    <td><img src="" alt="허니 캡슐 열어보기 및 다운로드" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">허니 캡슐 추가</td>
+    <td align="center">허니 캡슐 열어보기 및 다운로드</td>
   </tr>
 </table>
 
