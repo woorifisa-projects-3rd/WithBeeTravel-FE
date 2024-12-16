@@ -138,13 +138,11 @@
   </tr>
 </table>
 
-## ![주요 기능](https://github.com/user-attachments/assets/2979f638-cd8c-4fbf-bb0d-f41feb34b909)
-
 <br/>
 
-## 🎥 시연 영상
+## 🎥 홍보 영상
 
-[윗비트래블 시연 영상](https://youtu.be/MLBJV3tiibA)
+[윗비트래블 홍보 영상 바로가기](https://youtu.be/MLBJV3tiibA)
 
 <br/>
 
@@ -161,38 +159,6 @@
 ## ![인프라 구조도](https://github.com/user-attachments/assets/49bd6e51-3569-4d2d-9a0c-7d965a176e03)
 
 <br/>
-
-## 🎈 Commit 방법
-
-### Commit Title
-
-`[{type}/{jira_issue_num}]: Update [README.md](http://README.md)` 
-
-- Type: `{type}`
-- Jira Issue Num: `{jira_issue_num}`
-- Subject: `Update README.m`
-
-### Type
-
-- [feat] : 새로운 기능 추가
-- [fix] : 버그 수정
-- [docs] : 문서 수정
-- [style] : 코드 포맷 변경, 세미콜론 누락, 코드 변경 없음
-- [refactor] : 프로덕션 코드 리팩터링
-- [test] : 테스트 추가, 테스트 코드 리팩터링, 프로덕션 코드 변경 없음
-- [build] : gradle 세팅, 패키지 추가
-- [chore] : 빌드 테스크 업데이트, 패키지 매니저 환경설정, 프로덕션 코드 변경 없음
-
-### Subject
-
-- Subject만 보고도 해당 작업을 판단할 수 있게 작성해준다.
-- ex) 클라이언트에서 토큰 받아오는 기능 추가
-- 길이는 50자 이하로 작성한다.
-- 끝에는 마침표를 붙이지 않는다.
-
-### Jira Issue Num
-
-- 지라에서 자동적으로 정해주는 issue 번호를 사용한다.
 
 ## 👻 팀원구성
 
