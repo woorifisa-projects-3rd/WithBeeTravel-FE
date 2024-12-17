@@ -68,9 +68,9 @@
 > 결제 내역을 공유하고 정산할 수 있는 그룹인 여행을 생성하거나 초대 코드를 통해 가입할 수 있는 기능을 구현했습니다.
 <table>
   <tr>
-    <td><img src="" alt="여행 생성" width="200"/></td>
-    <td><img src="" alt="초대 코드 공유" width="200"/></td>
-    <td><img src="" alt="초대 코드로 가입" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%97%AC%ED%96%89%EC%83%9D%EC%84%B1.gif" alt="여행 생성" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.gif" alt="초대 코드 공유" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EB%A1%9C%EA%B0%80%EC%9E%85%ED%95%98%EA%B8%B0.gif" alt="초대 코드로 가입" width="200"/></td>
   </tr>
   <tr>
     <td align="center">여행 생성</td>
