@@ -71,7 +71,8 @@
 <br/>
 
 ### 2. 여행 생성 및 가입
-> 결제 내역을 공유하고 정산할 수 있는 그룹인 여행을 생성하거나 초대 코드를 통해 가입할 수 있는 기능을 구현했습니다.
+> 결제 내역을 공유하고 정산할 수 있는 그룹인 여행을 생성하고 초대 코드를 통해 가입할 수 있는 기능을 구현했습니다.
+
 <table>
   <tr>
     <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%97%AC%ED%96%89%EC%83%9D%EC%84%B1.gif" alt="여행 생성" width="200"/></td>
@@ -90,7 +91,8 @@
 ### 3. 그룹 공동 결제 내역 확인
 > 결제 멤버와 결제 참여 멤버를 한 눈에 볼 수 있는 기능을 구현했습니다. <br/>
 원하는 결제 내역만 확인할 수 있는 필터링 기능을 제공합니다. <br />
-결제 참여 멤버를 손쉽게 변경할 수 있습니다.
+결제 참여 멤버를 손쉽게 변경할 수 있습니다. <br/>
+(결제 참여 멤버란, 결제 금액을 함께 사용한 멤버로서 해당 결제 내역 정산에 포함되는 멤버를 뜻합니다.)
 
 <table>
   <tr>
@@ -131,16 +133,37 @@
 ### 5. 허니캡슐
 > 결제 내역에 추억을 기록할 수 있는 기능인 허니캡슐을 구현했습니다. <br />
 여행이 끝나면 캡슐을 열어 여행 기록을 확인 할 수 있습니다. <br/>
-캡슐을 다운받아 간직할 수 있습니다. <br />
+캡슐을 다운받아 간직할 수 있습니다.
 
 <table>
   <tr>
-    <td><img src="" alt="허니 캡슐 추가" width="200"/></td>
-    <td><img src="" alt="허니 캡슐 열어보기 및 다운로드" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EC%B6%94%EA%B0%80.gif" alt="허니 캡슐 추가" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.gif" alt="허니 캡슐 열어보기 및 다운로드" width="200"/></td>
   </tr>
   <tr>
     <td align="center">허니 캡슐 추가</td>
     <td align="center">허니 캡슐 열어보기 및 다운로드</td>
+  </tr>
+</table>
+
+<br />
+
+### 6. 정산
+> 정산 요청과 동의로 한 번에 자동 정산할 수 있는 기능을 구현했습니다. <br />
+여행 그룹장이 정산 요청을 하면 그룹원들은 정산 내역을 확인하고 정산 동의 및 취소를 할 수 있습니다.<br/>
+모든 그룹원들이 동의를 완료하면 연결된 계좌에서 자동으로 계좌 이체가 진행됩니다.<br />
+연결된 계좌에 잔액이 부족한 그룹원이 있는 경우, 정산 과정이 중단되고 다시 한 번 해당 그룹원의 동의를 받으며 계좌 잔액 확인을 요청합니다.
+
+<table>
+  <tr>
+    <td><img src="" alt="정산 요청" width="200"/></td>
+    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%A0%95%EC%82%B0%20%EB%82%B4%EC%97%AD%20%ED%99%95%EC%9D%B8.gif" alt="정산 내역 확인" width="200"/></td>
+    <td><img src="" alt="정산 동의" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">정산 요청</td>
+    <td align="center">정산 내역 확인</td>
+    <td align="center">정산 동의</td>
   </tr>
 </table>
 
