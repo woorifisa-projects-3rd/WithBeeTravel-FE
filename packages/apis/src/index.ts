@@ -10,5 +10,4 @@ export * from './authService';
 export * from './wibeeCardHistory';
 export * from './bankingService';
 export * from './adminService';
-export * from './realTimeMsg';
 export * from './honeyCapsuleService';

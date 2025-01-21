@@ -6,6 +6,6 @@
       "@withbee/auth-config": ["../auth-config/src/index.ts"]
     }
   },
-  "include": ["src", "custom.d.ts"],
+  "include": ["src", "custom.d.ts", "../utils/src/realTimeMsg.ts"],
   "exclude": ["node_modules", "dist"]
 }
