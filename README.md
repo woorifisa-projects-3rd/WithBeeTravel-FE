@@ -45,9 +45,9 @@
 > 서비스 기능에 적합한 금융 코어 기능을 구현하였습니다.
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EB%B1%85%ED%82%B9%ED%99%88.gif" alt="뱅킹 홈" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%84%EC%A2%8C%EC%83%9D%EC%84%B1.gif" alt="계좌 생성" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%84%EC%A2%8C%EC%83%81%EC%84%B8.gif" alt="계좌 상세" width="200"/></td>
+    <td><img src="./assets/%EB%B1%85%ED%82%B9%ED%99%88.gif" alt="뱅킹 홈" width="200"/></td>
+    <td><img src="./assets/%EA%B3%84%EC%A2%8C%EC%83%9D%EC%84%B1.gif" alt="계좌 생성" width="200"/></td>
+    <td><img src="./assets/%EA%B3%84%EC%A2%8C%EC%83%81%EC%84%B8.gif" alt="계좌 상세" width="200"/></td>
   </tr>
   <tr>
     <td align="center">뱅킹 홈</td>
@@ -57,9 +57,9 @@
 </table>
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%9E%85%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="입금" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%86%A1%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="송금" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B9%B4%EB%93%9C%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%95%8C%EB%A6%BC.gif" alt="카드 결제 내역 알림" width="200"/></td>
+    <td><img src="./assets/%EC%9E%85%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="입금" width="200"/></td>
+    <td><img src="./assets/%EC%86%A1%EA%B8%88%ED%95%98%EA%B8%B0.gif" alt="송금" width="200"/></td>
+    <td><img src="./assets/%EC%B9%B4%EB%93%9C%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%95%8C%EB%A6%BC.gif" alt="카드 결제 내역 알림" width="200"/></td>
   </tr>
   <tr>
     <td align="center">입금</td>
@@ -75,9 +75,9 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%97%AC%ED%96%89%EC%83%9D%EC%84%B1.gif" alt="여행 생성" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.gif" alt="초대 코드 공유" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EB%A1%9C%EA%B0%80%EC%9E%85%ED%95%98%EA%B8%B0.gif" alt="초대 코드로 가입" width="200"/></td>
+    <td><img src="./assets/%EC%97%AC%ED%96%89%EC%83%9D%EC%84%B1.gif" alt="여행 생성" width="200"/></td>
+    <td><img src="./assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0.gif" alt="초대 코드 공유" width="200"/></td>
+    <td><img src="./assets/%EC%B4%88%EB%8C%80%EC%BD%94%EB%93%9C%EB%A1%9C%EA%B0%80%EC%9E%85%ED%95%98%EA%B8%B0.gif" alt="초대 코드로 가입" width="200"/></td>
   </tr>
   <tr>
     <td align="center">여행 생성</td>
@@ -96,9 +96,9 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD.gif" alt="그룹 공동 결제 내역 확인" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%ED%95%84%ED%84%B0%EB%A7%81.gif" alt="결제 내역 필터링" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%B0%B8%EC%97%AC%EC%9D%B8%EC%9B%90%EC%88%98%EB%B3%80%EA%B2%BD.gif" alt="정산 참여 멤버 선택" width="200"/></td>
+    <td><img src="./assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD.gif" alt="그룹 공동 결제 내역 확인" width="200"/></td>
+    <td><img src="./assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%ED%95%84%ED%84%B0%EB%A7%81.gif" alt="결제 내역 필터링" width="200"/></td>
+    <td><img src="./assets/%EA%B3%B5%EB%8F%99%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%B0%B8%EC%97%AC%EC%9D%B8%EC%9B%90%EC%88%98%EB%B3%80%EA%B2%BD.gif" alt="정산 참여 멤버 선택" width="200"/></td>
   </tr>
   <tr>
     <td align="center">그룹 공동 결제 내역 확인</td>
@@ -117,9 +117,9 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%9E%90%EB%8F%99%EC%B6%94%EA%B0%80.gif" alt="위비 카드 결제 내역 자동 추가" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%9C%84%EB%B9%84%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0.gif" alt="위비 카드 결제 내역 선택 추가" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%A7%81%EC%A0%91%EC%B6%94%EA%B0%80.gif" alt="결제 내역 직접 추가" width="200"/></td>
+    <td><img src="./assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%9E%90%EB%8F%99%EC%B6%94%EA%B0%80.gif" alt="위비 카드 결제 내역 자동 추가" width="200"/></td>
+    <td><img src="./assets/%EC%9C%84%EB%B9%84%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0.gif" alt="위비 카드 결제 내역 선택 추가" width="200"/></td>
+    <td><img src="./assets/%EA%B2%B0%EC%A0%9C%EB%82%B4%EC%97%AD%EC%A7%81%EC%A0%91%EC%B6%94%EA%B0%80.gif" alt="결제 내역 직접 추가" width="200"/></td>
   </tr>
   <tr>
     <td align="center">위비 카드 결제 내역 자동 추가</td>
@@ -137,8 +137,8 @@
 
 <table>
   <tr>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EC%B6%94%EA%B0%80.gif" alt="허니 캡슐 추가" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.gif" alt="허니 캡슐 열어보기 및 다운로드" width="200"/></td>
+    <td><img src="./assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EC%B6%94%EA%B0%80.gif" alt="허니 캡슐 추가" width="200"/></td>
+    <td><img src="./assets/%ED%97%88%EB%8B%88%EC%BA%A1%EC%8A%90%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.gif" alt="허니 캡슐 열어보기 및 다운로드" width="200"/></td>
   </tr>
   <tr>
     <td align="center">허니 캡슐 추가</td>
@@ -156,9 +156,9 @@
 
 <table>
   <tr>
-    <td><img src="" alt="정산 요청" width="200"/></td>
-    <td><img src="https://github.com/woorifisa-projects-3rd/WithBeeTravel-FE/blob/ysa-readme/assets/%EC%A0%95%EC%82%B0%20%EB%82%B4%EC%97%AD%20%ED%99%95%EC%9D%B8.gif" alt="정산 내역 확인" width="200"/></td>
-    <td><img src="" alt="정산 동의" width="200"/></td>
+    <td><img src="./assets/%EC%A0%95%EC%82%B0%20%EC%9A%94%EC%B2%AD.gif" alt="정산 요청" width="200"/></td>
+    <td><img src="./assets/%EC%A0%95%EC%82%B0%20%EB%82%B4%EC%97%AD%20%ED%99%95%EC%9D%B8.gif" alt="정산 내역 확인" width="200"/></td>
+    <td><img src="./assets/%EC%A0%95%EC%82%B0%20%EB%8F%99%EC%9D%98.gif" alt="정산 동의" width="200"/></td>
   </tr>
   <tr>
     <td align="center">정산 요청</td>
@@ -171,14 +171,14 @@
 
 ## 📚 기술 스택
 
-## ![기술 스택1](https://github.com/user-attachments/assets/35065822-dd35-4abb-8fb8-4eef7c08963d)
-## ![기술 스택2](https://github.com/user-attachments/assets/990bad5a-d693-446e-963e-f00f6ef78c9a)
+<img width="500" alt="기술 스택1" src="https://github.com/user-attachments/assets/35065822-dd35-4abb-8fb8-4eef7c08963d">
+<img width="500" alt="기술 스택2" src="https://github.com/user-attachments/assets/990bad5a-d693-446e-963e-f00f6ef78c9a">
 
 <br />
 
 ## 🗃️ 인프라 구조도
 
-## ![인프라 구조도](https://github.com/user-attachments/assets/49bd6e51-3569-4d2d-9a0c-7d965a176e03)
+<img width="700" alt="인프라 구조도" src="https://github.com/user-attachments/assets/49bd6e51-3569-4d2d-9a0c-7d965a176e03">
 
 <br/>
 
