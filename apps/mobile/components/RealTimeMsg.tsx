@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import styles from './RealTimeMsg.module.css';
-import { connectSSE } from '@withbee/apis';
+import { connectSSE } from '@withbee/utils';
 import Link from 'next/link';
 
 interface Notification {
